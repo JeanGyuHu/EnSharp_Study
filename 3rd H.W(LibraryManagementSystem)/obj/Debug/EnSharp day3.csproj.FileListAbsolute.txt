@@ -1,0 +1,6 @@
+C:\Users\gjwls\source\repos\EnSharp day3\bin\Debug\EnSharp day3.exe
+C:\Users\gjwls\source\repos\EnSharp day3\bin\Debug\EnSharp day3.pdb
+C:\Users\gjwls\source\repos\EnSharp day3\obj\Debug\EnSharp day3.csprojResolveAssemblyReference.cache
+C:\Users\gjwls\source\repos\EnSharp day3\obj\Debug\EnSharp day3.csproj.CoreCompileInputs.cache
+C:\Users\gjwls\source\repos\EnSharp day3\obj\Debug\EnSharp day3.exe
+C:\Users\gjwls\source\repos\EnSharp day3\obj\Debug\EnSharp day3.pdb
