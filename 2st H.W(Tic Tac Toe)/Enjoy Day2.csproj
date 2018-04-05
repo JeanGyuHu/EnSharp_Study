@@ -45,6 +45,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ScoreBoard.cs" />
     <Compile Include="StartMenu.cs" />
+    <Compile Include="UserData.cs" />
     <Compile Include="VsComputerMode.cs" />
     <Compile Include="VsUserMode.cs" />
   </ItemGroup>

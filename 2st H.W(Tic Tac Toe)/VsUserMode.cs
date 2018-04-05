@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,9 +12,9 @@ namespace Enjoy_Day2
         private string strPlayerChoice;
         private int intPlayerChoice;
         private int playerTurnCount=0;
-        private StartMenu startMenu;
+        private int count = 0;
 
-        public VsUserMode(String name1,String name2)
+        public VsUserMode(string name1,string name2,List<UserData> list)
         {
             gameBoard = new char[9] { '1', '2', '3', '4', '5', '6', '7', '8', '9' };
 
@@ -33,6 +34,20 @@ namespace Enjoy_Day2
                     (gameBoard[2] == '●' && gameBoard[4] == '●' && gameBoard[6] == '●'))
                 {
                     Console.WriteLine("\n\n\t\t{0} 님 의 승 리 입 니 다 ! !\n\n\n\n\n\n",name1);
+
+                    count = 0;
+                    foreach(UserData data in list)
+                    {
+                        if(data.StrPlayer == name1)
+                        {
+                            data.Num++;
+                            break;
+                        }
+                        count++;
+                    }
+                    if (count == list.Count)
+                        list.Add(new UserData(name1, 1));
+
                     System.Threading.Thread.Sleep(2000);
                     break;
                 }
@@ -49,8 +64,22 @@ namespace Enjoy_Day2
                     (gameBoard[2] == '★' && gameBoard[4] == '★' && gameBoard[6] == '★'))
                 {
                     Console.WriteLine("\n\n\t\t{0} 님 의 승 리 입 니 다 ! !\n\n\n\n\n\n", name2);
+                    count = 0;
+                    foreach (UserData data in list)
+                    {
+                        if (data.StrPlayer == name1)
+                        {
+                            data.Num++;
+                            break;
+                        }
+                        count++;
+                    }
+                    if (count == list.Count)
+                        list.Add(new UserData(name1, 1));
+
                     System.Threading.Thread.Sleep(2000);
                     break;
+
                 }
                 Console.WriteLine("\n\n\t\t{0}\t{1}\t{2}\n\n", gameBoard[0], gameBoard[1], gameBoard[2]);
                 Console.WriteLine("\t\t{0}\t{1}\t{2}\n\n", gameBoard[3], gameBoard[4], gameBoard[5]);
@@ -67,6 +96,7 @@ namespace Enjoy_Day2
                     (gameBoard[8] == '●' || gameBoard[8] == '★'))
                 {
                     Console.WriteLine("\n\n\t\t 무 승 부 입 니 다 ! !");
+                    System.Threading.Thread.Sleep(2000);
                     break;
                 }
                     
@@ -150,7 +180,6 @@ namespace Enjoy_Day2
                 }
                 
             }
-            startMenu = new StartMenu();
         }
     }
 }
