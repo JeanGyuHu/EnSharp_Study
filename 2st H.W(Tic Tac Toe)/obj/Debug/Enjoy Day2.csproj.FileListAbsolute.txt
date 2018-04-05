@@ -1,6 +1,0 @@
-C:\Users\gjwls\source\repos\Enjoy Day2\bin\Debug\Enjoy Day2.exe
-C:\Users\gjwls\source\repos\Enjoy Day2\bin\Debug\Enjoy Day2.pdb
-C:\Users\gjwls\source\repos\Enjoy Day2\obj\Debug\Enjoy Day2.csprojResolveAssemblyReference.cache
-C:\Users\gjwls\source\repos\Enjoy Day2\obj\Debug\Enjoy Day2.csproj.CoreCompileInputs.cache
-C:\Users\gjwls\source\repos\Enjoy Day2\obj\Debug\Enjoy Day2.exe
-C:\Users\gjwls\source\repos\Enjoy Day2\obj\Debug\Enjoy Day2.pdb
