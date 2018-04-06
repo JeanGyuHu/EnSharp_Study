@@ -28,7 +28,6 @@ namespace EnSharp_day3
                     }
                     else
                     {
-                     
                         loginFlag = drawLoginPage(slist);
                     }
                     break;

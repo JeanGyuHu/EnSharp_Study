@@ -7,5 +7,6 @@ namespace EnSharp_day3
 {
     class UserMode
     {
+        
     }
 }

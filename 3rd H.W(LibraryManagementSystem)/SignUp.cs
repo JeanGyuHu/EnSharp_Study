@@ -27,7 +27,7 @@ namespace EnSharp_day3
                 drawPhoneNum();
                 drawAddress();
                 Console.Clear();
-                list.Add(new Member(strName, strResidentNum, strPassword, strId, 0, strAddress, strPhoneNumber));
+                list.Add(new Member(strName, strResidentNum, strPassword, strId, "0", strAddress, strPhoneNumber));
                 Console.Write("\n\n\n\n\n\n\t\t\t가입을 성공적으로 마쳤습니다!!");
                 System.Threading.Thread.Sleep(2000);
             }
@@ -135,8 +135,6 @@ namespace EnSharp_day3
             Console.WriteLine("\n\n\t\t\t┌---------------------------------------------┐");
             Console.WriteLine("\t\t\t│           S I G N   U P   P A G E           │");
             Console.WriteLine("\t\t\t└---------------------------------------------┘");
-
-
         }
     }
 }

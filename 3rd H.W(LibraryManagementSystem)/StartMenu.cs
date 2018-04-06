@@ -13,8 +13,10 @@ namespace EnSharp_day3
         private List<Member> listSuperviser = new List<Member>();
         private List<Book> listBook = new List<Book>();
         private Login login;
+
         public StartMenu()
         {
+            listSuperviser.Add(new Member("1", "1", "1", "1", "1", "1", "1"));
             while (flag)
             {
                 drawAndRead();
