@@ -7,5 +7,9 @@ namespace EnSharp_day3
 {
     class LibraryManagement
     {
+        public LibraryManagement(List<Book> list)
+        {
+
+        }
     }
 }

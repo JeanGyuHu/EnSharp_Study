@@ -21,10 +21,10 @@ namespace EnSharp_day3
                 switch (strChoice)
                 {
                     case "1":
-                        controlMember = new ControlMember();
+                        controlMember = new ControlMember(ulist);
                         break;
                     case "2":
-                        libraryManagement = new LibraryManagement();
+                        libraryManagement = new LibraryManagement(bookList);
                         break;
                     case "3":
                         flag = false;
