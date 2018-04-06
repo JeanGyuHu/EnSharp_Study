@@ -28,6 +28,7 @@ namespace EnSharp_day3
                     }
                     else
                     {
+                     
                         loginFlag = drawLoginPage(slist);
                     }
                     break;
@@ -37,10 +38,11 @@ namespace EnSharp_day3
 
                     if (loginFlag)
                     {
-                        UserMode super = new UserMode();
+                        UserMode user = new UserMode();
                     }
                     else
                     {
+                       
                         loginFlag = drawLoginPage(slist);
                     }
                     break;
@@ -49,6 +51,7 @@ namespace EnSharp_day3
 
         public bool drawLoginPage(List<Member> list)
         {
+            Console.Clear();
             Console.WriteLine("\n\n\t\t\t\tLOGIN PAGE");
             Console.Write("\n\n\t\t\tID ::\n\t\t\t >> ");
             id = Console.ReadLine();

@@ -8,7 +8,7 @@ namespace EnSharp_day3
     class StartMenu
     {
         private string strMode;
-        private Boolean flag=true;
+        private Boolean flag = true;
         private List<Member> listUserMember = new List<Member>();
         private List<Member> listSuperviser = new List<Member>();
         private List<Book> listBook = new List<Book>();
@@ -23,16 +23,17 @@ namespace EnSharp_day3
                 {
                     case "1":
                         Console.Clear();
-                        login = new Login(strMode,listSuperviser);
+                        login = new Login(strMode, listSuperviser, listUserMember, listBook);
                         break;
 
                     case "2":
                         Console.Clear();
-                        login = new Login(strMode, listUserMember);
+                        login = new Login(strMode, listUserMember, listUserMember, listBook);
                         break;
 
                     case "3":
                         Console.Clear();
+                        SignUp signup = new SignUp(listUserMember); 
                         break;
 
                     case "4":

@@ -7,5 +7,9 @@ namespace EnSharp_day3
 {
     class SuperviserMode
     {
+        public SuperviserMode(List<Member> slist, List<Member> ulist, List<Book> bookList)
+        {
+
+        }
     }
 }

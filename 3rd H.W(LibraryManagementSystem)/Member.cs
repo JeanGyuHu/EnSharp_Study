@@ -50,14 +50,14 @@ namespace EnSharp_day3
             get { return memPhoneNumber; }
             set { memPhoneNumber = value; }
         }
-        public Member(string n,string resi,string pw, string id,string due,string add,string phone)
+        public Member(string name,string residentNum,string password, string id,string due,string address,string phone)
         {
-            Name = n;
-            ResidentNum = resi;
-            Password = pw;
+            Name = name;
+            ResidentNum = residentNum;
+            Password = password;
             Id = id;
             NumOverdue = due;
-            Address = add;
+            Address = address;
             PhoneNumber = phone;
         }
     }
