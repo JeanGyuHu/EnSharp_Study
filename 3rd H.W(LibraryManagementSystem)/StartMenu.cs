@@ -17,6 +17,7 @@ namespace EnSharp_day3
         public StartMenu()
         {
             listSuperviser.Add(new Member("1", "1", "1", "1", "1", "1", "1"));
+            listUserMember.Add(new Member("1", "1", "1", "1", "1", "1", "1"));
             while (flag)
             {
                 drawAndRead();
