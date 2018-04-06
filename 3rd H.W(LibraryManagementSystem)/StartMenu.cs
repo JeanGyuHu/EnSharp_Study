@@ -32,7 +32,7 @@ namespace EnSharp_day3
                         break;
 
                     case "3":
-
+                        Console.Clear();
                         break;
 
                     case "4":
@@ -40,7 +40,9 @@ namespace EnSharp_day3
                         break;
 
                     default:
-
+                        Console.Clear();
+                        drawAndRead();
+                        Console.WriteLine("잘못된 입력입니다.");
                         break;
                 }
             }
