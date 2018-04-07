@@ -43,7 +43,7 @@ namespace EnSharp_day3
             Console.WriteLine("\n\n\t\t\t\t1. User Management");
             Console.WriteLine("\n\n\t\t\t\t2. Book Management");
             Console.WriteLine("\n\n\t\t\t\t3. EXIT");
-
+            Console.Write("\n\n\t\t\t\t >> ");
             strChoice = Console.ReadLine();
             
         }

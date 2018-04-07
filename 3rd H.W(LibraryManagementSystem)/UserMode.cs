@@ -49,6 +49,7 @@ namespace EnSharp_day3
             Console.WriteLine("\n\n\t\t\t\t2. Extend return time");
             Console.WriteLine("\n\n\t\t\t\t3. Change my information");
             Console.WriteLine("\n\n\t\t\t\t4. EXIT");
+            Console.Write("\n\n\t\t\t\t >> ");
 
             strChoice = Console.ReadLine();
 

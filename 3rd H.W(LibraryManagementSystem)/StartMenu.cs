@@ -18,6 +18,9 @@ namespace EnSharp_day3
         {
             listSuperviser.Add(new Member("1", "1", "1", "1", "1", "1", "1"));
             listUserMember.Add(new Member("1", "1", "1", "1", "1", "1", "1"));
+            listUserMember.Add(new Member("2", "2", "2", "2", "2", "2", "2"));
+            listUserMember.Add(new Member("3", "3", "3", "3", "3", "3", "3"));
+            listUserMember.Add(new Member("4", "4", "4", "4", "4", "4", "4"));
             while (flag)
             {
                 drawAndRead();

@@ -33,7 +33,7 @@ namespace EnSharp_day3
             }
             else
             {
-                drawId();
+                SignUp signUp = new SignUp(list);
             }
 
         }
@@ -87,18 +87,24 @@ namespace EnSharp_day3
         {
             Console.Clear();
             draw();
-            Console.Write("\n\n\t\t\tPhoneNumber :: (write number only(max 11))\n\t\t\t >> ");
+            Console.Write("\n\n\t\t\tPhoneNumber :: (write number only(10 ~ 11))\n\t\t\t >> ");
             strPhoneNumber = Console.ReadLine();
 
-            if (!long.TryParse(strPhoneNumber, out long x))    //받은 값이 문자열이면 다시 받고, 숫자면 그냥 받는다.
+            if (!long.TryParse(strPhoneNumber, out long x))  
             {
-                Console.WriteLine("\n\n\t\t숫자를 입력해주세요 !");
+                Console.WriteLine("\n\n\t\tWrite number only !");
                 System.Threading.Thread.Sleep(2000);
                 drawPhoneNum();
             }
             if (strPhoneNumber.Length > 11)
             {
-                Console.WriteLine("\n\n\t\t전화번호의 길이가 너무 깁니다 !");
+                Console.WriteLine("\n\n\t\tNumber is too long !");
+                System.Threading.Thread.Sleep(2000);
+                drawPhoneNum();
+            }
+            if (strPhoneNumber.Length < 10)
+            {
+                Console.WriteLine("\n\n\t\tNumber is too short!");
                 System.Threading.Thread.Sleep(2000);
                 drawPhoneNum();
             }
