@@ -9,8 +9,8 @@ namespace EnSharp_day3
     {
         private AddMember addMember;
         private string strChoice;
-        private string strId;
         private bool flag = true;
+        private string strId;
         private string strPhoneNumber;
         private string strAddress;
         private string strSearch;
@@ -67,7 +67,7 @@ namespace EnSharp_day3
             Console.WriteLine("\t\t└------------------------------------------------------------------------------------┘");
 
             for (int i = 0; i < list.Count; i++)
-                Console.WriteLine("\t{0}\t{1}\t{2}\t{3}\t{4}\t{5}\t{6}\t{7}", i + 1, list[i].Name, list[i].ResidentNum, list[i].Id, list[i].Password, list[i].NumOverdue, list[i].Address, list[i].PhoneNumber);
+                Console.WriteLine("\t\t\t  {0}\t  {1}\t  {2}\t  {3}\t  {4}\t  {5}\t  {6}", list[i].Name, list[i].ResidentNum, list[i].Id, list[i].Password, list[i].NumOverdue, list[i].Address, list[i].PhoneNumber);
             
         }
         public void drawCategory()
@@ -99,15 +99,17 @@ namespace EnSharp_day3
             }
             if (count.Equals(list.Count))
                 drawEdit(list);
+            else
+            {
+                drawPhoneNum();
+                drawAddress();
 
-            drawPhoneNum();
-            drawAddress();
+                list[memberIndex].PhoneNumber = strPhoneNumber;
+                list[memberIndex].Address = strAddress;
 
-            list[memberIndex].PhoneNumber = strPhoneNumber;
-            list[memberIndex].Address = strAddress;
-
-            Console.WriteLine("\n\n\n\t\t\tE D I T  S U C C E S S !");
-            System.Threading.Thread.Sleep(1000);
+                Console.WriteLine("\n\n\n\t\t\tE D I T  S U C C E S S !");
+                System.Threading.Thread.Sleep(1000);
+            }
 
         }
         public void drawAddress()
@@ -181,7 +183,7 @@ namespace EnSharp_day3
                     for (int i = 0; i < list.Count; i++)
                     {
                         if(list[i].Name.Equals(strSearch))
-                            Console.WriteLine("\t{0}\t{1}\t{2}\t{3}\t{4}\t{5}\t{6}\t{7}", i + 1, list[i].Name, list[i].ResidentNum, list[i].Id, list[i].Password, list[i].NumOverdue, list[i].Address, list[i].PhoneNumber);
+                            Console.WriteLine("\t\t\t  {0}\t  {1}\t  {2}\t  {3}\t  {4}\t  {5}\t  {6}", list[i].Name, list[i].ResidentNum, list[i].Id, list[i].Password, list[i].NumOverdue, list[i].Address, list[i].PhoneNumber);
                     }
                     break;
                 case "2":
@@ -191,7 +193,7 @@ namespace EnSharp_day3
                     for (int i = 0; i < list.Count; i++)
                     {
                         if (list[i].ResidentNum.Equals(strSearch))
-                            Console.WriteLine("\t{0}\t{1}\t{2}\t{3}\t{4}\t{5}\t{6}\t{7}", i + 1, list[i].Name, list[i].ResidentNum, list[i].Id, list[i].Password, list[i].NumOverdue, list[i].Address, list[i].PhoneNumber);
+                            Console.WriteLine("\t\t\t  {0}\t  {1}\t  {2}\t  {3}\t  {4}\t  {5}\t  {6}", list[i].Name, list[i].ResidentNum, list[i].Id, list[i].Password, list[i].NumOverdue, list[i].Address, list[i].PhoneNumber);
                     }
                     break;
                 case "3":
@@ -201,7 +203,7 @@ namespace EnSharp_day3
                     for (int i = 0; i < list.Count; i++)
                     {
                         if (list[i].Id.Equals(strSearch))
-                            Console.WriteLine("\t{0}\t{1}\t{2}\t{3}\t{4}\t{5}\t{6}\t{7}", i + 1, list[i].Name, list[i].ResidentNum, list[i].Id, list[i].Password, list[i].NumOverdue, list[i].Address, list[i].PhoneNumber);
+                            Console.WriteLine("\t\t\t  {0}\t  {1}\t  {2}\t  {3}\t  {4}\t  {5}\t  {6}", list[i].Name, list[i].ResidentNum, list[i].Id, list[i].Password, list[i].NumOverdue, list[i].Address, list[i].PhoneNumber);
                     }
                     break;
                 case "4":
@@ -211,7 +213,7 @@ namespace EnSharp_day3
                     for (int i = 0; i < list.Count; i++)
                     {
                         if (list[i].Password.Equals(strSearch))
-                            Console.WriteLine("\t{0}\t{1}\t{2}\t{3}\t{4}\t{5}\t{6}\t{7}", i + 1, list[i].Name, list[i].ResidentNum, list[i].Id, list[i].Password, list[i].NumOverdue, list[i].Address, list[i].PhoneNumber);
+                            Console.WriteLine("\t\t\t  {0}\t  {1}\t  {2}\t  {3}\t  {4}\t  {5}\t  {6}", list[i].Name, list[i].ResidentNum, list[i].Id, list[i].Password, list[i].NumOverdue, list[i].Address, list[i].PhoneNumber);
 
                     }
                     break;
@@ -223,7 +225,7 @@ namespace EnSharp_day3
                     for (int i = 0; i < list.Count; i++)
                     {
                         if (list[i].NumOverdue.Equals(strSearch))
-                            Console.WriteLine("\t{0}\t{1}\t{2}\t{3}\t{4}\t{5}\t{6}\t{7}", i + 1, list[i].Name, list[i].ResidentNum, list[i].Id, list[i].Password, list[i].NumOverdue, list[i].Address, list[i].PhoneNumber);
+                            Console.WriteLine("\t\t\t  {0}\t  {1}\t  {2}\t  {3}\t  {4}\t  {5}\t  {6}", list[i].Name, list[i].ResidentNum, list[i].Id, list[i].Password, list[i].NumOverdue, list[i].Address, list[i].PhoneNumber);
                     }
                     break;
                 case "6":
@@ -233,7 +235,7 @@ namespace EnSharp_day3
                     for (int i = 0; i < list.Count; i++)
                     {
                         if (list[i].Address.Equals(strSearch))
-                            Console.WriteLine("\t{0}\t{1}\t{2}\t{3}\t{4}\t{5}\t{6}\t{7}", i + 1, list[i].Name, list[i].ResidentNum, list[i].Id, list[i].Password, list[i].NumOverdue, list[i].Address, list[i].PhoneNumber);
+                            Console.WriteLine("\t\t\t  {0}\t  {1}\t  {2}\t  {3}\t  {4}\t  {5}\t  {6}", list[i].Name, list[i].ResidentNum, list[i].Id, list[i].Password, list[i].NumOverdue, list[i].Address, list[i].PhoneNumber);
                     }
                     break;
 
@@ -245,7 +247,7 @@ namespace EnSharp_day3
                     for (int i = 0; i < list.Count; i++)
                     {
                         if (list[i].PhoneNumber.Equals(strSearch))
-                            Console.WriteLine("\t{0}\t{1}\t{2}\t{3}\t{4}\t{5}\t{6}\t{7}", i + 1, list[i].Name, list[i].ResidentNum, list[i].Id, list[i].Password, list[i].NumOverdue, list[i].Address, list[i].PhoneNumber);
+                            Console.WriteLine("\t\t\t  {0}\t  {1}\t  {2}\t  {3}\t  {4}\t  {5}\t  {6}", list[i].Name, list[i].ResidentNum, list[i].Id, list[i].Password, list[i].NumOverdue, list[i].Address, list[i].PhoneNumber);
                     }
                     break;
                 default:

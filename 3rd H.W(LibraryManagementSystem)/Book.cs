@@ -9,44 +9,44 @@ namespace EnSharp_day3
     {
         private string bookNo;
         private string bookName;
-        private string bookNum;
+        private int bookCount;
         private string bookPbls;
         private string bookAuthor;
         
         public string BookNo
         {
-            get { return bookNo; }
-            set { bookNo = value; }
+            get { return this.bookNo; }
+            set { this.bookNo = value; }
         }
         
         public string BookName
         {
-            get { return bookName; }
-            set { bookName = value; }
+            get { return this.bookName; }
+            set { this.bookName = value; }
         }
 
-        public string BookNum
+        public int BookCount
         {
-            get { return bookNum; }
-            set { bookNum = value; }
+            get { return this.bookCount; }
+            set { this.bookCount = value; }
         }
         
         public string BookPbls
         {
-            get { return BookPbls; }
-            set { bookPbls = value; }
+            get { return this.bookPbls; }
+            set { this.bookPbls = value; }
         }
         public string BookAuthor
         {
-            get { return bookAuthor; }
-            set { bookAuthor = value; }
+            get { return this.bookAuthor; }
+            set { this.bookAuthor = value; }
         }
 
-        public Book(string no,string name,string num,string pbls,string author)
+        public Book(string no,string name,int count,string pbls,string author)
         {
             BookNo = no;
             BookName = name;
-            BookNum = num;
+            BookCount = count;
             BookPbls = pbls;
             BookAuthor = author;
         }

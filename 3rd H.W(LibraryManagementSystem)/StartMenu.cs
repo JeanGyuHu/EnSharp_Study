@@ -16,11 +16,12 @@ namespace EnSharp_day3
 
         public StartMenu()
         {
-            listSuperviser.Add(new Member("1", "1", "1", "1", "1", "1", "1"));
-            listUserMember.Add(new Member("1", "1", "1", "1", "1", "1", "1"));
-            listUserMember.Add(new Member("2", "2", "2", "2", "2", "2", "2"));
-            listUserMember.Add(new Member("3", "3", "3", "3", "3", "3", "3"));
-            listUserMember.Add(new Member("4", "4", "4", "4", "4", "4", "4"));
+            listBook.Add(new Book("12-12341234", "C#프로그래밍", 3, "허진규출판사", "허진규"));
+            listSuperviser.Add(new Member("1", "1", "1", "1", 1, "1", "1"));
+            listUserMember.Add(new Member("1", "1", "1", "1", 1, "1", "1"));
+            listUserMember.Add(new Member("2", "2", "2", "2", 2, "2", "2"));
+            listUserMember.Add(new Member("3", "3", "3", "3", 3, "3", "3"));
+            listUserMember.Add(new Member("4", "4", "4", "4", 4, "4", "4"));
             while (flag)
             {
                 drawAndRead();

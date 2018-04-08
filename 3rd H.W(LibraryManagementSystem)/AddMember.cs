@@ -28,7 +28,7 @@ namespace EnSharp_day3
                 drawPhoneNum();
                 drawAddress();
                 Console.Clear();
-                list.Add(new Member(strName, strResidentNum, strPassword, strId, "0", strAddress, strPhoneNumber));
+                list.Add(new Member(strName, strResidentNum, strPassword, strId, 0, strAddress, strPhoneNumber));
                 Console.Write("\n\n\n\n\n\n\t\t\tAdd Success!!");
                 System.Threading.Thread.Sleep(2000);
             }
@@ -81,7 +81,12 @@ namespace EnSharp_day3
                 System.Threading.Thread.Sleep(2000);
                 drawResidentNum();
             }
-
+            if (strResidentNum.Length != 14)
+            {
+                Console.WriteLine("\n\n\t\tInput format is wrong !");
+                System.Threading.Thread.Sleep(1000);
+                drawResidentNum();
+            }
         }
         public void drawPhoneNum()
         {

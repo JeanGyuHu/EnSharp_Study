@@ -11,7 +11,7 @@ namespace EnSharp_day3
         private string memResidentNum;
         private string memPassword;
         private string memId;
-        private string memNumOverdue;
+        private int memNumOverdue;
         private string memAddress;
         private string memPhoneNumber;
 
@@ -35,7 +35,7 @@ namespace EnSharp_day3
             get { return memId; }
             set { memId = value; }
         }
-        public string NumOverdue
+        public int NumOverdue
         {
             get { return memNumOverdue; }
             set { memNumOverdue = value; }
@@ -50,7 +50,7 @@ namespace EnSharp_day3
             get { return memPhoneNumber; }
             set { memPhoneNumber = value; }
         }
-        public Member(string name,string residentNum,string password, string id,string due,string address,string phone)
+        public Member(string name,string residentNum,string password, string id,int due,string address,string phone)
         {
             Name = name;
             ResidentNum = residentNum;
