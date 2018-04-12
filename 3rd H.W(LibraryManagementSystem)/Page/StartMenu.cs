@@ -7,11 +7,17 @@ namespace EnSharp_day3
 {
     class StartMenu
     {
+        private DrawControlMember drawControlMember = new DrawControlMember();
+        private const string LoginSuperviserMode = "1";
+        private const string LoginUserMode = "2";
+        private const string GoToSignUpPage = "3";
+        private const string Exit = "4";
         private string strMode;
         private Boolean flag = true;
         private List<Member> listUserMember = new List<Member>();
         private List<Member> listSuperviser = new List<Member>();
         private List<Book> listBook = new List<Book>();
+        private List<RentalData> listRental = new List<RentalData>();
         private Login login;
 
         public StartMenu()
@@ -22,53 +28,33 @@ namespace EnSharp_day3
             listUserMember.Add(new Member("2", "2", "2", "2", 2, "2", "2"));
             listUserMember.Add(new Member("3", "3", "3", "3", 3, "3", "3"));
             listUserMember.Add(new Member("4", "4", "4", "4", 4, "4", "4"));
+
             while (flag)
             {
-                drawAndRead();
-
+                drawControlMember.DrawBasicMenu();
+                strMode = Console.ReadLine();
                 switch (strMode)
                 {
-                    case "1":
-                        Console.Clear();
-                        login = new Login(strMode, listSuperviser, listUserMember, listBook);
+                    case LoginSuperviserMode:
+                        login = new Login(strMode, listSuperviser, listUserMember, listBook,listRental);
                         break;
 
-                    case "2":
-                        Console.Clear();
-                        login = new Login(strMode, listUserMember, listUserMember, listBook);
+                    case LoginUserMode:
+                        login = new Login(strMode, listUserMember, listUserMember, listBook,listRental);
                         break;
 
-                    case "3":
-                        Console.Clear();
+                    case GoToSignUpPage:
                         SignUp signup = new SignUp(listUserMember); 
                         break;
 
-                    case "4":
+                    case Exit:
                         flag = false;
                         break;
 
                     default:
-                        Console.Clear();
-                        drawAndRead();
-                        Console.WriteLine("잘못된 입력입니다.");
                         break;
                 }
             }
-
-        }
-
-        public void drawAndRead()
-        {
-            Console.Clear();
-            Console.WriteLine("\n\n\t\t\t\t****************");
-            Console.WriteLine("\t\t\t\t* Hu's Library *");
-            Console.WriteLine("\t\t\t\t****************\n\n");
-            Console.WriteLine("\n\n\t\t\t\t1. Superviser Mode");
-            Console.WriteLine("\n\n\t\t\t\t2. User Mode");
-            Console.WriteLine("\n\n\t\t\t\t3. Sign up");
-            Console.WriteLine("\n\n\t\t\t\t4. EXIT");
-            Console.Write("\n\n\t\t\t >>> ");
-            strMode = Console.ReadLine();
         }
     }
 }

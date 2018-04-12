@@ -7,45 +7,36 @@ namespace EnSharp_day3
 {
     class SuperviserMode
     {
+        private const string MemberControl = "1";
+        private const string BookManagement = "2";
+        private const string Exit = "3";
         private bool flag = true;
         private string strChoice;
         private ControlMember controlMember;
         private LibraryManagement libraryManagement;
+        private DrawControlMember drawControlMember = new DrawControlMember();
 
         public SuperviserMode(List<Member> slist, List<Member> ulist, List<Book> bookList)
         {
             while (flag)
             {
-                draw();
-
+                drawControlMember.DrawSuperViserModeMenu();
+                strChoice = Console.ReadLine();
                 switch (strChoice)
                 {
-                    case "1":
+                    case MemberControl:
                         controlMember = new ControlMember(ulist);
                         break;
-                    case "2":
+                    case BookManagement:
                         libraryManagement = new LibraryManagement(bookList);
                         break;
-                    case "3":
+                    case Exit:
                         flag = false;
                         break;
                     default:
                         break;
                 }
             }
-        }
-        public void draw()
-        {
-            Console.Clear();
-            Console.WriteLine("\n\n\t\t\t┌---------------------------------------------------┐");
-            Console.WriteLine("\t\t\t│           S U P E R V I S E R   M O D E           │");
-            Console.WriteLine("\t\t\t└---------------------------------------------------┘");
-            Console.WriteLine("\n\n\t\t\t\t1. User Management");
-            Console.WriteLine("\n\n\t\t\t\t2. Book Management");
-            Console.WriteLine("\n\n\t\t\t\t3. EXIT");
-            Console.Write("\n\n\t\t\t\t >> ");
-            strChoice = Console.ReadLine();
-            
         }
     }
 }

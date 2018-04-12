@@ -40,18 +40,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AddMember.cs" />
-    <Compile Include="Book.cs" />
-    <Compile Include="ControlMember.cs" />
-    <Compile Include="LibraryManagement.cs" />
-    <Compile Include="Login.cs" />
-    <Compile Include="StartMenu.cs" />
-    <Compile Include="Member.cs" />
-    <Compile Include="SignUp.cs" />
-    <Compile Include="Start.cs" />
+    <Compile Include="Draw\DrawAboutBooks.cs" />
+    <Compile Include="Draw\DrawControlMember.cs" />
+    <Compile Include="Page\ExceptionHandling.cs" />
+    <Compile Include="Page\AddMember.cs" />
+    <Compile Include="V.O\Book.cs" />
+    <Compile Include="Page\ControlMember.cs" />
+    <Compile Include="Page\ExtendRentalTime.cs" />
+    <Compile Include="Page\LibraryManagement.cs" />
+    <Compile Include="Page\Login.cs" />
+    <Compile Include="V.O\RentalData.cs" />
+    <Compile Include="Page\RentBook.cs" />
+    <Compile Include="Page\StartMenu.cs" />
+    <Compile Include="V.O\Member.cs" />
+    <Compile Include="Page\SignUp.cs" />
+    <Compile Include="main\Start.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SuperviserMode.cs" />
-    <Compile Include="UserMode.cs" />
+    <Compile Include="Page\SuperviserMode.cs" />
+    <Compile Include="Page\UserMode.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
