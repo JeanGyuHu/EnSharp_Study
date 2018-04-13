@@ -7,16 +7,24 @@ namespace EnSharp_day3
 {
     class RentBook
     {
-        private string strBookChoice;
-        private int count = 0;
-        private int findIndex = -1;
-        private DrawAboutBooks drawAboutBooks = new DrawAboutBooks();
+        private string strBookChoice;           //빌리려고하는 책정보
+        private int count = 0;                  //책을 다 검사했나 체크하기 위한 변수
+        private int findIndex = -1;             //대여할때 찾은 책의 인덱스 값
+        private DrawAboutBooks drawAboutBooks;   //UI를 그리기 위한  객체
         private ExceptionHandling exceptionHandling;
-        private DateTime now = DateTime.Now;
+        private DateTime now;
 
+        /// <summary>
+        /// 책 정보, 이미 빌린 사람의 정보, 현재 사용중인 사람의 id를 이용하여 책을 대여해주는 메소드
+        /// </summary>
+        /// <param name="bookList">책 정보 리스트</param>
+        /// <param name="rentalList">대여자 리스트</param>
+        /// <param name="id">현재 사용중인 유저 아이디</param>
         public RentBook(List<Book> bookList,List<RentalData> rentalList,string id)
         {
+            drawAboutBooks = new DrawAboutBooks();
             exceptionHandling = new ExceptionHandling();
+            now = DateTime.Now;
 
             drawAboutBooks.DrawBookInformation(bookList);
             drawAboutBooks.DrawWriteBookName();
@@ -40,6 +48,14 @@ namespace EnSharp_day3
             
         }
         
+        /// <summary>
+        /// 책이 있는지 체크해주고 책의 개수가 충분히 있다면 인덱스값을 넘겨준다.
+        /// </summary>
+        /// <param name="bookList">책 정보 리스트</param>
+        /// <param name="rentalList">대여자 리스트</param>
+        /// <param name="id">사용자 아이디</param>
+        /// <param name="bookChoice">선택한 책</param>
+        /// <returns></returns>
         public int FindBook(List<Book> bookList,List<RentalData> rentalList,string id, string bookChoice)
         {
             count = 0;

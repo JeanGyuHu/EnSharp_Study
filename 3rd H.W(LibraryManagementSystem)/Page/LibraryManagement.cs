@@ -43,6 +43,10 @@ namespace EnSharp_day3
             DrawAndSelectMenu(list);
         }
 
+        /// <summary>
+        /// 기본 메뉴창을 띄우는 메소드
+        /// </summary>
+        /// <param name="list">책의 리스트</param>
         public void DrawAndSelectMenu(List<Book> list)
         {
             while (flag)
@@ -75,6 +79,10 @@ namespace EnSharp_day3
                 }
             }
         }
+        /// <summary>
+        /// 원하는 책을 지울때 사용하는 메소드
+        /// </summary>
+        /// <param name="list">책 목록</param>
         public void DrawDelete(List<Book> list)
         {
             drawAboutBooks.DrawBookInformation(list);
@@ -92,7 +100,10 @@ namespace EnSharp_day3
             }
             drawAboutBooks.DrawDeleteFailed();
         }
-
+        /// <summary>
+        /// 원하는 정보로 검색하는 메소드
+        /// </summary>
+        /// <param name="list">책 정보</param>
         public void DrawSearch(List<Book> list)
         {
             drawAboutBooks.DrawSearchMenu();
@@ -140,25 +151,43 @@ namespace EnSharp_day3
             }
             drawAboutBooks.DrawPressAnyKey();
         }
-
+        /// <summary>
+        /// 책의 이름을 받는 메소드
+        /// </summary>
         public void DrawName()
         {
             Console.Clear();
             drawAboutBooks.DrawBookInfoTitle();
             drawAboutBooks.DrawWriteBookName();
             strBookName = Console.ReadLine();
-            
+            if (strBookName.Length<1)
+                DrawName();
+            if (exceptionHandling.CheckHaveSpace(strBookName))
+                DrawName();
         }
+        /// <summary>
+        /// 책의 정보를 입력받고 수정하는 메소드를 호출
+        /// </summary>
+        /// <param name="list">모든 책 리스트</param>
         public void DrawEdit(List<Book> list)
         {
-            int count = 0;
-            int memberIndex = 0;
-            int inputCount = 0;
-
             drawAboutBooks.DrawBookInformation(list);
 
             drawAboutBooks.DrawWriteBookName();
             strName = Console.ReadLine();
+            EditBook(list);
+
+        }
+
+        /// <summary>
+        /// 책의 정보를 수정해주는 메소드
+        /// </summary>
+        /// <param name="list">모든 책 정보</param>
+        public void EditBook(List<Book> list)
+        {
+            int count = 0;
+            int memberIndex = 0;
+            int inputCount = 0;
 
             count = 0;
             foreach (Book book in list)
@@ -186,7 +215,9 @@ namespace EnSharp_day3
                 }
             }
         }
-
+        /// <summary>
+        /// 책 번호를 입력받는 메소드
+        /// </summary>
         public void DrawNo()
         {
             Console.Clear();
@@ -199,7 +230,12 @@ namespace EnSharp_day3
                 DrawNo();
             }
         }
-
+        /// <summary>
+        /// 책이 있는지 판단하고 있으면 그 책이 있는 위치를 반환
+        /// </summary>
+        /// <param name="list">모든 책 리스트</param>
+        /// <param name="name">책 이름</param>
+        /// <returns>책이 있으면 그 책의 위치, 아니면 -1 리턴</returns>
         public int CheckBook(List<Book> list,string name)
         {
             for (int i = 0; i < list.Count; i++)
@@ -212,6 +248,10 @@ namespace EnSharp_day3
 
             return -1;
         }
+        /// <summary>
+        /// 숫자를 입력받는 메소드
+        /// </summary>
+        /// <returns>입력 받은 숫자를 int형으로 바꿔서 반환</returns>
         public int DrawCount()
         {
             int inputIndex = -1;
@@ -235,6 +275,9 @@ namespace EnSharp_day3
             return inputIndex;
         }
 
+        /// <summary>
+        /// 저자를 입력받는 메소드
+        /// </summary>
         public void DrawAuthor()
         {
             Console.Clear();
@@ -246,6 +289,9 @@ namespace EnSharp_day3
                 DrawAuthor();
         }
 
+        /// <summary>
+        /// 출판사를 입력받는 메소드
+        /// </summary>
         public void DrawPublisher()
         {
             Console.Clear();
@@ -253,7 +299,10 @@ namespace EnSharp_day3
             drawAboutBooks.DrawWriteBookPublisher();
             strBookPublisher = Console.ReadLine();
         }
-
+        /// <summary>
+        /// 새 책을 추가하는 메소드
+        /// </summary>
+        /// <param name="list">책 정보 리스트</param>
         public void DrawAdd(List<Book> list)
         {
             int bookIndex = -1;
@@ -282,6 +331,12 @@ namespace EnSharp_day3
                 DrawAdd(list);
             }
         }
+        /// <summary>
+        /// 책번호가 이미 있는지 없는지 체크해주는 메소드
+        /// </summary>
+        /// <param name="list">책 리스트</param>
+        /// <param name="no">사용자가 입력한 책번호</param>
+        /// <returns>있으면 false, 없으면 true</returns>
         public bool CheckNo(List<Book> list,string no)
         {
             int count = 0;

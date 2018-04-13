@@ -9,30 +9,38 @@ namespace EnSharp_day3
 {
     class SignUp
     {
-        private DrawControlMember drawControlMember;
-        private ExceptionHandling exceptionHandling;
-        private SecureString securePassword;
-        private SecureString secureResidentNum;
-        private string strId;
-        private string stringResidentNum;
-        private string strName;
-        private string stringPassword;
-        private string strAddress;
-        private string strPhoneNumber;
+        private DrawControlMember drawControlMember;        //UI 그리기 위한 객체 선언
+        private ExceptionHandling exceptionHandling;        //예외 처리를 위한 객체 선언
+        private SecureString securePassword;                //비밀번호를 받기 위한 보안string
+        private SecureString secureResidentNum;             //주민번호를 받기 위한 보안 string     
+        private string strId;                               //id 입력 받기 위함
+        private string stringResidentNum;                   //보안으로 받은 것을 저장하기 위해 string으로 변환해주기 위함
+        private string strName;                             //이름을 입력 받기 위함
+        private string stringPassword;                      //보안으로 받은 것을 저장하기 위해 string으로 변환해주기 위함
+        private string strAddress;                          //주소를 입력 받기 위함
+        private string strPhoneNumber;                      //전화번호를 입력 받기 위함
 
         private int count = 0;
 
+        /// <summary>
+        /// 각 객체 초기화 후에 회원가입 메소드 호출
+        /// </summary>
+        /// <param name="list"></param>
         public SignUp(List<Member> list)
-        {
-            HelpSignUp(list);
-        }
-
-        public void HelpSignUp(List<Member> list)
         {
             drawControlMember = new DrawControlMember();
             exceptionHandling = new ExceptionHandling();
             securePassword = new SecureString();
             secureResidentNum = new SecureString();
+            HelpSignUp(list);
+        }
+
+        /// <summary>
+        /// 회원가입 절차를 밟은 후에 회원 추가
+        /// </summary>
+        /// <param name="list">회원 정보 목록</param>
+        public void HelpSignUp(List<Member> list)
+        {
 
             DrawId();
 
@@ -52,7 +60,9 @@ namespace EnSharp_day3
                 HelpSignUp(list);
             }
         }
-
+        /// <summary>
+        /// 아이디 입력 받는 메소드
+        /// </summary>
         public void DrawId()
         {
             drawControlMember.DrawSignUpTitle();
@@ -63,6 +73,9 @@ namespace EnSharp_day3
                 DrawId();
             }
         }
+        /// <summary>
+        /// 비밀번호 입력 받는 메소드
+        /// </summary>
         public void DrawPassword()
         {
             drawControlMember.DrawSignUpTitle();
@@ -74,12 +87,18 @@ namespace EnSharp_day3
                 DrawPassword();
             }
         }
+        /// <summary>
+        /// 이름 입력 받는 메소드
+        /// </summary>
         public void DrawName()
         {
             drawControlMember.DrawSignUpTitle();
             drawControlMember.DrawWriteName();
             strName = Console.ReadLine();
         }
+        /// <summary>
+        /// 주민번호 입력 받는 메소드
+        /// </summary>
         public void DrawResidentNum()
         {
             drawControlMember.DrawSignUpTitle();
@@ -92,6 +111,9 @@ namespace EnSharp_day3
                 DrawResidentNum();
             }
         }
+        /// <summary>
+        /// 전화번호 입력 받는 메소드
+        /// </summary>
         public void DrawPhoneNum()
         {
             Console.Clear();
@@ -104,6 +126,9 @@ namespace EnSharp_day3
                 DrawPhoneNum();
             }
         }
+        /// <summary>
+        /// 주소를 입력받는 메소드
+        /// </summary>
         public void DrawAddress()
         {
             drawControlMember.DrawSignUpTitle();
@@ -115,6 +140,11 @@ namespace EnSharp_day3
                 DrawAddress();
             }
         }
+        /// <summary>
+        /// 아이디가 이미 있는지 없는지 여부 체크
+        /// </summary>
+        /// <param name="list">회원 리스트</param>
+        /// <returns>회원가입 가능 아이디인지 아닌지 여부</returns>
         public bool CheckId(List<Member> list)
         {
             count = 0;

@@ -279,7 +279,7 @@ namespace EnSharp_day3
 
             for (int count = 0; count < inputName.Length; count++)
             {
-                if (inputName[count] == ' ')
+                if (inputName[count].Equals(" "))
                     return false;
             }
             return result;
