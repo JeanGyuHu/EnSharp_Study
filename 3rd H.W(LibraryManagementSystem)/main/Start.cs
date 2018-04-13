@@ -9,7 +9,8 @@ namespace EnSharp_day3
     {
         static void Main(string[] args)
         {
-            StartMenu login = new StartMenu();
+            StartMenu startMenu = new StartMenu();
+            startMenu.StartMainMenu();
         }
     }
 }

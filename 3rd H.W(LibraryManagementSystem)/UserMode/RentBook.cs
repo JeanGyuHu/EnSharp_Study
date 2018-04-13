@@ -25,29 +25,29 @@ namespace EnSharp_day3
             drawAboutBooks = new DrawAboutBooks();
             exceptionHandling = new ExceptionHandling();
             now = DateTime.Now;
+        }
+        public void RentBookPage(List<Book> bookList, List<RentalData> rentalList, string id)
+        {
+            drawAboutBooks.Information(bookList);
+            drawAboutBooks.WriteBookName();
 
-            drawAboutBooks.DrawBookInformation(bookList);
-            drawAboutBooks.DrawWriteBookName();
-            
             strBookChoice = Console.ReadLine();
 
-            findIndex = FindBook(bookList,rentalList,id, strBookChoice);
+            findIndex = FindBook(bookList, rentalList, id, strBookChoice);
 
             if (findIndex.Equals(-1))
             {
-                drawAboutBooks.DrawRentalFailed();
+                drawAboutBooks.RentalFailed();
             }
             else
             {
                 bookList[findIndex].BookCount--;
-                rentalList.Add(new RentalData(bookList[findIndex].BookNo, bookList[findIndex].BookName, bookList[findIndex].BookPbls, bookList[findIndex].BookAuthor, id,new DateTime(now.Year,now.Month+1,now.Day+10)));
-                drawAboutBooks.DrawRentalSuccess();
+                rentalList.Add(new RentalData(bookList[findIndex].BookNo, bookList[findIndex].BookName, bookList[findIndex].BookPbls, bookList[findIndex].BookAuthor, id, new DateTime(now.Year, now.Month + 1, now.Day + 10)));
+                drawAboutBooks.RentalSuccess();
             }
 
-            drawAboutBooks.DrawPressAnyKey();
-            
+            drawAboutBooks.PressAnyKey();
         }
-        
         /// <summary>
         /// 책이 있는지 체크해주고 책의 개수가 충분히 있다면 인덱스값을 넘겨준다.
         /// </summary>

@@ -20,35 +20,35 @@ namespace EnSharp_day3
         /// <summary>
         /// 수정할 사람의 아이디를 입력하는 메소드
         /// </summary>
-        public void DrawEditScreen()
+        public void EditScreen()
         {
             Console.Write("\n\n\n\t\t\tChoose person (Id) >>");
         }
         /// <summary>
         /// 주소를 입력하라고 알리는 메소드
         /// </summary>
-        public void DrawAdressScreen()
+        public void AdressScreen()
         {
             Console.Write("\n\n\t\t\tAddress ::\n\t\t\t >> ");
         }
         /// <summary>
         /// 전화번호를 입력하라고 알리는 메소드
         /// </summary>
-        public void DrawPhoneScreen()
+        public void PhoneScreen()
         {
             Console.Write("\n\n\t\t\tPhoneNumber :: (write number only(10 ~ 11))\n\t\t\t >> ");
         }
         /// <summary>
         /// 지울 사람 아이디를 적으라는 메소드
         /// </summary>
-        public void DrawDeleteScreen()
+        public void DeleteScreen()
         {
             Console.Write("\n\n\n\t\t\tChoose person (Id) >>");
         }
         /// <summary>
         /// 멤버 정보를 띄우는 창의 제목 부분과 카테고리 출력
         /// </summary>
-        public void DrawCategory()
+        public void Category()
         {
             Console.Clear();
             Console.SetWindowSize(150, 30);
@@ -64,9 +64,9 @@ namespace EnSharp_day3
         ///카테고리를 출력하고 그에 해당하는 회원정보를 출력하는 메소드
         /// </summary>
         /// <param name="list">회원정보를 담고 있는 리스트</param>
-        public void DrawInformation(List<Member> list)
+        public void Information(List<Member> list)
         {
-            DrawCategory();
+            Category();
             for (int i = 0; i < list.Count; i++)
                 Console.WriteLine("   {0}{1}{2}{3}{4}\t\t\t{5}{6}", list[i].Name.PadRight(10), list[i].ResidentNum.PadRight(25), list[i].Id.PadRight(20), list[i].Password.PadRight(30), list[i].NumOverdue, list[i].Address.PadRight(25), list[i].PhoneNumber.PadRight(15));
 
@@ -76,103 +76,103 @@ namespace EnSharp_day3
         /// </summary>
         /// <param name="list">회원 정보를 담고 있는 리스트</param>
         /// <param name="strSearch">검색할 회원의 이름</param>
-        public void DrawSearchWithName(List<Member> list, string strSearch)
+        public void SearchWithName(List<Member> list, string strSearch)
         {
             for (int i = 0; i < list.Count; i++)
             {
                 if (list[i].Name.Equals(strSearch))
                     Console.WriteLine("   {0}{1}{2}{3}{4}\t\t\t{5}{6}", list[i].Name.PadRight(10), list[i].ResidentNum.PadRight(25), list[i].Id.PadRight(20), list[i].Password.PadRight(30), list[i].NumOverdue, list[i].Address.PadRight(25), list[i].PhoneNumber.PadRight(15));
             }
-            DrawPressAnyKey();
+            PressAnyKey();
         }
         /// <summary>
         /// 주민번호로 검색했을때의 결과값 출력
         /// </summary>
         /// <param name="list">회원 정보를 담고 있는 리스트</param>
         /// <param name="strSearch">검색할 회원의 주민등록 번호</param>
-        public void DrawSearchWithResidentNum(List<Member> list, string strSearch)
+        public void SearchWithResidentNum(List<Member> list, string strSearch)
         {
             for (int i = 0; i < list.Count; i++)
             {
                 if (list[i].ResidentNum.Equals(strSearch))
                     Console.WriteLine("   {0}{1}{2}{3}{4}\t\t\t{5}{6}", list[i].Name.PadRight(10), list[i].ResidentNum.PadRight(25), list[i].Id.PadRight(20), list[i].Password.PadRight(30), list[i].NumOverdue, list[i].Address.PadRight(25), list[i].PhoneNumber.PadRight(15));
             }
-            DrawPressAnyKey();
+            PressAnyKey();
         }
         /// <summary>
         /// 아이디로 검색했을때의 결과값 출력
         /// </summary>
         /// <param name="list">회원 정보를 담고 있는 리스트</param>
         /// <param name="strSearch">검색할 회원의 아이디</param>
-        public void DrawSearchWithId(List<Member> list, string strSearch)
+        public void SearchWithId(List<Member> list, string strSearch)
         {
             for (int i = 0; i < list.Count; i++)
             {
                 if (list[i].Id.Equals(strSearch))
                     Console.WriteLine("   {0}{1}{2}{3}{4}\t\t\t{5}{6}", list[i].Name.PadRight(10), list[i].ResidentNum.PadRight(25), list[i].Id.PadRight(20), list[i].Password.PadRight(30), list[i].NumOverdue, list[i].Address.PadRight(25), list[i].PhoneNumber.PadRight(15));
             }
-            DrawPressAnyKey();
+            PressAnyKey();
         }
         /// <summary>
         /// 비밀번호로 검색했을때의 결과값 출력
         /// </summary>
         /// <param name="list">회원 정보를 담고 있는 리스트</param>
         /// <param name="strSearch">검색할 회원의 비밀번호</param>
-        public void DrawSearchWithPassword(List<Member> list, string strSearch)
+        public void SearchWithPassword(List<Member> list, string strSearch)
         {
             for (int i = 0; i < list.Count; i++)
             {
                 if (list[i].Password.Equals(strSearch))
                     Console.WriteLine("   {0}{1}{2}{3}{4}\t\t\t{5}{6}", list[i].Name.PadRight(10), list[i].ResidentNum.PadRight(25), list[i].Id.PadRight(20), list[i].Password.PadRight(30), list[i].NumOverdue, list[i].Address.PadRight(25), list[i].PhoneNumber.PadRight(15));
             }
-            DrawPressAnyKey();
+            PressAnyKey();
         }
         /// <summary>
         /// 연체를 한 횟수로 검색했을때의 결과값 출력
         /// </summary>
         /// <param name="list">회원 정보를 담고 있는 리스트</param>
         /// <param name="strSearch">연체 횟수</param>
-        public void DrawSearchWithOverdue(List<Member> list, string strSearch)
+        public void SearchWithOverdue(List<Member> list, string strSearch)
         {
             for (int i = 0; i < list.Count; i++)
             {
                 if (list[i].NumOverdue.Equals(strSearch))
                     Console.WriteLine("   {0}{1}{2}{3}{4}\t\t\t{5}{6}", list[i].Name.PadRight(10), list[i].ResidentNum.PadRight(25), list[i].Id.PadRight(20), list[i].Password.PadRight(30), list[i].NumOverdue, list[i].Address.PadRight(25), list[i].PhoneNumber.PadRight(15));
             }
-            DrawPressAnyKey();
+            PressAnyKey();
         }
         /// <summary>
         /// 주소로 검색했을때의 결과값 출력
         /// </summary>
         /// <param name="list">회원 정보를 담고 있는 리스트</param>
         /// <param name="strSearch">검색할 회원의 주소</param>
-        public void DrawSearchWithAddress(List<Member> list, string strSearch)
+        public void SearchWithAddress(List<Member> list, string strSearch)
         {
             for (int i = 0; i < list.Count; i++)
             {
                 if (list[i].Address.Equals(strSearch))
                     Console.WriteLine("   {0}{1}{2}{3}{4}\t\t\t{5}{6}", list[i].Name.PadRight(10), list[i].ResidentNum.PadRight(25), list[i].Id.PadRight(20), list[i].Password.PadRight(30), list[i].NumOverdue, list[i].Address.PadRight(25), list[i].PhoneNumber.PadRight(15));
             }
-            DrawPressAnyKey();
+            PressAnyKey();
         }
         /// <summary>
         /// 전화번호로 검색했을때의 결과값 출력
         /// </summary>
         /// <param name="list">회원 정보를 담고 있는 리스트</param>
         /// <param name="strSearch">검색할 회원의 전화번호</param>
-        public void DrawSearchWithPhone(List<Member> list, string strSearch)
+        public void SearchWithPhone(List<Member> list, string strSearch)
         {
             for (int i = 0; i < list.Count; i++)
             {
                 if (list[i].PhoneNumber.Equals(strSearch))
                     Console.WriteLine("   {0}{1}{2}{3}{4}\t\t\t{5}{6}", list[i].Name.PadRight(10), list[i].ResidentNum.PadRight(25), list[i].Id.PadRight(20), list[i].Password.PadRight(30), list[i].NumOverdue, list[i].Address.PadRight(25), list[i].PhoneNumber.PadRight(15));
             }
-            DrawPressAnyKey();
+            PressAnyKey();
         }
         /// <summary>
         /// 아무키나 입력하시오... 출력
         /// </summary>
-        public void DrawPressAnyKey()
+        public void PressAnyKey()
         {
             Console.Write("\n\n\n\t\t\tPress any key . . .");
             keyInfo = Console.ReadKey();
@@ -180,63 +180,63 @@ namespace EnSharp_day3
         /// <summary>
         /// 이름을 입력하시오 출력
         /// </summary>
-        public void DrawWriteName()
+        public void WriteName()
         {
             Console.Write("\n\n\t\t\t\twrite name (limit 2 ~ 10) : ");
         }
         /// <summary>
         /// 주민번호 입력하시오 출력
         /// </summary>
-        public void DrawWriteResidentNum()
+        public void WriteResidentNum()
         {
             Console.Write("\n\n\t\t\t\twrite Resident Number (xxxxxx-xxxxxxx) : ");
         }
         /// <summary>
         /// 아이디 입력하시오 출력
         /// </summary>
-        public void DrawWriteId()
+        public void WriteId()
         {
             Console.Write("\n\n\t\t\t\twrite Id : ");
         }
         /// <summary>
         /// 비밀번호 입력하시오 출력
         /// </summary>
-        public void DrawWritePassword()
+        public void WritePassword()
         {
             Console.Write("\n\n\t\t\t\twrite Password : ");
         }
         /// <summary>
         /// 회원가입할때 아이디 입력하시오.. 출력
         /// </summary>
-        public void DrawWriteSignId()
+        public void WriteSignId()
         {
             Console.Write("\n\n\t\t\twrite Id (only number and English ,limit (8 ~ 14) : ");
         }
         /// <summary>
         /// 회원가입할때 비밀번호 입력하시오.. 출력
         /// </summary>
-        public void DrawWriteSignPassword()
+        public void WriteSignPassword()
         {
             Console.Write("\n\n\t\t\t\twrite Password (limit 8 ~ 14): ");
         }
         /// <summary>
         /// 연체 횟수를 입력하시오.. 출력
         /// </summary>
-        public void DrawWriteOverdue()
+        public void WriteOverdue()
         {
             Console.Write("\n\n\t\t\t\twrite Number of Overdue : ");
         }
         /// <summary>
         /// 주소를 입력하시오.. 출력
         /// </summary>
-        public void DrawWriteAddress()
+        public void WriteAddress()
         {
             Console.Write("\n\n\t\t\t\twrite Address (15 ~ 20) : ");
         }
         /// <summary>
         /// login Page임을 알리는 메소드
         /// </summary>
-        public void DrawLoginPage()
+        public void LoginPage()
         {
             Console.Clear();
             Console.WriteLine("\n\n\t\t\t\tLOGIN PAGE");
@@ -244,30 +244,30 @@ namespace EnSharp_day3
         /// <summary>
         /// 전화번호 입력하시오.. 출력
         /// </summary>
-        public void DrawWritePhone()
+        public void WritePhone()
         {
             Console.Write("\n\n\t\t\t\twrite PhoneNumber (write number only(10 ~ 11)) : ");
         }
         /// <summary>
         /// 삭제 성공!!
         /// </summary>
-        public void DrawDeleteSuccess()
+        public void DeleteSuccess()
         {
             Console.WriteLine("\n\n\n\t\t\tD E L E T E  S U C C E S S !");
-            DrawPressAnyKey();
+            PressAnyKey();
         }
         /// <summary>
         /// 삭제 실패...ㅜ
         /// </summary>
-        public void DrawEditSuccess()
+        public void EditSuccess()
         {
             Console.WriteLine("\n\n\n\t\t\tE D I T  S U C C E S S !");
-            DrawPressAnyKey();
+            PressAnyKey();
         }
         /// <summary>
         /// 회원 가입 창 제목
         /// </summary>
-        public void DrawSignUpTitle()
+        public void SignUpTitle()
         { 
             Console.Clear();
             Console.WriteLine("\n\n\t\t\t┌---------------------------------------------┐");
@@ -278,15 +278,15 @@ namespace EnSharp_day3
         /// <summary>
         /// 회원 가입 성공!!
         /// </summary>
-        public void DrawSignUpSuccess()
+        public void SignUpSuccess()
         {
             Console.WriteLine("\n\n\n\t\t\tS I G N   U P   S U C C E S S !");
-            DrawPressAnyKey();
+            PressAnyKey();
         }
         /// <summary>
         /// 회원 검색창 메뉴
         /// </summary>
-        public void DrawSearchMenu()
+        public void SearchMenu()
         {
             Console.Clear();
             Console.WriteLine("\n\n\t\t\t\t1. Name");
@@ -301,7 +301,7 @@ namespace EnSharp_day3
         /// <summary>
         /// 회원 관리 창 기본 메뉴
         /// </summary>
-        public void DrawMenu()
+        public void Menu()
         {
             Console.Clear();
             Console.WriteLine("\n\n\t\t\t┌----------------------------------------------------------┐");
@@ -318,7 +318,7 @@ namespace EnSharp_day3
         /// <summary>
         /// 회원 추가할때 제목
         /// </summary>
-        public void DrawAddMemberTitle()
+        public void AddMemberTitle()
         {
 
 
@@ -332,7 +332,7 @@ namespace EnSharp_day3
         /// <summary>
         /// 가장 기본 메뉴창
         /// </summary>
-        public void DrawBasicMenu()
+        public void BasicMenu()
         {
             Console.Clear();
             Console.WriteLine("\n\n\t\t\t\t****************");
@@ -348,7 +348,7 @@ namespace EnSharp_day3
         /// <summary>
         /// 관리자모드 메뉴창
         /// </summary>
-        public void DrawSuperViserModeMenu()
+        public void SuperViserModeMenu()
         {
             Console.Clear();
             Console.WriteLine("\n\n\t\t\t┌---------------------------------------------------┐");
@@ -363,7 +363,7 @@ namespace EnSharp_day3
         /// <summary>
         /// 유저모드 메뉴창
         /// </summary>
-        public void DrawUserModeMenu()
+        public void UserModeMenu()
         {
             Console.Clear();
             Console.WriteLine("\n\n\t\t\t┌---------------------------------------┐");

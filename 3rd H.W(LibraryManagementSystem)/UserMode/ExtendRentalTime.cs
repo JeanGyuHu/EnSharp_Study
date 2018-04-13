@@ -7,7 +7,7 @@ namespace EnSharp_day3
 {
     class ExtendRentalTime
     {
-        private DrawAboutBooks drawAboutBooks = new DrawAboutBooks();
+        private DrawAboutBooks drawAboutBooks;
         private string bookName;
         private int findIndex = 0;
 
@@ -19,7 +19,7 @@ namespace EnSharp_day3
         /// <param name="id">현재 사용중인 사용자의 아이디</param>
         public ExtendRentalTime(List<Member> memList,List<RentalData> rentalList,string id)
         {
-            DrawAndRun(memList, rentalList, id);
+            drawAboutBooks = new DrawAboutBooks();
         }
         
         /// <summary>
@@ -30,19 +30,19 @@ namespace EnSharp_day3
         /// <param name="id">현재 사용중인 사용자 아이디</param>
         public void DrawAndRun(List<Member> memList, List<RentalData> rentalList, string id)
         {
-            drawAboutBooks.DrawExtendTimeTitle(rentalList);
-            drawAboutBooks.DrawWriteBookName();
+            drawAboutBooks.ExtendTimeTitle(rentalList);
+            drawAboutBooks.WriteBookName();
             bookName = Console.ReadLine();
             findIndex = CheckBook(rentalList, bookName, id);
 
             if (findIndex.Equals(-1))
             {
-                drawAboutBooks.DrawExtendFailed();
+                drawAboutBooks.ExtendFailed();
             }
             else
             {
                 rentalList[findIndex].BookReturnTime = rentalList[findIndex].BookReturnTime.AddDays(10);
-                drawAboutBooks.DrawExtendSuccess();
+                drawAboutBooks.ExtendSuccess();
             }
 
         }

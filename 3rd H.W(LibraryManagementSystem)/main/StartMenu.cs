@@ -7,12 +7,6 @@ namespace EnSharp_day3
 {
     class StartMenu
     {
-        //매직 넘버
-        private const string LoginSuperviserMode = "1";
-        private const string LoginUserMode = "2";
-        private const string GoToSignUpPage = "3";
-        private const string Exit = "4";
-
         private string strMode;         //어떤 메뉴로 들어갈지 여부
         private Boolean flag = true;    //종료 flag
         private DrawControlMember drawControlMember;    //UI 그리기 위한 객체
@@ -20,14 +14,19 @@ namespace EnSharp_day3
         private List<Member> listSuperviser;            //관리자 정보
         private List<Book> listBook;                    //책정보
         private List<RentalData> listRental;            //대여자 정보
-        private Login login;                            //메뉴 선택시 로그인 창으로 넘어가기 위함
-
+        private Login loginUser;                            //메뉴 선택시 로그인 창으로 넘어가기 위함
+        private Login loginSuper;
+        private SignUp signUp;
         /// <summary>
         /// 시작했을때 첫 화면 선택에 따라서
         /// 관리자모드, 회원모드, 회원가입 모드로 이동한다.
         /// </summary>
         public StartMenu()
         {
+            loginSuper = new Login(strMode, listSuperviser, listUserMember, listBook, listRental);
+            loginUser = new Login(strMode, listUserMember, listUserMember, listBook, listRental);
+            signUp = new SignUp(listUserMember);
+
             drawControlMember = new DrawControlMember();
             listUserMember = new List<Member>();
             listSuperviser = new List<Member>();
@@ -40,26 +39,28 @@ namespace EnSharp_day3
             listUserMember.Add(new Member("2", "2", "2", "2", 2, "2", "2"));
             listUserMember.Add(new Member("3", "3", "3", "3", 3, "3", "3"));
             listUserMember.Add(new Member("4", "4", "4", "4", 4, "4", "4"));
-
+        }
+        public void StartMainMenu()
+        {
             while (flag)
             {
-                drawControlMember.DrawBasicMenu();
+                drawControlMember.BasicMenu();
                 strMode = Console.ReadLine();
                 switch (strMode)
                 {
-                    case LoginSuperviserMode:
-                        login = new Login(strMode, listSuperviser, listUserMember, listBook,listRental);
+                    case LibraryConstants.LoginSuperviserMode:
+                        loginSuper.CheckAndChangeScene(strMode,listSuperviser,listUserMember,listBook,listRental);
                         break;
 
-                    case LoginUserMode:
-                        login = new Login(strMode, listUserMember, listUserMember, listBook,listRental);
+                    case LibraryConstants.LoginUserMode:
+                        loginUser.CheckAndChangeScene(strMode, listSuperviser, listUserMember, listBook, listRental);
                         break;
 
-                    case GoToSignUpPage:
-                        SignUp signup = new SignUp(listUserMember); 
+                    case LibraryConstants.GoToSignUpPage:
+                        signUp.HelpSignUp(listUserMember);
                         break;
 
-                    case Exit:
+                    case LibraryConstants.Exit:
                         flag = false;
                         break;
 

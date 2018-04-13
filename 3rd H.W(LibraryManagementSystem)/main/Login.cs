@@ -11,10 +11,8 @@ namespace EnSharp_day3
     
     class Login
     {
-        //매직넘버
-        private const string StartSuperViserMode = "1";
-        private const string StartUserMode = "2";
-
+        private SuperviserMode superviserMode;
+        private UserMode userMode;
         private DrawControlMember drawControlMember;
         private string id;
         private SecureString securePassword;
@@ -32,9 +30,10 @@ namespace EnSharp_day3
         /// <param name="rentalList">대여자 목록이 있는 리스트</param>
         public Login(string mode, List<Member> slist, List<Member> ulist, List<Book> bookList,List<RentalData> rentalList)
         {
+            superviserMode = new SuperviserMode(slist, ulist, bookList);
+            userMode = new UserMode(ulist, bookList, rentalList);
             drawControlMember = new DrawControlMember();
             securePassword = new SecureString();
-            CheckAndChangeScene(mode,slist, ulist, bookList, rentalList);
         }
         /// <summary>
         /// 사용자가 선택한 모드에 따라서 관리자모드, 유저모드를 호출해준다.
@@ -48,13 +47,13 @@ namespace EnSharp_day3
         {
             switch (mode)
             {
-                case StartSuperViserMode:
+                case LibraryConstants.StartSuperViserMode:
 
                     loginFlag = DrawLoginPage(slist);
 
                     if (loginFlag)
                     {
-                        SuperviserMode super = new SuperviserMode(slist, ulist, bookList);
+                        superviserMode.SuperViserMenu(slist,ulist,bookList);
                     }
                     else
                     {
@@ -62,12 +61,12 @@ namespace EnSharp_day3
                     }
                     break;
 
-                case StartUserMode:
+                case LibraryConstants.StartUserMode:
                     loginFlag = DrawLoginPage(ulist);
 
                     if (loginFlag)
                     {
-                        UserMode user = new UserMode(ulist, bookList, rentalList, id);
+                        userMode.UserMenu(ulist,bookList,rentalList,id);
                     }
                     else
                     {
@@ -84,14 +83,14 @@ namespace EnSharp_day3
         /// <returns>로그인 여부</returns>
         public bool DrawLoginPage(List<Member> list)
         {
-            drawControlMember.DrawLoginPage();
-            drawControlMember.DrawWriteId();
+            drawControlMember.LoginPage();
+            drawControlMember.WriteId();
             id = Console.ReadLine();
             idCheck = CheckID(list, id);
 
             if (idCheck != -1)
             {
-                drawControlMember.DrawWritePassword();
+                drawControlMember.WritePassword();
                 securePassword = drawControlMember.GetConsoleSecurePassword();
                 string stringPassword = new NetworkCredential("", securePassword).Password;
                 if(CheckPW(list, idCheck, stringPassword))

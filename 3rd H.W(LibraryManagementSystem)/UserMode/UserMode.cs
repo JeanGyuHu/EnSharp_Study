@@ -7,11 +7,7 @@ namespace EnSharp_day3
 {
     class UserMode
     {
-        //매직 넘버
-        private const string RentBookPage = "1";
-        private const string ExtendRentalTimePage = "2";
-        private const string Exit = "3";
-
+        private string id;
         private string strChoice;
         private bool flag = true;
         private RentBook rentBook;
@@ -25,23 +21,28 @@ namespace EnSharp_day3
         /// <param name="bookList">책 정보 리스트</param>
         /// <param name="rentalList">대여자 정보 리스트</param>
         /// <param name="id">로그인한 사용자 정보</param>
-        public UserMode(List<Member> memList, List<Book> bookList,List<RentalData> rentalList,string id)
+        public UserMode(List<Member> memList, List<Book> bookList,List<RentalData> rentalList)
         {
             drawControlMember = new DrawControlMember();
+            extendRentalTime = new ExtendRentalTime(memList, rentalList, id);
+            rentBook = new RentBook(bookList, rentalList, id);
+        }
+
+        public void UserMenu(List<Member> memList, List<Book> bookList, List<RentalData> rentalList, string id)
+        {
             while (flag)
             {
-                drawControlMember.DrawUserModeMenu();
+                drawControlMember.UserModeMenu();
                 strChoice = Console.ReadLine();
                 switch (strChoice)
                 {
-                    case RentBookPage:
-                        rentBook = new RentBook(bookList,rentalList,id);
+                    case LibraryConstants.RentBookPage:
+                        rentBook.RentBookPage(bookList,rentalList,id);
                         break;
-
-                    case ExtendRentalTimePage:
-                        extendRentalTime = new ExtendRentalTime(memList,rentalList,id);
+                    case LibraryConstants.ExtendRentalTimePage:
+                        extendRentalTime.DrawAndRun(memList, rentalList, id);
                         break;
-                    case Exit:
+                    case LibraryConstants.GoBack:
                         flag = false;
                         break;
                     default:
@@ -49,6 +50,14 @@ namespace EnSharp_day3
                         break;
                 }
             }
+        }
+        public string GetId()
+        {
+            return id;
+        }
+        public void setId(string userId)
+        {
+            id = userId;
         }
     }
 }

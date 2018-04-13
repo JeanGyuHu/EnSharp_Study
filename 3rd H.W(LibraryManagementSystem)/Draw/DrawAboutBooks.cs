@@ -16,7 +16,7 @@ namespace EnSharp_day3
         /// <summary>
         /// 아무키나 누르세요... 를 띄워주는 메소드
         /// </summary>
-        public void DrawPressAnyKey()
+        public void PressAnyKey()
         {
             Console.Write("\n\n\n\t\t\tPress Any Key . . .");
             keyInfo = Console.ReadKey();
@@ -25,7 +25,7 @@ namespace EnSharp_day3
         /// 현재 도서관의 책 정보를 보여주는 메소드
         /// </summary>
         /// <param name="list">책의 정보를 담고 있는 리스트</param>
-        public void DrawBookInformation(List<Book> list)
+        public void Information(List<Book> list)
         {
             Console.Clear();
             Console.WriteLine("\n\n\t\t\t┌------------------------------------------------------┐");
@@ -42,7 +42,7 @@ namespace EnSharp_day3
         /// <summary>
         /// 책정보 카테고리를 그려주는 메소드
         /// </summary>
-        public void DrawBookCategory()
+        public void Category()
         {
             Console.Clear();
             Console.WriteLine("┌---------------------------------------------------------------------------------------┐");
@@ -52,7 +52,7 @@ namespace EnSharp_day3
         /// <summary>
         /// 현재 어떤 창인지 위에 제목을 그려주는 메소드
         /// </summary>
-        public void DrawBookInfoTitle()
+        public void InfoTitle()
         {
             Console.Clear();
             Console.WriteLine("\n\n\t\t\t┌------------------------------------------------------------------┐");
@@ -62,87 +62,89 @@ namespace EnSharp_day3
         /// <summary>
         /// 책을 선택하라는 메세지를 띄워주는 메소드
         /// </summary>
-        public void DrawDeleteMessage()
+        public void DeleteMessage()
         {
             Console.Write("\n\n\n\t\t\tChoose Book (name) >> ");
         }
         /// <summary>
         /// 삭제 성공 메세지를 띄워주는 메소드
         /// </summary>
-        public void DrawDeleteSuccess()
+        public void DeleteSuccess()
         {
             Console.WriteLine("\n\n\n\t\t\tD E L E T E  S U C C E S S !");
-            DrawPressAnyKey();
+            PressAnyKey();
         }
         /// <summary>
         /// 삭제 실패 메세지를 띄워주는 메소드
         /// </summary>
-        public void DrawDeleteFailed()
+        public void DeleteFailed()
         {
             Console.WriteLine("\n\n\n\t\t\tD E L E T E  F A I L E D !");
-            DrawPressAnyKey();
+            PressAnyKey();
         }
         /// <summary>
         /// 변경 성공 메세지를 띄워주는 메소드
         /// </summary>
-        public void DrawEditSuccess()
+        public void EditSuccess()
         {
             Console.WriteLine("\n\n\n\t\t\tE D I T  S U C C E S S !");
-            DrawPressAnyKey();
+            PressAnyKey();
         }
         /// <summary>
         /// 책 번호를 적으라는 메소드
         /// </summary>
-        public void DrawWriteBookNo()
+        public void WriteBookNo()
         {
-            Console.Write("\n\n\t\t\t\twrite Book no (xx-xxxxxxxx) : ");
+            Console.WriteLine("\n\n\t\t\t\t책의 고유번호를 입력하세요.");
+            Console.Write("\n\n\t\t\t\t형식 xx-xxxxxxxx (x는 모두 숫자) >> ");
         }
         /// <summary>
         /// 책 이름을 적으라는 메세지를 띄우는 메소드
         /// </summary>
-        public void DrawWriteBookName()
+        public void WriteBookName()
         {
             Console.Write("\n\n\t\t\t\twrite Book name : ");
         }
         /// <summary>
         /// 책 대여 실패를 알리는 메소드
         /// </summary>
-        public void DrawRentalFailed()
+        public void RentalFailed()
         {
             Console.WriteLine("\n\n\t\t\tR E N T A L  F A I L E D ! !");
         }
         /// <summary>
         /// 책 대여 성공을 알리는 메소드
         /// </summary>
-        public void DrawRentalSuccess()
+        public void RentalSuccess()
         {
             Console.WriteLine("\n\t\t\tR E N T A L   S U C C E S S ! !");
         }
         /// <summary>
         /// 책의 권수를 적으라고 알리는 메소드
         /// </summary>
-        public void DrawWriteBookCount()
+        public void WriteBookCount()
         {
-            Console.Write("\n\n\t\t\t\twrite Book count : ");
+            Console.WriteLine("\n\n\t\t\t\t책의 권수를 입력하세요. ");
+            Console.Write("\n\n\t\t\t\t(999개 이상 입력 불가능) >>");
         }
         /// <summary>
         /// 책의 저자를 적으라고 알리는 메소드
         /// </summary>
-        public void DrawWriteBookAuthor()
+        public void WriteBookAuthor()
         {
             Console.Write("\n\n\t\t\t\twrite Book Author : ");
         }
         /// <summary>
         /// 책의 출판사를 적으라고 알리는 메소드
         /// </summary>
-        public void DrawWriteBookPublisher()
+        public void WriteBookPublisher()
         {
             Console.Write("\n\n\t\t\t\twrite Book Publisher (Only English): ");
         }
         /// <summary>
         /// 검색할때 메뉴창을 그리는 메소드
         /// </summary>
-        public void DrawSearchMenu()
+        public void SearchMenu()
         {
             Console.Clear();
             Console.WriteLine("\n\n\t\t\t\t1. Book No");
@@ -157,7 +159,7 @@ namespace EnSharp_day3
         /// </summary>
         /// <param name="list">책의 정보를 가지고 있는 리스트</param>
         /// <param name="strSearch">찾는 책의 번호</param>
-        public void DrawSearchNo(List<Book> list, string strSearch)
+        public void SearchNo(List<Book> list, string strSearch)
         {
             for (int i = 0; i < list.Count; i++)
             {
@@ -170,7 +172,7 @@ namespace EnSharp_day3
         /// </summary>
         /// <param name="list">책의 정보를 가지고 있는 리스트</param>
         /// <param name="strSearch">찾는 책 이름</param>
-        public void DrawSearchName(List<Book> list, string strSearch)
+        public void SearchName(List<Book> list, string strSearch)
         {
             for (int i = 0; i < list.Count; i++)
             {
@@ -183,7 +185,7 @@ namespace EnSharp_day3
         /// </summary>
         /// <param name="list">책의 정보를 가지고 있는 리스트</param>
         /// <param name="strSearch">찾는 책의 권수</param>
-        public void DrawSearchCount(List<Book> list, string strSearch)
+        public void SearchCount(List<Book> list, string strSearch)
         {
             for (int i = 0; i < list.Count; i++)
             {
@@ -196,7 +198,7 @@ namespace EnSharp_day3
         /// </summary>
         /// <param name="list">책의 정보를 가지고 있는 리스트</param>
         /// <param name="strSearch">찾는 책의 저자</param>
-        public void DrawSearchAuthor(List<Book> list, string strSearch)
+        public void SearchAuthor(List<Book> list, string strSearch)
         {
             for (int i = 0; i < list.Count; i++)
             {
@@ -207,25 +209,25 @@ namespace EnSharp_day3
         /// <summary>
         /// 연장 성공을 알리는 메소드
         /// </summary>
-        public void DrawExtendSuccess()
+        public void ExtendSuccess()
         {
             Console.WriteLine("\n\n\n\t\t\tE X T E N D   S U C C E S S !");
-            DrawPressAnyKey();
+            PressAnyKey();
         }
         /// <summary>
         /// 연장 실패를 알리는 메소드
         /// </summary>
-        public void DrawExtendFailed()
+        public void ExtendFailed()
         {
             Console.WriteLine("\n\n\n\t\t\tE X T E N D   F A I L E D !");
-            DrawPressAnyKey();
+            PressAnyKey();
         }
         /// <summary>
         /// 출판사로 검색 후 출력해주는 메소드
         /// </summary>
         /// <param name="list">책의 정보를 가지고 있는 리스트</param>
         /// <param name="strSearch">찾는 책의 출판사명</param>
-        public void DrawSearchPublisher(List<Book> list, string strSearch)
+        public void SearchPublisher(List<Book> list, string strSearch)
         {
             for (int i = 0; i < list.Count; i++)
             {
@@ -237,7 +239,7 @@ namespace EnSharp_day3
         /// 시간 연장 페이지의 UI를 그리는 메소드
         /// </summary>
         /// <param name="list">책을 빌린 사람들의 목록</param>
-        public void DrawExtendTimeTitle(List<RentalData> list)
+        public void ExtendTimeTitle(List<RentalData> list)
         {
             Console.Clear();
             Console.WriteLine("\n\n\t\t\t┌---------------------------------------------------------┐");
@@ -254,7 +256,7 @@ namespace EnSharp_day3
         /// <summary>
         /// 도서관리 메인 메뉴 그리는 메소드
         /// </summary>
-        public void DrawBookManagementMenu()
+        public void ManagementMenu()
         {
             Console.Clear();
             Console.WriteLine("\n\n\t\t\t┌------------------------------------------------------------------┐");

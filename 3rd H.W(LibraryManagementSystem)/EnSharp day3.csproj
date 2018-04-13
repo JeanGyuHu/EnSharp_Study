@@ -42,22 +42,24 @@
   <ItemGroup>
     <Compile Include="Draw\DrawAboutBooks.cs" />
     <Compile Include="Draw\DrawControlMember.cs" />
-    <Compile Include="Page\ExceptionHandling.cs" />
-    <Compile Include="Page\AddMember.cs" />
+    <Compile Include="Const\LibraryConstants.cs" />
+    <Compile Include="Exception\ExceptionHandling.cs" />
+    <Compile Include="SuperViserMode\AddMember.cs" />
     <Compile Include="V.O\Book.cs" />
-    <Compile Include="Page\ControlMember.cs" />
-    <Compile Include="Page\ExtendRentalTime.cs" />
-    <Compile Include="Page\LibraryManagement.cs" />
-    <Compile Include="Page\Login.cs" />
+    <Compile Include="SuperViserMode\ControlMember.cs" />
+    <Compile Include="UserMode\ExtendRentalTime.cs" />
+    <Compile Include="SuperViserMode\LibraryManagement.cs" />
+    <Compile Include="main\Login.cs" />
     <Compile Include="V.O\RentalData.cs" />
-    <Compile Include="Page\RentBook.cs" />
-    <Compile Include="Page\StartMenu.cs" />
+    <Compile Include="UserMode\RentBook.cs" />
+    <Compile Include="main\StartMenu.cs" />
     <Compile Include="V.O\Member.cs" />
-    <Compile Include="Page\SignUp.cs" />
+    <Compile Include="UserMode\SignUp.cs" />
     <Compile Include="main\Start.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Page\SuperviserMode.cs" />
-    <Compile Include="Page\UserMode.cs" />
+    <Compile Include="SuperViserMode\SuperviserMode.cs" />
+    <Compile Include="UserMode\UserMode.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

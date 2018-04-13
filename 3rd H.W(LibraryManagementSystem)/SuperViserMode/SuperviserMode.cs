@@ -7,11 +7,6 @@ namespace EnSharp_day3
 {
     class SuperviserMode
     {
-        //매직넘버
-        private const string MemberControl = "1";
-        private const string BookManagement = "2";
-        private const string Exit = "3";
-
         private bool flag = true;       //종료 flag
         private string strChoice;       //어떤 작업을 할지 입력받음
         private ControlMember controlMember;    //회원관리 메뉴
@@ -28,20 +23,25 @@ namespace EnSharp_day3
         public SuperviserMode(List<Member> slist, List<Member> ulist, List<Book> bookList)
         {
             drawControlMember = new DrawControlMember();
+            controlMember = new ControlMember(ulist);
+            libraryManagement = new LibraryManagement(bookList);  
+        }
 
+        public void SuperViserMenu(List<Member> slist, List<Member> ulist, List<Book> bookList)
+        {
             while (flag)
             {
-                drawControlMember.DrawSuperViserModeMenu();
+                drawControlMember.SuperViserModeMenu();
                 strChoice = Console.ReadLine();
                 switch (strChoice)
                 {
-                    case MemberControl:
-                        controlMember = new ControlMember(ulist);
+                    case LibraryConstants.MemberControl:
+                        controlMember.MemberManagement(ulist);
                         break;
-                    case BookManagement:
-                        libraryManagement = new LibraryManagement(bookList);
+                    case LibraryConstants.BookManagement:
+                        libraryManagement.DrawAndSelectMenu(bookList);
                         break;
-                    case Exit:
+                    case LibraryConstants.GoBack:
                         flag = false;
                         break;
                     default:

@@ -32,7 +32,6 @@ namespace EnSharp_day3
             exceptionHandling = new ExceptionHandling();
             securePassword = new SecureString();
             secureResidentNum = new SecureString();
-            HelpSignUp(list);
         }
 
         /// <summary>
@@ -41,7 +40,6 @@ namespace EnSharp_day3
         /// <param name="list">회원 정보 목록</param>
         public void HelpSignUp(List<Member> list)
         {
-
             DrawId();
 
             if (CheckId(list))
@@ -53,7 +51,7 @@ namespace EnSharp_day3
                 DrawAddress();
                 Console.Clear();
                 list.Add(new Member(strName, stringResidentNum, stringPassword, strId, 0, strAddress, strPhoneNumber));
-                drawControlMember.DrawSignUpSuccess();
+                drawControlMember.SignUpSuccess();
             }
             else
             {
@@ -65,8 +63,8 @@ namespace EnSharp_day3
         /// </summary>
         public void DrawId()
         {
-            drawControlMember.DrawSignUpTitle();
-            drawControlMember.DrawWriteSignId();
+            drawControlMember.SignUpTitle();
+            drawControlMember.WriteSignId();
             strId = Console.ReadLine();
             if (!exceptionHandling.CheckId(strId))
             {
@@ -78,8 +76,8 @@ namespace EnSharp_day3
         /// </summary>
         public void DrawPassword()
         {
-            drawControlMember.DrawSignUpTitle();
-            drawControlMember.DrawWriteSignPassword();
+            drawControlMember.SignUpTitle();
+            drawControlMember.WriteSignPassword();
             securePassword = drawControlMember.GetConsoleSecurePassword();
             stringPassword = new NetworkCredential("", securePassword).Password;
             if (!exceptionHandling.CheckPw(stringPassword))
@@ -92,8 +90,8 @@ namespace EnSharp_day3
         /// </summary>
         public void DrawName()
         {
-            drawControlMember.DrawSignUpTitle();
-            drawControlMember.DrawWriteName();
+            drawControlMember.SignUpTitle();
+            drawControlMember.WriteName();
             strName = Console.ReadLine();
         }
         /// <summary>
@@ -101,8 +99,8 @@ namespace EnSharp_day3
         /// </summary>
         public void DrawResidentNum()
         {
-            drawControlMember.DrawSignUpTitle();
-            drawControlMember.DrawWriteResidentNum();
+            drawControlMember.SignUpTitle();
+            drawControlMember.WriteResidentNum();
             secureResidentNum = drawControlMember.GetConsoleSecurePassword();
             stringResidentNum = new NetworkCredential("", secureResidentNum).Password;
 
@@ -117,8 +115,8 @@ namespace EnSharp_day3
         public void DrawPhoneNum()
         {
             Console.Clear();
-            drawControlMember.DrawSignUpTitle();
-            drawControlMember.DrawWritePhone();
+            drawControlMember.SignUpTitle();
+            drawControlMember.WritePhone();
             strPhoneNumber = Console.ReadLine();
 
             if (!exceptionHandling.CheckPhone(strPhoneNumber))
@@ -131,8 +129,8 @@ namespace EnSharp_day3
         /// </summary>
         public void DrawAddress()
         {
-            drawControlMember.DrawSignUpTitle();
-            drawControlMember.DrawWriteAddress();
+            drawControlMember.SignUpTitle();
+            drawControlMember.WriteAddress();
             strAddress = Console.ReadLine();
 
             if (!exceptionHandling.CheckAddress(strAddress))
