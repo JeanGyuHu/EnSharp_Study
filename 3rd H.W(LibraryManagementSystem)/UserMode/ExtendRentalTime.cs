@@ -8,6 +8,7 @@ namespace EnSharp_day3
     class ExtendRentalTime
     {
         private DrawAboutBooks drawAboutBooks;
+        private ExceptionHandling exceptionHandling;
         private string bookName;
         private int findIndex = 0;
 
@@ -20,6 +21,7 @@ namespace EnSharp_day3
         public ExtendRentalTime(List<Member> memList,List<RentalData> rentalList,string id)
         {
             drawAboutBooks = new DrawAboutBooks();
+            exceptionHandling = new ExceptionHandling();
         }
         
         /// <summary>
@@ -30,11 +32,10 @@ namespace EnSharp_day3
         /// <param name="id">현재 사용중인 사용자 아이디</param>
         public void DrawAndRun(List<Member> memList, List<RentalData> rentalList, string id)
         {
-            drawAboutBooks.ExtendTimeTitle(rentalList);
-            drawAboutBooks.WriteBookName();
-            bookName = Console.ReadLine();
+            DrawNo(rentalList, id);
+            if (bookName.Equals("0"))
+                return;
             findIndex = CheckBook(rentalList, bookName, id);
-
             if (findIndex.Equals(-1))
             {
                 drawAboutBooks.ExtendFailed();
@@ -46,6 +47,16 @@ namespace EnSharp_day3
             }
 
         }
+        public void DrawNo(List<RentalData> rentalList, string id)
+        {
+            drawAboutBooks.ExtendTimeTitle(rentalList, id);
+            drawAboutBooks.WriteBookNo();
+            bookName = Console.ReadLine();
+            if (bookName.Equals("0"))
+                return;
+            if (!exceptionHandling.CheckBookNo(bookName))
+                DrawNo(rentalList, id);
+        }
         /// <summary>
         /// 이미 이책을 대여했다면 위치를 리턴하는 메소드
         /// </summary>
@@ -53,13 +64,13 @@ namespace EnSharp_day3
         /// <param name="bookName">책이름</param>
         /// <param name="id">책 빌리려는 사람</param>
         /// <returns>책의 정보가 저장되어있는 위치</returns>
-        public int CheckBook(List<RentalData> RentalList,string bookName, string id) 
+        public int CheckBook(List<RentalData> RentalList,string bookNo, string id) 
         {
             int result = -1;
 
             for (int check = 0; check < RentalList.Count; check++)
             {
-                if (RentalList[check].BookLender.Equals(id) && RentalList[check].BookName.Equals(bookName))
+                if (RentalList[check].BookLender.Equals(id) && RentalList[check].BookNo.Equals(bookNo))
                 {
                     result = check;
                     return result;

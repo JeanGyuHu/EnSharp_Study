@@ -40,10 +40,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Draw\DrawStartMark.cs" />
     <Compile Include="Draw\DrawAboutBooks.cs" />
     <Compile Include="Draw\DrawControlMember.cs" />
     <Compile Include="Const\LibraryConstants.cs" />
     <Compile Include="Exception\ExceptionHandling.cs" />
+    <Compile Include="UserMode\ReturnBooks.cs" />
     <Compile Include="SuperViserMode\AddMember.cs" />
     <Compile Include="V.O\Book.cs" />
     <Compile Include="SuperViserMode\ControlMember.cs" />

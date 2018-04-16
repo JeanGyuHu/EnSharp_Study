@@ -22,28 +22,18 @@ namespace EnSharp_day3
         /// </summary>
         public void EditScreen()
         {
-            Console.Write("\n\n\n\t\t\tChoose person (Id) >>");
+            Console.Write("\n\n\n\t\t\tChoose person (Id) (뒤로가기를 원하면 0을 입력) >>");
         }
-        /// <summary>
-        /// 주소를 입력하라고 알리는 메소드
-        /// </summary>
-        public void AdressScreen()
+        public void ExitMessage()
         {
-            Console.Write("\n\n\t\t\tAddress ::\n\t\t\t >> ");
-        }
-        /// <summary>
-        /// 전화번호를 입력하라고 알리는 메소드
-        /// </summary>
-        public void PhoneScreen()
-        {
-            Console.Write("\n\n\t\t\tPhoneNumber :: (write number only(10 ~ 11))\n\t\t\t >> ");
+            Console.WriteLine("\n\n\t\t\t뒤로가려면 Enter를 누르세요.");
         }
         /// <summary>
         /// 지울 사람 아이디를 적으라는 메소드
         /// </summary>
         public void DeleteScreen()
         {
-            Console.Write("\n\n\n\t\t\tChoose person (Id) >>");
+            Console.Write("\n\n\n\t\t\tChoose person (ID) >>");
         }
         /// <summary>
         /// 멤버 정보를 띄우는 창의 제목 부분과 카테고리 출력
@@ -51,14 +41,13 @@ namespace EnSharp_day3
         public void Category()
         {
             Console.Clear();
-            Console.SetWindowSize(150, 30);
+            Console.SetWindowSize(180, 30);
             Console.WriteLine("\n\n\t\t\t┌--------------------------------------------------------┐");
             Console.WriteLine("\t\t\t│           M E M B E R   I N F O R M A T I O N          │");
             Console.WriteLine("\t\t\t└--------------------------------------------------------┘");
-            Console.WriteLine("\n\n┌---------------------------------------------------------------------------------------------------------------------------------------------┐");
-            Console.WriteLine("│   Name   │   Resident Number   │          Id          │           Password          │ Number of Overdue│      Address      │   PhoneNumber   │");
-            Console.WriteLine("└---------------------------------------------------------------------------------------------------------------------------------------------┘");
-
+            Console.WriteLine("\n\n┌-------------------------------------------------------------------------------------------------------------------------------------------------┐");
+            Console.WriteLine("│   Name   │   Resident Number   │          Id          │         Password        │    PhoneNumber    │        Address        │ Number of Overdue │");
+            Console.WriteLine("└-------------------------------------------------------------------------------------------------------------------------------------------------┘");
         }
         /// <summary>
         ///카테고리를 출력하고 그에 해당하는 회원정보를 출력하는 메소드
@@ -68,8 +57,18 @@ namespace EnSharp_day3
         {
             Category();
             for (int i = 0; i < list.Count; i++)
-                Console.WriteLine("   {0}{1}{2}{3}{4}\t\t\t{5}{6}", list[i].Name.PadRight(10), list[i].ResidentNum.PadRight(25), list[i].Id.PadRight(20), list[i].Password.PadRight(30), list[i].NumOverdue, list[i].Address.PadRight(25), list[i].PhoneNumber.PadRight(15));
+            {
+                
+                byte[] byteName1 = Encoding.Default.GetBytes(list[i].Name + "          ");
+                byte[] byteName2 = new byte[10];
+                Array.Copy(byteName1, byteName2, 10);
 
+                byte[] byteAddress1 = Encoding.Default.GetBytes(list[i].Address + "                              ");
+                byte[] byteAddress2 = new byte[30];
+                Array.Copy(byteAddress1, byteAddress2, 30);
+
+                Console.WriteLine("   {0}{1,-25}{2,-25}{3,-20}{4,-22}{5}{6,-5}",Encoding.Default.GetString(byteName2) , list[i].ResidentNum, list[i].Id, list[i].Password, list[i].PhoneNumber, Encoding.Default.GetString(byteAddress2), list[i].NumOverdue);
+            }
         }
         /// <summary>
         /// 이름으로 검색했을때의 결과값 출력
@@ -81,7 +80,17 @@ namespace EnSharp_day3
             for (int i = 0; i < list.Count; i++)
             {
                 if (list[i].Name.Equals(strSearch))
-                    Console.WriteLine("   {0}{1}{2}{3}{4}\t\t\t{5}{6}", list[i].Name.PadRight(10), list[i].ResidentNum.PadRight(25), list[i].Id.PadRight(20), list[i].Password.PadRight(30), list[i].NumOverdue, list[i].Address.PadRight(25), list[i].PhoneNumber.PadRight(15));
+                {
+                    byte[] byteName1 = Encoding.Default.GetBytes(list[i].Name + "          ");
+                    byte[] byteName2 = new byte[10];
+                    Array.Copy(byteName1, byteName2, 10);
+
+                    byte[] byteAddress1 = Encoding.Default.GetBytes(list[i].Address + "                              ");
+                    byte[] byteAddress2 = new byte[30];
+                    Array.Copy(byteAddress1, byteAddress2, 30);
+
+                    Console.WriteLine("   {0}{1,-25}{2,-25}{3,-20}{4,-22}{5}{6,-5}", Encoding.Default.GetString(byteName2), list[i].ResidentNum, list[i].Id, list[i].Password, list[i].PhoneNumber, Encoding.Default.GetString(byteAddress2), list[i].NumOverdue);
+                }
             }
             PressAnyKey();
         }
@@ -95,7 +104,17 @@ namespace EnSharp_day3
             for (int i = 0; i < list.Count; i++)
             {
                 if (list[i].ResidentNum.Equals(strSearch))
-                    Console.WriteLine("   {0}{1}{2}{3}{4}\t\t\t{5}{6}", list[i].Name.PadRight(10), list[i].ResidentNum.PadRight(25), list[i].Id.PadRight(20), list[i].Password.PadRight(30), list[i].NumOverdue, list[i].Address.PadRight(25), list[i].PhoneNumber.PadRight(15));
+                {
+                    byte[] byteName1 = Encoding.Default.GetBytes(list[i].Name + "          ");
+                    byte[] byteName2 = new byte[10];
+                    Array.Copy(byteName1, byteName2, 10);
+
+                    byte[] byteAddress1 = Encoding.Default.GetBytes(list[i].Address + "                              ");
+                    byte[] byteAddress2 = new byte[30];
+                    Array.Copy(byteAddress1, byteAddress2, 30);
+
+                    Console.WriteLine("   {0}{1,-25}{2,-25}{3,-20}{4,-22}{5}{6,-5}", Encoding.Default.GetString(byteName2), list[i].ResidentNum, list[i].Id, list[i].Password, list[i].PhoneNumber, Encoding.Default.GetString(byteAddress2), list[i].NumOverdue);
+                }
             }
             PressAnyKey();
         }
@@ -109,7 +128,17 @@ namespace EnSharp_day3
             for (int i = 0; i < list.Count; i++)
             {
                 if (list[i].Id.Equals(strSearch))
-                    Console.WriteLine("   {0}{1}{2}{3}{4}\t\t\t{5}{6}", list[i].Name.PadRight(10), list[i].ResidentNum.PadRight(25), list[i].Id.PadRight(20), list[i].Password.PadRight(30), list[i].NumOverdue, list[i].Address.PadRight(25), list[i].PhoneNumber.PadRight(15));
+                {
+                    byte[] byteName1 = Encoding.Default.GetBytes(list[i].Name + "          ");
+                    byte[] byteName2 = new byte[10];
+                    Array.Copy(byteName1, byteName2, 10);
+
+                    byte[] byteAddress1 = Encoding.Default.GetBytes(list[i].Address + "                              ");
+                    byte[] byteAddress2 = new byte[30];
+                    Array.Copy(byteAddress1, byteAddress2, 30);
+
+                    Console.WriteLine("   {0}{1,-25}{2,-25}{3,-20}{4,-22}{5}{6,-5}", Encoding.Default.GetString(byteName2), list[i].ResidentNum, list[i].Id, list[i].Password, list[i].PhoneNumber, Encoding.Default.GetString(byteAddress2), list[i].NumOverdue);
+                }
             }
             PressAnyKey();
         }
@@ -123,7 +152,17 @@ namespace EnSharp_day3
             for (int i = 0; i < list.Count; i++)
             {
                 if (list[i].Password.Equals(strSearch))
-                    Console.WriteLine("   {0}{1}{2}{3}{4}\t\t\t{5}{6}", list[i].Name.PadRight(10), list[i].ResidentNum.PadRight(25), list[i].Id.PadRight(20), list[i].Password.PadRight(30), list[i].NumOverdue, list[i].Address.PadRight(25), list[i].PhoneNumber.PadRight(15));
+                {
+                    byte[] byteName1 = Encoding.Default.GetBytes(list[i].Name + "          ");
+                    byte[] byteName2 = new byte[10];
+                    Array.Copy(byteName1, byteName2, 10);
+
+                    byte[] byteAddress1 = Encoding.Default.GetBytes(list[i].Address + "                              ");
+                    byte[] byteAddress2 = new byte[30];
+                    Array.Copy(byteAddress1, byteAddress2, 30);
+
+                    Console.WriteLine("   {0}{1,-25}{2,-25}{3,-20}{4,-22}{5}{6,-5}", Encoding.Default.GetString(byteName2), list[i].ResidentNum, list[i].Id, list[i].Password, list[i].PhoneNumber, Encoding.Default.GetString(byteAddress2), list[i].NumOverdue);
+                }
             }
             PressAnyKey();
         }
@@ -136,8 +175,18 @@ namespace EnSharp_day3
         {
             for (int i = 0; i < list.Count; i++)
             {
-                if (list[i].NumOverdue.Equals(strSearch))
-                    Console.WriteLine("   {0}{1}{2}{3}{4}\t\t\t{5}{6}", list[i].Name.PadRight(10), list[i].ResidentNum.PadRight(25), list[i].Id.PadRight(20), list[i].Password.PadRight(30), list[i].NumOverdue, list[i].Address.PadRight(25), list[i].PhoneNumber.PadRight(15));
+                if (list[i].NumOverdue.Equals(Convert.ToInt32(strSearch)))
+                {
+                    byte[] byteName1 = Encoding.Default.GetBytes(list[i].Name + "          ");
+                    byte[] byteName2 = new byte[10];
+                    Array.Copy(byteName1, byteName2, 10);
+
+                    byte[] byteAddress1 = Encoding.Default.GetBytes(list[i].Address + "                              ");
+                    byte[] byteAddress2 = new byte[30];
+                    Array.Copy(byteAddress1, byteAddress2, 30);
+
+                    Console.WriteLine("   {0}{1,-25}{2,-25}{3,-20}{4,-22}{5}{6,-5}", Encoding.Default.GetString(byteName2), list[i].ResidentNum, list[i].Id, list[i].Password, list[i].PhoneNumber, Encoding.Default.GetString(byteAddress2), list[i].NumOverdue);
+                }
             }
             PressAnyKey();
         }
@@ -151,7 +200,17 @@ namespace EnSharp_day3
             for (int i = 0; i < list.Count; i++)
             {
                 if (list[i].Address.Equals(strSearch))
-                    Console.WriteLine("   {0}{1}{2}{3}{4}\t\t\t{5}{6}", list[i].Name.PadRight(10), list[i].ResidentNum.PadRight(25), list[i].Id.PadRight(20), list[i].Password.PadRight(30), list[i].NumOverdue, list[i].Address.PadRight(25), list[i].PhoneNumber.PadRight(15));
+                {
+                    byte[] byteName1 = Encoding.Default.GetBytes(list[i].Name + "          ");
+                    byte[] byteName2 = new byte[10];
+                    Array.Copy(byteName1, byteName2, 10);
+
+                    byte[] byteAddress1 = Encoding.Default.GetBytes(list[i].Address + "                              ");
+                    byte[] byteAddress2 = new byte[30];
+                    Array.Copy(byteAddress1, byteAddress2, 30);
+
+                    Console.WriteLine("   {0}{1,-25}{2,-25}{3,-20}{4,-22}{5}{6,-5}", Encoding.Default.GetString(byteName2), list[i].ResidentNum, list[i].Id, list[i].Password, list[i].PhoneNumber, Encoding.Default.GetString(byteAddress2), list[i].NumOverdue);
+                }
             }
             PressAnyKey();
         }
@@ -165,7 +224,17 @@ namespace EnSharp_day3
             for (int i = 0; i < list.Count; i++)
             {
                 if (list[i].PhoneNumber.Equals(strSearch))
-                    Console.WriteLine("   {0}{1}{2}{3}{4}\t\t\t{5}{6}", list[i].Name.PadRight(10), list[i].ResidentNum.PadRight(25), list[i].Id.PadRight(20), list[i].Password.PadRight(30), list[i].NumOverdue, list[i].Address.PadRight(25), list[i].PhoneNumber.PadRight(15));
+                {
+                    byte[] byteName1 = Encoding.Default.GetBytes(list[i].Name + "          ");
+                    byte[] byteName2 = new byte[10];
+                    Array.Copy(byteName1, byteName2, 10);
+
+                    byte[] byteAddress1 = Encoding.Default.GetBytes(list[i].Address + "                              ");
+                    byte[] byteAddress2 = new byte[30];
+                    Array.Copy(byteAddress1, byteAddress2, 30);
+
+                    Console.WriteLine("   {0}{1,-25}{2,-25}{3,-20}{4,-22}{5}{6,-5}", Encoding.Default.GetString(byteName2), list[i].ResidentNum, list[i].Id, list[i].Password, list[i].PhoneNumber, Encoding.Default.GetString(byteAddress2), list[i].NumOverdue);
+                }
             }
             PressAnyKey();
         }
@@ -176,62 +245,135 @@ namespace EnSharp_day3
         {
             Console.Write("\n\n\n\t\t\tPress any key . . .");
             keyInfo = Console.ReadKey();
+            Console.SetWindowSize(120, 30);
         }
         /// <summary>
         /// 이름을 입력하시오 출력
         /// </summary>
-        public void WriteName()
+        public void WriteName(int num)
         {
-            Console.Write("\n\n\t\t\t\twrite name (limit 2 ~ 10) : ");
+            switch (num)
+            {
+                case (int)LibraryConstants.Mode.Add:
+                    Console.WriteLine("\n\n\t\t\t\t이름을 입력하세요. (뒤로가기 1,종료 0)");
+                    Console.WriteLine("\n\n\t\t\t\t공백을 제외한 완성된 한글만 입력 가능합니다.(글자 제한 : 2 ~ 5)");
+                    Console.Write("\n\n\t\t\t\t>> ");
+                    break;
+                case (int)LibraryConstants.Mode.Search:
+                    Console.WriteLine("\n\n\t\t\t\t이름을 입력하세요. (뒤로가기 0)");
+                    Console.WriteLine("\n\n\t\t\t\t공백을 제외한 완성된 한글만 입력 가능합니다.(글자 제한 : 2 ~ 5)");
+                    Console.Write("\n\n\t\t\t\t>> ");
+                    break;
+            }
+
         }
         /// <summary>
         /// 주민번호 입력하시오 출력
         /// </summary>
-        public void WriteResidentNum()
+        public void WriteResidentNum(int num)
         {
-            Console.Write("\n\n\t\t\t\twrite Resident Number (xxxxxx-xxxxxxx) : ");
+            switch (num)
+            {
+                case (int)LibraryConstants.Mode.Add:
+                    Console.WriteLine("\n\n\t\t\t\t주민등록번호를 입력하세요. (뒤로가기 1,종료 0)");
+                    Console.WriteLine("\n\n\t\t\t\t형식은 yymmdd-(1,2)xxxxxx (남자면 1, 여자면 2)");
+                    Console.Write("\n\n\t\t\t\t>> ");
+                    break;
+                case (int)LibraryConstants.Mode.Search:
+                    Console.WriteLine("\n\n\t\t\t\t주민등록번호를 입력하세요. (뒤로가기 0)");
+                    Console.WriteLine("\n\n\t\t\t\t형식은 yymmdd-(1,2)xxxxxx (남자면 1, 여자면 2)");
+                    Console.Write("\n\n\t\t\t\t>> ");
+                    break;
+            }
+
         }
         /// <summary>
         /// 아이디 입력하시오 출력
         /// </summary>
         public void WriteId()
         {
-            Console.Write("\n\n\t\t\t\twrite Id : ");
+            
+            Console.WriteLine("\n\n\t\t\t\t아이디를 입력하세요. (종료 0)");
+            Console.Write("\n\n\t\t\t\t>> ");
         }
         /// <summary>
         /// 비밀번호 입력하시오 출력
         /// </summary>
         public void WritePassword()
         {
-            Console.Write("\n\n\t\t\t\twrite Password : ");
+            
+            Console.WriteLine("\n\n\t\t\t\t비밀번호를 입력하세요. (아이디 다시 입력 -1,종료 0)");
+            Console.Write("\n\n\t\t\t\t>> ");
         }
         /// <summary>
         /// 회원가입할때 아이디 입력하시오.. 출력
         /// </summary>
-        public void WriteSignId()
+        public void WriteSignId(int num)
         {
-            Console.Write("\n\n\t\t\twrite Id (only number and English ,limit (8 ~ 14) : ");
+            switch (num)
+            {
+                case (int)LibraryConstants.Mode.Add:
+                    Console.WriteLine("\n\n\t\t\t\t아이디를 입력하세요. (종료 0)");
+                    Console.WriteLine("\n\n\t\t\t\t형식은 공백을 제외한 영어와 숫자만 가능합니다. (글자 제한 : 8 ~ 14)");
+                    Console.Write("\n\n\t\t\t\t>> ");
+                    break;
+                case (int)LibraryConstants.Mode.Search:
+                    Console.WriteLine("\n\n\t\t\t\t아이디를 입력하세요. (뒤로가기 0)");
+                    Console.WriteLine("\n\n\t\t\t\t형식은 공백을 제외한 영어와 숫자만 가능합니다. (글자 제한 : 8 ~ 14)");
+                    Console.Write("\n\n\t\t\t\t>> ");
+                    break;                   
+            }
+
         }
         /// <summary>
         /// 회원가입할때 비밀번호 입력하시오.. 출력
         /// </summary>
-        public void WriteSignPassword()
+        public void WriteSignPassword(int num)
         {
-            Console.Write("\n\n\t\t\t\twrite Password (limit 8 ~ 14): ");
+            switch (num)
+            {
+                case (int)LibraryConstants.Mode.Add:
+                    Console.WriteLine("\n\n\t\t\t\t비밀번호를 입력하세요. (뒤로가기 1,종료 0)");
+                    Console.WriteLine("\n\n\t\t\t\t형식은 공백을 제외한 영어와 숫자,특수문자만 가능합니다. (글자 제한 : 8 ~ 14)");
+                    Console.Write("\n\n\t\t\t\t>> ");
+                    break;
+                case (int)LibraryConstants.Mode.Search:
+                    Console.WriteLine("\n\n\t\t\t\t비밀번호를 입력하세요. (뒤로가기 0)");
+                    Console.WriteLine("\n\n\t\t\t\t형식은 공백을 제외한 영어와 숫자,특수문자만 가능합니다. (글자 제한 : 8 ~ 14)");
+                    Console.Write("\n\n\t\t\t\t>> ");
+                    break;
+            }
+
         }
         /// <summary>
         /// 연체 횟수를 입력하시오.. 출력
         /// </summary>
-        public void WriteOverdue()
+        public void WriteOverdue(int num)
         {
-            Console.Write("\n\n\t\t\t\twrite Number of Overdue : ");
+            Console.WriteLine("\n\n\t\t\t\t연체한 횟수를 입력하세요. (숫자만 입력)");
+            Console.Write("\n\n\t\t\t\t>> ");
         }
         /// <summary>
         /// 주소를 입력하시오.. 출력
         /// </summary>
-        public void WriteAddress()
+        public void WriteAddress(int num)
         {
-            Console.Write("\n\n\t\t\t\twrite Address (15 ~ 20) : ");
+            switch (num)
+            {
+                case (int)LibraryConstants.Mode.Add:
+                    Console.WriteLine("\n\n\t\t\t\t주소를 입력하세요. (뒤로가기 1,종료 0)");
+                    Console.WriteLine("\n\n\t\t\t\t형식은 완성된 한글만 가능합니다.");
+                    Console.WriteLine("\n\n\t\t\t\t예시) (00~000시/도) (0~000시/군/구) (00~000로)");
+                    Console.Write("\n\n\t\t\t\t>> ");
+                    break;
+                case (int)LibraryConstants.Mode.Search:
+                    Console.WriteLine("\n\n\t\t\t\t주소를 입력하세요. (뒤로가기 0)");
+                    Console.WriteLine("\n\n\t\t\t\t형식은 완성된 한글만 가능합니다.");
+                    Console.WriteLine("\n\n\t\t\t\t예시) (00~000시/도) (0~000시/군/구) (00~000로)");
+                    Console.Write("\n\n\t\t\t\t>> ");
+                    break;
+            }
+            
         }
         /// <summary>
         /// login Page임을 알리는 메소드
@@ -239,14 +381,32 @@ namespace EnSharp_day3
         public void LoginPage()
         {
             Console.Clear();
-            Console.WriteLine("\n\n\t\t\t\tLOGIN PAGE");
+            Console.Clear();
+            Console.WriteLine("\n\n\t\t\t┌-----------------------------------------┐");
+            Console.WriteLine("\t\t\t│           L O G I N   P A G E           │");
+            Console.WriteLine("\t\t\t└-----------------------------------------┘");
         }
         /// <summary>
         /// 전화번호 입력하시오.. 출력
         /// </summary>
-        public void WritePhone()
+        public void WritePhone(int num)
         {
-            Console.Write("\n\n\t\t\t\twrite PhoneNumber (write number only(10 ~ 11)) : ");
+            switch (num)
+            {
+                case (int)LibraryConstants.Mode.Add:
+                    Console.WriteLine("\n\n\t\t\t\t전화번호를 입력하세요. (뒤로가기 1,종료 0)");
+                    Console.WriteLine("\n\n\t\t\t\t형식은 01(0,1,6,7,8,9)-(xxx,xxxx)-xxxx x는 숫자만 가능합니다.");
+                    Console.WriteLine("\n\n\t\t\t\t예시) 010-4701-8554");
+                    Console.Write("\n\n\t\t\t\t>> ");
+                    break;
+                case (int)LibraryConstants.Mode.Search:
+                    Console.WriteLine("\n\n\t\t\t\t전화번호를 입력하세요. (뒤로가기 0)");
+                    Console.WriteLine("\n\n\t\t\t\t형식은 01(0,1,6,7,8,9)-(xxx,xxxx)-xxxx x는 숫자만 가능합니다.");
+                    Console.WriteLine("\n\n\t\t\t\t예시) 010-4701-8554");
+                    Console.Write("\n\n\t\t\t\t>> ");
+                    break;
+            }
+            
         }
         /// <summary>
         /// 삭제 성공!!
@@ -259,6 +419,11 @@ namespace EnSharp_day3
         /// <summary>
         /// 삭제 실패...ㅜ
         /// </summary>
+        public void DeleteFailed()
+        {
+            Console.WriteLine("\n\n\n\t\t\tD E L E T E   F A I L E D !");
+            PressAnyKey();
+        }
         public void EditSuccess()
         {
             Console.WriteLine("\n\n\n\t\t\tE D I T  S U C C E S S !");
@@ -296,6 +461,8 @@ namespace EnSharp_day3
             Console.WriteLine("\n\n\t\t\t\t5. Number of Overdue");
             Console.WriteLine("\n\n\t\t\t\t6. Address");
             Console.WriteLine("\n\n\t\t\t\t7. PhoneNumber");
+            Console.WriteLine("\n\n\t\t\t\t8. EXIT");
+            Console.WriteLine("\t\t\t\t검색 중 종료하고 싶으면 책 이름이 아닌 아무거나 입력!");
             Console.Write("\n\t\t\t\t>> ");
         }
         /// <summary>
@@ -371,7 +538,8 @@ namespace EnSharp_day3
             Console.WriteLine("\t\t\t└---------------------------------------┘");
             Console.WriteLine("\n\n\t\t\t\t1. Book Rental");
             Console.WriteLine("\n\n\t\t\t\t2. Extend return time");
-            Console.WriteLine("\n\n\t\t\t\t3. EXIT");
+            Console.WriteLine("\n\n\t\t\t\t3. Return Books");
+            Console.WriteLine("\n\n\t\t\t\t4. EXIT");
             Console.Write("\n\n\t\t\t\t >> ");
         }
         /// <summary>

@@ -18,7 +18,7 @@ namespace EnSharp_day3
         private SecureString securePassword;
         private int idCheck = -1;
         private bool loginFlag = false;
-
+        private string stringPassword;
         /// <summary>
         /// 
         /// </summary>
@@ -31,7 +31,7 @@ namespace EnSharp_day3
         public Login(string mode, List<Member> slist, List<Member> ulist, List<Book> bookList,List<RentalData> rentalList)
         {
             superviserMode = new SuperviserMode(slist, ulist, bookList);
-            userMode = new UserMode(ulist, bookList, rentalList);
+            userMode = new UserMode(ulist, bookList, rentalList,id);
             drawControlMember = new DrawControlMember();
             securePassword = new SecureString();
         }
@@ -45,25 +45,31 @@ namespace EnSharp_day3
         /// <param name="rentalList">대여자 목록</param>
         public void CheckAndChangeScene(string mode, List<Member> slist, List<Member> ulist, List<Book> bookList, List<RentalData> rentalList)
         {
+
             switch (mode)
             {
                 case LibraryConstants.StartSuperViserMode:
 
                     loginFlag = DrawLoginPage(slist);
-
+                    if (id.Equals("0") || stringPassword.Equals("0"))
+                        return;
                     if (loginFlag)
                     {
                         superviserMode.SuperViserMenu(slist,ulist,bookList);
                     }
                     else
                     {
+                        userMode.setId(id);
                         CheckAndChangeScene(mode, slist, ulist, bookList, rentalList);
                     }
                     break;
 
                 case LibraryConstants.StartUserMode:
                     loginFlag = DrawLoginPage(ulist);
-
+                    if (id.Equals("0") || stringPassword.Equals("0"))
+                        return;
+                    if(stringPassword.Equals("-1"))
+                        CheckAndChangeScene(mode, slist, ulist, bookList, rentalList);
                     if (loginFlag)
                     {
                         userMode.UserMenu(ulist,bookList,rentalList,id);
@@ -86,13 +92,15 @@ namespace EnSharp_day3
             drawControlMember.LoginPage();
             drawControlMember.WriteId();
             id = Console.ReadLine();
+            if (id.Equals("0"))
+                return false;
             idCheck = CheckID(list, id);
 
             if (idCheck != -1)
             {
                 drawControlMember.WritePassword();
                 securePassword = drawControlMember.GetConsoleSecurePassword();
-                string stringPassword = new NetworkCredential("", securePassword).Password;
+                stringPassword = new NetworkCredential("", securePassword).Password;
                 if(CheckPW(list, idCheck, stringPassword))
                 {
                     return true;
@@ -136,6 +144,10 @@ namespace EnSharp_day3
                 return true;
 
             return false;
+        }
+        public void SetId(string loginId)
+        {
+            id = loginId;
         }
     }
 }

@@ -10,12 +10,12 @@ namespace EnSharp_day3
         private ExceptionHandling exceptionHandling;
         private DrawControlMember drawControlMember;    //창을 그려주기 위한 객체 선언
         private AddMember addMember;                    //회원 추가 창으로 넘어가기 위해 객체 선언
-        private string strChoice;                       //어떤 작업을 할지 선택을 받는 변수
+        private string choice;                       //어떤 작업을 할지 선택을 받는 변수
         private bool flag = true;                       //회원관리 창을 빠져나가기 위한 Flag
-        private string strId;                           //아이디 입력 받는 변수
-        private string strPhoneNumber;                  //전화번호 입력 받는 변수
-        private string strAddress;                      //주소를 입력받는 변수
-        private string strSearch;                       //어떤 값으로 검색할지 입력받는 변수
+        private string id;                           //아이디 입력 받는 변수
+        private string phoneNumber;                  //전화번호 입력 받는 변수
+        private string address;                      //주소를 입력받는 변수
+        private string search;                       //어떤 값으로 검색할지 입력받는 변수
         private int count = 0;                          //리스트를 전부 검색했나 확인하기 위한 변수
         private int memberIndex = 0;                    //몇번 Member의 위치를 변경할건지 저장
 
@@ -31,13 +31,13 @@ namespace EnSharp_day3
 
         public void MemberManagement(List<Member> list)
         {
+            flag = true;
             while (flag)
             {
                 drawControlMember.Menu();
-                strChoice = Console.ReadLine();
+                choice = Console.ReadLine();
 
-
-                switch (strChoice)
+                switch (choice)
                 {
                     case LibraryConstants.AddNewMember:
                         addMember.DrawAndAdd(list);
@@ -78,12 +78,13 @@ namespace EnSharp_day3
 
             drawControlMember.EditScreen();
 
-            strId = Console.ReadLine();
-
+            id = Console.ReadLine();
+            if (id.Equals("0"))
+                return;
             count = 0;
             foreach(Member mem in list)
             {
-                if (mem.Id.Equals(strId))
+                if (mem.Id.Equals(id))
                 {
                     memberIndex = list.IndexOf(mem);
                     break;
@@ -97,8 +98,8 @@ namespace EnSharp_day3
                 DrawPhoneNum();
                 DrawAddress();
 
-                list[memberIndex].PhoneNumber = strPhoneNumber;
-                list[memberIndex].Address = strAddress;
+                list[memberIndex].PhoneNumber = phoneNumber;
+                list[memberIndex].Address = address;
 
                 drawControlMember.EditSuccess();
             }
@@ -111,8 +112,14 @@ namespace EnSharp_day3
         {
             Console.Clear();
 
-            drawControlMember.AdressScreen();
-            strAddress = Console.ReadLine();
+            drawControlMember.WriteAddress((int)LibraryConstants.Mode.Add);
+            address = Console.ReadLine();
+            if (address.Equals("0"))
+                return;
+            if (!exceptionHandling.CheckAddress(address))
+            {
+                DrawAddress();
+            }
         }
         /// <summary>
         /// 전화번호 입력받는 메소드
@@ -120,11 +127,22 @@ namespace EnSharp_day3
         public void DrawPhoneNum()
         {
             Console.Clear();
-            drawControlMember.PhoneScreen();
-            strPhoneNumber = Console.ReadLine();
-
-            if (!exceptionHandling.CheckPhone(strPhoneNumber))
+            drawControlMember.WritePhone((int)LibraryConstants.Mode.Add);
+            phoneNumber = Console.ReadLine();
+            if (phoneNumber.Equals("0"))
+                return;
+            if (!exceptionHandling.CheckPhone(phoneNumber))
                 DrawPhoneNum();
+        }
+        public void DeleteSub(List<Member> list)
+        {
+            drawControlMember.Information(list);
+
+            drawControlMember.DeleteScreen();
+            id = Console.ReadLine();
+
+            if (!exceptionHandling.CheckId(id))
+                DeleteSub(list);
         }
         /// <summary>
         /// 삭제하는 창을 그리고 삭제하는 메소드
@@ -132,20 +150,21 @@ namespace EnSharp_day3
         /// <param name="list"></param>
         public void DrawDelete(List<Member> list)
         {
-            drawControlMember.Information(list);
-
-            drawControlMember.DeleteScreen();
-            strId = Console.ReadLine();
+            count = 0;
+            DeleteSub(list);
 
             for (int i = 0;i<list.Count;i++)
             {
-                if (list[i].Id.Equals(strId))
+                if (list[i].Id.Equals(id))
                 {
                     list.RemoveAt(i);
+                    drawControlMember.DeleteSuccess();
+                    return;
                 }
+                count++;
             }
-
-            drawControlMember.DeleteSuccess();
+            if (count.Equals(list.Count))
+                drawControlMember.DeleteFailed();
         }
         /// <summary>
         /// 검색 기능을 담당하는 메소드
@@ -154,58 +173,141 @@ namespace EnSharp_day3
         public void DrawSearch(List<Member> list)
         {
             drawControlMember.SearchMenu();
-            strId = Console.ReadLine();
-
-            switch (strId)
+            id = Console.ReadLine();
+            Console.Clear();
+            switch (id)
             {
                 case LibraryConstants.SearchWithName:
-                    drawControlMember.WriteName();
-                    strSearch = Console.ReadLine();
+                    SearchSub(list, LibraryConstants.SearchWithName);
+                    if (search.Equals("0")) return;
                     drawControlMember.Category();
-                    drawControlMember.SearchWithName(list,strSearch);
+                    drawControlMember.SearchWithName(list,search);
                     break;
                 case LibraryConstants.SearchWithResidentNum:
-                    drawControlMember.WriteResidentNum();
-                    strSearch = Console.ReadLine();
+                    SearchSub(list, LibraryConstants.SearchWithResidentNum);
+                    if (search.Equals("0")) return;
                     drawControlMember.Category();
-                    drawControlMember.SearchWithResidentNum(list, strSearch);
+                    drawControlMember.SearchWithResidentNum(list, search);
                     break;
                 case LibraryConstants.SearchWithId:
-                    drawControlMember.WriteSignId();
-                    strSearch = Console.ReadLine();
+                    SearchSub(list, LibraryConstants.SearchWithId);
+                    if (search.Equals("0")) return;
                     drawControlMember.Category();
-                    drawControlMember.SearchWithId(list, strSearch);
+                    drawControlMember.SearchWithId(list, search);
                     break;
                 case LibraryConstants.SearchWithPassword:
-                    drawControlMember.WriteSignPassword();
-                    strSearch = Console.ReadLine();
+                    SearchSub(list, LibraryConstants.SearchWithPassword);
+                    if (search.Equals("0")) return;
                     drawControlMember.Category();
-                    drawControlMember.SearchWithPassword(list, strSearch);
+                    drawControlMember.SearchWithPassword(list, search);
                     break;
 
                 case LibraryConstants.SearchWithOverdue:
-                    drawControlMember.WriteOverdue();
-                    strSearch = Console.ReadLine();
+                    SearchSub(list, LibraryConstants.SearchWithOverdue);
+                    if (search.Equals("-1")) return;
                     drawControlMember.Category();
-                    drawControlMember.SearchWithOverdue(list, strSearch);
+                    drawControlMember.SearchWithOverdue(list, search);
                     break;
                 case LibraryConstants.SearchWithAddress:
-                    drawControlMember.WriteAddress();
-                    strSearch = Console.ReadLine();
+                    SearchSub(list, LibraryConstants.SearchWithAddress);
+                    if (search.Equals("0")) return;
                     drawControlMember.Category();
-                    drawControlMember.SearchWithAddress(list, strSearch);
+                    drawControlMember.SearchWithAddress(list, search);
                     break;
                 case LibraryConstants.SearchWithPhone:
-                    drawControlMember.WritePhone();
-                    strSearch = Console.ReadLine();
+                    SearchSub(list, LibraryConstants.SearchWithPhone);
+                    if (search.Equals("0")) return;
                     drawControlMember.Category();
-                    drawControlMember.SearchWithPhone(list, strSearch);
+                    drawControlMember.SearchWithPhone(list, search);
+                    break;
+                case LibraryConstants.ReturnBack:
                     break;
                 default:
                     DrawSearch(list);
                     break;
             }
             
+        }
+
+        public void SearchSub(List<Member> list,string mode)
+        {
+            switch (mode)
+            {
+                case LibraryConstants.SearchWithName:
+                    drawControlMember.WriteName((int)LibraryConstants.Mode.Search);
+                    search = Console.ReadLine();
+                    if (search.Equals("0")) return;
+                    if (!exceptionHandling.CheckName(search))
+                    {
+                        Console.Clear();
+                        SearchSub(list, LibraryConstants.SearchWithName);
+                    }
+                    break;
+                case LibraryConstants.SearchWithResidentNum:
+                    drawControlMember.WriteResidentNum((int)LibraryConstants.Mode.Search);
+                    search = Console.ReadLine();
+                    if (search.Equals("0")) return;
+                    if (!exceptionHandling.CheckResidentNum(search))
+                    {
+                        Console.Clear();
+                        SearchSub(list, LibraryConstants.SearchWithResidentNum);
+                    }
+                    break;
+                case LibraryConstants.SearchWithId:
+                    drawControlMember.WriteSignId((int)LibraryConstants.Mode.Search);
+                    search = Console.ReadLine();
+                    if (search.Equals("0")) return;
+                    if(!exceptionHandling.CheckId(search))
+                    {
+                        Console.Clear();
+                        SearchSub(list, LibraryConstants.SearchWithId);
+                    }
+                        
+                    break;
+                case LibraryConstants.SearchWithPassword:
+                    drawControlMember.WriteSignPassword((int)LibraryConstants.Mode.Search);
+                    search = Console.ReadLine();
+                    if (search.Equals("0")) return;
+                    if (!exceptionHandling.CheckPw(search))
+                    {
+                        Console.Clear();
+                        SearchSub(list, LibraryConstants.SearchWithPassword);
+                    }
+                    break;
+
+                case LibraryConstants.SearchWithOverdue:
+                    drawControlMember.WriteOverdue((int)LibraryConstants.Mode.Search);
+                    search = Console.ReadLine();
+                    if (search.Equals("-1")) return;
+                    if (exceptionHandling.CheckBookCount(search).Equals(-1))
+                    {
+                        Console.Clear();
+                        SearchSub(list, LibraryConstants.SearchWithOverdue);
+                    }
+                    break;
+                case LibraryConstants.SearchWithAddress:
+                    drawControlMember.WriteAddress((int)LibraryConstants.Mode.Search);
+                    search = Console.ReadLine();
+                    if (search.Equals("0")) return;
+                    if (!exceptionHandling.CheckAddress(search))
+                    {
+                        Console.Clear();
+                        SearchSub(list, LibraryConstants.SearchWithAddress);
+                    }
+                        break;
+                case LibraryConstants.SearchWithPhone:
+                    drawControlMember.WritePhone((int)LibraryConstants.Mode.Search);
+                    search = Console.ReadLine();
+                    if (search.Equals("0")) return;
+                    if (!exceptionHandling.CheckPhone(search))
+                    {
+                        Console.Clear();
+                        SearchSub(list, LibraryConstants.SearchWithPhone);
+                    }
+                    break;
+                default:
+                    break;
+            }
         }
         /// <summary>
         /// 회원정보를 전부 띄워주는 메소드

@@ -8,7 +8,7 @@ namespace EnSharp_day3
     class SuperviserMode
     {
         private bool flag = true;       //종료 flag
-        private string strChoice;       //어떤 작업을 할지 입력받음
+        private string choice;       //어떤 작업을 할지 입력받음
         private ControlMember controlMember;    //회원관리 메뉴
         private LibraryManagement libraryManagement;    //책관리 메뉴
         private DrawControlMember drawControlMember;    //Ui 그리는 객체
@@ -29,11 +29,12 @@ namespace EnSharp_day3
 
         public void SuperViserMenu(List<Member> slist, List<Member> ulist, List<Book> bookList)
         {
+            flag = true;
             while (flag)
             {
                 drawControlMember.SuperViserModeMenu();
-                strChoice = Console.ReadLine();
-                switch (strChoice)
+                choice = Console.ReadLine();
+                switch (choice)
                 {
                     case LibraryConstants.MemberControl:
                         controlMember.MemberManagement(ulist);
@@ -41,7 +42,7 @@ namespace EnSharp_day3
                     case LibraryConstants.BookManagement:
                         libraryManagement.DrawAndSelectMenu(bookList);
                         break;
-                    case LibraryConstants.GoBack:
+                    case LibraryConstants.GoReturn:
                         flag = false;
                         break;
                     default:

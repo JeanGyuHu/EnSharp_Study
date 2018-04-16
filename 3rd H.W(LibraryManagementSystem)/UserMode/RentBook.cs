@@ -7,7 +7,7 @@ namespace EnSharp_day3
 {
     class RentBook
     {
-        private string strBookChoice;           //빌리려고하는 책정보
+        private string choice;           //빌리려고하는 책정보
         private int count = 0;                  //책을 다 검사했나 체크하기 위한 변수
         private int findIndex = -1;             //대여할때 찾은 책의 인덱스 값
         private DrawAboutBooks drawAboutBooks;   //UI를 그리기 위한  객체
@@ -28,12 +28,12 @@ namespace EnSharp_day3
         }
         public void RentBookPage(List<Book> bookList, List<RentalData> rentalList, string id)
         {
-            drawAboutBooks.Information(bookList);
-            drawAboutBooks.WriteBookName();
 
-            strBookChoice = Console.ReadLine();
+            DrawNo(bookList);
+            if (choice.Equals("0"))
+                return;
 
-            findIndex = FindBook(bookList, rentalList, id, strBookChoice);
+            findIndex = FindBook(bookList, rentalList, id, choice);
 
             if (findIndex.Equals(-1))
             {
@@ -41,12 +41,22 @@ namespace EnSharp_day3
             }
             else
             {
-                bookList[findIndex].BookCount--;
-                rentalList.Add(new RentalData(bookList[findIndex].BookNo, bookList[findIndex].BookName, bookList[findIndex].BookPbls, bookList[findIndex].BookAuthor, id, new DateTime(now.Year, now.Month + 1, now.Day + 10)));
+                bookList[findIndex].Count--;
+                rentalList.Add(new RentalData(bookList[findIndex].No, bookList[findIndex].Name, bookList[findIndex].Pbls, bookList[findIndex].Author, id, new DateTime(now.Year, now.Month + 1, now.Day + 10)));
                 drawAboutBooks.RentalSuccess();
             }
 
             drawAboutBooks.PressAnyKey();
+        }
+        public void DrawNo(List<Book> bookList)
+        {
+            drawAboutBooks.Information(bookList);
+            drawAboutBooks.WriteBookNo();
+            choice = Console.ReadLine();
+            if (choice.Equals("0"))
+                return;
+            if (!exceptionHandling.CheckBookNo(choice))
+                DrawNo(bookList);
         }
         /// <summary>
         /// 책이 있는지 체크해주고 책의 개수가 충분히 있다면 인덱스값을 넘겨준다.
@@ -65,8 +75,8 @@ namespace EnSharp_day3
 
             for (int i = 0; i < bookList.Count; i++)
             {
-                if (bookList[i].BookName.Equals(bookChoice))
-                    if (bookList[i].BookCount > 0)
+                if (bookList[i].No.Equals(bookChoice))
+                    if (bookList[i].Count > 0)
                         return i;
                 count++;
             }

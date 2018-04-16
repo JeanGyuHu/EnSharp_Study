@@ -13,12 +13,12 @@ namespace EnSharp_day3
         private ExceptionHandling exceptionHandling;        //예외 처리를 위한 객체 선언
         private SecureString securePassword;                //비밀번호를 받기 위한 보안string
         private SecureString secureResidentNum;             //주민번호를 받기 위한 보안 string     
-        private string strId;                               //id 입력 받기 위함
-        private string stringResidentNum;                   //보안으로 받은 것을 저장하기 위해 string으로 변환해주기 위함
-        private string strName;                             //이름을 입력 받기 위함
-        private string stringPassword;                      //보안으로 받은 것을 저장하기 위해 string으로 변환해주기 위함
-        private string strAddress;                          //주소를 입력 받기 위함
-        private string strPhoneNumber;                      //전화번호를 입력 받기 위함
+        private string id;                               //id 입력 받기 위함
+        private string residentNum;                   //보안으로 받은 것을 저장하기 위해 string으로 변환해주기 위함
+        private string name;                             //이름을 입력 받기 위함
+        private string password;                      //보안으로 받은 것을 저장하기 위해 string으로 변환해주기 위함
+        private string address;                          //주소를 입력 받기 위함
+        private string phoneNumber;                      //전화번호를 입력 받기 위함
 
         private int count = 0;
 
@@ -40,102 +40,141 @@ namespace EnSharp_day3
         /// <param name="list">회원 정보 목록</param>
         public void HelpSignUp(List<Member> list)
         {
-            DrawId();
+            DrawId(list);
+            if (id.Equals("0"))
+                return;
 
-            if (CheckId(list))
-            {
-                DrawPassword();
-                DrawName();
-                DrawResidentNum();
-                DrawPhoneNum();
-                DrawAddress();
-                Console.Clear();
-                list.Add(new Member(strName, stringResidentNum, stringPassword, strId, 0, strAddress, strPhoneNumber));
-                drawControlMember.SignUpSuccess();
-            }
-            else
-            {
-                HelpSignUp(list);
-            }
+            DrawPassword(list);
+            if (password.Equals("0"))
+                return;
+            DrawName(list);
+            if (name.Equals("0"))
+                return;
+            DrawResidentNum(list);
+            if (residentNum.Equals("0"))
+                return;
+            DrawPhoneNum(list);
+            if (phoneNumber.Equals("0"))
+                return;
+            DrawAddress(list);
+            if (address.Equals("0"))
+                return;
+            Console.Clear();
+            list.Add(new Member(name, residentNum, password, id, 0, address, phoneNumber));
+            drawControlMember.SignUpSuccess();
+
         }
         /// <summary>
         /// 아이디 입력 받는 메소드
         /// </summary>
-        public void DrawId()
+        public void DrawId(List<Member> list)
         {
             drawControlMember.SignUpTitle();
-            drawControlMember.WriteSignId();
-            strId = Console.ReadLine();
-            if (!exceptionHandling.CheckId(strId))
+            drawControlMember.WriteSignId((int)LibraryConstants.Mode.Add);
+            id = Console.ReadLine();
+            if (id.Equals("0"))
+                return;
+
+            if (!exceptionHandling.CheckId(id))
             {
-                DrawId();
+                DrawId(list);
+            }
+            if (!CheckId(list))
+            {
+                DrawId(list);
             }
         }
         /// <summary>
         /// 비밀번호 입력 받는 메소드
         /// </summary>
-        public void DrawPassword()
+        public void DrawPassword(List<Member> list)
         {
             drawControlMember.SignUpTitle();
-            drawControlMember.WriteSignPassword();
+            drawControlMember.WriteSignPassword((int)LibraryConstants.Mode.Add);
             securePassword = drawControlMember.GetConsoleSecurePassword();
-            stringPassword = new NetworkCredential("", securePassword).Password;
-            if (!exceptionHandling.CheckPw(stringPassword))
+            password = new NetworkCredential("", securePassword).Password;
+            if (password.Equals("0"))
+                return;
+            if (password.Equals("1"))
+                DrawId(list);
+            if (!exceptionHandling.CheckPw(password))
             {
-                DrawPassword();
+                DrawPassword(list);
             }
         }
         /// <summary>
         /// 이름 입력 받는 메소드
         /// </summary>
-        public void DrawName()
+        public void DrawName(List<Member> list)
         {
             drawControlMember.SignUpTitle();
-            drawControlMember.WriteName();
-            strName = Console.ReadLine();
+            drawControlMember.WriteName((int)LibraryConstants.Mode.Add);
+            name = Console.ReadLine();
+
+            if (name.Equals("0"))
+                return;
+            if (name.Equals("1"))
+                DrawPassword(list);
+
+            if (!exceptionHandling.CheckName(name))
+            {
+                DrawName(list);
+            }
         }
         /// <summary>
         /// 주민번호 입력 받는 메소드
         /// </summary>
-        public void DrawResidentNum()
+        public void DrawResidentNum(List<Member> list)
         {
             drawControlMember.SignUpTitle();
-            drawControlMember.WriteResidentNum();
+            drawControlMember.WriteResidentNum((int)LibraryConstants.Mode.Add);
             secureResidentNum = drawControlMember.GetConsoleSecurePassword();
-            stringResidentNum = new NetworkCredential("", secureResidentNum).Password;
+            residentNum = new NetworkCredential("", secureResidentNum).Password;
 
-            if (!exceptionHandling.CheckResidentNum(stringResidentNum))
+            if (residentNum.Equals("0"))
+                return;
+            if (residentNum.Equals("1"))
+                DrawName(list);
+            if (!exceptionHandling.CheckResidentNum(residentNum))
             {
-                DrawResidentNum();
+                DrawResidentNum(list);
             }
         }
         /// <summary>
         /// 전화번호 입력 받는 메소드
         /// </summary>
-        public void DrawPhoneNum()
+        public void DrawPhoneNum(List<Member> list)
         {
             Console.Clear();
             drawControlMember.SignUpTitle();
-            drawControlMember.WritePhone();
-            strPhoneNumber = Console.ReadLine();
+            drawControlMember.WritePhone((int)LibraryConstants.Mode.Add);
+            phoneNumber = Console.ReadLine();
 
-            if (!exceptionHandling.CheckPhone(strPhoneNumber))
+            if (phoneNumber.Equals("0"))
+                return;
+            if (phoneNumber.Equals("1"))
+                DrawResidentNum(list);
+            if (!exceptionHandling.CheckPhone(phoneNumber))
             {
-                DrawPhoneNum();
+                DrawPhoneNum(list);
             }
         }
         /// <summary>
         /// 주소를 입력받는 메소드
         /// </summary>
-        public void DrawAddress()
+        public void DrawAddress(List<Member> list)
         {
             drawControlMember.SignUpTitle();
-            drawControlMember.WriteAddress();
-            strAddress = Console.ReadLine();
+            drawControlMember.WriteAddress((int)LibraryConstants.Mode.Add);
+            address = Console.ReadLine();
 
-            if (!exceptionHandling.CheckAddress(strAddress))
+            if (address.Equals("0"))
+                return;
+            if (address.Equals("1"))
+                DrawPhoneNum(list);
+            if (!exceptionHandling.CheckAddress(address))
             {
-                DrawAddress();
+                DrawAddress(list);
             }
         }
         /// <summary>
@@ -148,7 +187,7 @@ namespace EnSharp_day3
             count = 0;
             foreach (Member mem in list)
             {
-                if (mem.Id.Equals(strId))
+                if (mem.Id.Equals(id))
                 {
                     Console.WriteLine("\n\n\t\t\tUsername already taken. Please try another one.");
                     return false;

@@ -15,7 +15,9 @@ namespace EnSharp_day3
 
         public const string MemberControl = "1";
         public const string BookManagement = "2";
-        public const string GoBack = "3";
+        public const string ReturnBooks = "3";
+        public const string GoReturn = "3";
+        public const string GoBack = "4";
 
         public const string RentBookPage = "1";
         public const string ExtendRentalTimePage = "2";
@@ -50,5 +52,8 @@ namespace EnSharp_day3
         public const string SearchWithOverdue = "5";
         public const string SearchWithAddress = "6";
         public const string SearchWithPhone = "7";
+        public const string ReturnBack = "8";
+
+        public enum Mode { Add=1, Search };
     }
 }

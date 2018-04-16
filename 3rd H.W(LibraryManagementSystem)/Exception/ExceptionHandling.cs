@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace EnSharp_day3
 {
@@ -18,6 +19,7 @@ namespace EnSharp_day3
         }
         /// <summary>
         /// 입력 받은 아이디가 해당 조건에 만족하는지 체크
+        /// 숫자가 8자에서 14자 사이이며 영어와 숫자만 입력 받는다.
         /// </summary>
         /// <param name="id">회원이 입력한 아이디</param>
         /// <returns>조건 만족시 true</returns>
@@ -25,25 +27,39 @@ namespace EnSharp_day3
         {
             result = true;
 
-            if (!CheckIsNumAndChar(id))
-                result = false;
+
+            for(int index = 0; index < id.Length; index++)
+            {
+                if (Regex.IsMatch(id, @"[a-zA-Z0-9]").Equals(false))
+                    return false;
+            }
+            if (Regex.IsMatch(id, @"[가-힣]"))
+                return false;
+            if (Regex.IsMatch(id, " "))
+                return false;
+            if (Regex.IsMatch(id, @"[~`!@#$%%\-+={}[\]|\\;:""<>,.?/]"))
+                return false;
             if (id.Length < 8 || id.Length > 14)
                 result = false;
+
             return result; 
         }
         /// <summary>
         /// 입력받은 아이디가 조건에 만족하는 체크
+        /// 영문자와 숫자 특수문자 외에는 사용 금지 길이제한 8~14
         /// </summary>
         /// <param name="pw">사용자가 입력한 비밀번호</param>
         /// <returns>조건 만족 여부</returns>
         public bool CheckPw(string pw)
         {
             result = true;
-
-            if (!CheckIsNumAndChar(pw))
-            {
-                result = false;
-            }
+            for (int index = 0; index < pw.Length; index++)
+                if (Regex.IsMatch(pw, @"[a-zA-Z0-9~`!@#$%%\-+={}[\]|\\;:""<>,.?/]").Equals(false))
+                    return false;
+            if (Regex.IsMatch(pw, @"[가-힣]"))
+                return false;
+            if (Regex.IsMatch(pw, " "))
+                return false;
             if (pw.Length < 8 || pw.Length > 14)
                 result = false;
 
@@ -62,13 +78,12 @@ namespace EnSharp_day3
             {
                 if (rentalList[i].BookLender.Equals(id))
                 {
-                    if (rentalList[i].BookName.Equals(bookChoice))
+                    if (rentalList[i].BookNo.Equals(bookChoice))
                     {
                         return false;
                     }
                 }
             }
-
             return true;
         }
         /// <summary>
@@ -80,11 +95,14 @@ namespace EnSharp_day3
         {
             result = true;
 
-            if (!CheckIsChar(name))
-                result = false;
-
-            if (name.Length < 1 || name.Length > 10)
-                result = false;
+            Regex regex = new Regex(@"[^가-힣]");
+            Match m = regex.Match(name);
+            while (m.Success)
+            {
+                return false;
+            }
+            if (name.Length > 5 || name.Length < 2)
+                return false;
 
             return result;
         }
@@ -100,18 +118,10 @@ namespace EnSharp_day3
             if (bookNo.Length != 11)
                 return false;
 
-            if (!CheckPartNum(bookNo, 0, 1))
-            {
-                result = false;
-            }
-            if (!bookNo[2].Equals('-'))
-            {
-                result = false;
-            }
-            if (!CheckPartNum(bookNo, 3, 10))
-                result = false;
+            if (Regex.IsMatch(bookNo, @"12-[0-9]{8}"))
+                return true;
 
-            return result;
+            return false;
         }
         /// <summary>
         /// 책이 조건을 충족하는지 체크
@@ -120,18 +130,45 @@ namespace EnSharp_day3
         /// <returns>충족 여부</returns>
         public int CheckBookCount (string bookCount)
         {
-            if (bookCount.Length > 4)
+
+            if (bookCount.Length > 2||bookCount.Length<1)
                 return -1;
-            if (!CheckIsNum(bookCount))
+            //Regex regex = new Regex(@"\D");
+            //Match m = regex.Match(bookCount);
+            //while (m.Success)
+            //{
+            //    return -1;
+            //}
+            if (Regex.IsMatch(bookCount, @"\D"))
                 return -1;
-
-            int result = Int32.Parse(bookCount);
-
-
+            if (Regex.IsMatch(bookCount, @"[0-9]{1,2}"))
+                return Int32.Parse(bookCount);
             if (Int32.Parse(bookCount) < 0)
                 return -1;
 
-            return result;
+            return -1;
+        }
+        public bool CheckAuthor(string author)
+        {
+            if (author.Length < 1 || author.Length > 20)
+                return false;
+
+            if (Regex.IsMatch(author, @"[~`!@#$%%\-+={}[\]|\\;:""<>,?/]"))
+                return false;
+            if (Regex.IsMatch(author, @"[0-9]"))
+                return false;
+            return true;
+        }
+        public bool CheckPublisher(string publisher)
+        {
+            if (publisher.Length < 1 || publisher.Length > 20)
+                return false;
+            if (Regex.IsMatch(publisher, @"[~`!@#$%%\-+={}[\]|\\;:""<>,?/]"))
+                return false;
+            if (Regex.IsMatch(publisher, @"[0-9]"))
+                return false;
+
+            return true;
         }
         /// <summary>
         /// 주민등록번호 조건 충족 여부
@@ -140,21 +177,19 @@ namespace EnSharp_day3
         /// <returns>충족 여부</returns>
         public bool CheckResidentNum(string resiNum)
         {
+            char[] inputResinum = resiNum.ToCharArray();
             result = true;
 
+            if (!Regex.IsMatch(resiNum, @"[0-9][0-9][01][0-9][0123][0-9]-[12][0-9]{6}"))
+                return false;
             if (resiNum.Length != 14)
                 return false;
 
-            if (!CheckPartNum(resiNum, 0, 5))
-            {
-                result = false;
-            }
-            if (!resiNum[6].Equals('-'))
-            {
-                result = false;
-            }
-            if (!CheckPartNum(resiNum, 7, 13))
-                result = false;
+            if (inputResinum[2].Equals('1') && inputResinum[3] > '2')
+                return false;
+
+            if (inputResinum[4].Equals('3') && inputResinum[5] > '1')
+                return false;
 
             return result;
         }
@@ -167,10 +202,11 @@ namespace EnSharp_day3
         {
             result = true;
 
-            if (!CheckIsNum(phone))
+            if (phone.Length > 13 || phone.Length < 12)
                 result = false;
-            if (phone.Length > 11 || phone.Length < 10)
+            if (!Regex.IsMatch(phone, @"01[016789]-\d{3,4}-[0-9]{4}"))
                 result = false;
+
             return result;
         }
         /// <summary>
@@ -182,9 +218,10 @@ namespace EnSharp_day3
         {
             result = true;
 
-            if (!CheckIsNumAndChar(address))
+            if (address.Length > 14 || address.Length < 10)
                 result = false;
-            if (address.Length > 20 || address.Length < 15)
+
+            if (!Regex.IsMatch(address, @"[가-힣]{2,3}[시도]\s[가-힣]{1,3}[시군구]\s[가-힣]{2,3}[로]"))
                 result = false;
 
             return result;

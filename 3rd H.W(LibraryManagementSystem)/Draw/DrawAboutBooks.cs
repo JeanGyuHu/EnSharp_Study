@@ -18,8 +18,12 @@ namespace EnSharp_day3
         /// </summary>
         public void PressAnyKey()
         {
-            Console.Write("\n\n\n\t\t\tPress Any Key . . .");
+            Console.Write("\n\t\t\tPress Any Key . . .");
             keyInfo = Console.ReadKey();
+        }
+        public void ExitMessage()
+        {
+            Console.WriteLine("\n\n\t\t\t뒤로가려면 Enter를 누르세요.");
         }
         /// <summary>
         /// 현재 도서관의 책 정보를 보여주는 메소드
@@ -31,12 +35,26 @@ namespace EnSharp_day3
             Console.WriteLine("\n\n\t\t\t┌------------------------------------------------------┐");
             Console.WriteLine("\t\t\t│           B O O K S   I N F O R M A T I O N          │");
             Console.WriteLine("\t\t\t└------------------------------------------------------┘");
-            Console.WriteLine("┌---------------------------------------------------------------------------------------┐");
-            Console.WriteLine("│\tNo\t│\tName\t│\tCount\t│\tAuthor\t│\tPublisher\t│");
-            Console.WriteLine("└---------------------------------------------------------------------------------------┘");
+            Console.WriteLine("┌-------------------------------------------------------------------------------------------┐");
+            Console.WriteLine("│\tNo\t│\tName\t│\tPublisher\t│\tAuthor\t│\tCount\t    │");
+            Console.WriteLine("└-------------------------------------------------------------------------------------------┘");
 
             for (int i = 0; i < list.Count; i++)
-                Console.WriteLine("{0}\t{1}{2}\t{3}{4}", list[i].BookNo.PadLeft(13), list[i].BookName.PadRight(20), list[i].BookCount, list[i].BookAuthor.PadRight(20), list[i].BookPbls.PadRight(20));
+            {
+                byte[] byteName1 = Encoding.Default.GetBytes(list[i].Name + "          ");
+                byte[] byteName2 = new byte[20];
+                Array.Copy(byteName1, byteName2, 20);
+
+                byte[] bytePublisher1 = Encoding.Default.GetBytes(list[i].Pbls + "                              ");
+                byte[] bytePublisher2 = new byte[25];
+                Array.Copy(bytePublisher1, bytePublisher2, 25);
+
+                byte[] byteAuthor1 = Encoding.Default.GetBytes(list[i].Author + "                              ");
+                byte[] byteAuthor2 = new byte[20];
+                Array.Copy(byteAuthor1, byteAuthor2, 20);
+
+                Console.WriteLine("   {0,-15}{1}{2}{3}{4,-10}", list[i].No,Encoding.Default.GetString(byteName2), Encoding.Default.GetString(bytePublisher2), Encoding.Default.GetString(byteAuthor2), list[i].Count);
+            }
 
         }
         /// <summary>
@@ -45,9 +63,9 @@ namespace EnSharp_day3
         public void Category()
         {
             Console.Clear();
-            Console.WriteLine("┌---------------------------------------------------------------------------------------┐");
-            Console.WriteLine("│\tNo\t│\tName\t│\tCount\t│\tAuthor\t│\tPublisher\t│");
-            Console.WriteLine("└---------------------------------------------------------------------------------------┘");
+            Console.WriteLine("┌-------------------------------------------------------------------------------------------┐");
+            Console.WriteLine("│\tNo\t│\tName\t│\tPublisher\t│\tAuthor\t│\tCount\t    │");
+            Console.WriteLine("└-------------------------------------------------------------------------------------------┘");
         }
         /// <summary>
         /// 현재 어떤 창인지 위에 제목을 그려주는 메소드
@@ -95,15 +113,18 @@ namespace EnSharp_day3
         /// </summary>
         public void WriteBookNo()
         {
-            Console.WriteLine("\n\n\t\t\t\t책의 고유번호를 입력하세요.");
-            Console.Write("\n\n\t\t\t\t형식 xx-xxxxxxxx (x는 모두 숫자) >> ");
+            Console.WriteLine("\n\n\t\t\t\t책의 고유번호를 입력하세요.(종료 0)");
+            Console.WriteLine("\n\n\t\t\t\t형식 12-xxxxxxxx (x는 모두 숫자)");
+            Console.Write("\n\n\t\t\t\t>> ");
         }
         /// <summary>
         /// 책 이름을 적으라는 메세지를 띄우는 메소드
         /// </summary>
         public void WriteBookName()
         {
-            Console.Write("\n\n\t\t\t\twrite Book name : ");
+            Console.WriteLine("\n\n\t\t\t\t책의 이름을 입력하세요. (뒤로가기 1, 종료 0)");
+            Console.WriteLine("\n\n\t\t\t\t형식 공백을 제외한 모든 이름이 가능합니다.");
+            Console.Write("\n\n\t\t\t\t>> ");
         }
         /// <summary>
         /// 책 대여 실패를 알리는 메소드
@@ -124,22 +145,27 @@ namespace EnSharp_day3
         /// </summary>
         public void WriteBookCount()
         {
-            Console.WriteLine("\n\n\t\t\t\t책의 권수를 입력하세요. ");
-            Console.Write("\n\n\t\t\t\t(999개 이상 입력 불가능) >>");
+            Console.WriteLine("\n\n\t\t\t\t책의 권수를 입력하세요. (뒤로가기 -2, 종료 -1)");
+            Console.WriteLine("\n\n\t\t\t\t(99개 이상 입력 불가능)");
+            Console.Write("\n\n\t\t\t\t>> ");
         }
         /// <summary>
         /// 책의 저자를 적으라고 알리는 메소드
         /// </summary>
         public void WriteBookAuthor()
         {
-            Console.Write("\n\n\t\t\t\twrite Book Author : ");
+            Console.WriteLine("\n\n\t\t\t\t책의 저자를 입력하세요. (뒤로가기 1, 종료 0)");
+            Console.WriteLine("\n\n\t\t\t\t형식 영어,한글과 특수문자. 사용가능");
+            Console.Write("\n\n\t\t\t\t>> ");
         }
         /// <summary>
         /// 책의 출판사를 적으라고 알리는 메소드
         /// </summary>
         public void WriteBookPublisher()
         {
-            Console.Write("\n\n\t\t\t\twrite Book Publisher (Only English): ");
+            Console.WriteLine("\n\n\t\t\t\t책의 출판사를 입력하세요. (뒤로가기 1, 종료 0)");
+            Console.WriteLine("\n\n\t\t\t\t형식 영어,한글과 특수문자. 사용가능");
+            Console.Write("\n\n\t\t\t\t>> ");
         }
         /// <summary>
         /// 검색할때 메뉴창을 그리는 메소드
@@ -152,6 +178,8 @@ namespace EnSharp_day3
             Console.WriteLine("\n\n\t\t\t\t3. Book Count");
             Console.WriteLine("\n\n\t\t\t\t4. Book Author");
             Console.WriteLine("\n\n\t\t\t\t5. Book Publisher");
+            Console.WriteLine("\n\n\t\t\t\t6. EXIT");
+            Console.WriteLine("\t\t\t검색 중 책 이름이 아닌 아무거나 입력시 종료");
             Console.Write("\n\t\t\t\t>> ");
         }
         /// <summary>
@@ -163,8 +191,22 @@ namespace EnSharp_day3
         {
             for (int i = 0; i < list.Count; i++)
             {
-                if (list[i].BookNo.Equals(strSearch))
-                    Console.WriteLine("{0}\t{1}{2}\t{3}{4}", list[i].BookNo.PadLeft(13), list[i].BookName.PadRight(20), list[i].BookCount, list[i].BookAuthor.PadRight(20), list[i].BookPbls.PadRight(20));
+                if (list[i].No.Equals(strSearch))
+                {
+                    byte[] byteName1 = Encoding.Default.GetBytes(list[i].Name + "          ");
+                    byte[] byteName2 = new byte[20];
+                    Array.Copy(byteName1, byteName2, 20);
+
+                    byte[] bytePublisher1 = Encoding.Default.GetBytes(list[i].Pbls + "                              ");
+                    byte[] bytePublisher2 = new byte[25];
+                    Array.Copy(bytePublisher1, bytePublisher2, 25);
+
+                    byte[] byteAuthor1 = Encoding.Default.GetBytes(list[i].Author + "                              ");
+                    byte[] byteAuthor2 = new byte[20];
+                    Array.Copy(byteAuthor1, byteAuthor2, 20);
+
+                    Console.WriteLine("   {0,-15}{1}{2}{3}{4,-10}", list[i].No, Encoding.Default.GetString(byteName2), Encoding.Default.GetString(bytePublisher2), Encoding.Default.GetString(byteAuthor2), list[i].Count);
+                }
             }
         }
         /// <summary>
@@ -176,8 +218,22 @@ namespace EnSharp_day3
         {
             for (int i = 0; i < list.Count; i++)
             {
-                if (list[i].BookName.Equals(strSearch))
-                    Console.WriteLine("{0}\t{1}{2}\t{3}{4}", list[i].BookNo.PadLeft(13), list[i].BookName.PadRight(20), list[i].BookCount, list[i].BookAuthor.PadRight(20), list[i].BookPbls.PadRight(20));
+                if (list[i].Name.Equals(strSearch))
+                {
+                    byte[] byteName1 = Encoding.Default.GetBytes(list[i].Name + "          ");
+                    byte[] byteName2 = new byte[20];
+                    Array.Copy(byteName1, byteName2, 20);
+
+                    byte[] bytePublisher1 = Encoding.Default.GetBytes(list[i].Pbls + "                              ");
+                    byte[] bytePublisher2 = new byte[25];
+                    Array.Copy(bytePublisher1, bytePublisher2, 25);
+
+                    byte[] byteAuthor1 = Encoding.Default.GetBytes(list[i].Author + "                              ");
+                    byte[] byteAuthor2 = new byte[20];
+                    Array.Copy(byteAuthor1, byteAuthor2, 20);
+
+                    Console.WriteLine("   {0,-15}{1}{2}{3}{4,-10}", list[i].No, Encoding.Default.GetString(byteName2), Encoding.Default.GetString(bytePublisher2), Encoding.Default.GetString(byteAuthor2), list[i].Count);
+                }
             }
         }
         /// <summary>
@@ -189,8 +245,22 @@ namespace EnSharp_day3
         {
             for (int i = 0; i < list.Count; i++)
             {
-                if (list[i].BookCount.Equals(Convert.ToInt32(strSearch)))
-                    Console.WriteLine("{0}\t{1}{2}\t{3}{4}", list[i].BookNo.PadLeft(13), list[i].BookName.PadRight(20), list[i].BookCount, list[i].BookAuthor.PadRight(20), list[i].BookPbls.PadRight(20));
+                if (list[i].Count.Equals(Convert.ToInt32(strSearch)))
+                {
+                    byte[] byteName1 = Encoding.Default.GetBytes(list[i].Name + "          ");
+                    byte[] byteName2 = new byte[20];
+                    Array.Copy(byteName1, byteName2, 20);
+
+                    byte[] bytePublisher1 = Encoding.Default.GetBytes(list[i].Pbls + "                              ");
+                    byte[] bytePublisher2 = new byte[25];
+                    Array.Copy(bytePublisher1, bytePublisher2, 25);
+
+                    byte[] byteAuthor1 = Encoding.Default.GetBytes(list[i].Author + "                              ");
+                    byte[] byteAuthor2 = new byte[20];
+                    Array.Copy(byteAuthor1, byteAuthor2, 20);
+
+                    Console.WriteLine("   {0,-15}{1}{2}{3}{4,-10}", list[i].No, Encoding.Default.GetString(byteName2), Encoding.Default.GetString(bytePublisher2), Encoding.Default.GetString(byteAuthor2), list[i].Count);
+                }
             }
         }
         /// <summary>
@@ -202,8 +272,22 @@ namespace EnSharp_day3
         {
             for (int i = 0; i < list.Count; i++)
             {
-                if (list[i].BookAuthor.Equals(strSearch))
-                    Console.WriteLine("{0}\t{1}{2}\t{3}{4}", list[i].BookNo.PadLeft(13), list[i].BookName.PadRight(20), list[i].BookCount, list[i].BookAuthor.PadRight(20), list[i].BookPbls.PadRight(20));
+                if (list[i].Author.Equals(strSearch))
+                {
+                    byte[] byteName1 = Encoding.Default.GetBytes(list[i].Name + "          ");
+                    byte[] byteName2 = new byte[20];
+                    Array.Copy(byteName1, byteName2, 20);
+
+                    byte[] bytePublisher1 = Encoding.Default.GetBytes(list[i].Pbls + "                              ");
+                    byte[] bytePublisher2 = new byte[25];
+                    Array.Copy(bytePublisher1, bytePublisher2, 25);
+
+                    byte[] byteAuthor1 = Encoding.Default.GetBytes(list[i].Author + "                              ");
+                    byte[] byteAuthor2 = new byte[20];
+                    Array.Copy(byteAuthor1, byteAuthor2, 20);
+
+                    Console.WriteLine("   {0,-15}{1}{2}{3}{4,-10}", list[i].No, Encoding.Default.GetString(byteName2), Encoding.Default.GetString(bytePublisher2), Encoding.Default.GetString(byteAuthor2), list[i].Count);
+                }
             }
         }
         /// <summary>
@@ -231,26 +315,60 @@ namespace EnSharp_day3
         {
             for (int i = 0; i < list.Count; i++)
             {
-                if (list[i].BookPbls.Equals(strSearch))
-                    Console.WriteLine("{0}\t{1}{2}\t{3}{4}", list[i].BookNo.PadLeft(13), list[i].BookName.PadRight(20), list[i].BookCount, list[i].BookAuthor.PadRight(20), list[i].BookPbls.PadRight(20));
+                if (list[i].Pbls.Equals(strSearch))
+                {
+                    byte[] byteName1 = Encoding.Default.GetBytes(list[i].Name + "          ");
+                    byte[] byteName2 = new byte[20];
+                    Array.Copy(byteName1, byteName2, 20);
+
+                    byte[] bytePublisher1 = Encoding.Default.GetBytes(list[i].Pbls + "                              ");
+                    byte[] bytePublisher2 = new byte[25];
+                    Array.Copy(bytePublisher1, bytePublisher2, 25);
+
+                    byte[] byteAuthor1 = Encoding.Default.GetBytes(list[i].Author + "                              ");
+                    byte[] byteAuthor2 = new byte[20];
+                    Array.Copy(byteAuthor1, byteAuthor2, 20);
+
+                    Console.WriteLine("   {0,-15}{1}{2}{3}{4,-10}", list[i].No, Encoding.Default.GetString(byteName2), Encoding.Default.GetString(bytePublisher2), Encoding.Default.GetString(byteAuthor2), list[i].Count);
+                }
             }
         }
         /// <summary>
         /// 시간 연장 페이지의 UI를 그리는 메소드
         /// </summary>
         /// <param name="list">책을 빌린 사람들의 목록</param>
-        public void ExtendTimeTitle(List<RentalData> list)
+        public void ExtendTimeTitle(List<RentalData> list,string id)
         {
             Console.Clear();
             Console.WriteLine("\n\n\t\t\t┌---------------------------------------------------------┐");
             Console.WriteLine("\t\t\t│           E X T E N D   R E N T A L   T I M E           │");
             Console.WriteLine("\t\t\t└---------------------------------------------------------┘");
             Console.WriteLine("┌----------------------------------------------------------------------------------------------------------------┐");
-            Console.WriteLine("│\tNo\t│\tName\t   │\tLender\t  │\tAuthor\t│\tPublisher\t│\tReturn Time\t  |");
+            Console.WriteLine("│\tNo\t│\tName\t   │   \tLender\t     │\tAuthor\t   │\tPublisher\t│\tReturn Time\t  |");
             Console.WriteLine("└----------------------------------------------------------------------------------------------------------------┘");
 
             foreach (RentalData data in list)
-                Console.WriteLine("{0}\t{1}{2}{3}{4}{5}", data.BookNo.PadRight(13), data.BookName.PadRight(20), data.BookLender.PadRight(10), data.BookAuthor.PadRight(20), data.BookPbls.PadRight(20), data.BookReturnTime.ToString("yyyy-MM-dd").PadRight(20));
+                if (data.BookLender.Equals(id))
+                {
+                    byte[] byteName1 = Encoding.Default.GetBytes(data.BookName + "          ");
+                    byte[] byteName2 = new byte[20];
+                    Array.Copy(byteName1, byteName2, 20);
+
+                    byte[] byteLender1 = Encoding.Default.GetBytes(data.BookLender + "                              ");
+                    byte[] byteLender2 = new byte[20];
+                    Array.Copy(byteLender1, byteLender2, 20);
+
+                    byte[] byteAuthor1 = Encoding.Default.GetBytes(data.BookAuthor + "                              ");
+                    byte[] byteAuthor2 = new byte[15];
+                    Array.Copy(byteAuthor1, byteAuthor2, 15);
+
+                    byte[] bytePublisher1 = Encoding.Default.GetBytes(data.BookPbls + "                              ");
+                    byte[] bytePublisher2 = new byte[20];
+                    Array.Copy(bytePublisher1, bytePublisher2, 20);
+
+                    Console.WriteLine("   {0,-15}{1}{2}{3}{4}{5}", data.BookNo, Encoding.Default.GetString(byteName2), Encoding.Default.GetString(byteLender2), Encoding.Default.GetString(byteAuthor2), Encoding.Default.GetString(bytePublisher2), data.BookReturnTime.ToString("yyyy-MM-dd").PadRight(20));
+                }
+               
         }
 
         /// <summary>
@@ -269,6 +387,39 @@ namespace EnSharp_day3
             Console.WriteLine("\n\n\t\t\t\t5. Print Book");
             Console.WriteLine("\n\n\t\t\t\t6. EXIT");
             Console.Write("\n\n\t\t\t\t >> ");
+        }
+
+        public void ReturnBooksTitle(List<RentalData> list, string id)
+        {
+            Console.Clear();
+            Console.WriteLine("\n\n\t\t\t┌---------------------------------------------┐");
+            Console.WriteLine("\t\t\t│           R E T U R N   B O O K S           │");
+            Console.WriteLine("\t\t\t└---------------------------------------------┘");
+            Console.WriteLine("┌----------------------------------------------------------------------------------------------------------------┐");
+            Console.WriteLine("│\tNo\t│\tName\t   │   \tLender\t     │\tAuthor\t   │\tPublisher\t│\tReturn Time\t  |");
+            Console.WriteLine("└----------------------------------------------------------------------------------------------------------------┘");
+
+            foreach (RentalData data in list)
+                if (data.BookLender.Equals(id))
+                {
+                    byte[] byteName1 = Encoding.Default.GetBytes(data.BookName + "          ");
+                    byte[] byteName2 = new byte[20];
+                    Array.Copy(byteName1, byteName2, 20);
+
+                    byte[] byteLender1 = Encoding.Default.GetBytes(data.BookLender + "                              ");
+                    byte[] byteLender2 = new byte[20];
+                    Array.Copy(byteLender1, byteLender2, 20);
+
+                    byte[] byteAuthor1 = Encoding.Default.GetBytes(data.BookAuthor + "                              ");
+                    byte[] byteAuthor2 = new byte[15];
+                    Array.Copy(byteAuthor1, byteAuthor2, 15);
+
+                    byte[] bytePublisher1 = Encoding.Default.GetBytes(data.BookPbls + "                              ");
+                    byte[] bytePublisher2 = new byte[20];
+                    Array.Copy(bytePublisher1, bytePublisher2, 20);
+
+                    Console.WriteLine("   {0,-15}{1}{2}{3}{4}{5}", data.BookNo, Encoding.Default.GetString(byteName2), Encoding.Default.GetString(byteLender2), Encoding.Default.GetString(byteAuthor2), Encoding.Default.GetString(bytePublisher2), data.BookReturnTime.ToString("yyyy-MM-dd").PadRight(20));
+                }
         }
     }
 }
