@@ -29,8 +29,16 @@ namespace EnSharp_day3
             returnBooks = new ReturnBooks(bookList,rentalList,id);
         }
 
+        /// <summary>
+        /// 유저 모드에서 메뉴창을 그리고 다음으로 이동하는 메소드
+        /// </summary>
+        /// <param name="memList">유저 정보리스트</param>
+        /// <param name="bookList">책 정보 리스트</param>
+        /// <param name="rentalList">대여자 리스트</param>
+        /// <param name="id">현재 사용자명</param>
         public void UserMenu(List<Member> memList, List<Book> bookList, List<RentalData> rentalList, string id)
         {
+            flag = true;
             while (flag)
             {
                 drawControlMember.UserModeMenu();
@@ -59,7 +67,7 @@ namespace EnSharp_day3
         {
             return id;
         }
-        public void setId(string userId)
+        public void SetId(string userId)
         {
             id = userId;
         }

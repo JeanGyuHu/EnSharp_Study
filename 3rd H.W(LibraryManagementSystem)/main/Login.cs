@@ -59,7 +59,7 @@ namespace EnSharp_day3
                     }
                     else
                     {
-                        userMode.setId(id);
+                        userMode.SetId(id);
                         CheckAndChangeScene(mode, slist, ulist, bookList, rentalList);
                     }
                     break;

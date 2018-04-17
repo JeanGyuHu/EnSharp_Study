@@ -47,6 +47,11 @@ namespace EnSharp_day3
             }
 
         }
+        /// <summary>
+        /// 연장을 할때 No 정보를 입력 받기 위한 메소드
+        /// </summary>
+        /// <param name="rentalList">대여자 리스트</param>
+        /// <param name="id">현재 사용자 명</param>
         public void DrawNo(List<RentalData> rentalList, string id)
         {
             drawAboutBooks.ExtendTimeTitle(rentalList, id);

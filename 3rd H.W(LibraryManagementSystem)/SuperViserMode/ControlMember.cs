@@ -20,7 +20,7 @@ namespace EnSharp_day3
         private int memberIndex = 0;                    //몇번 Member의 위치를 변경할건지 저장
 
         /// <summary>
-        /// 생성자로써 생성되면 메뉴를 그리고 선택에 따라서 원하는 작업을 수행해준다.
+        /// 생성자로써 생성되면 클래스에서 사용되는 객체들을 생성 및 초기화해준다.
         /// </summary>
         /// <param name="list">회원 정보 리스트</param>
         public ControlMember(List<Member> list){
@@ -29,6 +29,10 @@ namespace EnSharp_day3
             exceptionHandling = new ExceptionHandling();
         }
 
+        /// <summary>
+        /// 멤버 관리하는 메소드 (메인 역할)
+        /// </summary>
+        /// <param name="list">회원 정보 목록</param>
         public void MemberManagement(List<Member> list)
         {
             flag = true;
@@ -95,9 +99,12 @@ namespace EnSharp_day3
                 DrawEdit(list);
             else
             {
-                DrawPhoneNum();
-                DrawAddress();
-
+                DrawPhoneNum(list);
+                if (phoneNumber.Equals("0"))
+                    return;
+                DrawAddress(list);
+                if (address.Equals("0"))
+                    return;
                 list[memberIndex].PhoneNumber = phoneNumber;
                 list[memberIndex].Address = address;
 
@@ -108,7 +115,7 @@ namespace EnSharp_day3
         /// <summary>
         /// 주소 입력받는 메소드
         /// </summary>
-        public void DrawAddress()
+        public void DrawAddress(List<Member> list)
         {
             Console.Clear();
 
@@ -116,24 +123,32 @@ namespace EnSharp_day3
             address = Console.ReadLine();
             if (address.Equals("0"))
                 return;
+            if (address.Equals("1"))
+                DrawPhoneNum(list);
             if (!exceptionHandling.CheckAddress(address))
             {
-                DrawAddress();
+                DrawAddress(list);
             }
         }
         /// <summary>
         /// 전화번호 입력받는 메소드
         /// </summary>
-        public void DrawPhoneNum()
+        public void DrawPhoneNum(List<Member> list)
         {
             Console.Clear();
             drawControlMember.WritePhone((int)LibraryConstants.Mode.Add);
             phoneNumber = Console.ReadLine();
             if (phoneNumber.Equals("0"))
                 return;
+            if (phoneNumber.Equals("1"))
+                DrawEdit(list);
             if (!exceptionHandling.CheckPhone(phoneNumber))
-                DrawPhoneNum();
+                DrawPhoneNum(list);
         }
+        /// <summary>
+        /// 삭제하는 하는 부분에서 아이디를 받고 체크해주는 역할을 한다.
+        /// </summary>
+        /// <param name="list">회원 목록 리스트</param>
         public void DeleteSub(List<Member> list)
         {
             drawControlMember.Information(list);
@@ -229,6 +244,12 @@ namespace EnSharp_day3
             
         }
 
+        /// <summary>
+        /// 탐색할 때 입력 값에 대한 예외처리를 해주는 메소드
+        /// 들어온 enum 값에 따라 해당 작업을 한다.
+        /// </summary>
+        /// <param name="list">회원 정보 리스트</param>
+        /// <param name="mode">어떤 카테고리로 검색할지</param>
         public void SearchSub(List<Member> list,string mode)
         {
             switch (mode)

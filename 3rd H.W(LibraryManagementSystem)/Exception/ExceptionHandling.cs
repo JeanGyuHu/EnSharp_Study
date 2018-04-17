@@ -148,6 +148,11 @@ namespace EnSharp_day3
 
             return -1;
         }
+        /// <summary>
+        /// 저자를 확인해주는 메소드
+        /// </summary>
+        /// <param name="author">사용자가 입력한 저자명</param>
+        /// <returns>조건 충족 여부</returns>
         public bool CheckAuthor(string author)
         {
             if (author.Length < 1 || author.Length > 20)
@@ -159,6 +164,11 @@ namespace EnSharp_day3
                 return false;
             return true;
         }
+        /// <summary>
+        /// 출판사를 확인해주는 메소드
+        /// </summary>
+        /// <param name="publisher">사용자가 입력한 출판사명</param>
+        /// <returns>조건 충족 여부</returns>
         public bool CheckPublisher(string publisher)
         {
             if (publisher.Length < 1 || publisher.Length > 20)
@@ -186,8 +196,7 @@ namespace EnSharp_day3
                 return false;
 
             if (inputResinum[2].Equals('1') && inputResinum[3] > '2')
-                return false;
-
+                return false;            
             if (inputResinum[4].Equals('3') && inputResinum[5] > '1')
                 return false;
 

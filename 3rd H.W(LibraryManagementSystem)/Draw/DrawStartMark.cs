@@ -8,6 +8,9 @@ namespace EnSharp_day3
 {
     class DrawStartMark
     {
+        /// <summary>
+        /// 비밀...
+        /// </summary>
         public DrawStartMark()
         {
 

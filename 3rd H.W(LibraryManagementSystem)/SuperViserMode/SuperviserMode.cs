@@ -27,6 +27,12 @@ namespace EnSharp_day3
             libraryManagement = new LibraryManagement(bookList);  
         }
 
+        /// <summary>
+        /// 관리자모드 메뉴 창을 띄워주는 메소드
+        /// </summary>
+        /// <param name="slist">관리자 정보 리스트</param>
+        /// <param name="ulist">유저 정보 리스트</param>
+        /// <param name="bookList">책 정보 리스트</param>
         public void SuperViserMenu(List<Member> slist, List<Member> ulist, List<Book> bookList)
         {
             flag = true;

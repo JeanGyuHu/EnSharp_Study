@@ -7,7 +7,7 @@ namespace EnSharp_day3
 {
     class LibraryConstants
     {
-        //매직 넘버
+        //매직 넘버들
         public const string LoginSuperviserMode = "1";
         public const string LoginUserMode = "2";
         public const string GoToSignUpPage = "3";

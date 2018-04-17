@@ -21,6 +21,9 @@ namespace EnSharp_day3
             Console.Write("\n\t\t\tPress Any Key . . .");
             keyInfo = Console.ReadKey();
         }
+        /// <summary>
+        /// 뒤로 가려면 Enter를 누르세요..
+        /// </summary>
         public void ExitMessage()
         {
             Console.WriteLine("\n\n\t\t\t뒤로가려면 Enter를 누르세요.");
@@ -389,6 +392,11 @@ namespace EnSharp_day3
             Console.Write("\n\n\t\t\t\t >> ");
         }
 
+        /// <summary>
+        /// 반납 메뉴에서 반납하는 창을 그리는 메소드
+        /// </summary>
+        /// <param name="list">대여자 리스트</param>
+        /// <param name="id">사용자 이름</param>
         public void ReturnBooksTitle(List<RentalData> list, string id)
         {
             Console.Clear();

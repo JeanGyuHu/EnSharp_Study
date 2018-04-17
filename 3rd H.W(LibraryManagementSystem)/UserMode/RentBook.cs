@@ -26,6 +26,13 @@ namespace EnSharp_day3
             exceptionHandling = new ExceptionHandling();
             now = DateTime.Now;
         }
+        /// <summary>
+        /// 책을 빌리는 창을 띄워주고
+        /// 책을 고르고 빌리는 역할을 한다.
+        /// </summary>
+        /// <param name="bookList">책 정보 리스트</param>
+        /// <param name="rentalList">대여자 리스트</param>
+        /// <param name="id">현재 사용자 명</param>
         public void RentBookPage(List<Book> bookList, List<RentalData> rentalList, string id)
         {
 
@@ -48,6 +55,10 @@ namespace EnSharp_day3
 
             drawAboutBooks.PressAnyKey();
         }
+        /// <summary>
+        /// 책의 번호를 입력받는 메소드
+        /// </summary>
+        /// <param name="bookList">책 정보 리스트</param>
         public void DrawNo(List<Book> bookList)
         {
             drawAboutBooks.Information(bookList);

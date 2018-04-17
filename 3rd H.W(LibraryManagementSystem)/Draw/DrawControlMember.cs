@@ -24,6 +24,9 @@ namespace EnSharp_day3
         {
             Console.Write("\n\n\n\t\t\tChoose person (Id) (뒤로가기를 원하면 0을 입력) >>");
         }
+        /// <summary>
+        /// 뒤로가려면 Enter를 누르세요
+        /// </summary>
         public void ExitMessage()
         {
             Console.WriteLine("\n\n\t\t\t뒤로가려면 Enter를 누르세요.");
@@ -288,7 +291,7 @@ namespace EnSharp_day3
 
         }
         /// <summary>
-        /// 아이디 입력하시오 출력
+        /// 아이디 입력하시오 출력 (로그인 화면)
         /// </summary>
         public void WriteId()
         {
@@ -297,7 +300,7 @@ namespace EnSharp_day3
             Console.Write("\n\n\t\t\t\t>> ");
         }
         /// <summary>
-        /// 비밀번호 입력하시오 출력
+        /// 비밀번호 입력하시오 출력 (로그인 화면)
         /// </summary>
         public void WritePassword()
         {
@@ -424,6 +427,9 @@ namespace EnSharp_day3
             Console.WriteLine("\n\n\n\t\t\tD E L E T E   F A I L E D !");
             PressAnyKey();
         }
+        /// <summary>
+        /// 수정 성공!!
+        /// </summary>
         public void EditSuccess()
         {
             Console.WriteLine("\n\n\n\t\t\tE D I T  S U C C E S S !");

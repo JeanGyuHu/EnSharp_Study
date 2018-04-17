@@ -12,13 +12,13 @@ namespace EnSharp_day3
         private string id;
 
         private SecureString secureResidentNum = new SecureString();    //주민등록번호를 비밀문자로 입력받는다.
-        private string residentNum;                               //주민등록번호를 저장하기위해 string으로 변환
-        private string name;                                         //유저의 이름을 받기 위함
+        private string residentNum;                                     //주민등록번호를 저장하기위해 string으로 변환
+        private string name;                                            //유저의 이름을 받기 위함
         private SecureString securePassword = new SecureString();       //비밀번호를 비밀문자로 입력받는다.
-        private string password;                                  //저장을 위해 string으로 변환하기 위함
+        private string password;                                        //저장을 위해 string으로 변환하기 위함
 
-        private string address;                                      //주소 입력 받기 위함
-        private string phoneNumber;                                  //전화번호 입력받기 위함
+        private string address;                                         //주소 입력 받기 위함
+        private string phoneNumber;                                     //전화번호 입력받기 위함
         private int count;                                              //아이디 체크를 할때 전부다 확인을 했나 체크하기 위함
         private DrawControlMember drawControlMember;                    //출력을 하기 위해 클래스의 객체 선언
         private ExceptionHandling exceptionHandling;                    //예외처리를 위해 클래스의 객체 선언

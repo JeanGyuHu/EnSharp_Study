@@ -15,9 +15,9 @@ namespace EnSharp_day3
         private List<Book> listBook;                    //책정보
         private List<RentalData> listRental;            //대여자 정보
         private Login loginUser;                            //메뉴 선택시 로그인 창으로 넘어가기 위함
-        private Login loginSuper;
-        private SignUp signUp;
-        private DrawStartMark drawStartMark;
+        private Login loginSuper;                       //관리자모드를 위해 선언
+        private SignUp signUp;                          //유저모드를 위해 선언  
+        private DrawStartMark drawStartMark;            //★
         /// <summary>
         /// 시작했을때 첫 화면 선택에 따라서
         /// 관리자모드, 회원모드, 회원가입 모드로 이동한다.
@@ -41,10 +41,10 @@ namespace EnSharp_day3
             listBook.Add(new Book("12-12341236", "C#프로그래밍", 3, "허진구출판사", "허진구"));
             listSuperviser.Add(new Member("1", "1", "1", "1", 1, "1", "1"));
             listUserMember.Add(new Member("1", "1", "1", "1", 1, "1", "1"));
-            listUserMember.Add(new Member("김예진", "970102-2222222", "1", "rladPwls12", 1, "서울시 군자동 화양로", "010-1234-1234"));
-            listUserMember.Add(new Member("주영준", "960202-1111111", "1", "wndudwns23", 2, "서울시 군자동 세종로", "010-2345-2345"));
-            listUserMember.Add(new Member("서코찡", "920302-1223232", "1", "tjzhWld123", 3, "서울시 율곡동 육공오로", "010-3456-3456"));
-            listUserMember.Add(new Member("허진규", "920402-1133223", "1", "gjwlsrb1231", 4, "서울시 율곡동 에이로", "010-4701-8554"));
+            listUserMember.Add(new Member("김예진", "970102-2222222", "1", "rladPwls12", 1, "서울시 군자구 화양로", "010-1234-1234"));
+            listUserMember.Add(new Member("주영준", "960202-1111111", "1", "wndudwns23", 2, "서울시 군자구 세종로", "010-2345-2345"));
+            listUserMember.Add(new Member("서코찡", "920302-1223232", "1", "tjzhWld123", 3, "서울시 율곡구 육공오로", "010-3456-3456"));
+            listUserMember.Add(new Member("허진규", "920402-1133223", "1", "gjwlsrb1231", 4, "서울시 율곡구 에이로", "010-4701-8554"));
             listRental.Add(new RentalData("12-12341234","C++프로그래밍","호호출판사","호호","서코찡",new DateTime(2018,05,10)));
             listRental.Add(new RentalData("12-12341235", "C프로그래밍", "하하출판사", "하하", "김예진", new DateTime(2018,05,10)));
             listRental.Add(new RentalData("12-12341236", "C#프로그래밍", "후후출판사", "후후", "주영준", new DateTime(2018,05,10)));
