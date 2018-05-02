@@ -60,7 +60,7 @@ namespace EnSharp_day3
             if (address.Equals("0"))
                 return;
             Console.Clear();
-            list.Add(new Member(name, residentNum, password, id, 0, address, phoneNumber));
+            list.Add(new Member(name, residentNum, password, id, address, phoneNumber));
             drawControlMember.SignUpSuccess();
 
         }

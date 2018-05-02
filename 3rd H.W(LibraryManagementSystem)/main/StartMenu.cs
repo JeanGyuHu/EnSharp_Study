@@ -39,15 +39,15 @@ namespace EnSharp_day3
             listBook.Add(new Book("12-12341234", "C++프로그래밍", 1, "허진교출판사", "허진교"));
             listBook.Add(new Book("12-12341235", "C프로그래밍", 2, "허진규출판사", "허진규"));
             listBook.Add(new Book("12-12341236", "C#프로그래밍", 3, "허진구출판사", "허진구"));
-            listSuperviser.Add(new Member("1", "1", "1", "1", 1, "1", "1"));
-            listUserMember.Add(new Member("1", "1", "1", "1", 1, "1", "1"));
-            listUserMember.Add(new Member("김예진", "970102-2222222", "1", "rladPwls12", 1, "서울시 군자구 화양로", "010-1234-1234"));
-            listUserMember.Add(new Member("주영준", "960202-1111111", "1", "wndudwns23", 2, "서울시 군자구 세종로", "010-2345-2345"));
-            listUserMember.Add(new Member("서코찡", "920302-1223232", "1", "tjzhWld123", 3, "서울시 율곡구 육공오로", "010-3456-3456"));
-            listUserMember.Add(new Member("허진규", "920402-1133223", "1", "gjwlsrb1231", 4, "서울시 율곡구 에이로", "010-4701-8554"));
-            listRental.Add(new RentalData("12-12341234","C++프로그래밍","호호출판사","호호","서코찡",new DateTime(2018,05,10)));
-            listRental.Add(new RentalData("12-12341235", "C프로그래밍", "하하출판사", "하하", "김예진", new DateTime(2018,05,10)));
-            listRental.Add(new RentalData("12-12341236", "C#프로그래밍", "후후출판사", "후후", "주영준", new DateTime(2018,05,10)));
+            listSuperviser.Add(new Member("1", "1", "1", "1",  "1", "1"));
+            listUserMember.Add(new Member("1", "1", "1", "1",  "1", "1"));
+            listUserMember.Add(new Member("김예진", "970102-2222222", "1", "rladPwls12", "서울시 군자구 화양로", "010-1234-1234"));
+            listUserMember.Add(new Member("주영준", "960202-1111111", "1", "wndudwns23", "서울시 군자구 세종로", "010-2345-2345"));
+            listUserMember.Add(new Member("서코찡", "920302-1223232", "1", "tjzhWld123", "서울시 율곡구 육공오로", "010-3456-3456"));
+            listUserMember.Add(new Member("허진규", "920402-1133223", "1", "gjwlsrb1231", "서울시 율곡구 에이로", "010-4701-8554"));
+            listRental.Add(new RentalData("12-12341234","C++프로그래밍","호호출판사","호호","서코찡",new DateTime(2018,05,10),0));
+            listRental.Add(new RentalData("12-12341235", "C프로그래밍", "하하출판사", "하하", "김예진", new DateTime(2018,05,10),1));
+            listRental.Add(new RentalData("12-12341236", "C#프로그래밍", "후후출판사", "후후", "주영준", new DateTime(2018,05,10),1));
         }
         public void StartMainMenu()
         {

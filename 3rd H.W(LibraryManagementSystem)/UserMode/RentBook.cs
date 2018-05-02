@@ -49,7 +49,7 @@ namespace EnSharp_day3
             else
             {
                 bookList[findIndex].Count--;
-                rentalList.Add(new RentalData(bookList[findIndex].No, bookList[findIndex].Name, bookList[findIndex].Pbls, bookList[findIndex].Author, id, new DateTime(now.Year, now.Month + 1, now.Day + 10)));
+                rentalList.Add(new RentalData(bookList[findIndex].No, bookList[findIndex].Name, bookList[findIndex].Pbls, bookList[findIndex].Author, id, new DateTime(now.Year, now.Month + 1, now.Day + 10),0));
                 drawAboutBooks.RentalSuccess();
             }
 

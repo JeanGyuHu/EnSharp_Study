@@ -13,7 +13,7 @@ namespace EnSharp_day3
         private string bookAuthor;  //책 저자
         private string bookLender;  //책 대여자
         private DateTime bookReturnTime;    //반납일자
-        
+        private int extendCount;
         /// <summary>
         /// 책 번호에 대한 get/set
         /// </summary>
@@ -65,6 +65,12 @@ namespace EnSharp_day3
             set { bookReturnTime = value; }
         }
 
+        public int ExtendCount
+        {
+            get { return this.extendCount; }
+            set { extendCount = value; }
+        }
+
         /// <summary>
         /// 대여자에 대한 정보가 들어왔을때 초기화 해주는 생성자
         /// </summary>
@@ -74,7 +80,7 @@ namespace EnSharp_day3
         /// <param name="author">입력 책 저자</param>
         /// <param name="lender">입력 책 대여자</param>
         /// <param name="date">입력 책 반납일자</param>
-        public RentalData(string no, string name, string pbls, string author,string lender,DateTime date)
+        public RentalData(string no, string name, string pbls, string author,string lender,DateTime date,int extendCount)
         {
             BookNo = no;
             BookName = name;
@@ -82,6 +88,7 @@ namespace EnSharp_day3
             BookAuthor = author;
             BookLender = lender;
             BookReturnTime = date;
+            ExtendCount = extendCount;
         }
     }
 }

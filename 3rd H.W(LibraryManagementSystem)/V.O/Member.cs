@@ -11,7 +11,6 @@ namespace EnSharp_day3
         private string memResidentNum;  //회원 주민번호
         private string memPassword;     //회원 비밀번호
         private string memId;           //회원 아이디    
-        private int memNumOverdue;      //회원 연체 횟수
         private string memAddress;      //회원 주소
         private string memPhoneNumber;  //회원 전화번호
 
@@ -48,14 +47,6 @@ namespace EnSharp_day3
             set { memId = value; }
         }
         /// <summary>
-        /// 연체 횟수에 대한 get/set
-        /// </summary>
-        public int NumOverdue
-        {
-            get { return memNumOverdue; }
-            set { memNumOverdue = value; }
-        }
-        /// <summary>
         /// 주소에 대한 get/set
         /// </summary>
         public string Address
@@ -81,13 +72,12 @@ namespace EnSharp_day3
         /// <param name="due">입력 회원 연체 횟수</param>
         /// <param name="address">입력 회원 주소</param>
         /// <param name="phone">입력 회원 전화번호</param>
-        public Member(string name,string residentNum,string password, string id,int due,string address,string phone)
+        public Member(string name,string residentNum,string password, string id,string address,string phone)
         {
             Name = name;
             ResidentNum = residentNum;
             Password = password;
             Id = id;
-            NumOverdue = due;
             Address = address;
             PhoneNumber = phone;
         }
