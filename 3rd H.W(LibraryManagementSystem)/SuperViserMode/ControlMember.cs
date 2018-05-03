@@ -63,6 +63,7 @@ namespace EnSharp_day3
                     case LibraryConstants.GoBeforePage:
                         flag = false;
                         break;
+                    
                     default:
                         break;
                 }
@@ -210,6 +211,13 @@ namespace EnSharp_day3
                     memberDAO.SearchWithQuary("select * from member where phoneNumber = \"" + search + "\"");
                     drawControlMember.PressAnyKey();
                     break;
+                case LibraryConstants.SearchWithAge:
+                    SearchSub(LibraryConstants.SearchWithAge);
+                    if (search.Equals("0")) return;
+                    drawControlMember.Category();
+                    memberDAO.SearchWithQuary("select * from member where age = \"" + search + "\"");
+                    drawControlMember.PressAnyKey();
+                    break;
                 case LibraryConstants.ReturnBack:
                     break;
                 default:
@@ -289,6 +297,16 @@ namespace EnSharp_day3
                     {
                         Console.Clear();
                         SearchSub(LibraryConstants.SearchWithPhone);
+                    }
+                    break;
+                case LibraryConstants.SearchWithAge:
+                    drawControlMember.WriteSearchAge();
+                    search = Console.ReadLine();
+                    if (search.Equals("0")) return;
+                    if (!exceptionHandling.CheckBookCount(search))
+                    {
+                        Console.Clear();
+                        SearchSub(LibraryConstants.SearchWithAge);
                     }
                     break;
                 default:

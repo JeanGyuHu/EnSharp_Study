@@ -48,9 +48,9 @@ namespace EnSharp_day3
             Console.WriteLine("\n\n\t\t\t┌--------------------------------------------------------┐");
             Console.WriteLine("\t\t\t│           M E M B E R   I N F O R M A T I O N          │");
             Console.WriteLine("\t\t\t└--------------------------------------------------------┘");
-            Console.WriteLine("\n\n┌----------------------------------------------------------------------------------------------------------------------------------------┐");
-            Console.WriteLine("│   Name   │   Resident Number   │          Id          │         Password        │    PhoneNumber    │        Address         │");
-            Console.WriteLine("└-----------------------------------------------------------------------------------------------------------------------------------------┘");
+            Console.WriteLine("\n\n┌---------------------------------------------------------------------------------------------------------------------------------------------┐");
+            Console.WriteLine("│   Name   │   Resident Number   │          Id          │         Password        │    PhoneNumber    │        Address         │      Age      |");
+            Console.WriteLine("└----------------------------------------------------------------------------------------------------------------------------------------------┘");
         }
  
         /// <summary>
@@ -82,6 +82,12 @@ namespace EnSharp_day3
             }
 
         }
+        public void WriteSearchAge()
+        {
+            Console.WriteLine("\n\n\t\t\t\t나이를 입력하세요. (뒤로가기 0)");
+            Console.WriteLine("\n\n\t\t\t\t공백을 제외한 100미만 숫자 입력 가능합니다.(글자 제한 : 2)");
+            Console.Write("\n\n\t\t\t\t>> ");
+        }
         /// <summary>
         /// 주민번호 입력하시오 출력
         /// </summary>
@@ -91,12 +97,12 @@ namespace EnSharp_day3
             {
                 case (int)LibraryConstants.Mode.Add:
                     Console.WriteLine("\n\n\t\t\t\t주민등록번호를 입력하세요. (뒤로가기 1,종료 0)");
-                    Console.WriteLine("\n\n\t\t\t\t형식은 yymmdd-(1,2)xxxxxx (남자면 1, 여자면 2)");
+                    Console.WriteLine("\n\n\t\t\t\t형식은 yymmdd-(1,2,3,4)xxxxxx (남자면 1,3 여자면 2,4)");
                     Console.Write("\n\n\t\t\t\t>> ");
                     break;
                 case (int)LibraryConstants.Mode.Search:
                     Console.WriteLine("\n\n\t\t\t\t주민등록번호를 입력하세요. (뒤로가기 0)");
-                    Console.WriteLine("\n\n\t\t\t\t형식은 yymmdd-(1,2)xxxxxx (남자면 1, 여자면 2)");
+                    Console.WriteLine("\n\n\t\t\t\t형식은 yymmdd-(1,2,3,4)xxxxxx (남자면 1,3, 여자면 2,4)");
                     Console.Write("\n\n\t\t\t\t>> ");
                     break;
             }
@@ -178,7 +184,7 @@ namespace EnSharp_day3
                 case (int)LibraryConstants.Mode.Add:
                     Console.WriteLine("\n\n\t\t\t\t주소를 입력하세요. (뒤로가기 1,종료 0)");
                     Console.WriteLine("\n\n\t\t\t\t형식은 완성된 한글만 가능합니다.");
-                    Console.WriteLine("\n\n\t\t\t\t예시) (00~000시/도) (0~000시/군/구) (00~000로)");
+                    Console.WriteLine("\n\n\t\t\t\t예시) (00~0000시/도) (0~000시/군/구) (00~000로)");
                     Console.Write("\n\n\t\t\t\t>> ");
                     break;
                 case (int)LibraryConstants.Mode.Search:
@@ -211,13 +217,13 @@ namespace EnSharp_day3
                 case (int)LibraryConstants.Mode.Add:
                     Console.WriteLine("\n\n\t\t\t\t전화번호를 입력하세요. (뒤로가기 1,종료 0)");
                     Console.WriteLine("\n\n\t\t\t\t형식은 01(0,1,6,7,8,9)-(xxx,xxxx)-xxxx x는 숫자만 가능합니다.");
-                    Console.WriteLine("\n\n\t\t\t\t예시) 010-4701-8554");
+                    Console.WriteLine("\n\n\t\t\t\t예시) 010-4701-8554 (각각의 자리는 똑같은 숫자로 중복 불가능)");
                     Console.Write("\n\n\t\t\t\t>> ");
                     break;
                 case (int)LibraryConstants.Mode.Search:
                     Console.WriteLine("\n\n\t\t\t\t전화번호를 입력하세요. (뒤로가기 0)");
                     Console.WriteLine("\n\n\t\t\t\t형식은 01(0,1,6,7,8,9)-(xxx,xxxx)-xxxx x는 숫자만 가능합니다.");
-                    Console.WriteLine("\n\n\t\t\t\t예시) 010-4701-8554");
+                    Console.WriteLine("\n\n\t\t\t\t예시) 010-4701-8554 (각각의 자리는 똑같은 숫자로 중복 불가능)");
                     Console.Write("\n\n\t\t\t\t>> ");
                     break;
             }
@@ -278,7 +284,8 @@ namespace EnSharp_day3
             Console.WriteLine("\n\n\t\t\t\t4. Password");
             Console.WriteLine("\n\n\t\t\t\t5. Address");
             Console.WriteLine("\n\n\t\t\t\t6. PhoneNumber");
-            Console.WriteLine("\n\n\t\t\t\t7. EXIT");
+            Console.WriteLine("\n\n\t\t\t\t7. Age");
+            Console.WriteLine("\n\n\t\t\t\t8. EXIT");
             Console.Write("\n\t\t\t\t>> ");
         }
         /// <summary>

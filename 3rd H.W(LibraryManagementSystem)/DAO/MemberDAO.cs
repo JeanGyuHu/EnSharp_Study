@@ -21,23 +21,35 @@ namespace EnSharp_day3
 
         public void AddMember(Member member)
         {
+            int age = 0;
             connection.Open();
 
             command = connection.CreateCommand();
-            command.CommandText = "INSERT INTO member values(@name,@residentNumber,@id,@password,@phoneNumber,@address)";
-            command.Parameters.Add("@name", MySqlDbType.VarChar).Value= member.Name;
+            command.CommandText = "INSERT INTO member values(@name,@residentNumber,@id,@password,@phoneNumber,@address,@age)";
+            command.Parameters.Add("@name", MySqlDbType.VarChar).Value = member.Name;
             command.Parameters.Add("@residentNumber", MySqlDbType.VarChar).Value = member.ResidentNum;
             command.Parameters.Add("@id", MySqlDbType.VarChar).Value = member.Id;
             command.Parameters.Add("@password", MySqlDbType.VarChar).Value = member.Password;
             command.Parameters.Add("@phoneNumber", MySqlDbType.VarChar).Value = member.PhoneNumber;
             command.Parameters.Add("@address", MySqlDbType.VarChar).Value = member.Address;
 
+            if (member.ResidentNum[7].Equals('1') || member.ResidentNum[7].Equals('2'))
+            {
+                age = 100 + Convert.ToInt32(DateTime.Now.Year) % 100 - Convert.ToInt32(member.ResidentNum.Substring(0, 2))+1;
+            }
+
+            if (member.ResidentNum[7].Equals('3') || member.ResidentNum[7].Equals('4'))
+            {
+                age = Convert.ToInt32(DateTime.Now.Year) % 100 - Convert.ToInt32(member.ResidentNum.Substring(0, 2))+1;
+            }
+
+            command.Parameters.Add("@age", MySqlDbType.VarChar).Value = age;
 
             command.ExecuteNonQuery();
             connection.Close();
         }
 
-        public void EditMemberInformation(string id,string phone,string address)
+        public void EditMemberInformation(string id, string phone, string address)
         {
             connection.Open();
 
@@ -74,7 +86,7 @@ namespace EnSharp_day3
 
             while (reader.Read())
             {
-                Console.WriteLine("   " + ConvertLength(reader.GetString(0), 13) + ConvertLength(reader.GetString(1), 21) + ConvertLength(reader.GetString(2), 27) + ConvertLength(reader.GetString(3), 21) + ConvertLength(reader.GetString(4), 20) + ConvertLength(reader.GetString(5), 26));
+                Console.WriteLine("   " + ConvertLength(reader.GetString(0), 13) + ConvertLength(reader.GetString(1), 21) + ConvertLength(reader.GetString(2), 27) + ConvertLength(reader.GetString(3), 21) + ConvertLength(reader.GetString(4), 20) + ConvertLength(reader.GetString(5), 28) + ConvertLength(reader.GetInt32(6).ToString(), 5));
             }
             connection.Close();
         }
@@ -90,7 +102,7 @@ namespace EnSharp_day3
 
             while (reader.Read())
             {
-                Console.WriteLine("   "+ConvertLength(reader.GetString(0),13) + ConvertLength(reader.GetString(1),21) + ConvertLength(reader.GetString(2),27) + ConvertLength(reader.GetString(3),21) + ConvertLength(reader.GetString(4),20) + ConvertLength(reader.GetString(5),26));
+                Console.WriteLine("   " + ConvertLength(reader.GetString(0), 13) + ConvertLength(reader.GetString(1), 21) + ConvertLength(reader.GetString(2), 27) + ConvertLength(reader.GetString(3), 21) + ConvertLength(reader.GetString(4), 20) + ConvertLength(reader.GetString(5), 28) + ConvertLength(reader.GetInt32(6).ToString(), 5));
             }
             connection.Close();
         }

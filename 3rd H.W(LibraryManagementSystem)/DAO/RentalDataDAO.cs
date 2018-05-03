@@ -18,7 +18,7 @@ namespace EnSharp_day3
         {
             connection = new MySqlConnection(connectionInformation);
         }
-
+       
         public void AddAfterRent(RentalData rentalData)
         {
             connection.Open();

@@ -133,12 +133,6 @@ namespace EnSharp_day3
 
             if (bookCount.Length > 2||bookCount.Length<1)
                 return false;
-            //Regex regex = new Regex(@"\D");
-            //Match m = regex.Match(bookCount);
-            //while (m.Success)
-            //{
-            //    return -1;
-            //}
             if (Regex.IsMatch(bookCount, @"\D"))
                 return false;
             if (Regex.IsMatch(bookCount, @"[0-9]{1,2}"))
@@ -148,6 +142,7 @@ namespace EnSharp_day3
 
             return true;
         }
+
         /// <summary>
         /// 저자를 확인해주는 메소드
         /// </summary>
@@ -155,7 +150,7 @@ namespace EnSharp_day3
         /// <returns>조건 충족 여부</returns>
         public bool CheckAuthor(string author)
         {
-            if (author.Length < 1 || author.Length > 20)
+            if (author.Length < 2 || author.Length > 20)
                 return false;
 
             if (Regex.IsMatch(author, @"[~`!@#$%%\-+={}[\]|\\;:""<>,?/]"))
@@ -166,11 +161,13 @@ namespace EnSharp_day3
         }
         public bool CheckPrice(string price)
         {
-            if (price.Length < 4 || price.Length > 11)
+            if (price.Length < 4 || price.Length > 8)
                 return false;
             if (Regex.IsMatch(price, @"[~`!@#$%%\-+={}[\]|\\;:""<>,?/]"))
                 return false;
             if (Regex.IsMatch(price, @"\D"))
+                return false;
+            if (Int32.Parse(price) < 3000)
                 return false;
             return true;
 
@@ -199,13 +196,47 @@ namespace EnSharp_day3
         public bool CheckResidentNum(string resiNum)
         {
             char[] inputResinum = resiNum.ToCharArray();
+            int year;
             result = true;
 
-            if (!Regex.IsMatch(resiNum, @"[0-9][0-9][01][0-9][0123][0-9]-[12][0-9]{6}"))
+            if (!Regex.IsMatch(resiNum, @"[0-9][0-9][01][0-9][0123][0-9]-[1234][0-9]{6}"))
                 return false;
             if (resiNum.Length != 14)
                 return false;
 
+            if (Convert.ToInt32(resiNum.Substring(0, 2)) > 10 && Convert.ToInt32(resiNum.Substring(0, 2)) < 99)
+                year = Convert.ToInt32("20" + resiNum.Substring(0, 2));
+            else
+                year = Convert.ToInt32("19" + resiNum.Substring(0, 2));
+
+            if (Convert.ToInt32(resiNum.Substring(0, 2)) > 10 && Convert.ToInt32(resiNum.Substring(0, 2)) <= 99 && (resiNum[7].Equals('3') || resiNum[7].Equals('4')))
+                return false;
+            if (Convert.ToInt32(resiNum.Substring(2, 2)).Equals(01) && (Convert.ToInt32(resiNum.Substring(4, 2)) < 1 || Convert.ToInt32(resiNum.Substring(4, 2)) > 31))
+                return false;
+            if (Convert.ToInt32(resiNum.Substring(2, 2)).Equals(02) && !((year % 4 == 0 && year % 100 != 0) || year % 400 == 0) && (Convert.ToInt32(resiNum.Substring(4, 2)) < 1 || Convert.ToInt32(resiNum.Substring(4, 2)) > 28))
+                return false;
+            if (Convert.ToInt32(resiNum.Substring(2, 2)).Equals(02) && (( year% 4 == 0 && year % 100 != 0) || year % 400 == 0)&&(Convert.ToInt32(resiNum.Substring(4, 2)) < 1 || Convert.ToInt32(resiNum.Substring(4, 2)) > 29))
+                return false;
+            if (Convert.ToInt32(resiNum.Substring(2, 2)).Equals(03) && (Convert.ToInt32(resiNum.Substring(4, 2)) < 1 || Convert.ToInt32(resiNum.Substring(4, 2)) > 31))
+                return false;
+            if (Convert.ToInt32(resiNum.Substring(2, 2)).Equals(04) && (Convert.ToInt32(resiNum.Substring(4, 2)) < 1 || Convert.ToInt32(resiNum.Substring(4, 2)) > 30))
+                return false;
+            if (Convert.ToInt32(resiNum.Substring(2, 2)).Equals(05) && (Convert.ToInt32(resiNum.Substring(4, 2)) < 1 || Convert.ToInt32(resiNum.Substring(4, 2)) > 31))
+                return false;
+            if (Convert.ToInt32(resiNum.Substring(2, 2)).Equals(06) && (Convert.ToInt32(resiNum.Substring(4, 2)) < 1 || Convert.ToInt32(resiNum.Substring(4, 2)) > 30))
+                return false;
+            if (Convert.ToInt32(resiNum.Substring(2, 2)).Equals(07) && (Convert.ToInt32(resiNum.Substring(4, 2)) < 1 || Convert.ToInt32(resiNum.Substring(4, 2)) > 31))
+                return false;
+            if (Convert.ToInt32(resiNum.Substring(2, 2)).Equals(08) && (Convert.ToInt32(resiNum.Substring(4, 2)) < 1 || Convert.ToInt32(resiNum.Substring(4, 2)) > 31))
+                return false;
+            if (Convert.ToInt32(resiNum.Substring(2, 2)).Equals(09) && (Convert.ToInt32(resiNum.Substring(4, 2)) < 1 || Convert.ToInt32(resiNum.Substring(4, 2)) > 30))
+                return false;
+            if (Convert.ToInt32(resiNum.Substring(2, 2)).Equals(10) && (Convert.ToInt32(resiNum.Substring(4, 2)) < 1 || Convert.ToInt32(resiNum.Substring(4, 2)) > 31))
+                return false;
+            if (Convert.ToInt32(resiNum.Substring(2, 2)).Equals(11) && (Convert.ToInt32(resiNum.Substring(4, 2)) < 1 || Convert.ToInt32(resiNum.Substring(4, 2)) > 30))
+                return false;
+            if (Convert.ToInt32(resiNum.Substring(2, 2)).Equals(12) && (Convert.ToInt32(resiNum.Substring(4, 2)) < 1 || Convert.ToInt32(resiNum.Substring(4, 2)) > 31))
+                return false;
             if (inputResinum[2].Equals('1') && inputResinum[3] > '2')
                 return false;            
             if (inputResinum[4].Equals('3') && inputResinum[5] > '1')
@@ -227,6 +258,17 @@ namespace EnSharp_day3
             if (!Regex.IsMatch(phone, @"01[016789]-\d{3,4}-[0-9]{4}"))
                 result = false;
 
+            if (phone.Length.Equals(12))
+            {
+                if (phone[4].Equals(phone[5]) && phone[5].Equals(phone[6])) return false;
+                if (phone[8].Equals(phone[9]) && phone[9].Equals(phone[10]) && phone[10].Equals(phone[11])) return false;
+            }
+            if (phone.Length.Equals(13))
+            {
+                if (phone[4].Equals(phone[5]) && phone[5].Equals(phone[6]) && phone[6].Equals(phone[7])) return false;
+                if (phone[9].Equals(phone[10]) && phone[10].Equals(phone[11]) && phone[11].Equals(phone[12])) return false;
+            }
+
             return result;
         }
         /// <summary>
@@ -241,7 +283,7 @@ namespace EnSharp_day3
             if (address.Length > 14 || address.Length < 10)
                 result = false;
 
-            if (!Regex.IsMatch(address, @"[가-힣]{2,4}[시도]\s[가-힣]{1,3}[시군구]\s[가-힣]{2,3}[로]"))
+            if (!Regex.IsMatch(address, @"^[가-힣]{2,4}[시도]\s[가-힣]{1,3}[시군구]\s[가-힣]{2,3}[로]$"))
                 result = false;
 
             return result;

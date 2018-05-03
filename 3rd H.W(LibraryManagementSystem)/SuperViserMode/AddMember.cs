@@ -62,7 +62,7 @@ namespace EnSharp_day3
             if (address.Equals("0"))
                 return;
             Console.Clear();
-            memberDAO.AddMember(new Member(name, residentNum, password, id, address,phoneNumber));
+            memberDAO.AddMember(new Member(name, residentNum, password, id, address,phoneNumber,0));
             drawControlMember.PressAnyKey();
         }
         /// <summary>

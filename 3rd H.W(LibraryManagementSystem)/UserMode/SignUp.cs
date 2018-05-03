@@ -22,8 +22,6 @@ namespace EnSharp_day3
         private string address;                          //주소를 입력 받기 위함
         private string phoneNumber;                      //전화번호를 입력 받기 위함
 
-        private int count = 0;
-
         /// <summary>
         /// 각 객체 초기화 후에 회원가입 메소드 호출
         /// </summary>
@@ -64,7 +62,7 @@ namespace EnSharp_day3
             if (address.Equals("0"))
                 return;
             Console.Clear();
-            memberDAO.AddMember(new Member(name, residentNum, password, id, address, phoneNumber));
+            memberDAO.AddMember(new Member(name, residentNum, password, id, address, phoneNumber,0));
             drawControlMember.SignUpSuccess();
 
         }
@@ -143,6 +141,10 @@ namespace EnSharp_day3
             {
                 DrawResidentNum();
             }
+            if(!databaseException.CheckResidentNumber(residentNum))
+            {
+                DrawResidentNum();
+            }
         }
         /// <summary>
         /// 전화번호 입력 받는 메소드
@@ -159,6 +161,10 @@ namespace EnSharp_day3
             if (phoneNumber.Equals("1"))
                 DrawResidentNum();
             if (!exceptionHandling.CheckPhone(phoneNumber))
+            {
+                DrawPhoneNum();
+            }
+            if (!databaseException.CheckPhoneNumber(phoneNumber))
             {
                 DrawPhoneNum();
             }

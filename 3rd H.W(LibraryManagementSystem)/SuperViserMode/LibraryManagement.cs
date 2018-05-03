@@ -400,7 +400,6 @@ namespace EnSharp_day3
         /// <param name="list">책 정보 리스트</param>
         public void DrawAdd()
         {
-            int bookIndex = -1;
             DrawNo();
             if (no.Equals("0"))
                 return;

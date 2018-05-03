@@ -51,7 +51,8 @@ namespace EnSharp_day3
         public const string SearchWithPassword = "4";
         public const string SearchWithAddress = "5";
         public const string SearchWithPhone = "6";
-        public const string ReturnBack = "7";
+        public const string SearchWithAge = "7";
+        public const string ReturnBack = "8";
 
         public enum Mode { Add=1, Search };
     }
