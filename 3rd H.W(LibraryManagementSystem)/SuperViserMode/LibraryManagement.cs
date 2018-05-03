@@ -17,7 +17,7 @@ namespace EnSharp_day3
         private string no;                       //책 번호 입력받기 위함
         private string name;                     //책 이름 입력받기 위함
         private string count;                    //책 개수 입력받기 위함
-        private int intCount;                       //책이 몇권인지 int형으로 변환받기 위함
+        private string price;                       //책의 가격을 받기 위함
         private string author;                   //책 저자 입력받기 위함
         private string publisher;                //책 출판사 입력받기 위함
         private string deleteName;                         //삭제할 이름 입력받기 위함
@@ -27,7 +27,7 @@ namespace EnSharp_day3
         /// 생성자로써 사용되는 객체를 생성, 초기화한다.
         /// </summary>
         /// <param name="list">책 정보 리스트</param>
-        public LibraryManagement(List<Book> list)
+        public LibraryManagement()
         {
             databaseException = new DatabaseException();
             exceptionHandling = new ExceptionHandling();
@@ -268,9 +268,24 @@ namespace EnSharp_day3
                     DrawEdit();
                     return;
                 }
+                if (!exceptionHandling.CheckBookCount(count))
+                {
+                    drawAboutBooks.EditSuccess("F A I L E D");
+                    return;
+                }
+
+                DrawEditPrice();
+                if (price.Equals("0"))
+                    return;
+                if(!exceptionHandling.CheckPrice(price))
+                {
+                    drawAboutBooks.EditSuccess("F A I L E D");
+                    return;
+                }
+
                 if (!databaseException.IsInBookDB(no))
                 {
-                    bookDAO.EditBookInformation(no, Convert.ToInt32(count));
+                    bookDAO.EditBookInformation(no, Convert.ToInt32(count),Convert.ToInt32(price));
                     drawAboutBooks.EditSuccess("S U C C E S S");
                 }
                 else
@@ -314,7 +329,7 @@ namespace EnSharp_day3
             {
                 DrawNo();
             }
-            if (!CheckNo(no))
+            if (!databaseException.IsInBookDB(no))
             {
                 DrawNo();
             }
@@ -353,6 +368,32 @@ namespace EnSharp_day3
             if (!exceptionHandling.CheckPublisher(publisher))
                 DrawPublisher();
         }
+        public void DrawEditPrice()
+        {
+            Console.Clear();
+            drawAboutBooks.InfoTitle();
+            drawAboutBooks.DrawWritePrice();
+            price = Console.ReadLine();
+            if (price.Equals("0"))
+                return;
+            if (price.Equals("1"))
+                DrawCountRead();
+            if (!exceptionHandling.CheckPrice(price))
+                DrawEditPrice();
+        }
+        public void DrawPrice()
+        {
+            Console.Clear();
+            drawAboutBooks.InfoTitle();
+            drawAboutBooks.DrawWritePrice();
+            price = Console.ReadLine();
+            if (price.Equals("0"))
+                return;
+            if (price.Equals("1"))
+                DrawPublisher();
+            if (!exceptionHandling.CheckPrice(price))
+                DrawPrice();
+        }
         /// <summary>
         /// 새 책을 추가하는 메소드
         /// </summary>
@@ -376,39 +417,19 @@ namespace EnSharp_day3
             DrawPublisher();
             if (publisher.Equals("0"))
                 return;
-
-            if (bookIndex != -1)
+            DrawPrice();
+            if (price.Equals("0"))
+                return;
+            if (!databaseException.IsInBookDB(no))
             {
-                list[bookIndex].Count = list[bookIndex].Count + intCount;
+                drawAboutBooks.AddResult("F A I L E D !");
             }
             else
             {
-                list.Add(new Book(no, name, intCount, publisher, author));
+                bookDAO.AddBook(new Book(no,name,Convert.ToInt32(count),publisher,author,Convert.ToInt32(price)));
+                drawAboutBooks.AddResult("S U C C E S S !");
             }
 
-        }
-        /// <summary>
-        /// 책번호가 이미 있는지 없는지 체크해주는 메소드
-        /// </summary>
-        /// <param name="list">책 리스트</param>
-        /// <param name="no">사용자가 입력한 책번호</param>
-        /// <returns>있으면 false, 없으면 true</returns>
-        public bool CheckNo(string no)
-        {
-            int count = 0;
-
-            for (int i = 0; i < list.Count; i++)
-            {
-                if (list[i].No.Equals(no))
-                {
-                    return false;
-                }
-                count++;
-            }
-            if (count.Equals(list.Count))
-                return true;
-
-            return false;
         }
     }
 }

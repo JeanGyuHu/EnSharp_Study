@@ -20,11 +20,11 @@ namespace EnSharp_day3
         /// <param name="slist">관리자 목록</param>
         /// <param name="ulist">유저 목록</param>
         /// <param name="bookList">책 목록</param>
-        public SuperviserMode(List<Member> slist, List<Member> ulist, List<Book> bookList)
+        public SuperviserMode()
         {
             drawControlMember = new DrawControlMember();
-            controlMember = new ControlMember(ulist);
-            libraryManagement = new LibraryManagement(bookList);  
+            controlMember = new ControlMember();
+            libraryManagement = new LibraryManagement();  
         }
 
         /// <summary>
@@ -33,7 +33,7 @@ namespace EnSharp_day3
         /// <param name="slist">관리자 정보 리스트</param>
         /// <param name="ulist">유저 정보 리스트</param>
         /// <param name="bookList">책 정보 리스트</param>
-        public void SuperViserMenu(List<Member> slist, List<Member> ulist, List<Book> bookList)
+        public void SuperViserMenu()
         {
             flag = true;
             while (flag)
@@ -43,10 +43,10 @@ namespace EnSharp_day3
                 switch (choice)
                 {
                     case LibraryConstants.MemberControl:
-                        controlMember.MemberManagement(ulist);
+                        controlMember.MemberManagement();
                         break;
                     case LibraryConstants.BookManagement:
-                        libraryManagement.DrawAndSelectMenu(bookList);
+                        libraryManagement.DrawAndSelectMenu();
                         break;
                     case LibraryConstants.GoReturn:
                         flag = false;

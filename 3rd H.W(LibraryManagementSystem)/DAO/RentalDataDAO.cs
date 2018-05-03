@@ -19,7 +19,7 @@ namespace EnSharp_day3
             connection = new MySqlConnection(connectionInformation);
         }
 
-        public void ChangeInformationAfterRent(RentalData rentalData)
+        public void AddAfterRent(RentalData rentalData)
         {
             connection.Open();
 
@@ -30,7 +30,7 @@ namespace EnSharp_day3
             command.Parameters.Add("@publisher", MySqlDbType.VarChar).Value = rentalData.BookPbls;
             command.Parameters.Add("@Author", MySqlDbType.VarChar).Value = rentalData.BookAuthor;
             command.Parameters.Add("@Lender", MySqlDbType.VarChar).Value = rentalData.BookLender;
-            command.Parameters.Add("@Date", MySqlDbType.VarChar).Value = rentalData.BookReturnTime;
+            command.Parameters.Add("@Date", MySqlDbType.VarChar).Value = rentalData.BookReturnTime.ToString("yyyy-MM-dd");
             command.Parameters.Add("extendCount", MySqlDbType.VarChar).Value = rentalData.ExtendCount;
             command.ExecuteNonQuery();
             connection.Close();
@@ -38,6 +38,8 @@ namespace EnSharp_day3
 
         public RentalData GetRentalData(string id,string no)
         {
+            connection.Open();
+
             command = connection.CreateCommand();
             command.CommandText = "Select * from rentaldata where bookLender = @id and bookNo = @no";
             command.Parameters.Add("@no", MySqlDbType.VarChar).Value = no;
@@ -58,8 +60,8 @@ namespace EnSharp_day3
             connection.Open();
 
             command = connection.CreateCommand();
-            command.CommandText = "UPDATE RentalData SET returnTime=@dateTime, extendCount = @count where bookLender = @id and bookNo = @no";
-            command.Parameters.Add("@dateTime", MySqlDbType.VarChar).Value = dateTime;
+            command.CommandText = "UPDATE rentaldata SET returnDate=@dateTime, extendCount = @count where bookLender = @id and bookNo = @no";
+            command.Parameters.Add("@dateTime", MySqlDbType.VarChar).Value = dateTime.ToString("yyyy-MM-dd");
             command.Parameters.Add("@count", MySqlDbType.VarChar).Value = count;
             command.Parameters.Add("@id", MySqlDbType.VarChar).Value = id;
             command.Parameters.Add("@no", MySqlDbType.VarChar).Value = no;
@@ -75,10 +77,34 @@ namespace EnSharp_day3
             command = connection.CreateCommand();
             command.CommandText = "Delete from rentalData where bookNo = @bookNo and bookLender = @id";
             command.Parameters.Add("@bookNo", MySqlDbType.VarChar).Value = no;
-            command.Parameters.Add("@bookLender", MySqlDbType.VarChar).Value = id;
+            command.Parameters.Add("@id", MySqlDbType.VarChar).Value = id;
 
             command.ExecuteNonQuery();
             connection.Close();
+        }
+        public void SearchAll()
+        {
+            connection.Open();
+
+            command = connection.CreateCommand();
+            command.CommandText = "Select * from rentaldata";
+
+            reader = command.ExecuteReader();
+
+            while (reader.Read())
+            {
+                Console.WriteLine("   "+ConvertLength(reader.GetString(0),15)+ ConvertLength(reader.GetString(1),20)+ ConvertLength(reader.GetString(2),20)+ ConvertLength(reader.GetString(3),15)+ ConvertLength(reader.GetString(4),20)+ ConvertLength(reader.GetDateTime(5).ToString("yyyy-MM-dd"),15));
+            }
+            connection.Close();
+        }
+
+        public string ConvertLength(string inputString, int length)
+        {
+            byte[] byteName1 = Encoding.Default.GetBytes(inputString + "                                                                                ");
+            byte[] byteName2 = new byte[length];
+            Array.Copy(byteName1, byteName2, length);
+
+            return Encoding.Default.GetString(byteName2);
         }
     }
 }

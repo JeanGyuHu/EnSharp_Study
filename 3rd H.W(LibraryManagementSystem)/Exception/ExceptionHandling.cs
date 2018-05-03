@@ -35,7 +35,7 @@ namespace EnSharp_day3
             }
             if (Regex.IsMatch(id, @"[가-힣]"))
                 return false;
-            if (Regex.IsMatch(id, " "))
+            if (Regex.IsMatch(id, @"\s"))
                 return false;
             if (Regex.IsMatch(id, @"[~`!@#$%%\-+={}[\]|\\;:""<>,.?/]"))
                 return false;
@@ -58,7 +58,7 @@ namespace EnSharp_day3
                     return false;
             if (Regex.IsMatch(pw, @"[가-힣]"))
                 return false;
-            if (Regex.IsMatch(pw, " "))
+            if (Regex.IsMatch(pw, @"\s"))
                 return false;
             if (pw.Length < 8 || pw.Length > 14)
                 result = false;
@@ -128,11 +128,11 @@ namespace EnSharp_day3
         /// </summary>
         /// <param name="bookCount">사용자가 입력한 책의 권수</param>
         /// <returns>충족 여부</returns>
-        public int CheckBookCount (string bookCount)
+        public bool CheckBookCount (string bookCount)
         {
 
             if (bookCount.Length > 2||bookCount.Length<1)
-                return -1;
+                return false;
             //Regex regex = new Regex(@"\D");
             //Match m = regex.Match(bookCount);
             //while (m.Success)
@@ -140,13 +140,13 @@ namespace EnSharp_day3
             //    return -1;
             //}
             if (Regex.IsMatch(bookCount, @"\D"))
-                return -1;
+                return false;
             if (Regex.IsMatch(bookCount, @"[0-9]{1,2}"))
-                return Int32.Parse(bookCount);
+                return true;
             if (Int32.Parse(bookCount) < 0)
-                return -1;
+                return false;
 
-            return -1;
+            return true;
         }
         /// <summary>
         /// 저자를 확인해주는 메소드
@@ -163,6 +163,17 @@ namespace EnSharp_day3
             if (Regex.IsMatch(author, @"[0-9]"))
                 return false;
             return true;
+        }
+        public bool CheckPrice(string price)
+        {
+            if (price.Length < 4 || price.Length > 11)
+                return false;
+            if (Regex.IsMatch(price, @"[~`!@#$%%\-+={}[\]|\\;:""<>,?/]"))
+                return false;
+            if (Regex.IsMatch(price, @"\D"))
+                return false;
+            return true;
+
         }
         /// <summary>
         /// 출판사를 확인해주는 메소드
@@ -230,7 +241,7 @@ namespace EnSharp_day3
             if (address.Length > 14 || address.Length < 10)
                 result = false;
 
-            if (!Regex.IsMatch(address, @"[가-힣]{2,3}[시도]\s[가-힣]{1,3}[시군구]\s[가-힣]{2,3}[로]"))
+            if (!Regex.IsMatch(address, @"[가-힣]{2,4}[시도]\s[가-힣]{1,3}[시군구]\s[가-힣]{2,3}[로]"))
                 result = false;
 
             return result;

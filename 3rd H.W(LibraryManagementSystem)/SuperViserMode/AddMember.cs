@@ -28,7 +28,7 @@ namespace EnSharp_day3
         /// 초기화 후에 회원가입을 진행한다.
         /// </summary>
         /// <param name="list">회원의 정보를 매개변수로 받는다.</param>
-        public AddMember(List<Member> list)
+        public AddMember()
         {
             drawControlMember = new DrawControlMember();
             exceptionHandling = new ExceptionHandling();
@@ -41,7 +41,7 @@ namespace EnSharp_day3
         /// 전체적으로 그리고 입력받고 추가하는 역할을 한다.
         /// </summary>
         /// <param name="list"></param>
-        public void DrawAndAdd(List<Member> list)
+        public void DrawAndAdd()
         {
             DrawId();
             if (id.Equals("0"))
@@ -62,7 +62,7 @@ namespace EnSharp_day3
             if (address.Equals("0"))
                 return;
             Console.Clear();
-            memberDAO.AddMember(new Member(name, residentNum,id, password, phoneNumber, address));
+            memberDAO.AddMember(new Member(name, residentNum, password, id, address,phoneNumber));
             drawControlMember.PressAnyKey();
         }
         /// <summary>
@@ -81,7 +81,7 @@ namespace EnSharp_day3
             {
                 DrawId();
             }
-            if (!CheckId())
+            else if (!CheckId())
             {
                 DrawId();
             }
@@ -143,6 +143,10 @@ namespace EnSharp_day3
             {
                 DrawResidentNum();
             }
+            if (!databaseException.CheckResidentNumber(residentNum))
+            {
+                DrawResidentNum();
+            }
         }
         /// <summary>
         /// 전화번호를 입력받는 부분
@@ -158,6 +162,10 @@ namespace EnSharp_day3
             if (phoneNumber.Equals("1"))
                 DrawResidentNum();
             if (!exceptionHandling.CheckPhone(phoneNumber))
+            {
+                DrawPhoneNum();
+            }
+            if (!databaseException.CheckPhoneNumber(phoneNumber))
             {
                 DrawPhoneNum();
             }
@@ -196,7 +204,7 @@ namespace EnSharp_day3
                 return false;
             }
 
-            return false;
+            return true;
         }
 
 

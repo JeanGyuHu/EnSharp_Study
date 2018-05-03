@@ -74,7 +74,7 @@ namespace EnSharp_day3
 
             while (reader.Read())
             {
-                Console.WriteLine(reader.GetString(0) + reader.GetString(1) + reader.GetString(2) + reader.GetString(3) + reader.GetString(4) + reader.GetString(5));
+                Console.WriteLine("   " + ConvertLength(reader.GetString(0), 13) + ConvertLength(reader.GetString(1), 21) + ConvertLength(reader.GetString(2), 27) + ConvertLength(reader.GetString(3), 21) + ConvertLength(reader.GetString(4), 20) + ConvertLength(reader.GetString(5), 26));
             }
             connection.Close();
         }
@@ -90,9 +90,18 @@ namespace EnSharp_day3
 
             while (reader.Read())
             {
-                Console.WriteLine(reader.GetString(0) + reader.GetString(1) + reader.GetString(2) + reader.GetString(3) + reader.GetString(4) + reader.GetString(5));
+                Console.WriteLine("   "+ConvertLength(reader.GetString(0),13) + ConvertLength(reader.GetString(1),21) + ConvertLength(reader.GetString(2),27) + ConvertLength(reader.GetString(3),21) + ConvertLength(reader.GetString(4),20) + ConvertLength(reader.GetString(5),26));
             }
             connection.Close();
+        }
+
+        public string ConvertLength(string inputString, int length)
+        {
+            byte[] byteName1 = Encoding.Default.GetBytes(inputString + "                                                                                ");
+            byte[] byteName2 = new byte[length];
+            Array.Copy(byteName1, byteName2, length);
+
+            return Encoding.Default.GetString(byteName2);
         }
     }
 }

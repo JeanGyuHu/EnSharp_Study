@@ -12,7 +12,8 @@ namespace EnSharp_day3
         private int count;          //책 개수
         private string pbls;        //책 출판사
         private string author;      //책 저자
-        
+        private int price;
+
         /// <summary>
         /// 책 번호에 대한 get/set
         /// </summary>
@@ -54,6 +55,12 @@ namespace EnSharp_day3
             set { this.author = value; }
         }
 
+        public int Price
+        {
+            get { return price; }
+            set { price = value; }
+        }
+        public Book() { }
         /// <summary>
         /// 생성자로써 모든 정보가 들어왔을때 모두다 값을 변경해준다.
         /// </summary>
@@ -62,13 +69,14 @@ namespace EnSharp_day3
         /// <param name="count">입력 책 개수</param>
         /// <param name="pbls">입력 책 출판사</param>
         /// <param name="author">입력 책 저자</param>
-        public Book(string no,string name,int count,string pbls,string author)
+        public Book(string no,string name,int count,string pbls,string author,int price)
         {
             No = no;
             Name = name;
             Count = count;
             Pbls = pbls;
             Author = author;
+            Price = price;
         }
     }
 }

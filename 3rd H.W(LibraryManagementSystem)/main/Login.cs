@@ -29,11 +29,11 @@ namespace EnSharp_day3
         /// <param name="ulist">User id가 저장되어있는 리스트</param>
         /// <param name="bookList">책정보가 저장되어있는 리스트</param>
         /// <param name="rentalList">대여자 목록이 있는 리스트</param>
-        public Login(string mode, List<Member> slist, List<Member> ulist, List<Book> bookList, List<RentalData> rentalList)
+        public Login(string mode)
         {
             databaseException = new DatabaseException();
-            superviserMode = new SuperviserMode(slist, ulist, bookList);
-            userMode = new UserMode(ulist, bookList, rentalList, id);
+            superviserMode = new SuperviserMode();
+            userMode = new UserMode(id);
             drawControlMember = new DrawControlMember();
             securePassword = new SecureString();
         }
@@ -45,40 +45,40 @@ namespace EnSharp_day3
         /// <param name="ulist">user id 목록</param>
         /// <param name="bookList">책 목록</param>
         /// <param name="rentalList">대여자 목록</param>
-        public void CheckAndChangeScene(string mode, List<Member> slist, List<Member> ulist, List<Book> bookList, List<RentalData> rentalList)
+        public void CheckAndChangeScene(string mode)
         {
 
             switch (mode)
             {
                 case LibraryConstants.StartSuperViserMode:
 
-                    loginFlag = DrawLoginPage(slist);
+                    loginFlag = DrawLoginPage();
                     if (id.Equals("0") || stringPassword.Equals("0"))
                         return;
                     if (loginFlag)
                     {
-                        superviserMode.SuperViserMenu(slist, ulist, bookList);
+                        superviserMode.SuperViserMenu();
                     }
                     else
                     {
                         userMode.SetId(id);
-                        CheckAndChangeScene(mode, slist, ulist, bookList, rentalList);
+                        CheckAndChangeScene(mode);
                     }
                     break;
 
                 case LibraryConstants.StartUserMode:
-                    loginFlag = DrawLoginPage(ulist);
+                    loginFlag = DrawLoginPage();
                     if (id.Equals("0") || stringPassword.Equals("0"))
                         return;
                     if (stringPassword.Equals("-1"))
-                        CheckAndChangeScene(mode, slist, ulist, bookList, rentalList);
+                        CheckAndChangeScene(mode);
                     if (loginFlag)
                     {
-                        userMode.UserMenu(ulist, bookList, rentalList, id);
+                        userMode.UserMenu(id);
                     }
                     else
                     {
-                        CheckAndChangeScene(mode, slist, ulist, bookList, rentalList);
+                        CheckAndChangeScene(mode);
                     }
                     break;
             }
@@ -89,7 +89,7 @@ namespace EnSharp_day3
         /// </summary>
         /// <param name="list">멤버 목록이 들어있는 리스트</param>
         /// <returns>로그인 여부</returns>
-        public bool DrawLoginPage(List<Member> list)
+        public bool DrawLoginPage()
         {
             drawControlMember.LoginPage();
             drawControlMember.WriteId();
@@ -113,7 +113,7 @@ namespace EnSharp_day3
             }
             else
             {
-                DrawLoginPage(list);
+                DrawLoginPage();
             }
             return false;
         }

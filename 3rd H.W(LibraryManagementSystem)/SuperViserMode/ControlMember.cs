@@ -18,15 +18,13 @@ namespace EnSharp_day3
         private string phoneNumber;                  //전화번호 입력 받는 변수
         private string address;                      //주소를 입력받는 변수
         private string search;                       //어떤 값으로 검색할지 입력받는 변수
-        private int count = 0;                          //리스트를 전부 검색했나 확인하기 위한 변수
-        private int memberIndex = 0;                    //몇번 Member의 위치를 변경할건지 저장
 
         /// <summary>
         /// 생성자로써 생성되면 클래스에서 사용되는 객체들을 생성 및 초기화해준다.
         /// </summary>
         /// <param name="list">회원 정보 리스트</param>
-        public ControlMember(List<Member> list){
-            addMember = new AddMember(list);
+        public ControlMember(){
+            addMember = new AddMember();
             memberDAO = new MemberDAO();
             drawControlMember = new DrawControlMember();
             exceptionHandling = new ExceptionHandling();
@@ -37,7 +35,7 @@ namespace EnSharp_day3
         /// 멤버 관리하는 메소드 (메인 역할)
         /// </summary>
         /// <param name="list">회원 정보 목록</param>
-        public void MemberManagement(List<Member> list)
+        public void MemberManagement()
         {
             flag = true;
             while (flag)
@@ -48,7 +46,7 @@ namespace EnSharp_day3
                 switch (choice)
                 {
                     case LibraryConstants.AddNewMember:
-                        addMember.DrawAndAdd(list);
+                        addMember.DrawAndAdd();
                         break;
                     case LibraryConstants.EditMemberInfo:
                         DrawEdit();
@@ -155,7 +153,6 @@ namespace EnSharp_day3
         /// <param name="list"></param>
         public void DrawDelete()
         {
-            count = 0;
             DeleteSub();
 
             memberDAO.DeleteMember(id);
@@ -176,36 +173,42 @@ namespace EnSharp_day3
                     if (search.Equals("0")) return;
                     drawControlMember.Category();
                     memberDAO.SearchWithQuary("select * from member where name = \"" + search + "\"");
+                    drawControlMember.PressAnyKey();
                     break;
                 case LibraryConstants.SearchWithResidentNum:
                     SearchSub(LibraryConstants.SearchWithResidentNum);
                     if (search.Equals("0")) return;
                     drawControlMember.Category();
                     memberDAO.SearchWithQuary("select * from member where residentNumber = \"" + search + "\"");
+                    drawControlMember.PressAnyKey();
                     break;
                 case LibraryConstants.SearchWithId:
                     SearchSub(LibraryConstants.SearchWithId);
                     if (search.Equals("0")) return;
                     drawControlMember.Category();
                     memberDAO.SearchWithQuary("select * from member where id = \"" + search + "\"");
+                    drawControlMember.PressAnyKey();
                     break;
                 case LibraryConstants.SearchWithPassword:
                     SearchSub(LibraryConstants.SearchWithPassword);
                     if (search.Equals("0")) return;
                     drawControlMember.Category();
                     memberDAO.SearchWithQuary("select * from member where password = \"" + search + "\"");
+                    drawControlMember.PressAnyKey();
                     break;
                 case LibraryConstants.SearchWithAddress:
                     SearchSub(LibraryConstants.SearchWithAddress);
                     if (search.Equals("0")) return;
                     drawControlMember.Category();
                     memberDAO.SearchWithQuary("select * from member where address = \"" + search + "\"");
+                    drawControlMember.PressAnyKey();
                     break;
                 case LibraryConstants.SearchWithPhone:
                     SearchSub(LibraryConstants.SearchWithPhone);
                     if (search.Equals("0")) return;
                     drawControlMember.Category();
                     memberDAO.SearchWithQuary("select * from member where phoneNumber = \"" + search + "\"");
+                    drawControlMember.PressAnyKey();
                     break;
                 case LibraryConstants.ReturnBack:
                     break;

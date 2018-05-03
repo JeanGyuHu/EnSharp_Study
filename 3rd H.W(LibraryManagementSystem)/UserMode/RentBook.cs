@@ -13,15 +13,20 @@ namespace EnSharp_day3
         private DrawAboutBooks drawAboutBooks;   //UI를 그리기 위한  객체
         private ExceptionHandling exceptionHandling;
         private DateTime now;
-
+        private BookDAO bookDAO;
+        private RentalDataDAO rentalDataDAO;
+        private DatabaseException databaseException;
         /// <summary>
         /// 책 정보, 이미 빌린 사람의 정보, 현재 사용중인 사람의 id를 이용하여 책을 대여해주는 메소드
         /// </summary>
         /// <param name="bookList">책 정보 리스트</param>
         /// <param name="rentalList">대여자 리스트</param>
         /// <param name="id">현재 사용중인 유저 아이디</param>
-        public RentBook(List<Book> bookList,List<RentalData> rentalList,string id)
+        public RentBook(string id)
         {
+            databaseException = new DatabaseException();
+            rentalDataDAO = new RentalDataDAO();
+            bookDAO = new BookDAO();
             drawAboutBooks = new DrawAboutBooks();
             exceptionHandling = new ExceptionHandling();
             now = DateTime.Now;
@@ -33,24 +38,29 @@ namespace EnSharp_day3
         /// <param name="bookList">책 정보 리스트</param>
         /// <param name="rentalList">대여자 리스트</param>
         /// <param name="id">현재 사용자 명</param>
-        public void RentBookPage(List<Book> bookList, List<RentalData> rentalList, string id)
+        public void RentBookPage(string id)
         {
+            drawAboutBooks.Category();
+            bookDAO.SearchAll();
 
-            DrawNo(bookList);
+            DrawNo();
             if (choice.Equals("0"))
                 return;
 
-            findIndex = FindBook(bookList, rentalList, id, choice);
-
-            if (findIndex.Equals(-1))
+            if (!databaseException.IsInAlreadyRentDB(id,choice))
             {
-                drawAboutBooks.RentalFailed();
+                drawAboutBooks.RentalResult("F A I L E D");
+            }
+            else if (bookDAO.GetBook(choice).Count>0)
+            {
+                Book book = bookDAO.GetBook(choice);
+                bookDAO.EditBookInformation(choice, --book.Count,book.Price);
+                rentalDataDAO.AddAfterRent(new RentalData(choice, book.Name, book.Pbls, book.Author, id, new DateTime(now.Year, now.Month + 1, now.Day + 10), 0));
+                drawAboutBooks.RentalResult("S U C C E S S");
             }
             else
             {
-                bookList[findIndex].Count--;
-                rentalList.Add(new RentalData(bookList[findIndex].No, bookList[findIndex].Name, bookList[findIndex].Pbls, bookList[findIndex].Author, id, new DateTime(now.Year, now.Month + 1, now.Day + 10),0));
-                drawAboutBooks.RentalSuccess();
+                drawAboutBooks.RentalResult("F A I L E D (연장 횟수 초과)");    
             }
 
             drawAboutBooks.PressAnyKey();
@@ -59,40 +69,16 @@ namespace EnSharp_day3
         /// 책의 번호를 입력받는 메소드
         /// </summary>
         /// <param name="bookList">책 정보 리스트</param>
-        public void DrawNo(List<Book> bookList)
+        public void DrawNo()
         {
-            drawAboutBooks.Information(bookList);
+            drawAboutBooks.Category();
+            bookDAO.SearchAll();
             drawAboutBooks.WriteBookNo();
             choice = Console.ReadLine();
             if (choice.Equals("0"))
                 return;
             if (!exceptionHandling.CheckBookNo(choice))
-                DrawNo(bookList);
-        }
-        /// <summary>
-        /// 책이 있는지 체크해주고 책의 개수가 충분히 있다면 인덱스값을 넘겨준다.
-        /// </summary>
-        /// <param name="bookList">책 정보 리스트</param>
-        /// <param name="rentalList">대여자 리스트</param>
-        /// <param name="id">사용자 아이디</param>
-        /// <param name="bookChoice">선택한 책</param>
-        /// <returns></returns>
-        public int FindBook(List<Book> bookList,List<RentalData> rentalList,string id, string bookChoice)
-        {
-            count = 0;
-
-            if (!exceptionHandling.CheckAlreadyRent(rentalList, id, bookChoice))
-                return -1;
-
-            for (int i = 0; i < bookList.Count; i++)
-            {
-                if (bookList[i].No.Equals(bookChoice))
-                    if (bookList[i].Count > 0)
-                        return i;
-                count++;
-            }
-
-            return -1;
+                DrawNo();
         }
     }
 }

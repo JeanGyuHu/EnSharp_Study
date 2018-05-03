@@ -7,8 +7,11 @@ namespace EnSharp_day3
 {
     class ReturnBooks
     {
+        private DatabaseException databaseException;
+        private RentalDataDAO rentalDataDAO; 
         private DrawAboutBooks drawAboutBooks;          //UI를 그리기 위한 객체
         private ExceptionHandling exceptionHandling;    //예외처리를 위한 객체
+        private BookDAO bookDAO;
         private string no;  //번호를 받기 위한 string 변수
 
         /// <summary>
@@ -17,10 +20,13 @@ namespace EnSharp_day3
         /// <param name="bookList">책 정보 리스트</param>
         /// <param name="rentalList">대여자 리스트</param>
         /// <param name="id">현재 사용자명</param>
-        public ReturnBooks(List<Book> bookList, List<RentalData> rentalList, string id)
+        public ReturnBooks(string id)
         {
+            databaseException = new DatabaseException();
+            rentalDataDAO = new RentalDataDAO();
             drawAboutBooks = new DrawAboutBooks();
             exceptionHandling = new ExceptionHandling();
+            bookDAO = new BookDAO();
         }
         /// <summary>
         /// 책 빌리는 작업을 하는 메소드
@@ -28,27 +34,25 @@ namespace EnSharp_day3
         /// <param name="bookList">책 정보 리스트</param>
         /// <param name="rentalList">대여자 리스트</param>
         /// <param name="id">현재 사용자명</param>
-        public void ReturnBook(List<Book> bookList, List<RentalData> rentalList, string id)
+        public void ReturnBook(string id)
         {
             int findIndex = -1;
 
-            DrawNo(rentalList, id);
+            DrawNo(id);
             if (no.Equals("0"))
                 return;
 
-            findIndex = FindBookInRentalList(rentalList, id, no);
-
-            if (findIndex.Equals(-1))
+            if (databaseException.IsInAlreadyRentDB(id,no))
             {
-                drawAboutBooks.PressAnyKey();
+                drawAboutBooks.ReturnResult("F A I L E D !");
             }
             else
             {
-                rentalList.RemoveAt(findIndex);
-                FindBookInBookList(bookList, no);
-                drawAboutBooks.PressAnyKey();
+                rentalDataDAO.ChangeAfterReturnBook(id, no);
+                bookDAO.EditBookInformation(no,bookDAO.GetBook(no).Count++,bookDAO.GetBook(no).Price);
+                drawAboutBooks.ReturnResult("S U C C E S S !");
             }
-
+            drawAboutBooks.PressAnyKey();
             
         }
 
@@ -57,53 +61,20 @@ namespace EnSharp_day3
         /// </summary>
         /// <param name="rentalList">대여자 리스트</param>
         /// <param name="id">현재 사용자 명</param>
-        public void DrawNo(List<RentalData> rentalList, string id)
+        public void DrawNo(string id)
         {
-            drawAboutBooks.ReturnBooksTitle(rentalList, id);
+            drawAboutBooks.ReturnBooksTitle();
+            rentalDataDAO.SearchAll();
             drawAboutBooks.WriteBookNo();
             no = Console.ReadLine();
             if (no.Equals("0"))
                 return;
             if (!exceptionHandling.CheckBookNo(no))
             {
-                DrawNo(rentalList, id);
+                DrawNo(id);
                 if (no.Equals("0"))
                     return;
             }
-        }
-        /// <summary>
-        /// 찾은 책이 책 정보 리스트에 있는지 체크
-        /// </summary>
-        /// <param name="bookList">책 정보 리스트</param>
-        /// <param name="no">책 번호</param>
-        /// <returns>실패했을시에만 -1</returns>
-        public int FindBookInBookList(List<Book> bookList, string no)
-        {
-            for (int search = 0; search < bookList.Count; search++)
-            {
-                if (bookList[search].No.Equals(no))
-                    bookList[search].Count++;
-            }
-
-            return -1;
-        }
-
-        /// <summary>
-        /// 입력한 책이 대여자 리스트에 있는지 체크
-        /// </summary>
-        /// <param name="rentalList">대여자 리스트</param>
-        /// <param name="id">현재 사용자명</param>
-        /// <param name="no">책 번호</param>
-        /// <returns></returns>
-        public int FindBookInRentalList(List<RentalData> rentalList, string id, string no)
-        {
-            for (int search = 0; search < rentalList.Count; search++)
-            {
-                if (rentalList[search].BookLender.Equals(id))
-                    if (rentalList[search].BookNo.Equals(no))
-                        return search;
-            }
-            return -1;
         }
     }
 }

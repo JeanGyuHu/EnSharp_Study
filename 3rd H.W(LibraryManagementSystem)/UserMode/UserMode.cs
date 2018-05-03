@@ -21,12 +21,12 @@ namespace EnSharp_day3
         /// <param name="bookList">책 정보 리스트</param>
         /// <param name="rentalList">대여자 정보 리스트</param>
         /// <param name="id">로그인한 사용자 정보</param>
-        public UserMode(List<Member> memList, List<Book> bookList,List<RentalData> rentalList,string id)
+        public UserMode(string id)
         {
             drawControlMember = new DrawControlMember();
-            extendRentalTime = new ExtendRentalTime(memList, rentalList, id);
-            rentBook = new RentBook(bookList, rentalList, id);
-            returnBooks = new ReturnBooks(bookList,rentalList,id);
+            extendRentalTime = new ExtendRentalTime(id);
+            rentBook = new RentBook(id);
+            returnBooks = new ReturnBooks(id);
         }
 
         /// <summary>
@@ -36,7 +36,7 @@ namespace EnSharp_day3
         /// <param name="bookList">책 정보 리스트</param>
         /// <param name="rentalList">대여자 리스트</param>
         /// <param name="id">현재 사용자명</param>
-        public void UserMenu(List<Member> memList, List<Book> bookList, List<RentalData> rentalList, string id)
+        public void UserMenu(string id)
         {
             flag = true;
             while (flag)
@@ -46,13 +46,13 @@ namespace EnSharp_day3
                 switch (choice)
                 {
                     case LibraryConstants.RentBookPage:
-                        rentBook.RentBookPage(bookList,rentalList,id);
+                        rentBook.RentBookPage(id);
                         break;
                     case LibraryConstants.ExtendRentalTimePage:
-                        extendRentalTime.DrawAndRun(memList, rentalList, id);
+                        extendRentalTime.DrawAndRun(id);
                         break;
                     case LibraryConstants.ReturnBooks:
-                        returnBooks.ReturnBook(bookList,rentalList,id);
+                        returnBooks.ReturnBook(id);
                         break;
                     case LibraryConstants.GoBack:
                         flag = false;

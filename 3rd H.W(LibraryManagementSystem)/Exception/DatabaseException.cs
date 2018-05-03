@@ -90,6 +90,53 @@ namespace EnSharp_day3
                 return true;
         }
 
+        public bool CheckResidentNumber(string residentNumber)
+        {
+            int num = 0;
+
+            connection.Open();
+
+            command = connection.CreateCommand();
+            command.CommandText = "select * from member where residentNumber = @residentNumber";
+            command.Parameters.Add("@residentNumber", MySqlDbType.VarChar).Value = residentNumber;
+
+            reader = command.ExecuteReader();
+
+            while (reader.Read())
+            {
+                num++;
+            }
+            connection.Close();
+
+            if (num > 0)
+                return false;
+            else
+                return true;
+        }
+
+        public bool CheckPhoneNumber(string phone)
+        {
+            int num = 0;
+
+            connection.Open();
+
+            command = connection.CreateCommand();
+            command.CommandText = "select * from member where phoneNumber = @phone";
+            command.Parameters.Add("@phone", MySqlDbType.VarChar).Value = phone;
+
+            reader = command.ExecuteReader();
+
+            while (reader.Read())
+            {
+                num++;
+            }
+            connection.Close();
+
+            if (num > 0)
+                return false;
+            else
+                return true;
+        }
         public bool IsInAlreadyRentDB(string id,string no)
         {
             int num = 0;
