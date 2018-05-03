@@ -22,16 +22,14 @@ namespace EnSharp_day3
             //member.SearchAll();
 
             //book.DeleteBook("12-12341234");
-            Console.WriteLine(db.IsInBookDB("12-12341234"));
-            if (db.IsInBookDB("12-12341234"))
-            {
-                book.AddBook(new Book("12-12341234", "호호호웃어요", 3, "뿡뿡이출판사", "뿡뿡이"));
-            }
+            //Console.WriteLine(db.IsInBookDB("12-12341234"));
+            //if (db.IsInBookDB("12-12341234"))
+            //{
+            //    book.AddBook(new Book("12-12341234", "호호호웃어요", 3, "뿡뿡이출판사", "뿡뿡이"));
+            //}
 
-            //Console.WriteLine();
-
-            //StartMenu startMenu = new StartMenu();
-            //startMenu.StartMainMenu();
+            StartMenu startMenu = new StartMenu();
+            startMenu.StartMainMenu();
         }
     }
 }

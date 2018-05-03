@@ -19,7 +19,7 @@ namespace EnSharp_day3
             connection = new MySqlConnection(connectionInformation);
         }
 
-        public bool IsInMemberDB(string id)
+        public bool IsIdInMemberDB(string id)
         {
             int num=0;
 
@@ -42,6 +42,29 @@ namespace EnSharp_day3
                 return true;
         }
 
+        public bool IsPasswordInMemberDB(string id,string password)
+        {
+            int num = 0;
+
+            connection.Open();
+
+            command = connection.CreateCommand();
+            command.CommandText = "select * from member where id =@id and password = @password";
+            command.Parameters.Add("@id", MySqlDbType.VarChar).Value = id;
+            command.Parameters.Add("@password", MySqlDbType.VarChar).Value = password;
+
+            reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                num++;
+            }
+            connection.Close();
+
+            if (num > 0)
+                return false;
+            else
+                return true;
+        }
         public bool IsInBookDB(string no)
         {
             int num=0;
@@ -54,6 +77,32 @@ namespace EnSharp_day3
 
             reader = command.ExecuteReader();
             
+
+            while (reader.Read())
+            {
+                num++;
+            }
+            connection.Close();
+
+            if (num > 0)
+                return false;
+            else
+                return true;
+        }
+
+        public bool IsInAlreadyRentDB(string id,string no)
+        {
+            int num = 0;
+
+            connection.Open();
+
+            command = connection.CreateCommand();
+            command.CommandText = "select * from rentaldata where bookNo = @bookNo and bookLender = @bookLender";
+            command.Parameters.Add("@bookNo", MySqlDbType.VarChar).Value = no;
+            command.Parameters.Add("@bookLender", MySqlDbType.VarChar).Value = id;
+
+            reader = command.ExecuteReader();
+
 
             while (reader.Read())
             {

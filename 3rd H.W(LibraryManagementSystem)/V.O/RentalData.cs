@@ -71,6 +71,7 @@ namespace EnSharp_day3
             set { extendCount = value; }
         }
 
+        public RentalData() { }
         /// <summary>
         /// 대여자에 대한 정보가 들어왔을때 초기화 해주는 생성자
         /// </summary>

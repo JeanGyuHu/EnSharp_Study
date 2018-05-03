@@ -7,10 +7,11 @@ using System.Text;
 
 namespace EnSharp_day3
 {
-    
-    
+
+
     class Login
     {
+        private DatabaseException databaseException;
         private SuperviserMode superviserMode;
         private UserMode userMode;
         private DrawControlMember drawControlMember;
@@ -28,10 +29,11 @@ namespace EnSharp_day3
         /// <param name="ulist">User id가 저장되어있는 리스트</param>
         /// <param name="bookList">책정보가 저장되어있는 리스트</param>
         /// <param name="rentalList">대여자 목록이 있는 리스트</param>
-        public Login(string mode, List<Member> slist, List<Member> ulist, List<Book> bookList,List<RentalData> rentalList)
+        public Login(string mode, List<Member> slist, List<Member> ulist, List<Book> bookList, List<RentalData> rentalList)
         {
+            databaseException = new DatabaseException();
             superviserMode = new SuperviserMode(slist, ulist, bookList);
-            userMode = new UserMode(ulist, bookList, rentalList,id);
+            userMode = new UserMode(ulist, bookList, rentalList, id);
             drawControlMember = new DrawControlMember();
             securePassword = new SecureString();
         }
@@ -55,7 +57,7 @@ namespace EnSharp_day3
                         return;
                     if (loginFlag)
                     {
-                        superviserMode.SuperViserMenu(slist,ulist,bookList);
+                        superviserMode.SuperViserMenu(slist, ulist, bookList);
                     }
                     else
                     {
@@ -68,11 +70,11 @@ namespace EnSharp_day3
                     loginFlag = DrawLoginPage(ulist);
                     if (id.Equals("0") || stringPassword.Equals("0"))
                         return;
-                    if(stringPassword.Equals("-1"))
+                    if (stringPassword.Equals("-1"))
                         CheckAndChangeScene(mode, slist, ulist, bookList, rentalList);
                     if (loginFlag)
                     {
-                        userMode.UserMenu(ulist,bookList,rentalList,id);
+                        userMode.UserMenu(ulist, bookList, rentalList, id);
                     }
                     else
                     {
@@ -94,14 +96,13 @@ namespace EnSharp_day3
             id = Console.ReadLine();
             if (id.Equals("0"))
                 return false;
-            idCheck = CheckID(list, id);
 
-            if (idCheck != -1)
+            if (CheckID(id))
             {
                 drawControlMember.WritePassword();
                 securePassword = drawControlMember.GetConsoleSecurePassword();
                 stringPassword = new NetworkCredential("", securePassword).Password;
-                if(CheckPW(list, idCheck, stringPassword))
+                if (CheckPW(stringPassword))
                 {
                     return true;
                 }
@@ -122,14 +123,12 @@ namespace EnSharp_day3
         /// <param name="list">유저 리스트</param>
         /// <param name="id">입력한 아이디</param>
         /// <returns></returns>
-        public int CheckID(List<Member> list,string id)
+        public bool CheckID(string id)
         {
-            for(int check = 0;check <list.Count;check++)
-            {
-                if (list[check].Id.Equals(id))
-                    return check;
-            }
-            return -1;
+            if (!databaseException.IsIdInMemberDB(id))
+                return true;
+
+            return false;
         }
         /// <summary>
         /// 아이디를 체크했을때, 그 아이디에 해당하는 비밀번호가 사용자가 입력한 비밀번호와 일치하는지 체크
@@ -138,9 +137,9 @@ namespace EnSharp_day3
         /// <param name="index">아이디가 있는 인덱스정보</param>
         /// <param name="pw">사용자가 입력한 비밀번호</param>
         /// <returns></returns>
-        public bool CheckPW(List<Member> list,int index, string pw)
+        public bool CheckPW(string pw)
         {
-            if (list[index].Password.Equals(pw))
+            if (!databaseException.IsPasswordInMemberDB(id, pw))
                 return true;
 
             return false;

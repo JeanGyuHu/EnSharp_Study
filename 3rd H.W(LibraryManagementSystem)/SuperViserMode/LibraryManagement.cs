@@ -10,6 +10,8 @@ namespace EnSharp_day3
     {
         private ExceptionHandling exceptionHandling;    //예외처리를 위한 객체 선언
         private DrawAboutBooks drawAboutBooks;          //UI를 그리기 위한 객체 선언
+        private DatabaseException databaseException;
+        private BookDAO bookDAO;
         private string choice;                       //어떤 작업을 할지 선택받는 변수
         private bool flag = true;                       //이전 메뉴로 돌아가기 위한 flag
         private string no;                       //책 번호 입력받기 위함
@@ -27,15 +29,17 @@ namespace EnSharp_day3
         /// <param name="list">책 정보 리스트</param>
         public LibraryManagement(List<Book> list)
         {
+            databaseException = new DatabaseException();
             exceptionHandling = new ExceptionHandling();
             drawAboutBooks = new DrawAboutBooks();
+            bookDAO = new BookDAO();
         }
 
         /// <summary>
         /// 기본 메뉴창을 띄우는 메소드
         /// </summary>
         /// <param name="list">책의 리스트</param>
-        public void DrawAndSelectMenu(List<Book> list)
+        public void DrawAndSelectMenu()
         {
             flag = true;
             while (flag)
@@ -45,19 +49,20 @@ namespace EnSharp_day3
                 switch (choice)
                 {
                     case LibraryConstants.AddMode:
-                        DrawAdd(list);
+                        DrawAdd();
                         break;
                     case LibraryConstants.EditMode:
-                        DrawEdit(list);
+                        DrawEdit();
                         break;
                     case LibraryConstants.DeleteMode:
-                        DrawDelete(list);
+                        DrawDelete();
                         break;
                     case LibraryConstants.SearchMode:
-                        DrawSearch(list);
+                        DrawSearch();
                         break;
                     case LibraryConstants.PrintMode:
-                        drawAboutBooks.Information(list);
+                        drawAboutBooks.Category();
+                        bookDAO.SearchAll();
                         drawAboutBooks.PressAnyKey();
                         break;
                     case LibraryConstants.GoBefore:
@@ -72,41 +77,36 @@ namespace EnSharp_day3
         /// 원하는 책을 지울때 사용하는 메소드
         /// </summary>
         /// <param name="list">책 목록</param>
-        public void DrawDelete(List<Book> list)
+        public void DrawDelete()
         {
-            DeleteSub(list);
+            DeleteSub();
 
-            for (int i = 0; i < list.Count; i++)
-            {
-                if (list[i].No.Equals(deleteName))
-                {
-                    list.RemoveAt(i);
-                    drawAboutBooks.DeleteSuccess();
-                    return;
-                }
-            }
-            drawAboutBooks.DeleteFailed();
+            if (bookDAO.DeleteBook(deleteName))
+                drawAboutBooks.DeleteSuccess();
+            else
+                drawAboutBooks.DeleteFailed();
         }
         /// <summary>
         /// 책을 삭제할때 기본 키 값인 No값을 체크해주는 메소드
         /// </summary>
         /// <param name="list">책 정보 리스트</param>
-        public void DeleteSub(List<Book> list)
+        public void DeleteSub()
         {
-            drawAboutBooks.Information(list);
+            drawAboutBooks.Category();
+            bookDAO.SearchAll();
 
             drawAboutBooks.WriteBookNo();
             deleteName = Console.ReadLine();
             if (deleteName.Equals("0"))
                 return;
             if (!exceptionHandling.CheckBookNo(deleteName))
-                DeleteSub(list);
+                DeleteSub();
         }
         /// <summary>
         /// 원하는 정보로 검색하는 메소드
         /// </summary>
         /// <param name="list">책 정보 리스트</param>
-        public void DrawSearch(List<Book> list)
+        public void DrawSearch()
         {
             drawAboutBooks.SearchMenu();
             deleteName = Console.ReadLine();
@@ -114,39 +114,39 @@ namespace EnSharp_day3
             switch (deleteName)
             {
                 case LibraryConstants.SearchBookNo:
-                    SearchSub(list, LibraryConstants.SearchBookNo);
+                    SearchSub(LibraryConstants.SearchBookNo);
                     if (search.Equals("0")) return;
                     drawAboutBooks.Category();
-                    drawAboutBooks.SearchNo(list, search);
+                    bookDAO.SearchWithQuary("Select * from book where no = \"" + no + "\"");
                     break;
                 case LibraryConstants.SearchBookName:
-                    SearchSub(list, LibraryConstants.SearchBookName);
+                    SearchSub(LibraryConstants.SearchBookName);
                     if (search.Equals("0")) return;
                     drawAboutBooks.Category();
-                    drawAboutBooks.SearchName(list, search);
+                    bookDAO.SearchWithQuary("Select * from book where no = \"" + name + "\"");
                     break;
                 case LibraryConstants.SearchBookCount:
-                    SearchSub(list, LibraryConstants.SearchBookCount);
+                    SearchSub(LibraryConstants.SearchBookCount);
                     if (search.Equals("0")) return;
-                        drawAboutBooks.Category();
-                        drawAboutBooks.SearchCount(list, search);
+                    drawAboutBooks.Category();
+                    bookDAO.SearchWithQuary("Select * from book where no = \"" + count + "\"");
                     break;
                 case LibraryConstants.SearchBookAuthor:
-                    SearchSub(list, LibraryConstants.SearchBookAuthor);
+                    SearchSub(LibraryConstants.SearchBookAuthor);
                     if (search.Equals("0")) return;
                     drawAboutBooks.Category();
-                    drawAboutBooks.SearchAuthor(list, search);
+                    bookDAO.SearchWithQuary("Select * from book where no = \"" + author + "\"");
                     break;
                 case LibraryConstants.SearchBookPublisher:
-                    SearchSub(list, LibraryConstants.SearchBookPublisher);
+                    SearchSub(LibraryConstants.SearchBookPublisher);
                     if (search.Equals("0")) return;
                     drawAboutBooks.Category();
-                    drawAboutBooks.SearchPublisher(list, search);
+                    bookDAO.SearchWithQuary("Select * from book where no = \"" + publisher + "\"");
                     break;
                 case LibraryConstants.GoBefore:
                     break;
                 default:
-                    DrawSearch(list);
+                    DrawSearch();
                     break;
 
             }
@@ -157,7 +157,7 @@ namespace EnSharp_day3
         /// </summary>
         /// <param name="list"></param>
         /// <param name="mode"></param>
-        public void SearchSub(List<Book> list,string mode)
+        public void SearchSub(string mode)
         {
             switch (mode)
             {
@@ -168,7 +168,7 @@ namespace EnSharp_day3
                     if (!exceptionHandling.CheckBookNo(search))
                     {
                         Console.Clear();
-                        SearchSub(list, LibraryConstants.SearchBookNo);
+                        SearchSub(LibraryConstants.SearchBookNo);
                     }
                     break;
                 case LibraryConstants.SearchBookName:
@@ -178,12 +178,12 @@ namespace EnSharp_day3
                     if (search.Length < 1 || search.Length > 15)
                     {
                         Console.Clear();
-                        SearchSub(list, LibraryConstants.SearchBookName);
+                        SearchSub(LibraryConstants.SearchBookName);
                     }
                     if (Regex.IsMatch(search, @"^\s"))
                     {
                         Console.Clear();
-                        SearchSub(list, LibraryConstants.SearchBookName);
+                        SearchSub(LibraryConstants.SearchBookName);
                     }
                     break;
                 case LibraryConstants.SearchBookCount:
@@ -193,7 +193,7 @@ namespace EnSharp_day3
                     if (exceptionHandling.CheckBookCount(search).Equals(-1))
                     {
                         Console.Clear();
-                        SearchSub(list, LibraryConstants.SearchBookCount);
+                        SearchSub(LibraryConstants.SearchBookCount);
                     }
                     break;
                 case LibraryConstants.SearchBookAuthor:
@@ -203,7 +203,7 @@ namespace EnSharp_day3
                     if (!exceptionHandling.CheckAuthor(search))
                     {
                         Console.Clear();
-                        SearchSub(list, LibraryConstants.SearchBookAuthor);
+                        SearchSub(LibraryConstants.SearchBookAuthor);
                     }
                     break;
                 case LibraryConstants.SearchBookPublisher:
@@ -213,20 +213,20 @@ namespace EnSharp_day3
                     if (!exceptionHandling.CheckPublisher(search))
                     {
                         Console.Clear();
-                        SearchSub(list, LibraryConstants.SearchBookPublisher);
+                        SearchSub(LibraryConstants.SearchBookPublisher);
                     }
                     break;
                 case LibraryConstants.GoBefore:
                     break;
                 default:
-                    DrawSearch(list);
+                    DrawSearch();
                     break;
             }
         }
         /// <summary>
         /// 책의 이름을 받는 메소드
         /// </summary>
-        public void DrawName(List<Book> list)
+        public void DrawName()
         {
             Console.Clear();
             drawAboutBooks.InfoTitle();
@@ -235,22 +235,20 @@ namespace EnSharp_day3
             if (name.Equals("0"))
                 return;
             if (name.Equals("1"))
-                DrawNo(list);
+                DrawNo();
             if (name.Length < 1 || name.Length > 15)
-                DrawName(list);
+                DrawName();
             if (Regex.IsMatch(name, @"^\s"))
-                DrawName(list);
+                DrawName();
         }
         /// <summary>
         /// 책의 정보를 입력받고 수정하는 메소드를 호출
         /// </summary>
         /// <param name="list">모든 책 리스트</param>
-        public void DrawEdit(List<Book> list)
+        public void DrawEdit()
         {
-            int inputCount = 0;
-            int count2 = 0;
-
-            drawAboutBooks.Information(list);
+            drawAboutBooks.Category();
+            bookDAO.SearchAll();
 
             drawAboutBooks.WriteBookNo();
             deleteName = Console.ReadLine();
@@ -259,41 +257,51 @@ namespace EnSharp_day3
             if (deleteName.Equals("1"))
                 return;
             if (!exceptionHandling.CheckBookNo(deleteName))
-                DrawEdit(list);
+                DrawEdit();
             else
             {
-                for (int search = 0; search < list.Count; search++)
+                DrawCountRead();
+                if (count.Equals("-1"))
+                    return;
+                if (count.Equals("-2"))
                 {
-                    if (list[search].No.Equals(deleteName))
-                    {
-                        inputCount = DrawCountEdit(list);
-                        if (inputCount.Equals(-1))
-                            return;
-                        else if (inputCount.Equals(-2))
-                            DrawEdit(list);
-                        else if(exceptionHandling.CheckBookCount(count).Equals(-1))
-                            inputCount = DrawCountEdit(list);
-                            
-                        
-                        if(inputCount!=-1&&inputCount!=-2&&inputCount!=-3)
-                        {
-                            list[search].Count = inputCount;
-
-                            drawAboutBooks.EditSuccess();
-                        }
-                        break;
-                    }
-                    count2++;
+                    DrawEdit();
+                    return;
                 }
-                if (list.Count.Equals(count2))
-                    DrawEdit(list);
+                if (!databaseException.IsInBookDB(no))
+                {
+                    bookDAO.EditBookInformation(no, Convert.ToInt32(count));
+                    drawAboutBooks.EditSuccess("S U C C E S S");
+                }
+                else
+                {
+                    drawAboutBooks.EditSuccess("F A I L E D");
+                }
             }
         }
 
+        public void DrawCountRead()
+        {
+            Console.Clear();
+            drawAboutBooks.InfoTitle();
+            drawAboutBooks.WriteBookCount();
+            count = Console.ReadLine();
+            if (count.Equals("-1"))
+                return;
+            if (count.Equals("-2"))
+            {
+                DrawEdit();
+                return;
+            }
+            if (!exceptionHandling.CheckBookCount(count))
+            {
+                DrawCountRead();
+            }
+        }
         /// <summary>
         /// 책 번호를 입력받는 메소드
         /// </summary>
-        public void DrawNo(List<Book> list)
+        public void DrawNo()
         {
             Console.Clear();
             drawAboutBooks.InfoTitle();
@@ -301,92 +309,21 @@ namespace EnSharp_day3
             no = Console.ReadLine();
             if (no.Equals("0"))
                 return;
-            
+
             if (!exceptionHandling.CheckBookNo(no))
             {
-                DrawNo(list);
+                DrawNo();
             }
-            if (!CheckNo(list, no))
+            if (!CheckNo(no))
             {
-                DrawNo(list);
+                DrawNo();
             }
-        }
-        /// <summary>
-        /// 책이 있는지 판단하고 있으면 그 책이 있는 위치를 반환
-        /// </summary>
-        /// <param name="list">모든 책 리스트</param>
-        /// <param name="name">책 이름</param>
-        /// <returns>책이 있으면 그 책의 위치, 아니면 -1 리턴</returns>
-        public int CheckBook(List<Book> list, string name)
-        {
-            for (int i = 0; i < list.Count; i++)
-            {
-                if (list[i].Name.Equals(name))
-                {
-                    return i;
-                }
-            }
-
-            return -1;
-        }
-        public int DrawCountEdit(List<Book> list)
-        {
-            int inputIndex = -3;
-
-            Console.Clear();
-            drawAboutBooks.InfoTitle();
-            drawAboutBooks.WriteBookCount();
-            count = Console.ReadLine();
-            if (count.Equals("-1"))
-                return -1;
-            if (count.Equals("-2"))
-                return -2;
-            inputIndex = exceptionHandling.CheckBookCount(count);
-
-            if (inputIndex.Equals(-1))
-            {
-                DrawCountEdit(list);
-            }
-            else
-            {
-                return inputIndex;
-            }
-            return inputIndex;
-        }
-        /// <summary>
-        /// 숫자를 입력받는 메소드
-        /// </summary>
-        /// <returns>입력 받은 숫자를 int형으로 바꿔서 반환</returns>
-        public int DrawCount(List<Book> list)
-        {
-            int inputIndex = -1;
-
-            Console.Clear();
-            drawAboutBooks.InfoTitle();
-            drawAboutBooks.WriteBookCount();
-            count = Console.ReadLine();
-            if (count.Equals("-1"))
-                return -1;
-            if (count.Equals("-2"))
-                DrawName(list);
-            inputIndex = exceptionHandling.CheckBookCount(count);
-
-            if (inputIndex.Equals(-1))
-            {
-                DrawCount(list);
-
-            }
-            else
-            {
-                return inputIndex;
-            }
-            return inputIndex;
         }
 
         /// <summary>
         /// 저자를 입력받는 메소드
         /// </summary>
-        public void DrawAuthor(List<Book> list)
+        public void DrawAuthor()
         {
             Console.Clear();
             drawAboutBooks.InfoTitle();
@@ -395,15 +332,15 @@ namespace EnSharp_day3
             if (author.Equals("0"))
                 return;
             if (author.Equals("1"))
-                DrawCount(list);
+                DrawCountRead();
             if (!exceptionHandling.CheckAuthor(author))
-                DrawAuthor(list);
+                DrawAuthor();
         }
 
         /// <summary>
         /// 출판사를 입력받는 메소드
         /// </summary>
-        public void DrawPublisher(List<Book> list)
+        public void DrawPublisher()
         {
             Console.Clear();
             drawAboutBooks.InfoTitle();
@@ -412,52 +349,51 @@ namespace EnSharp_day3
             if (publisher.Equals("0"))
                 return;
             if (publisher.Equals("1"))
-                DrawAuthor(list);
+                DrawAuthor();
             if (!exceptionHandling.CheckPublisher(publisher))
-                DrawPublisher(list);
+                DrawPublisher();
         }
-            /// <summary>
-            /// 새 책을 추가하는 메소드
-            /// </summary>
-            /// <param name="list">책 정보 리스트</param>
-            public void DrawAdd(List<Book> list)
+        /// <summary>
+        /// 새 책을 추가하는 메소드
+        /// </summary>
+        /// <param name="list">책 정보 리스트</param>
+        public void DrawAdd()
+        {
+            int bookIndex = -1;
+            DrawNo();
+            if (no.Equals("0"))
+                return;
+
+            DrawName();
+            if (name.Equals("0"))
+                return;
+            DrawCountRead();
+            if (count.Equals("-1"))
+                return;
+            DrawAuthor();
+            if (author.Equals("0"))
+                return;
+            DrawPublisher();
+            if (publisher.Equals("0"))
+                return;
+
+            if (bookIndex != -1)
             {
-                int bookIndex = -1;
-                DrawNo(list);
-                if (no.Equals("0"))
-                    return;
-
-                DrawName(list);
-                if (name.Equals("0"))
-                    return;
-                DrawCount(list);
-                if (count.Equals("-1"))
-                    return;
-                DrawAuthor(list);
-                if (author.Equals("0"))
-                    return;
-                DrawPublisher(list);
-                if (publisher.Equals("0"))
-                    return;
-                bookIndex = CheckBook(list, name);
-
-                if (bookIndex != -1)
-                {
-                    list[bookIndex].Count = list[bookIndex].Count + intCount;
-                }
-                else
-                {
-                    list.Add(new Book(no, name, intCount, publisher, author));
-                }
-
+                list[bookIndex].Count = list[bookIndex].Count + intCount;
             }
-            /// <summary>
-            /// 책번호가 이미 있는지 없는지 체크해주는 메소드
-            /// </summary>
-            /// <param name="list">책 리스트</param>
-            /// <param name="no">사용자가 입력한 책번호</param>
-            /// <returns>있으면 false, 없으면 true</returns>
-            public bool CheckNo(List<Book> list, string no)
+            else
+            {
+                list.Add(new Book(no, name, intCount, publisher, author));
+            }
+
+        }
+        /// <summary>
+        /// 책번호가 이미 있는지 없는지 체크해주는 메소드
+        /// </summary>
+        /// <param name="list">책 리스트</param>
+        /// <param name="no">사용자가 입력한 책번호</param>
+        /// <returns>있으면 false, 없으면 true</returns>
+        public bool CheckNo(string no)
         {
             int count = 0;
 

@@ -8,6 +8,8 @@ namespace EnSharp_day3
     class ControlMember
     {
         private ExceptionHandling exceptionHandling;
+        private MemberDAO memberDAO;
+        private DatabaseException databaseException;
         private DrawControlMember drawControlMember;    //창을 그려주기 위한 객체 선언
         private AddMember addMember;                    //회원 추가 창으로 넘어가기 위해 객체 선언
         private string choice;                       //어떤 작업을 할지 선택을 받는 변수
@@ -25,8 +27,10 @@ namespace EnSharp_day3
         /// <param name="list">회원 정보 리스트</param>
         public ControlMember(List<Member> list){
             addMember = new AddMember(list);
+            memberDAO = new MemberDAO();
             drawControlMember = new DrawControlMember();
             exceptionHandling = new ExceptionHandling();
+            databaseException = new DatabaseException();
         }
 
         /// <summary>
@@ -46,28 +50,22 @@ namespace EnSharp_day3
                     case LibraryConstants.AddNewMember:
                         addMember.DrawAndAdd(list);
                         break;
-
                     case LibraryConstants.EditMemberInfo:
-                        DrawEdit(list);
+                        DrawEdit();
                         break;
-
                     case LibraryConstants.DeleteMember:
-                        DrawDelete(list);
+                        DrawDelete();
                         break;
-
                     case LibraryConstants.SearchMember:
-                        DrawSearch(list);
+                        DrawSearch();
                         break;
-
                     case LibraryConstants.PrintMemberInfo:
-                        DrawPrint(list);
+                        DrawPrint();
                         break;
-
                     case LibraryConstants.GoBeforePage:
                         flag = false;
                         break;
                     default:
-
                         break;
                 }
             }
@@ -76,37 +74,28 @@ namespace EnSharp_day3
         /// 수정을 위해 체크해주고 그려주는 창
         /// </summary>
         /// <param name="list">회원 정보 리스트</param>
-        public void DrawEdit(List<Member> list)
+        public void DrawEdit()
         {
-            drawControlMember.Information(list);
-
+            drawControlMember.Category();
+            memberDAO.SearchAll();
+            
             drawControlMember.EditScreen();
 
             id = Console.ReadLine();
             if (id.Equals("0"))
                 return;
-            count = 0;
-            foreach(Member mem in list)
-            {
-                if (mem.Id.Equals(id))
-                {
-                    memberIndex = list.IndexOf(mem);
-                    break;
-                }
-                count++;
-            }
-            if (count.Equals(list.Count))
-                DrawEdit(list);
+
+            if (databaseException.IsIdInMemberDB(id))
+                DrawEdit();
             else
             {
-                DrawPhoneNum(list);
+                DrawPhoneNum();
                 if (phoneNumber.Equals("0"))
                     return;
-                DrawAddress(list);
+                DrawAddress();
                 if (address.Equals("0"))
                     return;
-                list[memberIndex].PhoneNumber = phoneNumber;
-                list[memberIndex].Address = address;
+                memberDAO.EditMemberInformation(id, phoneNumber, address);
 
                 drawControlMember.EditSuccess();
             }
@@ -115,7 +104,7 @@ namespace EnSharp_day3
         /// <summary>
         /// 주소 입력받는 메소드
         /// </summary>
-        public void DrawAddress(List<Member> list)
+        public void DrawAddress()
         {
             Console.Clear();
 
@@ -124,16 +113,16 @@ namespace EnSharp_day3
             if (address.Equals("0"))
                 return;
             if (address.Equals("1"))
-                DrawPhoneNum(list);
+                DrawPhoneNum();
             if (!exceptionHandling.CheckAddress(address))
             {
-                DrawAddress(list);
+                DrawAddress();
             }
         }
         /// <summary>
         /// 전화번호 입력받는 메소드
         /// </summary>
-        public void DrawPhoneNum(List<Member> list)
+        public void DrawPhoneNum()
         {
             Console.Clear();
             drawControlMember.WritePhone((int)LibraryConstants.Mode.Add);
@@ -141,51 +130,41 @@ namespace EnSharp_day3
             if (phoneNumber.Equals("0"))
                 return;
             if (phoneNumber.Equals("1"))
-                DrawEdit(list);
+                DrawEdit();
             if (!exceptionHandling.CheckPhone(phoneNumber))
-                DrawPhoneNum(list);
+                DrawPhoneNum();
         }
         /// <summary>
         /// 삭제하는 하는 부분에서 아이디를 받고 체크해주는 역할을 한다.
         /// </summary>
         /// <param name="list">회원 목록 리스트</param>
-        public void DeleteSub(List<Member> list)
+        public void DeleteSub()
         {
-            drawControlMember.Information(list);
+            drawControlMember.Category();
+            memberDAO.SearchAll();
 
             drawControlMember.DeleteScreen();
             id = Console.ReadLine();
 
             if (!exceptionHandling.CheckId(id))
-                DeleteSub(list);
+                DeleteSub();
         }
         /// <summary>
         /// 삭제하는 창을 그리고 삭제하는 메소드
         /// </summary>
         /// <param name="list"></param>
-        public void DrawDelete(List<Member> list)
+        public void DrawDelete()
         {
             count = 0;
-            DeleteSub(list);
+            DeleteSub();
 
-            for (int i = 0;i<list.Count;i++)
-            {
-                if (list[i].Id.Equals(id))
-                {
-                    list.RemoveAt(i);
-                    drawControlMember.DeleteSuccess();
-                    return;
-                }
-                count++;
-            }
-            if (count.Equals(list.Count))
-                drawControlMember.DeleteFailed();
+            memberDAO.DeleteMember(id);
         }
         /// <summary>
         /// 검색 기능을 담당하는 메소드
         /// </summary>
         /// <param name="list"></param>
-        public void DrawSearch(List<Member> list)
+        public void DrawSearch()
         {
             drawControlMember.SearchMenu();
             id = Console.ReadLine();
@@ -193,52 +172,45 @@ namespace EnSharp_day3
             switch (id)
             {
                 case LibraryConstants.SearchWithName:
-                    SearchSub(list, LibraryConstants.SearchWithName);
+                    SearchSub(LibraryConstants.SearchWithName);
                     if (search.Equals("0")) return;
                     drawControlMember.Category();
-                    drawControlMember.SearchWithName(list,search);
+                    memberDAO.SearchWithQuary("select * from member where name = \"" + search + "\"");
                     break;
                 case LibraryConstants.SearchWithResidentNum:
-                    SearchSub(list, LibraryConstants.SearchWithResidentNum);
+                    SearchSub(LibraryConstants.SearchWithResidentNum);
                     if (search.Equals("0")) return;
                     drawControlMember.Category();
-                    drawControlMember.SearchWithResidentNum(list, search);
+                    memberDAO.SearchWithQuary("select * from member where residentNumber = \"" + search + "\"");
                     break;
                 case LibraryConstants.SearchWithId:
-                    SearchSub(list, LibraryConstants.SearchWithId);
+                    SearchSub(LibraryConstants.SearchWithId);
                     if (search.Equals("0")) return;
                     drawControlMember.Category();
-                    drawControlMember.SearchWithId(list, search);
+                    memberDAO.SearchWithQuary("select * from member where id = \"" + search + "\"");
                     break;
                 case LibraryConstants.SearchWithPassword:
-                    SearchSub(list, LibraryConstants.SearchWithPassword);
+                    SearchSub(LibraryConstants.SearchWithPassword);
                     if (search.Equals("0")) return;
                     drawControlMember.Category();
-                    drawControlMember.SearchWithPassword(list, search);
-                    break;
-
-                case LibraryConstants.SearchWithOverdue:
-                    SearchSub(list, LibraryConstants.SearchWithOverdue);
-                    if (search.Equals("-1")) return;
-                    drawControlMember.Category();
-                    drawControlMember.SearchWithOverdue(list, search);
+                    memberDAO.SearchWithQuary("select * from member where password = \"" + search + "\"");
                     break;
                 case LibraryConstants.SearchWithAddress:
-                    SearchSub(list, LibraryConstants.SearchWithAddress);
+                    SearchSub(LibraryConstants.SearchWithAddress);
                     if (search.Equals("0")) return;
                     drawControlMember.Category();
-                    drawControlMember.SearchWithAddress(list, search);
+                    memberDAO.SearchWithQuary("select * from member where address = \"" + search + "\"");
                     break;
                 case LibraryConstants.SearchWithPhone:
-                    SearchSub(list, LibraryConstants.SearchWithPhone);
+                    SearchSub(LibraryConstants.SearchWithPhone);
                     if (search.Equals("0")) return;
                     drawControlMember.Category();
-                    drawControlMember.SearchWithPhone(list, search);
+                    memberDAO.SearchWithQuary("select * from member where phoneNumber = \"" + search + "\"");
                     break;
                 case LibraryConstants.ReturnBack:
                     break;
                 default:
-                    DrawSearch(list);
+                    DrawSearch();
                     break;
             }
             
@@ -250,7 +222,7 @@ namespace EnSharp_day3
         /// </summary>
         /// <param name="list">회원 정보 리스트</param>
         /// <param name="mode">어떤 카테고리로 검색할지</param>
-        public void SearchSub(List<Member> list,string mode)
+        public void SearchSub(string mode)
         {
             switch (mode)
             {
@@ -261,7 +233,7 @@ namespace EnSharp_day3
                     if (!exceptionHandling.CheckName(search))
                     {
                         Console.Clear();
-                        SearchSub(list, LibraryConstants.SearchWithName);
+                        SearchSub(LibraryConstants.SearchWithName);
                     }
                     break;
                 case LibraryConstants.SearchWithResidentNum:
@@ -271,7 +243,7 @@ namespace EnSharp_day3
                     if (!exceptionHandling.CheckResidentNum(search))
                     {
                         Console.Clear();
-                        SearchSub(list, LibraryConstants.SearchWithResidentNum);
+                        SearchSub(LibraryConstants.SearchWithResidentNum);
                     }
                     break;
                 case LibraryConstants.SearchWithId:
@@ -281,7 +253,7 @@ namespace EnSharp_day3
                     if(!exceptionHandling.CheckId(search))
                     {
                         Console.Clear();
-                        SearchSub(list, LibraryConstants.SearchWithId);
+                        SearchSub(LibraryConstants.SearchWithId);
                     }
                         
                     break;
@@ -292,20 +264,10 @@ namespace EnSharp_day3
                     if (!exceptionHandling.CheckPw(search))
                     {
                         Console.Clear();
-                        SearchSub(list, LibraryConstants.SearchWithPassword);
+                        SearchSub(LibraryConstants.SearchWithPassword);
                     }
                     break;
 
-                case LibraryConstants.SearchWithOverdue:
-                    drawControlMember.WriteOverdue((int)LibraryConstants.Mode.Search);
-                    search = Console.ReadLine();
-                    if (search.Equals("-1")) return;
-                    if (exceptionHandling.CheckBookCount(search).Equals(-1))
-                    {
-                        Console.Clear();
-                        SearchSub(list, LibraryConstants.SearchWithOverdue);
-                    }
-                    break;
                 case LibraryConstants.SearchWithAddress:
                     drawControlMember.WriteAddress((int)LibraryConstants.Mode.Search);
                     search = Console.ReadLine();
@@ -313,7 +275,7 @@ namespace EnSharp_day3
                     if (!exceptionHandling.CheckAddress(search))
                     {
                         Console.Clear();
-                        SearchSub(list, LibraryConstants.SearchWithAddress);
+                        SearchSub(LibraryConstants.SearchWithAddress);
                     }
                         break;
                 case LibraryConstants.SearchWithPhone:
@@ -323,7 +285,7 @@ namespace EnSharp_day3
                     if (!exceptionHandling.CheckPhone(search))
                     {
                         Console.Clear();
-                        SearchSub(list, LibraryConstants.SearchWithPhone);
+                        SearchSub(LibraryConstants.SearchWithPhone);
                     }
                     break;
                 default:
@@ -334,9 +296,10 @@ namespace EnSharp_day3
         /// 회원정보를 전부 띄워주는 메소드
         /// </summary>
         /// <param name="list">회원정보리스트</param>
-        public void DrawPrint(List<Member> list)
+        public void DrawPrint()
         {
-            drawControlMember.Information(list);
+            drawControlMember.Category();
+            memberDAO.SearchAll();
 
             drawControlMember.PressAnyKey();
         }

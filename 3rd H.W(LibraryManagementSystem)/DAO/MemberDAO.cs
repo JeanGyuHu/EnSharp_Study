@@ -24,13 +24,14 @@ namespace EnSharp_day3
             connection.Open();
 
             command = connection.CreateCommand();
-            command.CommandText = "INSERT INTO member values(@name,@residentNumber,@password,@id,@address,@phoneNumber)";
+            command.CommandText = "INSERT INTO member values(@name,@residentNumber,@id,@password,@phoneNumber,@address)";
             command.Parameters.Add("@name", MySqlDbType.VarChar).Value= member.Name;
             command.Parameters.Add("@residentNumber", MySqlDbType.VarChar).Value = member.ResidentNum;
-            command.Parameters.Add("@password", MySqlDbType.VarChar).Value = member.Password;
             command.Parameters.Add("@id", MySqlDbType.VarChar).Value = member.Id;
-            command.Parameters.Add("@address", MySqlDbType.VarChar).Value = member.Address;
+            command.Parameters.Add("@password", MySqlDbType.VarChar).Value = member.Password;
             command.Parameters.Add("@phoneNumber", MySqlDbType.VarChar).Value = member.PhoneNumber;
+            command.Parameters.Add("@address", MySqlDbType.VarChar).Value = member.Address;
+
 
             command.ExecuteNonQuery();
             connection.Close();

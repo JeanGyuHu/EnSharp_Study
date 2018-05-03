@@ -35,16 +35,22 @@ namespace EnSharp_day3
             connection.Close();
         }
 
-        public void DeleteBook(string no)
+        public bool DeleteBook(string no)
         {
+            int result=0;
             connection.Open();
 
             command = connection.CreateCommand();
             command.CommandText = "Delete from book where no = @no";
             command.Parameters.Add("@no", MySqlDbType.VarChar).Value = no;
 
-            command.ExecuteNonQuery();
+            result = command.ExecuteNonQuery();
             connection.Close();
+
+            if (result == -1)
+                return true;
+            else
+                return false;
         }
 
         public void EditBookInformation(string no, int count)

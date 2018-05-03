@@ -48,9 +48,9 @@ namespace EnSharp_day3
             Console.WriteLine("\n\n\t\t\t┌--------------------------------------------------------┐");
             Console.WriteLine("\t\t\t│           M E M B E R   I N F O R M A T I O N          │");
             Console.WriteLine("\t\t\t└--------------------------------------------------------┘");
-            Console.WriteLine("\n\n┌-------------------------------------------------------------------------------------------------------------------------------------------------┐");
-            Console.WriteLine("│   Name   │   Resident Number   │          Id          │         Password        │    PhoneNumber    │        Address        │ Number of Overdue │");
-            Console.WriteLine("└-------------------------------------------------------------------------------------------------------------------------------------------------┘");
+            Console.WriteLine("\n\n┌----------------------------------------------------------------------------------------------------------------------------------------┐");
+            Console.WriteLine("│   Name   │   Resident Number   │          Id          │         Password        │    PhoneNumber    │        Address         │");
+            Console.WriteLine("└-----------------------------------------------------------------------------------------------------------------------------------------┘");
         }
         /// <summary>
         ///카테고리를 출력하고 그에 해당하는 회원정보를 출력하는 메소드
@@ -70,7 +70,7 @@ namespace EnSharp_day3
                 byte[] byteAddress2 = new byte[30];
                 Array.Copy(byteAddress1, byteAddress2, 30);
 
-                Console.WriteLine("   {0}{1,-25}{2,-25}{3,-20}{4,-22}{5}{6,-5}",Encoding.Default.GetString(byteName2) , list[i].ResidentNum, list[i].Id, list[i].Password, list[i].PhoneNumber, Encoding.Default.GetString(byteAddress2), list[i].NumOverdue);
+                Console.WriteLine("   {0}{1,-25}{2,-25}{3,-20}{4,-22}{5}",Encoding.Default.GetString(byteName2) , list[i].ResidentNum, list[i].Id, list[i].Password, list[i].PhoneNumber, Encoding.Default.GetString(byteAddress2));
             }
         }
         /// <summary>
@@ -92,7 +92,7 @@ namespace EnSharp_day3
                     byte[] byteAddress2 = new byte[30];
                     Array.Copy(byteAddress1, byteAddress2, 30);
 
-                    Console.WriteLine("   {0}{1,-25}{2,-25}{3,-20}{4,-22}{5}{6,-5}", Encoding.Default.GetString(byteName2), list[i].ResidentNum, list[i].Id, list[i].Password, list[i].PhoneNumber, Encoding.Default.GetString(byteAddress2), list[i].NumOverdue);
+                    Console.WriteLine("   {0}{1,-25}{2,-25}{3,-20}{4,-22}{5}", Encoding.Default.GetString(byteName2), list[i].ResidentNum, list[i].Id, list[i].Password, list[i].PhoneNumber, Encoding.Default.GetString(byteAddress2));
                 }
             }
             PressAnyKey();
@@ -116,7 +116,7 @@ namespace EnSharp_day3
                     byte[] byteAddress2 = new byte[30];
                     Array.Copy(byteAddress1, byteAddress2, 30);
 
-                    Console.WriteLine("   {0}{1,-25}{2,-25}{3,-20}{4,-22}{5}{6,-5}", Encoding.Default.GetString(byteName2), list[i].ResidentNum, list[i].Id, list[i].Password, list[i].PhoneNumber, Encoding.Default.GetString(byteAddress2), list[i].NumOverdue);
+                    Console.WriteLine("   {0}{1,-25}{2,-25}{3,-20}{4,-22}{5}", Encoding.Default.GetString(byteName2), list[i].ResidentNum, list[i].Id, list[i].Password, list[i].PhoneNumber, Encoding.Default.GetString(byteAddress2));
                 }
             }
             PressAnyKey();
@@ -140,7 +140,7 @@ namespace EnSharp_day3
                     byte[] byteAddress2 = new byte[30];
                     Array.Copy(byteAddress1, byteAddress2, 30);
 
-                    Console.WriteLine("   {0}{1,-25}{2,-25}{3,-20}{4,-22}{5}{6,-5}", Encoding.Default.GetString(byteName2), list[i].ResidentNum, list[i].Id, list[i].Password, list[i].PhoneNumber, Encoding.Default.GetString(byteAddress2), list[i].NumOverdue);
+                    Console.WriteLine("   {0}{1,-25}{2,-25}{3,-20}{4,-22}{5}", Encoding.Default.GetString(byteName2), list[i].ResidentNum, list[i].Id, list[i].Password, list[i].PhoneNumber, Encoding.Default.GetString(byteAddress2));
                 }
             }
             PressAnyKey();
@@ -164,35 +164,12 @@ namespace EnSharp_day3
                     byte[] byteAddress2 = new byte[30];
                     Array.Copy(byteAddress1, byteAddress2, 30);
 
-                    Console.WriteLine("   {0}{1,-25}{2,-25}{3,-20}{4,-22}{5}{6,-5}", Encoding.Default.GetString(byteName2), list[i].ResidentNum, list[i].Id, list[i].Password, list[i].PhoneNumber, Encoding.Default.GetString(byteAddress2), list[i].NumOverdue);
+                    Console.WriteLine("   {0}{1,-25}{2,-25}{3,-20}{4,-22}{5}", Encoding.Default.GetString(byteName2), list[i].ResidentNum, list[i].Id, list[i].Password, list[i].PhoneNumber, Encoding.Default.GetString(byteAddress2));
                 }
             }
             PressAnyKey();
         }
-        /// <summary>
-        /// 연체를 한 횟수로 검색했을때의 결과값 출력
-        /// </summary>
-        /// <param name="list">회원 정보를 담고 있는 리스트</param>
-        /// <param name="strSearch">연체 횟수</param>
-        public void SearchWithOverdue(List<Member> list, string strSearch)
-        {
-            for (int i = 0; i < list.Count; i++)
-            {
-                if (list[i].NumOverdue.Equals(Convert.ToInt32(strSearch)))
-                {
-                    byte[] byteName1 = Encoding.Default.GetBytes(list[i].Name + "          ");
-                    byte[] byteName2 = new byte[10];
-                    Array.Copy(byteName1, byteName2, 10);
 
-                    byte[] byteAddress1 = Encoding.Default.GetBytes(list[i].Address + "                              ");
-                    byte[] byteAddress2 = new byte[30];
-                    Array.Copy(byteAddress1, byteAddress2, 30);
-
-                    Console.WriteLine("   {0}{1,-25}{2,-25}{3,-20}{4,-22}{5}{6,-5}", Encoding.Default.GetString(byteName2), list[i].ResidentNum, list[i].Id, list[i].Password, list[i].PhoneNumber, Encoding.Default.GetString(byteAddress2), list[i].NumOverdue);
-                }
-            }
-            PressAnyKey();
-        }
         /// <summary>
         /// 주소로 검색했을때의 결과값 출력
         /// </summary>
@@ -212,7 +189,7 @@ namespace EnSharp_day3
                     byte[] byteAddress2 = new byte[30];
                     Array.Copy(byteAddress1, byteAddress2, 30);
 
-                    Console.WriteLine("   {0}{1,-25}{2,-25}{3,-20}{4,-22}{5}{6,-5}", Encoding.Default.GetString(byteName2), list[i].ResidentNum, list[i].Id, list[i].Password, list[i].PhoneNumber, Encoding.Default.GetString(byteAddress2), list[i].NumOverdue);
+                    Console.WriteLine("   {0}{1,-25}{2,-25}{3,-20}{4,-22}{5}", Encoding.Default.GetString(byteName2), list[i].ResidentNum, list[i].Id, list[i].Password, list[i].PhoneNumber, Encoding.Default.GetString(byteAddress2));
                 }
             }
             PressAnyKey();
@@ -236,7 +213,7 @@ namespace EnSharp_day3
                     byte[] byteAddress2 = new byte[30];
                     Array.Copy(byteAddress1, byteAddress2, 30);
 
-                    Console.WriteLine("   {0}{1,-25}{2,-25}{3,-20}{4,-22}{5}{6,-5}", Encoding.Default.GetString(byteName2), list[i].ResidentNum, list[i].Id, list[i].Password, list[i].PhoneNumber, Encoding.Default.GetString(byteAddress2), list[i].NumOverdue);
+                    Console.WriteLine("   {0}{1,-25}{2,-25}{3,-20}{4,-22}{5}", Encoding.Default.GetString(byteName2), list[i].ResidentNum, list[i].Id, list[i].Password, list[i].PhoneNumber, Encoding.Default.GetString(byteAddress2));
                 }
             }
             PressAnyKey();
@@ -464,11 +441,9 @@ namespace EnSharp_day3
             Console.WriteLine("\n\n\t\t\t\t2. Resident Number");
             Console.WriteLine("\n\n\t\t\t\t3. Id");
             Console.WriteLine("\n\n\t\t\t\t4. Password");
-            Console.WriteLine("\n\n\t\t\t\t5. Number of Overdue");
-            Console.WriteLine("\n\n\t\t\t\t6. Address");
-            Console.WriteLine("\n\n\t\t\t\t7. PhoneNumber");
-            Console.WriteLine("\n\n\t\t\t\t8. EXIT");
-            Console.WriteLine("\t\t\t\t검색 중 종료하고 싶으면 책 이름이 아닌 아무거나 입력!");
+            Console.WriteLine("\n\n\t\t\t\t5. Address");
+            Console.WriteLine("\n\n\t\t\t\t6. PhoneNumber");
+            Console.WriteLine("\n\n\t\t\t\t7. EXIT");
             Console.Write("\n\t\t\t\t>> ");
         }
         /// <summary>

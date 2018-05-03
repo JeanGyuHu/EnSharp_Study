@@ -16,13 +16,13 @@ namespace EnSharp_day3
         private string name;                                            //유저의 이름을 받기 위함
         private SecureString securePassword = new SecureString();       //비밀번호를 비밀문자로 입력받는다.
         private string password;                                        //저장을 위해 string으로 변환하기 위함
-
         private string address;                                         //주소 입력 받기 위함
         private string phoneNumber;                                     //전화번호 입력받기 위함
         private int count;                                              //아이디 체크를 할때 전부다 확인을 했나 체크하기 위함
         private DrawControlMember drawControlMember;                    //출력을 하기 위해 클래스의 객체 선언
         private ExceptionHandling exceptionHandling;                    //예외처리를 위해 클래스의 객체 선언
-
+        private DatabaseException databaseException;
+        private MemberDAO memberDAO;
         /// <summary>
         /// 기본 생성자로써 각각의 객체들의 생성해주고 초기화해준다.
         /// 초기화 후에 회원가입을 진행한다.
@@ -32,6 +32,8 @@ namespace EnSharp_day3
         {
             drawControlMember = new DrawControlMember();
             exceptionHandling = new ExceptionHandling();
+            databaseException = new DatabaseException();
+            memberDAO = new MemberDAO();
             count = 0;
         }
 
@@ -41,33 +43,32 @@ namespace EnSharp_day3
         /// <param name="list"></param>
         public void DrawAndAdd(List<Member> list)
         {
-            DrawId(list);
+            DrawId();
             if (id.Equals("0"))
                 return;
-            DrawPassword(list);
+            DrawPassword();
             if (password.Equals("0"))
                 return;
-            DrawName(list);
+            DrawName();
             if (name.Equals("0"))
                 return;
-            DrawResidentNum(list);
+            DrawResidentNum();
             if (residentNum.Equals("0"))
                 return;
-            DrawPhoneNum(list);
+            DrawPhoneNum();
             if (phoneNumber.Equals("0"))
                 return;
-            DrawAddress(list);
+            DrawAddress();
             if (address.Equals("0"))
                 return;
             Console.Clear();
-            list.Add(new Member(name, residentNum, password, id, address, phoneNumber));
+            memberDAO.AddMember(new Member(name, residentNum,id, password, phoneNumber, address));
             drawControlMember.PressAnyKey();
-
         }
         /// <summary>
         /// 아이디를 입력받는 부분
         /// </summary>
-        public void DrawId(List<Member> list)
+        public void DrawId()
         {
             Console.Clear();
             drawControlMember.AddMemberTitle();
@@ -75,21 +76,21 @@ namespace EnSharp_day3
             id = Console.ReadLine();
             if (id.Equals("0"))
                 return;
-     
+
             if (!exceptionHandling.CheckId(id))
             {
-                DrawId(list);
+                DrawId();
             }
-            if (!CheckId(list))
+            if (!CheckId())
             {
-                DrawId(list);
+                DrawId();
             }
         }
 
         /// <summary>
         /// 비밀번호를 입력받는 부분
         /// </summary>
-        public void DrawPassword(List<Member> list)
+        public void DrawPassword()
         {
             Console.Clear();
             drawControlMember.AddMemberTitle();
@@ -99,16 +100,16 @@ namespace EnSharp_day3
             if (password.Equals("0"))
                 return;
             if (password.Equals("1"))
-                DrawId(list);
+                DrawId();
             if (!exceptionHandling.CheckPw(password))
             {
-                DrawPassword(list);
+                DrawPassword();
             }
         }
         /// <summary>
         /// 이름을 입력받는 부분
         /// </summary>
-        public void DrawName(List<Member> list)
+        public void DrawName()
         {
             Console.Clear();
             drawControlMember.AddMemberTitle();
@@ -117,17 +118,17 @@ namespace EnSharp_day3
             if (name.Equals("0"))
                 return;
             if (name.Equals("1"))
-                DrawPassword(list);
+                DrawPassword();
 
             if (!exceptionHandling.CheckName(name))
             {
-                DrawName(list);
+                DrawName();
             }
         }
         /// <summary>
         /// 주민번호를 입력받는 부분
         /// </summary>
-        public void DrawResidentNum(List<Member> list)
+        public void DrawResidentNum()
         {
             Console.Clear();
             drawControlMember.AddMemberTitle();
@@ -137,16 +138,16 @@ namespace EnSharp_day3
             if (residentNum.Equals("0"))
                 return;
             if (residentNum.Equals("1"))
-                DrawName(list);
+                DrawName();
             if (!exceptionHandling.CheckResidentNum(residentNum))
             {
-                DrawResidentNum(list);
+                DrawResidentNum();
             }
         }
         /// <summary>
         /// 전화번호를 입력받는 부분
         /// </summary>
-        public void DrawPhoneNum(List<Member> list)
+        public void DrawPhoneNum()
         {
             Console.Clear();
             drawControlMember.AddMemberTitle();
@@ -155,16 +156,16 @@ namespace EnSharp_day3
             if (phoneNumber.Equals("0"))
                 return;
             if (phoneNumber.Equals("1"))
-                DrawResidentNum(list);
+                DrawResidentNum();
             if (!exceptionHandling.CheckPhone(phoneNumber))
             {
-                DrawPhoneNum(list);
+                DrawPhoneNum();
             }
         }
         /// <summary>
         /// 주소를 입력받는 부분
         /// </summary>
-        public void DrawAddress(List<Member> list)
+        public void DrawAddress()
         {
             Console.Clear();
             drawControlMember.AddMemberTitle();
@@ -173,10 +174,10 @@ namespace EnSharp_day3
             if (address.Equals("0"))
                 return;
             if (address.Equals("1"))
-                DrawPhoneNum(list);
+                DrawPhoneNum();
             if (!exceptionHandling.CheckAddress(address))
             {
-                DrawAddress(list);
+                DrawAddress();
             }
         }
         /// <summary>
@@ -184,22 +185,15 @@ namespace EnSharp_day3
         /// </summary>
         /// <param name="list">회원정보 리스트</param>
         /// <returns>회원이 있는지 없는지를 bool값으로 리턴</returns>
-        public bool CheckId(List<Member> list)
+        public bool CheckId()
         {
             count = 0;
-            foreach (Member mem in list)
+
+            if (!databaseException.IsIdInMemberDB(id))
             {
-                if (mem.Id.Equals(id))
-                {
-                    Console.WriteLine("\n\n\t\t\tUsername already taken. Please try another one.");
-                    drawControlMember.PressAnyKey();
-                    return false;
-                }
-                count++;
-            }
-            if (count == list.Count)
-            {
-                return true;
+                Console.WriteLine("\n\n\t\t\tUsername already taken. Please try another one.");
+                drawControlMember.PressAnyKey();
+                return false;
             }
 
             return false;
