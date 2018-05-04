@@ -1,0 +1,6 @@
+C:\Users\gjwls\source\repos\LectureTimeTable\bin\Debug\LectureTimeTable.exe
+C:\Users\gjwls\source\repos\LectureTimeTable\bin\Debug\LectureTimeTable.pdb
+C:\Users\gjwls\source\repos\LectureTimeTable\obj\Debug\LectureTimeTable.csprojResolveAssemblyReference.cache
+C:\Users\gjwls\source\repos\LectureTimeTable\obj\Debug\LectureTimeTable.csproj.CoreCompileInputs.cache
+C:\Users\gjwls\source\repos\LectureTimeTable\obj\Debug\LectureTimeTable.exe
+C:\Users\gjwls\source\repos\LectureTimeTable\obj\Debug\LectureTimeTable.pdb
