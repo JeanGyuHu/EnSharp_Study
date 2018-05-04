@@ -18,7 +18,7 @@ namespace EnSharp_day3
         private string phoneNumber;                  //전화번호 입력 받는 변수
         private string address;                      //주소를 입력받는 변수
         private string search;                       //어떤 값으로 검색할지 입력받는 변수
-
+        private string mode;
         /// <summary>
         /// 생성자로써 생성되면 클래스에서 사용되는 객체들을 생성 및 초기화해준다.
         /// </summary>
@@ -88,17 +88,46 @@ namespace EnSharp_day3
                 DrawEdit();
             else
             {
-                DrawPhoneNum();
-                if (phoneNumber.Equals("0"))
-                    return;
-                DrawAddress();
-                if (address.Equals("0"))
-                    return;
-                memberDAO.EditMemberInformation(id, phoneNumber, address);
-
-                drawControlMember.EditResult("S U C C E S S");
+                EditWhichOne();
             }
 
+        }
+        public void EditWhichOne()
+        {
+            bool exitFlag = true;
+
+            while (exitFlag)
+            {
+                drawControlMember.WriteEditWhich();
+                mode = Console.ReadLine();
+
+                switch (mode)
+                {
+                    case LibraryConstants.EDIT_ADDRESS:
+                        DrawAddress();
+                        if (address.Equals("0"))
+                            return;
+                        if (address.Equals("1"))
+                            return;
+                        memberDAO.EditMemberAddress(id, address);
+                        //drawControlMember.EditResult("S U C C E S S");
+                        return;
+                    case LibraryConstants.EDIT_PHONE:
+                        DrawPhoneNum();
+                        if (phoneNumber.Equals("0"))
+                            return;
+                        if (phoneNumber.Equals("1"))
+                            return;
+                        memberDAO.EditMemberPhone(id, phoneNumber);
+                        //drawControlMember.EditResult("S U C C E S S");
+                        return;
+                    case LibraryConstants.EDIT_EXIT:
+                        exitFlag = false;
+                        break;
+                    default:
+                        break;
+                }
+            }
         }
         /// <summary>
         /// 주소 입력받는 메소드
@@ -112,7 +141,10 @@ namespace EnSharp_day3
             if (address.Equals("0"))
                 return;
             if (address.Equals("1"))
-                DrawPhoneNum();
+            {
+                EditWhichOne();
+                return;
+            }
             if (!exceptionHandling.CheckAddress(address))
             {
                 DrawAddress();
@@ -129,7 +161,10 @@ namespace EnSharp_day3
             if (phoneNumber.Equals("0"))
                 return;
             if (phoneNumber.Equals("1"))
-                DrawEdit();
+            {
+                EditWhichOne();
+                return;
+            }
             if (!exceptionHandling.CheckPhone(phoneNumber))
                 DrawPhoneNum();
         }

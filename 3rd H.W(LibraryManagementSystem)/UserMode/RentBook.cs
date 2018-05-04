@@ -54,7 +54,7 @@ namespace EnSharp_day3
             else if (bookDAO.GetBook(choice).Count>0)
             {
                 Book book = bookDAO.GetBook(choice);
-                bookDAO.EditBookInformation(choice, --book.Count,book.Price);
+                bookDAO.EditBookCount(choice, --book.Count);
                 rentalDataDAO.AddAfterRent(new RentalData(choice, book.Name, book.Pbls, book.Author, id, new DateTime(now.Year, now.Month + 1, now.Day + 10), 0));
                 drawAboutBooks.RentalResult("S U C C E S S");
             }

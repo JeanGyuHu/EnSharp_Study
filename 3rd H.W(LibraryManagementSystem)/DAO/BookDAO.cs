@@ -86,13 +86,25 @@ namespace EnSharp_day3
                 return true;
         }
 
-        public void EditBookInformation(string no, int count, int price)
+        public void EditBookCount(string no, int count)
         {
             connection.Open();
 
             command = connection.CreateCommand();
-            command.CommandText = "UPDATE book SET count =@count, price = @price where no = @no";
+            command.CommandText = "UPDATE book SET count =@count where no = @no";
             command.Parameters.Add("@count", MySqlDbType.VarChar).Value = count;
+            command.Parameters.Add("@no", MySqlDbType.VarChar).Value = no;
+
+            command.ExecuteNonQuery();
+            connection.Close();
+        }
+
+        public void EditBookPrice(string no, int price)
+        {
+            connection.Open();
+
+            command = connection.CreateCommand();
+            command.CommandText = "UPDATE book SET price = @price where no = @no";
             command.Parameters.Add("@no", MySqlDbType.VarChar).Value = no;
             command.Parameters.Add("@price", MySqlDbType.VarChar).Value = price;
 

@@ -36,8 +36,6 @@ namespace EnSharp_day3
         /// <param name="id">현재 사용자명</param>
         public void ReturnBook(string id)
         {
-            int findIndex = -1;
-
             DrawNo(id);
             if (no.Equals("0"))
                 return;
@@ -49,7 +47,7 @@ namespace EnSharp_day3
             else
             {
                 rentalDataDAO.ChangeAfterReturnBook(id, no);
-                bookDAO.EditBookInformation(no,++bookDAO.GetBook(no).Count,bookDAO.GetBook(no).Price);
+                bookDAO.EditBookCount(no,++bookDAO.GetBook(no).Count);
                 drawAboutBooks.ReturnResult("S U C C E S S !");
             }
             drawAboutBooks.PressAnyKey();

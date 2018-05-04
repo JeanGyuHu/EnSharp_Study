@@ -49,13 +49,25 @@ namespace EnSharp_day3
             connection.Close();
         }
 
-        public void EditMemberInformation(string id, string phone, string address)
+        public void EditMemberPhone(string id, string phone)
         {
             connection.Open();
 
             command = connection.CreateCommand();
-            command.CommandText = "UPDATE member SET phoneNumber =@phone, address = @address where id = @id";
+            command.CommandText = "UPDATE member SET phoneNumber =@phone where id = @id";
             command.Parameters.Add("@phone", MySqlDbType.VarChar).Value = phone;
+            command.Parameters.Add("@id", MySqlDbType.VarChar).Value = id;
+
+            command.ExecuteNonQuery();
+            connection.Close();
+        }
+
+        public void EditMemberAddress(string id, string address)
+        {
+            connection.Open();
+
+            command = connection.CreateCommand();
+            command.CommandText = "UPDATE member SET address = @address where id = @id";
             command.Parameters.Add("@address", MySqlDbType.VarChar).Value = address;
             command.Parameters.Add("@id", MySqlDbType.VarChar).Value = id;
 

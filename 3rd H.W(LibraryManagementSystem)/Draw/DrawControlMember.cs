@@ -82,6 +82,13 @@ namespace EnSharp_day3
             }
 
         }
+        public void WriteEditWhich()
+        {
+            Console.Clear();
+            Console.WriteLine("\n\n\t\t\t\t수정할 부분을 선택하세요 !");
+            Console.WriteLine("\n\n\t\t\t\t1. 주소  2. 휴대전화번호  3. 나가기");
+            Console.Write("\n\n\t\t\t\t>> ");
+        }
         public void WriteSearchAge()
         {
             Console.WriteLine("\n\n\t\t\t\t나이를 입력하세요. (뒤로가기 0)");

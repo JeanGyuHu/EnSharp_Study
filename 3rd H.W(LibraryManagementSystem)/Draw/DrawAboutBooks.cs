@@ -113,6 +113,15 @@ namespace EnSharp_day3
         {
             Console.WriteLine("\n\t\t\tR E T U R N   {0} ! !",result);
         }
+
+        public void WriteEditWhich()
+        {
+            Console.Clear();
+            Console.WriteLine("\n\n\t\t\t\t수정할 부분을 선택하세요 !");
+            Console.WriteLine("\n\n\t\t\t\t1. 수량  2. 가격  3. 나가기");
+            Console.Write("\n\n\t\t\t\t>> ");
+        }
+
         /// <summary>
         /// 책의 권수를 적으라고 알리는 메소드
         /// </summary>

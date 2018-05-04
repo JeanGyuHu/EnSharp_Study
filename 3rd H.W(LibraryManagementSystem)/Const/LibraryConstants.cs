@@ -65,6 +65,14 @@ namespace EnSharp_day3
         public const string SearchWithAge = "7";
         public const string ReturnBack = "8";
 
+        public const string EDIT_ADDRESS = "1";
+        public const string EDIT_PHONE = "2";
+
+        public const string EDIT_COUNT = "1";
+        public const string EDIT_PRICE = "2";
+
+        public const string EDIT_EXIT = "3";
+
         //출력할때 add모드인지 Search 모드인지 판단해주기 위한 매직넘버
         public enum Mode { Add=1, Search };
     }

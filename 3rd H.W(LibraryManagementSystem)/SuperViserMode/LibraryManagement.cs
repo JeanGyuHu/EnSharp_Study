@@ -22,7 +22,7 @@ namespace EnSharp_day3
         private string publisher;                //책 출판사 입력받기 위함
         private string deleteName;                         //삭제할 이름 입력받기 위함
         private string search;                       //어떤걸로 검색할지 입력받기 위함
-
+        private string mode;
         /// <summary>
         /// 생성자로써 사용되는 객체를 생성, 초기화한다.
         /// </summary>
@@ -260,37 +260,60 @@ namespace EnSharp_day3
                 DrawEdit();
             else
             {
-                DrawCountRead();
-                if (count.Equals("-1"))
-                    return;
-                if (count.Equals("-2"))
-                {
-                    DrawEdit();
-                    return;
-                }
-                if (!exceptionHandling.CheckBookCount(count))
-                {
-                    drawAboutBooks.EditResult("F A I L E D");
-                    return;
-                }
+                EditWhichOne();
+            }
+        }
 
-                DrawEditPrice();
-                if (price.Equals("0"))
-                    return;
-                if(!exceptionHandling.CheckPrice(price))
-                {
-                    drawAboutBooks.EditResult("F A I L E D");
-                    return;
-                }
+        public void EditWhichOne()
+        {
+            bool exitFlag = true;
 
-                if (!databaseException.IsInBookDB(deleteName))
+            while (exitFlag)
+            {
+                drawAboutBooks.WriteEditWhich();
+                mode = Console.ReadLine();
+
+                switch (mode)
                 {
-                    bookDAO.EditBookInformation(deleteName, Convert.ToInt32(count),Convert.ToInt32(price));
-                    drawAboutBooks.EditResult("S U C C E S S");
-                }
-                else
-                {
-                    drawAboutBooks.EditResult("F A I L E D");
+                    case LibraryConstants.EDIT_COUNT:
+                        DrawCountRead();
+                        if (count.Equals("-1"))
+                            return;
+                        if (count.Equals("-2"))
+                            return;
+
+                        if (!databaseException.IsInBookDB(deleteName))
+                        {
+                            bookDAO.EditBookCount(deleteName, Convert.ToInt32(count));
+                            //drawAboutBooks.EditResult("S U C C E S S");
+                        }
+                        else
+                        {
+                            //drawAboutBooks.EditResult("F A I L E D");
+                        }
+                        return;
+                    case LibraryConstants.EDIT_PRICE:
+                        DrawEditPrice();
+                        if (price.Equals("0"))
+                            return;
+                        if (price.Equals("1"))
+                            return;
+
+                        if (!databaseException.IsInBookDB(deleteName))
+                        {
+                            bookDAO.EditBookPrice(deleteName,Convert.ToInt32(price));
+                            //drawAboutBooks.EditResult("S U C C E S S");
+                        }
+                        else
+                        {
+                            //drawAboutBooks.EditResult("F A I L E D");
+                        }
+                        return;
+                    case LibraryConstants.EDIT_EXIT:
+                        exitFlag = false;
+                        break;
+                    default:
+                        break;
                 }
             }
         }
@@ -305,7 +328,7 @@ namespace EnSharp_day3
                 return;
             if (count.Equals("-2"))
             {
-                DrawEdit();
+                EditWhichOne();
                 return;
             }
             if (!exceptionHandling.CheckBookCount(count))
@@ -377,7 +400,10 @@ namespace EnSharp_day3
             if (price.Equals("0"))
                 return;
             if (price.Equals("1"))
-                DrawCountRead();
+            {
+                EditWhichOne();
+                return;
+            }
             if (!exceptionHandling.CheckPrice(price))
                 DrawEditPrice();
         }
