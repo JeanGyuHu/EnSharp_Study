@@ -65,17 +65,9 @@ namespace EnSharp_day3
         /// <summary>
         /// 삭제 성공 메세지를 띄워주는 메소드
         /// </summary>
-        public void DeleteSuccess()
+        public void DeleteResult(string result)
         {
-            Console.WriteLine("\n\n\n\t\t\tD E L E T E  S U C C E S S !");
-            PressAnyKey();
-        }
-        /// <summary>
-        /// 삭제 실패 메세지를 띄워주는 메소드
-        /// </summary>
-        public void DeleteFailed()
-        {
-            Console.WriteLine("\n\n\n\t\t\tD E L E T E  F A I L E D !");
+            Console.WriteLine("\n\n\n\t\t\tD E L E T E  {0} !",result);
             PressAnyKey();
         }
         public void AddResult(string result)
@@ -86,7 +78,7 @@ namespace EnSharp_day3
         /// <summary>
         /// 변경 성공 메세지를 띄워주는 메소드
         /// </summary>
-        public void EditSuccess(string status)
+        public void EditResult(string status)
         {
             Console.WriteLine("\n\n\n\t\t\tE D I T  {0} !",status);
             PressAnyKey();
@@ -167,17 +159,9 @@ namespace EnSharp_day3
         /// <summary>
         /// 연장 성공을 알리는 메소드
         /// </summary>
-        public void ExtendSuccess()
+        public void ExtendResult(string result)
         {
-            Console.WriteLine("\n\n\n\t\t\tE X T E N D   S U C C E S S !");
-            PressAnyKey();
-        }
-        /// <summary>
-        /// 연장 실패를 알리는 메소드
-        /// </summary>
-        public void ExtendFailed()
-        {
-            Console.WriteLine("\n\n\n\t\t\tE X T E N D   F A I L E D !");
+            Console.WriteLine("\n\n\n\t\t\tE X T E N D   {0} !",result);
             PressAnyKey();
         }
         /// <summary>

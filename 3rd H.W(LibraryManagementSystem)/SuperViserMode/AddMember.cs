@@ -63,7 +63,7 @@ namespace EnSharp_day3
                 return;
             Console.Clear();
             memberDAO.AddMember(new Member(name, residentNum, password, id, address,phoneNumber,0));
-            drawControlMember.PressAnyKey();
+            drawControlMember.AddResult("S U C C E S S");
         }
         /// <summary>
         /// 아이디를 입력받는 부분

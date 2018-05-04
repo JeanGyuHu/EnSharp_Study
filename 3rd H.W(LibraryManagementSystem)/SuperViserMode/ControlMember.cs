@@ -96,7 +96,7 @@ namespace EnSharp_day3
                     return;
                 memberDAO.EditMemberInformation(id, phoneNumber, address);
 
-                drawControlMember.EditSuccess();
+                drawControlMember.EditResult("S U C C E S S");
             }
 
         }
@@ -157,6 +157,7 @@ namespace EnSharp_day3
             DeleteSub();
 
             memberDAO.DeleteMember(id);
+            drawControlMember.DeleteResult("S U C C E S S");
         }
         /// <summary>
         /// 검색 기능을 담당하는 메소드

@@ -232,25 +232,24 @@ namespace EnSharp_day3
         /// <summary>
         /// 삭제 성공!!
         /// </summary>
-        public void DeleteSuccess()
+        public void DeleteResult(string result)
         {
-            Console.WriteLine("\n\n\n\t\t\tD E L E T E  S U C C E S S !");
+            Console.WriteLine("\n\n\n\t\t\tD E L E T E  {0} !",result);
             PressAnyKey();
         }
-        /// <summary>
-        /// 삭제 실패...ㅜ
-        /// </summary>
-        public void DeleteFailed()
+
+        public void AddResult(string result)
         {
-            Console.WriteLine("\n\n\n\t\t\tD E L E T E   F A I L E D !");
+            Console.WriteLine("\n\n\n\t\t\tA D D  {0} !", result);
             PressAnyKey();
         }
+
         /// <summary>
         /// 수정 성공!!
         /// </summary>
-        public void EditSuccess()
+        public void EditResult(string result)
         {
-            Console.WriteLine("\n\n\n\t\t\tE D I T  S U C C E S S !");
+            Console.WriteLine("\n\n\n\t\t\tE D I T  {0} !",result);
             PressAnyKey();
         }
         /// <summary>
@@ -267,9 +266,9 @@ namespace EnSharp_day3
         /// <summary>
         /// 회원 가입 성공!!
         /// </summary>
-        public void SignUpSuccess()
+        public void SignUpResult(string result)
         {
-            Console.WriteLine("\n\n\n\t\t\tS I G N   U P   S U C C E S S !");
+            Console.WriteLine("\n\n\n\t\t\tS I G N   U P   {0} !",result);
             PressAnyKey();
         }
         /// <summary>

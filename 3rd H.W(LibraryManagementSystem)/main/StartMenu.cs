@@ -32,7 +32,7 @@ namespace EnSharp_day3
         }
         public void StartMainMenu()
         {
-            drawStartMark.StartMark();
+            //drawStartMark.StartMark();
 
             flag = true;
             while (flag)

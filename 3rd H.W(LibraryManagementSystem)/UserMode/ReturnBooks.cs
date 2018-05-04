@@ -49,7 +49,7 @@ namespace EnSharp_day3
             else
             {
                 rentalDataDAO.ChangeAfterReturnBook(id, no);
-                bookDAO.EditBookInformation(no,bookDAO.GetBook(no).Count++,bookDAO.GetBook(no).Price);
+                bookDAO.EditBookInformation(no,++bookDAO.GetBook(no).Count,bookDAO.GetBook(no).Price);
                 drawAboutBooks.ReturnResult("S U C C E S S !");
             }
             drawAboutBooks.PressAnyKey();

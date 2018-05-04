@@ -82,9 +82,9 @@ namespace EnSharp_day3
             DeleteSub();
 
             if (bookDAO.DeleteBook(deleteName))
-                drawAboutBooks.DeleteSuccess();
+                drawAboutBooks.DeleteResult("S U C C E S S !");
             else
-                drawAboutBooks.DeleteFailed();
+                drawAboutBooks.DeleteResult("F A I L E D !");
         }
         /// <summary>
         /// 책을 삭제할때 기본 키 값인 No값을 체크해주는 메소드
@@ -117,31 +117,31 @@ namespace EnSharp_day3
                     SearchSub(LibraryConstants.SearchBookNo);
                     if (search.Equals("0")) return;
                     drawAboutBooks.Category();
-                    bookDAO.SearchWithQuary("Select * from book where no = \"" + no + "\"");
+                    bookDAO.SearchWithQuary("Select * from book where no = \"" + search + "\"");
                     break;
                 case LibraryConstants.SearchBookName:
                     SearchSub(LibraryConstants.SearchBookName);
                     if (search.Equals("0")) return;
                     drawAboutBooks.Category();
-                    bookDAO.SearchWithQuary("Select * from book where no = \"" + name + "\"");
+                    bookDAO.SearchWithQuary("Select * from book where name = \"" + search + "\"");
                     break;
                 case LibraryConstants.SearchBookCount:
                     SearchSub(LibraryConstants.SearchBookCount);
                     if (search.Equals("0")) return;
                     drawAboutBooks.Category();
-                    bookDAO.SearchWithQuary("Select * from book where no = \"" + count + "\"");
+                    bookDAO.SearchWithQuary("Select * from book where count = \"" + search + "\"");
                     break;
                 case LibraryConstants.SearchBookAuthor:
                     SearchSub(LibraryConstants.SearchBookAuthor);
                     if (search.Equals("0")) return;
                     drawAboutBooks.Category();
-                    bookDAO.SearchWithQuary("Select * from book where no = \"" + author + "\"");
+                    bookDAO.SearchWithQuary("Select * from book where author = \"" + search + "\"");
                     break;
                 case LibraryConstants.SearchBookPublisher:
                     SearchSub(LibraryConstants.SearchBookPublisher);
                     if (search.Equals("0")) return;
                     drawAboutBooks.Category();
-                    bookDAO.SearchWithQuary("Select * from book where no = \"" + publisher + "\"");
+                    bookDAO.SearchWithQuary("Select * from book where publisher = \"" + search + "\"");
                     break;
                 case LibraryConstants.GoBefore:
                     break;
@@ -270,7 +270,7 @@ namespace EnSharp_day3
                 }
                 if (!exceptionHandling.CheckBookCount(count))
                 {
-                    drawAboutBooks.EditSuccess("F A I L E D");
+                    drawAboutBooks.EditResult("F A I L E D");
                     return;
                 }
 
@@ -279,18 +279,18 @@ namespace EnSharp_day3
                     return;
                 if(!exceptionHandling.CheckPrice(price))
                 {
-                    drawAboutBooks.EditSuccess("F A I L E D");
+                    drawAboutBooks.EditResult("F A I L E D");
                     return;
                 }
 
-                if (!databaseException.IsInBookDB(no))
+                if (!databaseException.IsInBookDB(deleteName))
                 {
-                    bookDAO.EditBookInformation(no, Convert.ToInt32(count),Convert.ToInt32(price));
-                    drawAboutBooks.EditSuccess("S U C C E S S");
+                    bookDAO.EditBookInformation(deleteName, Convert.ToInt32(count),Convert.ToInt32(price));
+                    drawAboutBooks.EditResult("S U C C E S S");
                 }
                 else
                 {
-                    drawAboutBooks.EditSuccess("F A I L E D");
+                    drawAboutBooks.EditResult("F A I L E D");
                 }
             }
         }

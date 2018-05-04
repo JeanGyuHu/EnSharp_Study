@@ -43,17 +43,17 @@ namespace EnSharp_day3
 
             if (databaseException.IsInAlreadyRentDB(id,bookName))
             {
-                drawAboutBooks.ExtendFailed();
+                drawAboutBooks.ExtendResult("F A I L E D !");
             }
             else
             {
                 if (rentalDataDAO.GetRentalData(id, bookName).ExtendCount < 2)
                 {
                     rentalDataDAO.ChangeInformationAfterExtendTime(id, bookName, rentalDataDAO.GetRentalData(id, bookName).BookReturnTime.AddDays(10), rentalDataDAO.GetRentalData(id, bookName).ExtendCount + 1);
-                    drawAboutBooks.ExtendSuccess();
+                    drawAboutBooks.ExtendResult("S U C C E S S !");
                 }
                 else
-                    drawAboutBooks.ExtendFailed();
+                    drawAboutBooks.ExtendResult("F A I L E D !");
             }
 
         }
