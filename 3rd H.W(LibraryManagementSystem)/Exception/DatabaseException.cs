@@ -6,19 +6,27 @@ using System.Text;
 
 namespace EnSharp_day3
 {
+    /// <summary>
+    /// 데이터베이스에서 발생하는 예외에 대한 처리
+    /// </summary>
     class DatabaseException
     {
-        private string connectionInformation = "Server = localhost; Database = ensharpdb;Uid=root;Pwd=123123;";
-        private MySqlConnection connection;
-        private string sql;
-        private MySqlCommand command;
-        private MySqlDataReader reader=null;
+        private string connectionInformation = "Server = localhost; Database = ensharpdb;Uid=root;Pwd=123123;";     //DB에 연결할때 사용하는 DB 연결정보
+        private MySqlConnection connection;             //DB에 연결할때 쓰이는 객체
+        private MySqlCommand command;                   //쿼리문을 실행해주는 객체
+        private MySqlDataReader reader=null;            //실행을 통해서 읽어온 정보를 지닌 객체
 
+        //기본 생성자로 connection을 localDB에 연결
         public DatabaseException()
         {
             connection = new MySqlConnection(connectionInformation);
         }
 
+        /// <summary>
+        /// 이미 있는 아이디인지 아닌지 체크해주는 메서드
+        /// </summary>
+        /// <param name="id">체크할 아이디</param>
+        /// <returns>있는지 여부</returns>
         public bool IsIdInMemberDB(string id)
         {
             int num=0;
@@ -42,6 +50,12 @@ namespace EnSharp_day3
                 return true;
         }
 
+        /// <summary>
+        /// 비밀번호와 아이디가 일치하는지 체크
+        /// </summary>
+        /// <param name="id">아이디</param>
+        /// <param name="password">비밀번호</param>
+        /// <returns>있는지 여부</returns>
         public bool IsPasswordInMemberDB(string id,string password)
         {
             int num = 0;
@@ -65,6 +79,11 @@ namespace EnSharp_day3
             else
                 return true;
         }
+        /// <summary>
+        /// 있는책인지 없는책인지 체크해주는 메서드
+        /// </summary>
+        /// <param name="no">있는지 체크할 책의 번호</param>
+        /// <returns>책의 존재 여부</returns>
         public bool IsInBookDB(string no)
         {
             int num=0;
@@ -90,6 +109,11 @@ namespace EnSharp_day3
                 return true;
         }
 
+        /// <summary>
+        /// 주민번호를 가진 사람이 있는지 없는지 여부를 체크한다
+        /// </summary>
+        /// <param name="residentNumber">확인할 주민번호</param>
+        /// <returns>존재 여부</returns>
         public bool CheckResidentNumber(string residentNumber)
         {
             int num = 0;
@@ -114,6 +138,11 @@ namespace EnSharp_day3
                 return true;
         }
 
+        /// <summary>
+        /// 전화번호가 있는지 없는지 체크해주는 역할
+        /// </summary>
+        /// <param name="phone">확인할 전화번호</param>
+        /// <returns>존재 여부</returns>
         public bool CheckPhoneNumber(string phone)
         {
             int num = 0;
@@ -137,6 +166,12 @@ namespace EnSharp_day3
             else
                 return true;
         }
+        /// <summary>
+        /// 이미 대여를 한 책인지 아닌지 체크해주는 메서드
+        /// </summary>
+        /// <param name="id">대여하려는 사람의 아이디</param>
+        /// <param name="no">대여하려고 하는 번호</param>
+        /// <returns></returns>
         public bool IsInAlreadyRentDB(string id,string no)
         {
             int num = 0;
@@ -163,6 +198,11 @@ namespace EnSharp_day3
                 return true;
         }
 
+        /// <summary>
+        /// 관리자 아이디가 있는지 체크
+        /// </summary>
+        /// <param name="id">관리자 아이디</param>
+        /// <returns>있는지 여부</returns>
         public bool CheckSuperviserID(string id)
         {
             int num = 0;
@@ -186,6 +226,12 @@ namespace EnSharp_day3
                 return true;
         }
 
+        /// <summary>
+        /// 관리자 비밀번호가 있는지 여부
+        /// </summary>
+        /// <param name="id">입력 아이디</param>
+        /// <param name="password">입력 비밀번호</param>
+        /// <returns>존재 여부</returns>
         public bool CheckSuperviserPassword(string id, string password)
         {
             int num = 0;

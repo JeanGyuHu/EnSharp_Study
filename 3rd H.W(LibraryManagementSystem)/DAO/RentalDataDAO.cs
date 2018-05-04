@@ -8,17 +8,22 @@ namespace EnSharp_day3
 {
     class RentalDataDAO
     {
-        private string connectionInformation = "Server = localhost; Database = ensharpdb;Uid=root;Pwd=123123;";
-        private MySqlConnection connection;
-        private MySqlCommand command;
-        private MySqlDataReader reader;
-        private RentalData rentalData;
+        private string connectionInformation = "Server = localhost; Database = ensharpdb;Uid=root;Pwd=123123;";          //DB에 연결할때 사용하는 DB 연결정보
+        private MySqlConnection connection;         //DB에 연결할때 쓰이는 객체
+        private MySqlCommand command;               //쿼리문을 실행해주는 객체
+        private MySqlDataReader reader;             //실행을 통해서 읽어온 정보를 지닌 객체
+        private RentalData rentalData;              //데이터베이스의 정보를 가져오기 위한 객체
 
+        //기본 생성자로 connection을 localDB에 연결
         public RentalDataDAO()
         {
             connection = new MySqlConnection(connectionInformation);
         }
        
+        /// <summary>
+        /// 매개변수로 넘어온 데이터를 가진 대여데이터를 만든다.
+        /// </summary>
+        /// <param name="rentalData">대여정보가 담겨있는 VO</param>
         public void AddAfterRent(RentalData rentalData)
         {
             connection.Open();
@@ -36,6 +41,12 @@ namespace EnSharp_day3
             connection.Close();
         }
 
+        /// <summary>
+        /// 데이터베이스에 저장된 대여정보를 가져온다.
+        /// </summary>
+        /// <param name="id">가져올 정보의 아이디</param>
+        /// <param name="no">가져올 정보의 no</param>
+        /// <returns></returns>
         public RentalData GetRentalData(string id,string no)
         {
             connection.Open();
@@ -55,6 +66,13 @@ namespace EnSharp_day3
             return rentalData;
         }
 
+        /// <summary>
+        /// 시간 연장을 한 후에 정보를 저장하는 기능을 한다.
+        /// </summary>
+        /// <param name="id">시간 연장할 아이디</param>
+        /// <param name="no">시간 연장할 책</param>
+        /// <param name="dateTime">연장할 시간</param>
+        /// <param name="count">몇번 연장을 했는지</param>
         public void ChangeInformationAfterExtendTime(string id,string no,DateTime dateTime,int count)
         {
             connection.Open();
@@ -70,6 +88,11 @@ namespace EnSharp_day3
             connection.Close();
         }
 
+        /// <summary>
+        /// 책을 반납한 후에 데이터 변화를 저장해주는 메서드
+        /// </summary>
+        /// <param name="id">반납한 사람 아이디</param>
+        /// <param name="no">반납한 책 번호</param>
         public void ChangeAfterReturnBook(string id,string no)
         {
             connection.Open();
@@ -98,6 +121,12 @@ namespace EnSharp_day3
             connection.Close();
         }
 
+        /// <summary>
+        /// 인자로 넘어온 문자열을 원하는 길이로 만들어준다.
+        /// </summary>
+        /// <param name="inputString">길이를 변경하고 싶은 문자열</param>
+        /// <param name="length">원하는 길이</param>
+        /// <returns>길이가 변환된 문자열</returns>
         public string ConvertLength(string inputString, int length)
         {
             byte[] byteName1 = Encoding.Default.GetBytes(inputString + "                                                                                ");

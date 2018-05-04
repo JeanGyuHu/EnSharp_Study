@@ -23,10 +23,7 @@ namespace EnSharp_day3
             connection = new MySqlConnection(connectionInformation);
         }
 
-        /// <summary>
-        /// Book Table에 넘어온 BookVO에 담겨있는 정보를 저장한다.
-        /// </summary>
-        /// <param name="book">저장할 정보가 담겨있는 VO</param>
+        
         public void AddBook(Book book)
         {
             connection.Open();          //연결
