@@ -161,7 +161,6 @@ namespace EnSharp_day3
             Console.WriteLine("\n\n\t\t\t\t4. Book Author");
             Console.WriteLine("\n\n\t\t\t\t5. Book Publisher");
             Console.WriteLine("\n\n\t\t\t\t6. EXIT");
-            Console.WriteLine("\t\t\t검색 중 책 이름이 아닌 아무거나 입력시 종료");
             Console.Write("\n\t\t\t\t>> ");
         }
 

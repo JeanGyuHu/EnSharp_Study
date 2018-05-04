@@ -68,6 +68,11 @@ namespace EnSharp_day3
 
             return book;
         }
+        /// <summary>
+        /// no의 값을 가진 책을 삭제한다.
+        /// </summary>
+        /// <param name="no">삭제할 책의 no</param>
+        /// <returns>성공 여부</returns>
         public bool DeleteBook(string no)
         {
             int result = 0;
@@ -86,6 +91,11 @@ namespace EnSharp_day3
                 return true;
         }
 
+        /// <summary>
+        /// 책의 수량을 수정해준다.
+        /// </summary>
+        /// <param name="no">수정할 책의 no</param>
+        /// <param name="count">수정할 수량</param>
         public void EditBookCount(string no, int count)
         {
             connection.Open();
@@ -99,6 +109,11 @@ namespace EnSharp_day3
             connection.Close();
         }
 
+        /// <summary>
+        /// 책의 가격을 수정해준다.
+        /// </summary>
+        /// <param name="no">수정할 책의 no</param>
+        /// <param name="price">수정할 가격</param>
         public void EditBookPrice(string no, int price)
         {
             connection.Open();
@@ -112,6 +127,10 @@ namespace EnSharp_day3
             connection.Close();
         }
 
+        /// <summary>
+        /// 인자로 받아온 SQL문으로 검색한다.
+        /// </summary>
+        /// <param name="quary">검색 SQL 문</param>
         public void SearchWithQuary(string quary)
         {
             connection.Open();
@@ -128,6 +147,9 @@ namespace EnSharp_day3
             connection.Close();
         }
 
+        /// <summary>
+        /// 모든 책 정보를 출력한다.
+        /// </summary>
         public void SearchAll()
         {
             connection.Open();
@@ -144,6 +166,12 @@ namespace EnSharp_day3
             connection.Close();
         }
 
+        /// <summary>
+        /// 인자로 넘어온 문자열을 원하는 길이로 만들어준다.
+        /// </summary>
+        /// <param name="inputString">길이를 변경하고 싶은 문자열</param>
+        /// <param name="length">원하는 길이</param>
+        /// <returns>길이가 변환된 문자열</returns>
         public string ConvertLength(string inputString, int length)
         {
             byte[] byteName1 = Encoding.Default.GetBytes(inputString + "                                                                                ");

@@ -17,7 +17,6 @@ namespace EnSharp_day3
         private DrawControlMember drawControlMember;
         private string id;
         private SecureString securePassword;
-        private int idCheck = -1;
         private bool loginFlag = false;
         private string stringPassword;
         /// <summary>
@@ -52,7 +51,7 @@ namespace EnSharp_day3
             {
                 case LibraryConstants.StartSuperViserMode:
 
-                    loginFlag = DrawLoginPage();
+                    loginFlag = DrawLoginPage(LibraryConstants.StartSuperViserMode);
                     if (id.Equals("0") || stringPassword.Equals("0"))
                         return;
                     if (loginFlag)
@@ -67,7 +66,7 @@ namespace EnSharp_day3
                     break;
 
                 case LibraryConstants.StartUserMode:
-                    loginFlag = DrawLoginPage();
+                    loginFlag = DrawLoginPage(LibraryConstants.StartUserMode);
                     if (id.Equals("0") || stringPassword.Equals("0"))
                         return;
                     if (stringPassword.Equals("-1"))
@@ -89,7 +88,7 @@ namespace EnSharp_day3
         /// </summary>
         /// <param name="list">멤버 목록이 들어있는 리스트</param>
         /// <returns>로그인 여부</returns>
-        public bool DrawLoginPage()
+        public bool DrawLoginPage(string mode)
         {
             drawControlMember.LoginPage();
             drawControlMember.WriteId();
@@ -97,12 +96,12 @@ namespace EnSharp_day3
             if (id.Equals("0"))
                 return false;
 
-            if (CheckID(id))
+            if (CheckID(id,mode))
             {
                 drawControlMember.WritePassword();
                 securePassword = drawControlMember.GetConsoleSecurePassword();
                 stringPassword = new NetworkCredential("", securePassword).Password;
-                if (CheckPW(stringPassword))
+                if (CheckPW(stringPassword,mode))
                 {
                     return true;
                 }
@@ -113,7 +112,7 @@ namespace EnSharp_day3
             }
             else
             {
-                DrawLoginPage();
+                DrawLoginPage(mode);
             }
             return false;
         }
@@ -123,11 +122,19 @@ namespace EnSharp_day3
         /// <param name="list">유저 리스트</param>
         /// <param name="id">입력한 아이디</param>
         /// <returns></returns>
-        public bool CheckID(string id)
+        public bool CheckID(string id,string mode)
         {
-            if (!databaseException.IsIdInMemberDB(id))
-                return true;
-
+            switch (mode)
+            {
+                case LibraryConstants.LoginSuperviserMode:
+                    if (!databaseException.CheckSuperviserID(id))
+                        return true;
+                    break;
+                case LibraryConstants.LoginUserMode:
+                    if (!databaseException.IsIdInMemberDB(id))
+                        return true;
+                    break;
+            }
             return false;
         }
         /// <summary>
@@ -137,11 +144,21 @@ namespace EnSharp_day3
         /// <param name="index">아이디가 있는 인덱스정보</param>
         /// <param name="pw">사용자가 입력한 비밀번호</param>
         /// <returns></returns>
-        public bool CheckPW(string pw)
+        public bool CheckPW(string pw,string mode)
         {
-            if (!databaseException.IsPasswordInMemberDB(id, pw))
-                return true;
-
+            switch (mode)
+            {
+                case LibraryConstants.LoginSuperviserMode:
+                    if (!databaseException.CheckSuperviserPassword(id, pw))
+                        return true;
+                    break;
+                case LibraryConstants.LoginUserMode:
+                    if (!databaseException.IsPasswordInMemberDB(id, pw))
+                        return true;
+                    break;
+                default:
+                    break;
+            }
             return false;
         }
         public void SetId(string loginId)

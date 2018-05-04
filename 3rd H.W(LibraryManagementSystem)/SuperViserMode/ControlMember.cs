@@ -200,67 +200,70 @@ namespace EnSharp_day3
         /// <param name="list"></param>
         public void DrawSearch()
         {
-            drawControlMember.SearchMenu();
-            id = Console.ReadLine();
-            Console.Clear();
-            switch (id)
+            bool exitFlag = true;
+            while (exitFlag)
             {
-                case LibraryConstants.SearchWithName:
-                    SearchSub(LibraryConstants.SearchWithName);
-                    if (search.Equals("0")) return;
-                    drawControlMember.Category();
-                    memberDAO.SearchWithQuary("select * from member where name = \"" + search + "\"");
-                    drawControlMember.PressAnyKey();
-                    break;
-                case LibraryConstants.SearchWithResidentNum:
-                    SearchSub(LibraryConstants.SearchWithResidentNum);
-                    if (search.Equals("0")) return;
-                    drawControlMember.Category();
-                    memberDAO.SearchWithQuary("select * from member where residentNumber = \"" + search + "\"");
-                    drawControlMember.PressAnyKey();
-                    break;
-                case LibraryConstants.SearchWithId:
-                    SearchSub(LibraryConstants.SearchWithId);
-                    if (search.Equals("0")) return;
-                    drawControlMember.Category();
-                    memberDAO.SearchWithQuary("select * from member where id = \"" + search + "\"");
-                    drawControlMember.PressAnyKey();
-                    break;
-                case LibraryConstants.SearchWithPassword:
-                    SearchSub(LibraryConstants.SearchWithPassword);
-                    if (search.Equals("0")) return;
-                    drawControlMember.Category();
-                    memberDAO.SearchWithQuary("select * from member where password = \"" + search + "\"");
-                    drawControlMember.PressAnyKey();
-                    break;
-                case LibraryConstants.SearchWithAddress:
-                    SearchSub(LibraryConstants.SearchWithAddress);
-                    if (search.Equals("0")) return;
-                    drawControlMember.Category();
-                    memberDAO.SearchWithQuary("select * from member where address = \"" + search + "\"");
-                    drawControlMember.PressAnyKey();
-                    break;
-                case LibraryConstants.SearchWithPhone:
-                    SearchSub(LibraryConstants.SearchWithPhone);
-                    if (search.Equals("0")) return;
-                    drawControlMember.Category();
-                    memberDAO.SearchWithQuary("select * from member where phoneNumber = \"" + search + "\"");
-                    drawControlMember.PressAnyKey();
-                    break;
-                case LibraryConstants.SearchWithAge:
-                    SearchSub(LibraryConstants.SearchWithAge);
-                    if (search.Equals("0")) return;
-                    drawControlMember.Category();
-                    memberDAO.SearchWithQuary("select * from member where age = \"" + search + "\"");
-                    drawControlMember.PressAnyKey();
-                    break;
-                case LibraryConstants.ReturnBack:
-                    break;
-                default:
-                    DrawSearch();
-                    break;
+                drawControlMember.SearchMenu();
+                id = Console.ReadLine();
+                Console.Clear();
+                switch (id)
+                {
+                    case LibraryConstants.SearchWithName:
+                        SearchSub(LibraryConstants.SearchWithName);
+                        if (search.Equals("0")) return;
+                        drawControlMember.Category();
+                        memberDAO.SearchWithQuary("select * from member where name = \"" + search + "\"");
+                        drawControlMember.PressAnyKey();
+                        break;
+                    case LibraryConstants.SearchWithResidentNum:
+                        SearchSub(LibraryConstants.SearchWithResidentNum);
+                        if (search.Equals("0")) return;
+                        drawControlMember.Category();
+                        memberDAO.SearchWithQuary("select * from member where residentNumber = \"" + search + "\"");
+                        drawControlMember.PressAnyKey();
+                        break;
+                    case LibraryConstants.SearchWithId:
+                        SearchSub(LibraryConstants.SearchWithId);
+                        if (search.Equals("0")) return;
+                        drawControlMember.Category();
+                        memberDAO.SearchWithQuary("select * from member where id = \"" + search + "\"");
+                        drawControlMember.PressAnyKey();
+                        break;
+                    case LibraryConstants.SearchWithPassword:
+                        SearchSub(LibraryConstants.SearchWithPassword);
+                        if (search.Equals("0")) return;
+                        drawControlMember.Category();
+                        memberDAO.SearchWithQuary("select * from member where password = \"" + search + "\"");
+                        drawControlMember.PressAnyKey();
+                        break;
+                    case LibraryConstants.SearchWithAddress:
+                        SearchSub(LibraryConstants.SearchWithAddress);
+                        if (search.Equals("0")) return;
+                        drawControlMember.Category();
+                        memberDAO.SearchWithQuary("select * from member where address = \"" + search + "\"");
+                        drawControlMember.PressAnyKey();
+                        break;
+                    case LibraryConstants.SearchWithPhone:
+                        SearchSub(LibraryConstants.SearchWithPhone);
+                        if (search.Equals("0")) return;
+                        drawControlMember.Category();
+                        memberDAO.SearchWithQuary("select * from member where phoneNumber = \"" + search + "\"");
+                        drawControlMember.PressAnyKey();
+                        break;
+                    case LibraryConstants.SearchWithAge:
+                        SearchSub(LibraryConstants.SearchWithAge);
+                        if (search.Equals("0")) return;
+                        drawControlMember.Category();
+                        memberDAO.SearchWithQuary("select * from member where age = \"" + search + "\"");
+                        drawControlMember.PressAnyKey();
+                        break;
+                    case LibraryConstants.ReturnBack:
+                        exitFlag = false;
+                        break;
+                    default:
+                        break;
+                }
             }
-            
         }
 
         /// <summary>

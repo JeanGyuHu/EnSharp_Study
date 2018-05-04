@@ -108,47 +108,51 @@ namespace EnSharp_day3
         /// <param name="list">책 정보 리스트</param>
         public void DrawSearch()
         {
-            drawAboutBooks.SearchMenu();
-            deleteName = Console.ReadLine();
-            Console.Clear();
-            switch (deleteName)
+            bool exitFlag = true;
+            while (exitFlag)
             {
-                case LibraryConstants.SearchBookNo:
-                    SearchSub(LibraryConstants.SearchBookNo);
-                    if (search.Equals("0")) return;
-                    drawAboutBooks.Category();
-                    bookDAO.SearchWithQuary("Select * from book where no = \"" + search + "\"");
-                    break;
-                case LibraryConstants.SearchBookName:
-                    SearchSub(LibraryConstants.SearchBookName);
-                    if (search.Equals("0")) return;
-                    drawAboutBooks.Category();
-                    bookDAO.SearchWithQuary("Select * from book where name = \"" + search + "\"");
-                    break;
-                case LibraryConstants.SearchBookCount:
-                    SearchSub(LibraryConstants.SearchBookCount);
-                    if (search.Equals("0")) return;
-                    drawAboutBooks.Category();
-                    bookDAO.SearchWithQuary("Select * from book where count = \"" + search + "\"");
-                    break;
-                case LibraryConstants.SearchBookAuthor:
-                    SearchSub(LibraryConstants.SearchBookAuthor);
-                    if (search.Equals("0")) return;
-                    drawAboutBooks.Category();
-                    bookDAO.SearchWithQuary("Select * from book where author = \"" + search + "\"");
-                    break;
-                case LibraryConstants.SearchBookPublisher:
-                    SearchSub(LibraryConstants.SearchBookPublisher);
-                    if (search.Equals("0")) return;
-                    drawAboutBooks.Category();
-                    bookDAO.SearchWithQuary("Select * from book where publisher = \"" + search + "\"");
-                    break;
-                case LibraryConstants.GoBefore:
-                    break;
-                default:
-                    DrawSearch();
-                    break;
+                drawAboutBooks.SearchMenu();
+                deleteName = Console.ReadLine();
+                Console.Clear();
+                switch (deleteName)
+                {
+                    case LibraryConstants.SearchBookNo:
+                        SearchSub(LibraryConstants.SearchBookNo);
+                        if (search.Equals("0")) return;
+                        drawAboutBooks.Category();
+                        bookDAO.SearchWithQuary("Select * from book where no = \"" + search + "\"");
+                        break;
+                    case LibraryConstants.SearchBookName:
+                        SearchSub(LibraryConstants.SearchBookName);
+                        if (search.Equals("0")) return;
+                        drawAboutBooks.Category();
+                        bookDAO.SearchWithQuary("Select * from book where name = \"" + search + "\"");
+                        break;
+                    case LibraryConstants.SearchBookCount:
+                        SearchSub(LibraryConstants.SearchBookCount);
+                        if (search.Equals("0")) return;
+                        drawAboutBooks.Category();
+                        bookDAO.SearchWithQuary("Select * from book where count = \"" + search + "\"");
+                        break;
+                    case LibraryConstants.SearchBookAuthor:
+                        SearchSub(LibraryConstants.SearchBookAuthor);
+                        if (search.Equals("0")) return;
+                        drawAboutBooks.Category();
+                        bookDAO.SearchWithQuary("Select * from book where author = \"" + search + "\"");
+                        break;
+                    case LibraryConstants.SearchBookPublisher:
+                        SearchSub(LibraryConstants.SearchBookPublisher);
+                        if (search.Equals("0")) return;
+                        drawAboutBooks.Category();
+                        bookDAO.SearchWithQuary("Select * from book where publisher = \"" + search + "\"");
+                        break;
+                    case LibraryConstants.GoBefore:
+                        exitFlag = false;
+                        break;
+                    default:
+                        break;
 
+                }
             }
             drawAboutBooks.PressAnyKey();
         }
@@ -159,6 +163,7 @@ namespace EnSharp_day3
         /// <param name="mode"></param>
         public void SearchSub(string mode)
         {
+
             switch (mode)
             {
                 case LibraryConstants.SearchBookNo:
@@ -219,7 +224,6 @@ namespace EnSharp_day3
                 case LibraryConstants.GoBefore:
                     break;
                 default:
-                    DrawSearch();
                     break;
             }
         }

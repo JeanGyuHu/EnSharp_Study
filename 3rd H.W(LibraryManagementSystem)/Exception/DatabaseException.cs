@@ -162,5 +162,52 @@ namespace EnSharp_day3
             else
                 return true;
         }
+
+        public bool CheckSuperviserID(string id)
+        {
+            int num = 0;
+
+            connection.Open();
+
+            command = connection.CreateCommand();
+            command.CommandText = "select * from superviser where id = @id";
+            command.Parameters.Add("@id", MySqlDbType.VarChar).Value = id;
+
+            reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                num++;
+            }
+            connection.Close();
+
+            if (num > 0)
+                return false;
+            else
+                return true;
+        }
+
+        public bool CheckSuperviserPassword(string id, string password)
+        {
+            int num = 0;
+
+            connection.Open();
+
+            command = connection.CreateCommand();
+            command.CommandText = "select * from superviser where id =@id and password = @password";
+            command.Parameters.Add("@id", MySqlDbType.VarChar).Value = id;
+            command.Parameters.Add("@password", MySqlDbType.VarChar).Value = password;
+
+            reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                num++;
+            }
+            connection.Close();
+
+            if (num > 0)
+                return false;
+            else
+                return true;
+        }
     }
 }
