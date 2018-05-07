@@ -144,6 +144,7 @@ namespace LectureTimeTable
                 drawUI.DivisionError();
                 return;
             }
+
             //이미 추가되어있는 과목은 아닌지
             if (dataControl.CheckInterestList(number))
             {   //입력한 정보의 수업이 존재한다면

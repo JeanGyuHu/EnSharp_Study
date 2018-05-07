@@ -147,6 +147,7 @@ namespace LectureTimeTable
                 return;
             }
 
+            
             if (dataControl.CheckRegisterList(number))
             {
                 if (readAndWriteExcelFile.GetRegisterLecture(id, major, number, division) != null)

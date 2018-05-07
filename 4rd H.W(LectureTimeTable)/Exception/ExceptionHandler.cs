@@ -104,8 +104,8 @@ namespace LectureTimeTable
             //12글자 시간에 대한 예외처리
             if (time.Length.Equals(12))
             {
-                startTime = Convert.ToDateTime(time.Substring(1, 5));
-                finishTime = Convert.ToDateTime(time.Substring(7,5));
+                startTime = Convert.ToDateTime("2018-05-05 " + time.Substring(1, 5) + ":00");
+                finishTime = Convert.ToDateTime("2018-05-05 " + time.Substring(7,5) + ":00");
 
                 for(int i = 0; i < list.Count; i++)
                 {
@@ -113,40 +113,40 @@ namespace LectureTimeTable
                     {
                         if (list[i].Time.Length.Equals(12))
                         {
-                            listStartTime = Convert.ToDateTime(list[i].Time.Substring(1, 5));
-                            listFinishTime = Convert.ToDateTime(list[i].Time.Substring(7, 5));
+                            listStartTime = Convert.ToDateTime("2018-05-05 "+list[i].Time.Substring(1, 5)+":00");
+                            listFinishTime = Convert.ToDateTime("2018-05-05 " + list[i].Time.Substring(7, 5) + ":00");
 
-                            if (listStartTime < startTime && listFinishTime > startTime&&time[0].Equals(list[i].Time[0]))
+                            if (listStartTime <= startTime && listFinishTime > startTime&&time[0].Equals(list[i].Time[0]))
                                 return false;
-                            if (listStartTime < finishTime && listFinishTime > finishTime && time[0].Equals(list[i].Time[0]))
+                            if (listStartTime < finishTime && listFinishTime >= finishTime && time[0].Equals(list[i].Time[0]))
                                 return false;
                         }
                         else if (list[i].Time.Length.Equals(13))
                         {
-                            listStartTime = Convert.ToDateTime(list[i].Time.Substring(2, 5));
-                            listFinishTime = Convert.ToDateTime(list[i].Time.Substring(8, 5));
+                            listStartTime = Convert.ToDateTime("2018-05-05 " + list[i].Time.Substring(2, 5) + ":00");
+                            listFinishTime = Convert.ToDateTime("2018-05-05 " + list[i].Time.Substring(8, 5) + ":00");
 
-                            if (listStartTime < startTime && listFinishTime > startTime && (time[0].Equals(list[i].Time[0]) || time[0].Equals(list[i].Time[1])))
+                            if (listStartTime <= startTime && listFinishTime > startTime && (time[0].Equals(list[i].Time[0]) || time[0].Equals(list[i].Time[1])))
                                 return false;
-                            if (listStartTime < finishTime && listFinishTime > finishTime && (time[0].Equals(list[i].Time[0]) || time[0].Equals(list[i].Time[1])))
+                            if (listStartTime < finishTime && listFinishTime >= finishTime && (time[0].Equals(list[i].Time[0]) || time[0].Equals(list[i].Time[1])))
                                 return false;
                         }
                         else if (list[i].Time.Length.Equals(26))
                         {
-                            listStartTime = Convert.ToDateTime(list[i].Time.Substring(2, 5));
-                            listFinishTime = Convert.ToDateTime(list[i].Time.Substring(8, 5));
+                            listStartTime = Convert.ToDateTime("2018-05-05 " + list[i].Time.Substring(2, 5) + ":00");
+                            listFinishTime = Convert.ToDateTime("2018-05-05 " + list[i].Time.Substring(8, 5) + ":00");
 
-                            listSecondStartTime = Convert.ToDateTime(list[i].Time.Substring(15, 5));
-                            listSecondFinishTime = Convert.ToDateTime(list[i].Time.Substring(21, 5));
+                            listSecondStartTime = Convert.ToDateTime("2018-05-05 " + list[i].Time.Substring(15, 5) + ":00");
+                            listSecondFinishTime = Convert.ToDateTime("2018-05-05 " + list[i].Time.Substring(21, 5) + ":00");
 
-                            if (listStartTime < startTime && listFinishTime > startTime && (time[0].Equals(list[i].Time[0]) || time[0].Equals(list[i].Time[1])))
+                            if (listStartTime <= startTime && listFinishTime > startTime && (time[0].Equals(list[i].Time[0]) || time[0].Equals(list[i].Time[1])))
                                 return false;
-                            if (listStartTime < finishTime && listFinishTime > finishTime && (time[0].Equals(list[i].Time[0]) || time[0].Equals(list[i].Time[1])))
+                            if (listStartTime < finishTime && listFinishTime >= finishTime && (time[0].Equals(list[i].Time[0]) || time[0].Equals(list[i].Time[1])))
                                 return false;
 
-                            if (listSecondStartTime < startTime && listSecondFinishTime > startTime && time[0].Equals(list[i].Time[14]))
+                            if (listSecondStartTime <= startTime && listSecondFinishTime > startTime && time[0].Equals(list[i].Time[14]))
                                 return false;
-                            if (listSecondStartTime < finishTime && listSecondFinishTime > finishTime && time[0].Equals(list[i].Time[14]))
+                            if (listSecondStartTime < finishTime && listSecondFinishTime >= finishTime && time[0].Equals(list[i].Time[14]))
                                 return false;
                         }
                     }
@@ -154,8 +154,8 @@ namespace LectureTimeTable
             }
             else if(time.Length.Equals(13))
             {
-                startTime = Convert.ToDateTime(time.Substring(2, 5));
-                finishTime = Convert.ToDateTime(time.Substring(8, 5));
+                startTime = Convert.ToDateTime("2018-05-05 " + time.Substring(2, 5) + ":00");
+                finishTime = Convert.ToDateTime("2018-05-05 " + time.Substring(8, 5) + ":00");
 
                 for (int i = 0; i < list.Count; i++)
                 {
@@ -163,40 +163,40 @@ namespace LectureTimeTable
                     {
                         if (list[i].Time.Length.Equals(12))
                         {
-                            listStartTime = Convert.ToDateTime(list[i].Time.Substring(1, 5));
-                            listFinishTime = Convert.ToDateTime(list[i].Time.Substring(7, 5));
+                            listStartTime = Convert.ToDateTime("2018-05-05 " + list[i].Time.Substring(1, 5) + ":00");
+                            listFinishTime = Convert.ToDateTime("2018-05-05 " + list[i].Time.Substring(7, 5) + ":00");
 
-                            if (listStartTime < startTime && listFinishTime > startTime && (time[0].Equals(list[i].Time[0]) || time[1].Equals(list[i].Time[0])))
+                            if (listStartTime <= startTime && listFinishTime > startTime && (time[0].Equals(list[i].Time[0]) || time[1].Equals(list[i].Time[0])))
                                 return false;
-                            if (listStartTime < finishTime && listFinishTime > finishTime && (time[0].Equals(list[i].Time[0]) || time[1].Equals(list[i].Time[0])))
+                            if (listStartTime < finishTime && listFinishTime >= finishTime && (time[0].Equals(list[i].Time[0]) || time[1].Equals(list[i].Time[0])))
                                 return false;
                         }
                         else if (list[i].Time.Length.Equals(13))
                         {
-                            listStartTime = Convert.ToDateTime(list[i].Time.Substring(2, 5));
-                            listFinishTime = Convert.ToDateTime(list[i].Time.Substring(8, 5));
+                            listStartTime = Convert.ToDateTime("2018-05-05 " + list[i].Time.Substring(2, 5) + ":00");
+                            listFinishTime = Convert.ToDateTime("2018-05-05 " + list[i].Time.Substring(8, 5) + ":00");
 
-                            if (listStartTime < startTime && listFinishTime > startTime && time[0].Equals(list[i].Time[0]) && time[1].Equals(list[i].Time[1]))
+                            if (listStartTime <= startTime && listFinishTime > startTime && time[0].Equals(list[i].Time[0]) && time[1].Equals(list[i].Time[1]))
                                 return false;
-                            if (listStartTime < finishTime && listFinishTime > finishTime && time[0].Equals(list[i].Time[0]) && time[1].Equals(list[i].Time[1]))
+                            if (listStartTime < finishTime && listFinishTime >= finishTime && time[0].Equals(list[i].Time[0]) && time[1].Equals(list[i].Time[1]))
                                 return false;
                         }
                         else if (list[i].Time.Length.Equals(26))
                         {
-                            listStartTime = Convert.ToDateTime(list[i].Time.Substring(2, 5));
-                            listFinishTime = Convert.ToDateTime(list[i].Time.Substring(8, 5));
+                            listStartTime = Convert.ToDateTime("2018-05-05 " + list[i].Time.Substring(2, 5) + ":00");
+                            listFinishTime = Convert.ToDateTime("2018-05-05 " + list[i].Time.Substring(8, 5) + ":00");
 
-                            listSecondStartTime = Convert.ToDateTime(list[i].Time.Substring(15, 5));
-                            listSecondFinishTime = Convert.ToDateTime(list[i].Time.Substring(21, 5));
+                            listSecondStartTime = Convert.ToDateTime("2018-05-05 " + list[i].Time.Substring(15, 5) + ":00");
+                            listSecondFinishTime = Convert.ToDateTime("2018-05-05 " + list[i].Time.Substring(21, 5) + ":00");
 
-                            if (listStartTime < startTime && listFinishTime > startTime && time[0].Equals(list[i].Time[0]) && time[1].Equals(list[i].Time[1]))
+                            if (listStartTime <= startTime && listFinishTime > startTime && time[0].Equals(list[i].Time[0]) && time[1].Equals(list[i].Time[1]))
                                 return false;
-                            if (listStartTime < finishTime && listFinishTime > finishTime && time[0].Equals(list[i].Time[0]) && time[1].Equals(list[i].Time[1]))
+                            if (listStartTime < finishTime && listFinishTime >= finishTime && time[0].Equals(list[i].Time[0]) && time[1].Equals(list[i].Time[1]))
                                 return false;
 
-                            if (listSecondStartTime < startTime && listSecondFinishTime > startTime && (time[0].Equals(list[i].Time[14]) || time[1].Equals(list[i].Time[14])))
+                            if (listSecondStartTime <= startTime && listSecondFinishTime > startTime && (time[0].Equals(list[i].Time[14]) || time[1].Equals(list[i].Time[14])))
                                 return false;
-                            if (listSecondStartTime < finishTime && listSecondFinishTime > finishTime && (time[0].Equals(list[i].Time[14])|| time[1].Equals(list[i].Time[14])))
+                            if (listSecondStartTime < finishTime && listSecondFinishTime >= finishTime && (time[0].Equals(list[i].Time[14])|| time[1].Equals(list[i].Time[14])))
                                 return false;
                         }
                     }
@@ -204,11 +204,11 @@ namespace LectureTimeTable
             }
             else if (time.Length.Equals(26))
             {
-                startTime = Convert.ToDateTime(time.Substring(2, 5));
-                finishTime = Convert.ToDateTime(time.Substring(8, 5));
+                startTime = Convert.ToDateTime("2018-05-05 " + time.Substring(2, 5) + ":00");
+                finishTime = Convert.ToDateTime("2018-05-05 " + time.Substring(8, 5) + ":00");
 
-                secondStartTime = Convert.ToDateTime(time.Substring(15, 5));
-                secondFinishTime = Convert.ToDateTime(time.Substring(21, 5));
+                secondStartTime = Convert.ToDateTime("2018-05-05 " + time.Substring(15, 5) + ":00");
+                secondFinishTime = Convert.ToDateTime("2018-05-05 " + time.Substring(21, 5) + ":00");
 
                 for (int i = 0; i < list.Count; i++)
                 {
@@ -216,52 +216,52 @@ namespace LectureTimeTable
                     {
                         if (list[i].Time.Length.Equals(12))
                         {
-                            listStartTime = Convert.ToDateTime(list[i].Time.Substring(1, 5));
-                            listFinishTime = Convert.ToDateTime(list[i].Time.Substring(7, 5));
+                            listStartTime = Convert.ToDateTime("2018-05-05 " + list[i].Time.Substring(1, 5) + ":00");
+                            listFinishTime = Convert.ToDateTime("2018-05-05 " + list[i].Time.Substring(7, 5) + ":00");
 
-                            if (listStartTime < startTime && listFinishTime > startTime && (time[0].Equals(list[i].Time[0]) || time[1].Equals(list[i].Time[0])))
+                            if (listStartTime <= startTime && listFinishTime > startTime && (time[0].Equals(list[i].Time[0]) || time[1].Equals(list[i].Time[0])))
                                 return false;
-                            if (listStartTime < finishTime && listFinishTime > finishTime && (time[0].Equals(list[i].Time[0]) || time[1].Equals(list[i].Time[0])))
+                            if (listStartTime < finishTime && listFinishTime >= finishTime && (time[0].Equals(list[i].Time[0]) || time[1].Equals(list[i].Time[0])))
                                 return false;
-                            if (listStartTime < secondStartTime && listFinishTime > secondStartTime && (time[14].Equals(list[i].Time[0])))
+                            if (listStartTime <= secondStartTime && listFinishTime > secondStartTime && (time[14].Equals(list[i].Time[0])))
                                 return false;
-                            if (listStartTime < secondFinishTime && listFinishTime > secondFinishTime && (time[14].Equals(list[i].Time[0])))
+                            if (listStartTime < secondFinishTime && listFinishTime >= secondFinishTime && (time[14].Equals(list[i].Time[0])))
                                 return false;
                         }
                         else if (list[i].Time.Length.Equals(13))
                         {
-                            listStartTime = Convert.ToDateTime(list[i].Time.Substring(2, 5));
-                            listFinishTime = Convert.ToDateTime(list[i].Time.Substring(8, 5));
+                            listStartTime = Convert.ToDateTime("2018-05-05 " + list[i].Time.Substring(2, 5) + ":00");
+                            listFinishTime = Convert.ToDateTime("2018-05-05 " + list[i].Time.Substring(8, 5) + ":00");
 
-                            if (listStartTime < startTime && listFinishTime > startTime && time[0].Equals(list[i].Time[0]) && time[1].Equals(list[i].Time[1]))
+                            if (listStartTime <= startTime && listFinishTime > startTime && time[0].Equals(list[i].Time[0]) && time[1].Equals(list[i].Time[1]))
                                 return false;
-                            if (listStartTime < finishTime && listFinishTime > finishTime && time[0].Equals(list[i].Time[0]) && time[1].Equals(list[i].Time[1]))
+                            if (listStartTime < finishTime && listFinishTime >= finishTime && time[0].Equals(list[i].Time[0]) && time[1].Equals(list[i].Time[1]))
                                 return false;
-                            if (listStartTime < secondStartTime && listFinishTime > secondStartTime && (time[14].Equals(list[i].Time[0]) || time[14].Equals(list[i].Time[1])))
+                            if (listStartTime <= secondStartTime && listFinishTime > secondStartTime && (time[14].Equals(list[i].Time[0]) || time[14].Equals(list[i].Time[1])))
                                 return false;
-                            if (listStartTime < secondFinishTime && listFinishTime > secondFinishTime && (time[14].Equals(list[i].Time[0]) || time[14].Equals(list[i].Time[1])))
+                            if (listStartTime < secondFinishTime && listFinishTime >= secondFinishTime && (time[14].Equals(list[i].Time[0]) || time[14].Equals(list[i].Time[1])))
                                 return false;
                         }
                         else if (list[i].Time.Length.Equals(26))
                         {
-                            listStartTime = Convert.ToDateTime(list[i].Time.Substring(2, 5));
-                            listFinishTime = Convert.ToDateTime(list[i].Time.Substring(8, 5));
+                            listStartTime = Convert.ToDateTime("2018-05-05 " + list[i].Time.Substring(2, 5) + ":00");
+                            listFinishTime = Convert.ToDateTime("2018-05-05 " + list[i].Time.Substring(8, 5) + ":00");
 
-                            listSecondStartTime = Convert.ToDateTime(list[i].Time.Substring(15, 5));
-                            listSecondFinishTime = Convert.ToDateTime(list[i].Time.Substring(21, 5));
+                            listSecondStartTime = Convert.ToDateTime("2018-05-05 " + list[i].Time.Substring(15, 5) + ":00");
+                            listSecondFinishTime = Convert.ToDateTime("2018-05-05 " + list[i].Time.Substring(21, 5) + ":00");
 
-                            if (listStartTime < startTime && listFinishTime > startTime && time[0].Equals(list[i].Time[0]) && time[1].Equals(list[i].Time[1]))
+                            if (listStartTime <= startTime && listFinishTime > startTime && time[0].Equals(list[i].Time[0]) && time[1].Equals(list[i].Time[1]))
                                 return false;
-                            if (listStartTime < finishTime && listFinishTime > finishTime && time[0].Equals(list[i].Time[0]) && time[1].Equals(list[i].Time[1]))
+                            if (listStartTime < finishTime && listFinishTime >= finishTime && time[0].Equals(list[i].Time[0]) && time[1].Equals(list[i].Time[1]))
                                 return false;
 
-                            if (listStartTime < secondStartTime && listFinishTime > secondStartTime && (time[14].Equals(list[i].Time[0]) || time[14].Equals(list[i].Time[1])))
+                            if (listStartTime <= secondStartTime && listFinishTime > secondStartTime && (time[14].Equals(list[i].Time[0]) || time[14].Equals(list[i].Time[1])))
                                 return false;
-                            if (listStartTime < secondFinishTime && listFinishTime > secondFinishTime && (time[14].Equals(list[i].Time[0]) || time[14].Equals(list[i].Time[1])))
+                            if (listStartTime < secondFinishTime && listFinishTime >= secondFinishTime && (time[14].Equals(list[i].Time[0]) || time[14].Equals(list[i].Time[1])))
                                 return false;
-                            if (listSecondStartTime < secondStartTime && listSecondFinishTime > secondStartTime && time[14].Equals(list[i].Time[14]))
+                            if (listSecondStartTime <= secondStartTime && listSecondFinishTime > secondStartTime && time[14].Equals(list[i].Time[14]))
                                 return false;
-                            if (listSecondStartTime < secondFinishTime && listSecondFinishTime > secondFinishTime && time[14].Equals(list[i].Time[14]))
+                            if (listSecondStartTime < secondFinishTime && listSecondFinishTime >= secondFinishTime && time[14].Equals(list[i].Time[14]))
                                 return false;
                         }
                     }
