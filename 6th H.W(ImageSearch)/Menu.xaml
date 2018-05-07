@@ -1,0 +1,14 @@
+﻿<Page x:Class="ImageSearch.Menu"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ImageSearch"
+        mc:Ignorable="d"
+        Title="Menu" Height="350" Width="525">
+    <Grid>
+        <Button x:Name="SearchPictureButton" Content="사진 검색" HorizontalAlignment="Left" Height="32" Margin="215,123,0,0" VerticalAlignment="Top" Width="94"  FontFamily="KoreanTIMSR" FontSize="16" Click="SearchPictureButton_Click"/>
+        <Label x:Name="MainTitleLabel" Content="진 규 랑  사 진 찾 자 !" HorizontalAlignment="Center" Height="44" Margin="139,42,133.4,0" VerticalAlignment="Top" Width="246" FontSize="36" FontFamily="Yanolja Yache R"/>
+        <Button x:Name="SearchMyLogButton" Content="검색 내역" HorizontalAlignment="Left" Height="32" Margin="215,186,0,0" VerticalAlignment="Top" Width="94"  FontSize="16" FontFamily="KoreanTIMSR" Click="SearchMyLogButton_Click"/>
+    </Grid>
+</Page>
