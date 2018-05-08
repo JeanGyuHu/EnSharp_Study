@@ -19,16 +19,57 @@ namespace ImageSearch
     /// </summary>
     public partial class SearchImage : Page
     {
-        SearchWithKakaoAPI searchWithKakao = new SearchWithKakaoAPI();
-        
+        private string response;
+        private ParsingData parsingData;
+        private List<ImageData> list;
         public SearchImage()
         {
             InitializeComponent();
+            parsingData = new ParsingData();
+            list = new List<ImageData>();
         }
 
         private void Search_Click(object sender, RoutedEventArgs e)
         {
-            searchWithKakao.Search("설현");
+            response = parsingData.RequestJson(searchTextBox.Text);
+            list = parsingData.ParseJson(response);
+            listView.Items.Clear();
+            if(howMany.SelectedIndex.Equals(1))
+            {   
+                for(int count = 0; count < 10; count++)
+                {
+                    Image image = new Image();
+                    image.Source = parsingData.LoadImage(list[count].ImageURL);
+                    image.Height = 100;
+                    image.Width = 100;
+                    listView.Items.Add(image);
+                }
+                searchTextBox.Clear();
+            }
+            else if (howMany.SelectedIndex.Equals(2))
+            {
+                for (int count = 0; count < 20; count++)
+                {
+                    Image image = new Image();
+                    image.Source = parsingData.LoadImage(list[count].ImageURL);
+                    image.Height = 100;
+                    image.Width = 100;
+                    listView.Items.Add(image);
+                }
+                searchTextBox.Clear();
+            }
+            else if (howMany.SelectedIndex.Equals(3))
+            {
+                for (int count = 0; count < 30; count++)
+                {
+                    Image image = new Image();
+                    image.Source = parsingData.LoadImage(list[count].ImageURL);
+                    image.Height = 100;
+                    image.Width = 100;
+                    listView.Items.Add(image);
+                }
+                searchTextBox.Clear();
+            }
         }
     }
 }

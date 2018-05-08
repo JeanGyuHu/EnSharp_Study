@@ -12,20 +12,28 @@
 
         <UniformGrid HorizontalAlignment="Center" Height="53" VerticalAlignment="Top" Width="237" Margin="156,10,131.8,0">
             <Label HorizontalAlignment="Center" FontSize="16" FontFamily="Yanolja Yache R">검색</Label>
-            <TextBox Width="105" HorizontalAlignment="Right" Margin="-0.4,0,13.8,-0.4"/>
+            <TextBox Name ="searchTextBox" Text="검색어 입력!" Width="105" HorizontalAlignment="Right" Margin="-0.4,0,13.8,-0.4"/>
             <Label HorizontalAlignment="Center" FontFamily="Yanolja Yache R" FontSize="16">개수</Label>
-            <ComboBox Margin="-0.4,0.4,13.8,0.2" HorizontalAlignment="Right" Width="105">
+            <ComboBox Name ="howMany"  Margin="-0.4,0.4,13.8,0.2" HorizontalAlignment="Right" Width="105" SelectedIndex="0">
+                <ComboBoxItem Content="이미지 개수"/>
                 <ComboBoxItem Content="10"/>
                 <ComboBoxItem Content="20"/>
                 <ComboBoxItem Content="30"/>
             </ComboBox>
-
         </UniformGrid>
-        <Label Content="이미지 검색" HorizontalAlignment="Left" Height="53" Margin="31,10,0,0" VerticalAlignment="Top" Width="146" FontFamily="Yanolja Yache R" FontSize="36"/>
-        <ScrollViewer HorizontalAlignment="Right" Margin="0,68,9.8,10.4" Width="505">
-            <WrapPanel x:Name="wp" Height="260" Width="479"/>
-        </ScrollViewer>
         <Button Name="Search" Content="검색" HorizontalAlignment="Left" Height="43" Margin="398,16,0,0" VerticalAlignment="Top" Width="66" FontSize="20" FontFamily="KoreanTIMSR" Click="Search_Click"/>
+        <Label Content="이미지 검색" HorizontalAlignment="Left" Height="53" Margin="31,10,0,0" VerticalAlignment="Top" Width="146" FontFamily="Yanolja Yache R" FontSize="36"/>
+        <ScrollViewer Margin="10,68,9.8,10.4">
+            <ListView Name ="listView" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                <ListView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel x:Name="wrap" Height="500" Width="479"/>
+                    </ItemsPanelTemplate>
+                </ListView.ItemsPanel>
+                
+            </ListView>
+        </ScrollViewer>
+        
 
     </Grid>
 </Page>
