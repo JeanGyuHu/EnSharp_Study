@@ -9,12 +9,12 @@ ImageSearch
 none
 false
 DEBUG;TRACE
-C:\Users\gjwls\source\repos\ImageSearch\App.xaml
-4-1299544571
+C:\Users\gjwls\source\repos\ImageSearch\Main\App.xaml
+5-2079881258
 
-10-1161132512
-1452128614
-MainWindow.xaml;Menu.xaml;SearchImage.xaml;SearchLog.xaml;
+13628912905
+15-5105541
+Main\MainWindow.xaml;ProgramLogic\Menu.xaml;ProgramLogic\SearchImage.xaml;ProgramLogic\SearchLog.xaml;ProgramLogic\PictureDialog.xaml;
 
 False
 
