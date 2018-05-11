@@ -5,8 +5,16 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ImageSearch"
         mc:Ignorable="d"
-        Title="SearchLog" Height="300" Width="300">
+        Title="SearchLog" Height="350" Width="525">
     <Grid>
-        
+        <ListView x:Name="searchLog" Height="233" VerticalAlignment="Top" Margin="0,0,9.8,0" ScrollViewer.HorizontalScrollBarVisibility="Disabled" FontFamily="KoreanTIMSR" FontSize="16">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="검색어" Width="225" DisplayMemberBinding="{Binding SearchWord}" />
+                    <GridViewColumn Header="시간" Width="300" DisplayMemberBinding="{Binding Time}" />
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <Button x:Name="deleteButton" Content="전부 삭제" HorizontalAlignment="Left" Margin="218,247,0,0" VerticalAlignment="Top" Width="82" Height="35" Click="DeleteButton_Click" FontFamily="KoreanTIMSR" FontSize="18"/>
     </Grid>
 </Page>

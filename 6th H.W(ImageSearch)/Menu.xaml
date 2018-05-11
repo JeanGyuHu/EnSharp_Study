@@ -6,9 +6,9 @@
         xmlns:local="clr-namespace:ImageSearch"
         mc:Ignorable="d"
         Title="Menu" Height="350" Width="525">
-    <Grid>
+    <Canvas Name="MainCanvas" Height="350" Width="525">
         <Button x:Name="SearchPictureButton" Content="사진 검색" HorizontalAlignment="Left" Height="32" Margin="215,123,0,0" VerticalAlignment="Top" Width="94"  FontFamily="KoreanTIMSR" FontSize="16" Click="SearchPictureButton_Click"/>
-        <Label x:Name="MainTitleLabel" Content="진 규 랑  사 진 찾 자 !" HorizontalAlignment="Center" Height="44" Margin="139,42,133.4,0" VerticalAlignment="Top" Width="246" FontSize="36" FontFamily="Yanolja Yache R"/>
+        <Label x:Name="MainTitleLabel" Content="진 규 랑  사 진 찾 자 !" HorizontalAlignment="Center" Height="44" Margin="139,42,133.4,0" VerticalAlignment="Top" Width="246" FontSize="36" FontFamily="Yanolja Yache R" Foreground="#FF323232"/>
         <Button x:Name="SearchMyLogButton" Content="검색 내역" HorizontalAlignment="Left" Height="32" Margin="215,186,0,0" VerticalAlignment="Top" Width="94"  FontSize="16" FontFamily="KoreanTIMSR" Click="SearchMyLogButton_Click"/>
-    </Grid>
+    </Canvas>
 </Page>

@@ -11,15 +11,15 @@
     <Grid>
 
         <UniformGrid HorizontalAlignment="Center" Height="53" VerticalAlignment="Top" Width="237" Margin="156,10,131.8,0">
-            <Label HorizontalAlignment="Center" FontSize="16" FontFamily="Yanolja Yache R">검색</Label>
-            <TextBox Name ="searchTextBox" Text="검색어 입력!" Width="105" HorizontalAlignment="Right" Margin="-0.4,0,13.8,-0.4"/>
             <Label HorizontalAlignment="Center" FontFamily="Yanolja Yache R" FontSize="16">개수</Label>
-            <ComboBox Name ="howMany"  Margin="-0.4,0.4,13.8,0.2" HorizontalAlignment="Right" Width="105" SelectedIndex="0">
+            <ComboBox Name ="howMany"  Margin="-0.4,0.4,13.8,0.2" HorizontalAlignment="Right" Width="105" SelectedIndex="0" FontFamily="Yanolja Yache R" FontSize="18">
                 <ComboBoxItem Content="이미지 개수"/>
                 <ComboBoxItem Content="10"/>
                 <ComboBoxItem Content="20"/>
                 <ComboBoxItem Content="30"/>
             </ComboBox>
+            <Label HorizontalAlignment="Center" FontSize="16" FontFamily="Yanolja Yache R">검색</Label>
+            <TextBox Name ="searchTextBox" Width="105" HorizontalAlignment="Right" Margin="-0.4,0,13.8,-0.4" GotFocus="SearchTextBox_Focus" FontFamily="Yanolja Yache R" FontSize="18"/>
         </UniformGrid>
         <Button Name="Search" Content="검색" HorizontalAlignment="Left" Height="43" Margin="398,16,0,0" VerticalAlignment="Top" Width="66" FontSize="20" FontFamily="KoreanTIMSR" Click="Search_Click"/>
         <Label Content="이미지 검색" HorizontalAlignment="Left" Height="53" Margin="31,10,0,0" VerticalAlignment="Top" Width="146" FontFamily="Yanolja Yache R" FontSize="36"/>
@@ -27,7 +27,7 @@
             <ListView Name ="listView" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
                 <ListView.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <WrapPanel x:Name="wrap" Height="500" Width="479"/>
+                        <WrapPanel/>
                     </ItemsPanelTemplate>
                 </ListView.ItemsPanel>
                 

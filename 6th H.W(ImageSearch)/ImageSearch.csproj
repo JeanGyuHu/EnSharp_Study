@@ -40,6 +40,7 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Web" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -53,54 +54,56 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <ApplicationDefinition Include="Main\App.xaml">
+    <ApplicationDefinition Include="App.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="CommonEvent.cs" />
+    <Compile Include="Constants\Constants.cs" />
     <Compile Include="DataVo\LogData.cs" />
     <Compile Include="DataVo\ImageData.cs" />
     <Compile Include="DataControl\ParsingData.cs" />
     <Compile Include="DataControl\SearchListDAO.cs" />
-    <Compile Include="ProgramLogic\SearchLog.xaml.cs">
+    <Compile Include="SearchLog.xaml.cs">
       <DependentUpon>SearchLog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ProgramLogic\PictureDialog.xaml.cs">
+    <Compile Include="PictureDialog.xaml.cs">
       <DependentUpon>PictureDialog.xaml</DependentUpon>
     </Compile>
-    <Page Include="Main\MainWindow.xaml">
+    <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Compile Include="Main\App.xaml.cs">
+    <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Main\MainWindow.xaml.cs">
+    <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="ProgramLogic\Menu.xaml">
+    <Page Include="Menu.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="ProgramLogic\SearchImage.xaml">
+    <Page Include="SearchImage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="ProgramLogic\SearchLog.xaml">
+    <Page Include="SearchLog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="ProgramLogic\PictureDialog.xaml">
+    <Page Include="PictureDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ProgramLogic\Menu.xaml.cs">
+    <Compile Include="Menu.xaml.cs">
       <DependentUpon>Menu.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ProgramLogic\SearchImage.xaml.cs">
+    <Compile Include="SearchImage.xaml.cs">
       <DependentUpon>SearchImage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -125,6 +128,9 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Image\skyscape.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
