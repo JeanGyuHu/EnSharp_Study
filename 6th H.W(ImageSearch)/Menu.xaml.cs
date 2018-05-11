@@ -76,6 +76,7 @@ namespace ImageSearch
             }
             else
             {
+                MyEllipseCanvas.BeginAnimation(Canvas.LeftProperty, null);
                 MyImage.Visibility = Visibility.Hidden;
                 //do yes stuff
             }

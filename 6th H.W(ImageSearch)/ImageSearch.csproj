@@ -132,5 +132,8 @@
   <ItemGroup>
     <Resource Include="Image\skyscape.jpg" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Image\문수형바탕.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

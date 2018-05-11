@@ -143,6 +143,8 @@ namespace ImageSearch
         //검색할때 공백과 특수무자에 대한 처리
         private bool SearchExceptionHandler(string text)
         {
+            if (text.Length < 1 || text.Length > 30)
+                return false;
             if (Regex.IsMatch(text, @"^ *$"))
                 return false;
             if (Regex.IsMatch(text, @"^[~`!@#$%%\-+={}[\]|\\;:""<>,.?/]*$"))
