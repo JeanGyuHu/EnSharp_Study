@@ -199,10 +199,10 @@ namespace LibraryManagementWithNaverAPI
             if (author.Length < 2 || author.Length > 20)
                 return false;
 
-            if (Regex.IsMatch(author, @"[~`!@#$%%\-+={}[\]|\\;:""<>,?/]"))
+            if (Regex.IsMatch(author, @"[~`!@#$%%\-+={}[\]\\;:""<>,?/]"))
                 return false;
-            if (Regex.IsMatch(author, @"[0-9]"))
-                return false;
+            //if (Regex.IsMatch(author, @"[0-9]"))
+                //return false;
             return true;
         }
         public bool CheckPrice(string price)
@@ -229,8 +229,8 @@ namespace LibraryManagementWithNaverAPI
                 return false;
             if (Regex.IsMatch(publisher, @"[~`!@#$%%\-+={}[\]|\\;:""<>,?/]"))
                 return false;
-            if (Regex.IsMatch(publisher, @"[0-9]"))
-                return false;
+            //if (Regex.IsMatch(publisher, @"[0-9]"))
+             //   return false;
 
             return true;
         }

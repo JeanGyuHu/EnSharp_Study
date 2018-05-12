@@ -43,6 +43,12 @@ namespace LibraryManagementWithNaverAPI
         public const string SEARCH_BOOK_COUNT = "3";
         public const string SEARCH_BOOK_AUTHOR = "4";
         public const string SEARCH_BOOK_PUBLISHER = "5";
+        public const string SEARCH_BOOK_IN_NAVER = "6";
+        public const string SEARCH_GO_BACK = "7";
+
+        public const string SEARCH_NAVER_NAME = "1";
+        public const string SEARCH_NAVER_PUBLISHER = "2";
+        public const string SEARCH_NAVER_AUTHOR = "3";
 
         //멤버 관리모드에서 각 메뉴에 대한 매직넘버
         public const string ADD_NEW_MEMBER = "1";
@@ -72,6 +78,9 @@ namespace LibraryManagementWithNaverAPI
 
         //출력할때 add모드인지 Search 모드인지 판단해주기 위한 매직넘버
         public enum Mode { Add = 1, Search };
+
+        public const string YES = "1";
+        public const string NO = "2";
 
         public const string CONNECTIONINFORMATION = "Server = localhost; Database = ensharpdb;Uid=root;Pwd=123123;";          //DB에 연결할때 사용하는 DB 연결정보
     }

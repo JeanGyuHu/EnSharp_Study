@@ -65,39 +65,7 @@ namespace LibraryManagementWithNaverAPI
             printAboutControlMembers.AddResult("S U C C E S S");
         }
 
-        /// <summary>
-        /// 로그인 페이지를 그리고 로그인이 됬는지 안됬는지 체크해주는 메소드
-        /// </summary>
-        /// <param name="list">멤버 목록이 들어있는 리스트</param>
-        /// <returns>로그인 여부</returns>
-        public bool DrawLoginPage(string mode)
-        {
-            printAboutControlMembers.LoginPage();
-            printAboutControlMembers.WriteId();
-            id = Console.ReadLine();
-            if (id.Equals("0"))
-                return false;
 
-            if (exceptionHandler.CheckID(id, mode))
-            {
-                printAboutControlMembers.WritePassword();
-                securePassword = printAboutControlMembers.GetConsoleSecurePassword();
-                password = new NetworkCredential("", securePassword).Password;
-                if (exceptionHandler.CheckPW(id,password, mode))
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
-            }
-            else
-            {
-                DrawLoginPage(mode);
-            }
-            return false;
-        }
 
         /// <summary>
         /// 아이디를 입력받는 부분

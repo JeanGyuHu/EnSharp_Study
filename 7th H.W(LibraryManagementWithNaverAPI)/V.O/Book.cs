@@ -7,20 +7,22 @@ namespace LibraryManagementWithNaverAPI
 {
     class Book
     {
-        private string no;          //책 번호
+        private string isbn;          //책 번호
         private string name;        //책 이름
         private int count;          //책 개수
         private string pbls;        //책 출판사
         private string author;      //책 저자
         private int price;
+        private DateTime pblsDate;
+        private string information;
 
         /// <summary>
         /// 책 번호에 대한 get/set
         /// </summary>
-        public string No
+        public string Isbn
         {
-            get { return this.no; }
-            set { this.no = value; }
+            get { return this.isbn; }
+            set { this.isbn = value; }
         }
         /// <summary>
         /// 책 이름에 대한 get/set
@@ -60,23 +62,37 @@ namespace LibraryManagementWithNaverAPI
             get { return price; }
             set { price = value; }
         }
+
+        public DateTime PblsDate
+        {
+            get { return pblsDate; }
+            set { pblsDate = value; }
+        }
+
+        public string Information
+        {
+            get { return information; }
+            set { information = value; }
+        }
         public Book() { }
         /// <summary>
         /// 생성자로써 모든 정보가 들어왔을때 모두다 값을 변경해준다.
         /// </summary>
-        /// <param name="no">입력 책 번호</param>
+        /// <param name="isbn">입력 책 번호</param>
         /// <param name="name">입력 책 이름</param>
         /// <param name="count">입력 책 개수</param>
         /// <param name="pbls">입력 책 출판사</param>
         /// <param name="author">입력 책 저자</param>
-        public Book(string no, string name, int count, string pbls, string author, int price)
+        public Book(string isbn, string name, int count, string pbls, string author, int price,DateTime pblsDate,string information)
         {
-            No = no;
+            Isbn = isbn;
             Name = name;
             Count = count;
             Pbls = pbls;
             Author = author;
             Price = price;
+            PblsDate = pblsDate;
+            Information = information;
         }
     }
 }

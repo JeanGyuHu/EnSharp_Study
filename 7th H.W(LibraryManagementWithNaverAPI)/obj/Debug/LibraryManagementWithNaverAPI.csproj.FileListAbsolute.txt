@@ -6,3 +6,5 @@ c:\users\gjwls\source\repos\LibraryManagementWithNaverAPI\obj\Debug\LibraryManag
 c:\users\gjwls\source\repos\LibraryManagementWithNaverAPI\obj\Debug\LibraryManagementWithNaverAPI.csproj.CoreCompileInputs.cache
 c:\users\gjwls\source\repos\LibraryManagementWithNaverAPI\obj\Debug\LibraryManagementWithNaverAPI.exe
 c:\users\gjwls\source\repos\LibraryManagementWithNaverAPI\obj\Debug\LibraryManagementWithNaverAPI.pdb
+C:\Users\gjwls\source\repos\LibraryManagementWithNaverAPI\bin\Debug\Newtonsoft.Json.dll
+C:\Users\gjwls\source\repos\LibraryManagementWithNaverAPI\bin\Debug\Newtonsoft.Json.xml

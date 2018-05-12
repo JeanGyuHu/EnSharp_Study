@@ -32,6 +32,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="MySql.Data, Version=6.9.11.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL" />
+    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -41,24 +44,28 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AddNewMember.cs" />
-    <Compile Include="LibraryManagement.cs" />
-    <Compile Include="MemberManagement.cs" />
+    <Compile Include="LogicAndFunction\AddNewMember.cs" />
+    <Compile Include="LogicAndFunction\LibraryManagement.cs" />
+    <Compile Include="LogicAndFunction\MemberManagement.cs" />
+    <Compile Include="ParsingData.cs" />
     <Compile Include="V.O\Book.cs" />
     <Compile Include="DAO\BookDAO.cs" />
-    <Compile Include="DBExceptionHandler.cs" />
-    <Compile Include="ExceptionHandler.cs" />
+    <Compile Include="Exception\DBExceptionHandler.cs" />
+    <Compile Include="Exception\ExceptionHandler.cs" />
     <Compile Include="Constants\LibraryConstants.cs" />
     <Compile Include="DAO\MemberDAO.cs" />
     <Compile Include="V.O\Member.cs" />
-    <Compile Include="MenuLogic.cs" />
-    <Compile Include="PrintAboutBooks.cs" />
-    <Compile Include="PrintAboutControlMembers.cs" />
+    <Compile Include="LogicAndFunction\MenuLogic.cs" />
+    <Compile Include="Print\PrintAboutBooks.cs" />
+    <Compile Include="Print\PrintAboutControlMembers.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="FunctionInUserMode.cs" />
+    <Compile Include="LogicAndFunction\FunctionInUserMode.cs" />
     <Compile Include="DAO\RentalDataDAO.cs" />
     <Compile Include="V.O\RentalData.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

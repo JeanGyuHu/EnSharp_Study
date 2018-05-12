@@ -24,13 +24,15 @@ namespace LibraryManagementWithNaverAPI
             connection.Open();          //연결
 
             command = connection.CreateCommand();
-            command.CommandText = "INSERT INTO book values(@no,@name,@count,@publisher,@author,@price)";    //SQL문 생성
-            command.Parameters.Add("@no", MySqlDbType.VarChar).Value = book.No;             //각각에 대한 정보 대입
+            command.CommandText = "INSERT INTO book values(@no,@name,@count,@publisher,@author,@price,@date,@information)";    //SQL문 생성
+            command.Parameters.Add("@no", MySqlDbType.VarChar).Value = book.Isbn;             //각각에 대한 정보 대입
             command.Parameters.Add("@name", MySqlDbType.VarChar).Value = book.Name;
             command.Parameters.Add("@count", MySqlDbType.VarChar).Value = book.Count;
             command.Parameters.Add("@publisher", MySqlDbType.VarChar).Value = book.Pbls;
             command.Parameters.Add("@author", MySqlDbType.VarChar).Value = book.Author;
             command.Parameters.Add("@price", MySqlDbType.VarChar).Value = book.Price;
+            command.Parameters.Add("@date", MySqlDbType.VarChar).Value = book.PblsDate.ToString("yyyy-MM-dd"); 
+            command.Parameters.Add("@information", MySqlDbType.VarChar).Value = book.Information;
 
             command.ExecuteNonQuery();  //DB에 SQL문 실행
             connection.Close();     //연결해제
@@ -54,7 +56,7 @@ namespace LibraryManagementWithNaverAPI
 
             while (reader.Read())   //쿼리문을 수행한 정보들에 대해서
             {
-                book = new Book(reader.GetString(0), reader.GetString(1), reader.GetInt32(2), reader.GetString(3), reader.GetString(4), reader.GetInt32(5));  //
+                book = new Book(reader.GetString(0), reader.GetString(1), reader.GetInt32(2), reader.GetString(3), reader.GetString(4), reader.GetInt32(5),reader.GetDateTime(6),reader.GetString(7));  //
             }
             connection.Close();
 
