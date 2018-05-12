@@ -1,0 +1,8 @@
+c:\users\gjwls\source\repos\LibraryManagementWithNaverAPI\bin\Debug\LibraryManagementWithNaverAPI.exe
+c:\users\gjwls\source\repos\LibraryManagementWithNaverAPI\bin\Debug\LibraryManagementWithNaverAPI.pdb
+c:\users\gjwls\source\repos\LibraryManagementWithNaverAPI\bin\Debug\MySql.Data.dll
+c:\users\gjwls\source\repos\LibraryManagementWithNaverAPI\bin\Debug\MySql.Data.xml
+c:\users\gjwls\source\repos\LibraryManagementWithNaverAPI\obj\Debug\LibraryManagementWithNaverAPI.csprojResolveAssemblyReference.cache
+c:\users\gjwls\source\repos\LibraryManagementWithNaverAPI\obj\Debug\LibraryManagementWithNaverAPI.csproj.CoreCompileInputs.cache
+c:\users\gjwls\source\repos\LibraryManagementWithNaverAPI\obj\Debug\LibraryManagementWithNaverAPI.exe
+c:\users\gjwls\source\repos\LibraryManagementWithNaverAPI\obj\Debug\LibraryManagementWithNaverAPI.pdb

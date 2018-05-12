@@ -9,6 +9,8 @@ namespace LibraryManagementWithNaverAPI
     {
         static void Main(string[] args)
         {
+            MenuLogic menuLogic = new MenuLogic();
+            menuLogic.StartMainMenu();
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MySql.Data.MySqlClient;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,7 +8,6 @@ namespace LibraryManagementWithNaverAPI
 {
     class BookDAO
     {
-        private string connectionInformation = "Server = localhost; Database = ensharpdb;Uid=root;Pwd=123123;";     //DB에 연결할때 사용하는 DB 연결정보
         private MySqlConnection connection;     //DB에 연결할때 쓰이는 객체
         private MySqlCommand command;           //쿼리문을 실행해주는 객체
         private MySqlDataReader reader;         //실행을 통해서 읽어온 정보를 지닌 객체
@@ -15,7 +15,7 @@ namespace LibraryManagementWithNaverAPI
         //기본 생성자로 connection을 localDB에 연결
         public BookDAO()
         {
-            connection = new MySqlConnection(connectionInformation);
+            connection = new MySqlConnection(LibraryConstants.CONNECTIONINFORMATION);
         }
 
 

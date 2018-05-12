@@ -73,6 +73,6 @@ namespace LibraryManagementWithNaverAPI
         //출력할때 add모드인지 Search 모드인지 판단해주기 위한 매직넘버
         public enum Mode { Add = 1, Search };
 
-        public const string connectionInformation = "Server = localhost; Database = ensharpdb;Uid=root;Pwd=123123;";          //DB에 연결할때 사용하는 DB 연결정보
+        public const string CONNECTIONINFORMATION = "Server = localhost; Database = ensharpdb;Uid=root;Pwd=123123;";          //DB에 연결할때 사용하는 DB 연결정보
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Security;
 using System.Text;
 
@@ -10,7 +11,7 @@ namespace LibraryManagementWithNaverAPI
     {
         private string mode;
         private string id;
-        private string stringPassword;
+        private string password;
         private SecureString securePassword;
         private AddNewMember addNewMember;
         private PrintAboutBooks printAboutBooks;
@@ -18,9 +19,13 @@ namespace LibraryManagementWithNaverAPI
         private FunctionInUserMode functionInUserMode;
         private LibraryManagement libraryManagement;
         private BookDAO bookDAO;
+        private MemberManagement memberManagement;
+        private ExceptionHandler exceptionHandler;
 
         public MenuLogic()
         {
+            exceptionHandler = new ExceptionHandler();
+            memberManagement = new MemberManagement();
             printAboutControlMembers = new PrintAboutControlMembers();
             functionInUserMode = new FunctionInUserMode();
             libraryManagement = new LibraryManagement();
@@ -74,11 +79,11 @@ namespace LibraryManagementWithNaverAPI
         {
             bool loginFlag = false;
 
-            loginFlag = addNewMember.DrawLoginPage(mode);
+            loginFlag = DrawLoginPage(mode);
 
-            if (id.Equals("0") || stringPassword.Equals("0"))
+            if (id.Equals("0") || password.Equals("0"))
                 return;
-            if (stringPassword.Equals("-1"))
+            if (password.Equals("-1"))
                 Login();
             if (loginFlag)
             {
@@ -169,16 +174,16 @@ namespace LibraryManagementWithNaverAPI
                         addNewMember.DrawAndAdd();
                         break;
                     case LibraryConstants.EDIT_MEMBER_INFO:
-                        libraryManagement.DrawEdit();
+                        memberManagement.DrawEdit();
                         break;
                     case LibraryConstants.DELETE_MEMBER:
-                        libraryManagement.DrawDelete();
+                        memberManagement.DrawDelete();
                         break;
                     case LibraryConstants.SEARCH_MEMBER:
-                        libraryManagement.DrawSearch();
+                        memberManagement.DrawSearch();
                         break;
                     case LibraryConstants.PRINT_MEMBER_INFO:
-                        libraryManagement.DrawPrint();
+                        memberManagement.DrawPrint();
                         break;
                     case LibraryConstants.GO_BEFORE_PAGE:
                         flag = false;
@@ -226,6 +231,39 @@ namespace LibraryManagementWithNaverAPI
                         break;
                 }
             }
+        }
+        /// <summary>
+        /// 로그인 페이지를 그리고 로그인이 됬는지 안됬는지 체크해주는 메소드
+        /// </summary>
+        /// <param name="list">멤버 목록이 들어있는 리스트</param>
+        /// <returns>로그인 여부</returns>
+        public bool DrawLoginPage(string mode)
+        {
+            printAboutControlMembers.LoginPage();
+            printAboutControlMembers.WriteId();
+            id = Console.ReadLine();
+            if (id.Equals("0"))
+                return false;
+
+            if (exceptionHandler.CheckID(id, mode))
+            {
+                printAboutControlMembers.WritePassword();
+                securePassword = printAboutControlMembers.GetConsoleSecurePassword();
+                password = new NetworkCredential("", securePassword).Password;
+                if (exceptionHandler.CheckPW(id, password, mode))
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                DrawLoginPage(mode);
+            }
+            return false;
         }
     }
 }
