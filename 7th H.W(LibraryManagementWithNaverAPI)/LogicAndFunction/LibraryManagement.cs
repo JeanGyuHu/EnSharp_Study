@@ -12,7 +12,7 @@ namespace LibraryManagementWithNaverAPI
         private PrintAboutBooks printAboutBooks;          //UI를 그리기 위한 객체 선언
         private DBExceptionHandler dBExceptionHandler;
         private BookDAO bookDAO;
-        private string choice;                       //어떤 작업을 할지 선택받는 변수
+        private string status;                       //어떤 작업을 할지 선택받는 변수
         private bool flag = true;                       //이전 메뉴로 돌아가기 위한 flag
         private string no;                       //책 번호 입력받기 위함
         private string name;                     //책 이름 입력받기 위함
@@ -193,9 +193,7 @@ namespace LibraryManagementWithNaverAPI
                     }
                     break;
                 case LibraryConstants.SEARCH_BOOK_IN_NAVER:
-                    printAboutBooks.SearchCategoryInNaver();
-                    search = Console.ReadLine();
-                    SearchInNaver(search);
+                    SearchInNaver();
                     break;
                 case LibraryConstants.SEARCH_GO_BACK:
                     break;
@@ -203,79 +201,113 @@ namespace LibraryManagementWithNaverAPI
                     break;
             }
         }
-        public void SearchInNaver(string mode)
+        public void SearchInNaver()
         {
-            switch (mode)
+            bool exitFlag = true;
+            while (exitFlag)
             {
-                case LibraryConstants.SEARCH_NAVER_NAME:
-                    printAboutBooks.WriteBookName();
-                    if (!SearchSubInNaver())
+                printAboutBooks.SearchCategoryInNaver();
+                mode = Console.ReadLine();
+                
+                switch (mode)
+                {
+                    case LibraryConstants.SEARCH_NAVER_NAME:
+                        
+                        if (!SearchSubInNaver(mode))
+                            return;
+                        status = "도 서 명";
+                        bookList = printAboutBooks.ResultFromNaver(status, search, Convert.ToInt32(count));
+                        printAboutBooks.PressAnyKey();
+                        if (bookList != null)
+                            AddAfterSearch(bookList);
+                        break;
+                    case LibraryConstants.SEARCH_NAVER_PUBLISHER:
+                        
+                        if (!SearchSubInNaver(mode))
+                            return;
+                        status = "출 판 사";
+                        bookList = printAboutBooks.ResultFromNaver(status, search, Convert.ToInt32(count));
+                        printAboutBooks.PressAnyKey();
+                        if (bookList != null)
+                            AddAfterSearch(bookList);
+                        break;
+                    case LibraryConstants.SEARCH_NAVER_AUTHOR:
+                        if (!SearchSubInNaver(mode))
+                            return;
+                        status = "저    자";
+                        bookList = printAboutBooks.ResultFromNaver(status, search, Convert.ToInt32(count));
+                        printAboutBooks.PressAnyKey();
+                        if (bookList != null) 
+                            AddAfterSearch(bookList);
                         return;
-                    bookList = printAboutBooks.ResultFromNaver("도 서 명", search, Convert.ToInt32(count));
-                    if (bookList != null)
-                        AddAfterSearch(bookList);
-                    break;
-                case LibraryConstants.SEARCH_NAVER_PUBLISHER:
-                    printAboutBooks.WriteBookPublisher();
-                    if (!SearchSubInNaver())
-                        return;
-                    bookList = printAboutBooks.ResultFromNaver("출 판 사", search, Convert.ToInt32(count));
-                    if (bookList != null)
-                        AddAfterSearch(bookList);
-                    break;
-                case LibraryConstants.SEARCH_NAVER_AUTHOR:
-                    printAboutBooks.WriteBookAuthor();
-                    if (!SearchSubInNaver())
-                        return;
-                    bookList = printAboutBooks.ResultFromNaver("저 자", search, Convert.ToInt32(count));
-                    if (bookList != null)
-                        AddAfterSearch(bookList);
-                    break;
-                default:
-                    break;
+                    case LibraryConstants.GO_BACK:
+                        exitFlag = false;
+                        break;
+                    default:
+                        break;
+                }
             }
         }
 
         public void AddAfterSearch(List<Book> list)
         {
-            bool successFlag = false;
-
-            printAboutBooks.AddOrNot();
-            mode = Console.ReadLine();
-
-            switch (mode)
+            bool successFlag = false, yesOrNoExitFlag= true;
+            while (yesOrNoExitFlag)
             {
-                case LibraryConstants.YES:
-                    printAboutBooks.WriteBookNo();
-                    answer = Console.ReadLine();
+                Console.Clear();
+                printAboutBooks.AddOrNot();
+                mode = Console.ReadLine();
 
-                    foreach(Book book in list)
-                    {
-                        if (book.Isbn.Equals(answer))
+                switch (mode)
+                {
+                    case LibraryConstants.YES:
+                        Console.Clear();
+                        printAboutBooks.ResultFromNaver(status,search, Convert.ToInt32(count));
+                        printAboutBooks.WriteBookNo();
+                        answer = Console.ReadLine();
+
+                        foreach (Book book in list)
                         {
-                            bookDAO.AddBook(new Book(book.Isbn.Replace("<b>", "").Replace("</b>", ""), book.Name.Replace("<b>", "").Replace("</b>", ""), book.Count, book.Pbls,book.Author.Replace("<b>", "").Replace("</b>", ""), book.Price,book.PblsDate,book.Information.Replace("<b>", "").Replace("</b>", "")));
-                            successFlag = true;
-                            break;
+                            if (book.Isbn.Equals(answer))
+                            {
+                                if (dBExceptionHandler.IsInBookDB(answer))
+                                {
+                                    bookDAO.AddBook(new Book(book.Isbn, book.Name, book.Count, book.Pbls, book.Author, book.Price, book.PblsDate, book.Information));
+                                    successFlag = true;
+                                    break;
+                                }
+                            }
                         }
-                    }
-                    if (successFlag)
-                        printAboutBooks.AddResult("S U C C E S S !");
-                    else
-                        printAboutBooks.AddResult("F A I L E D !");
-                    break;
-                case LibraryConstants.NO:
-                    printAboutBooks.PressAnyKey();
-                    break;
+                        if (successFlag)
+                            printAboutBooks.AddResult("S U C C E S S !");
+                        else
+                            printAboutBooks.AddResult("F A I L E D ! (잘못된 ISBN이거나, 이미 추가된 항목입니다.)");
+                        return;
+                    case LibraryConstants.NO:
+                        printAboutBooks.PressAnyKey();
+                        yesOrNoExitFlag = false;
+                        return;
+                    default:
+                        break;
+                }
             }
         }
-        public bool SearchSubInNaver()
+        public bool SearchSubInNaver(string mode)
         {
+            Console.Clear();
+            if(mode.Equals(LibraryConstants.SEARCH_NAVER_NAME))
+                printAboutBooks.WriteBookName();
+            else if(mode.Equals(LibraryConstants.SEARCH_NAVER_PUBLISHER))
+                printAboutBooks.WriteBookPublisher();
+            else if(mode.Equals(LibraryConstants.SEARCH_NAVER_AUTHOR))
+                printAboutBooks.WriteBookAuthor();
+
             search = Console.ReadLine();
             if (search.Equals("0"))
                 return false;
-            else if (Regex.IsMatch(search, @"^ *$"))
+            else if (Regex.IsMatch(search, @"^ *$") || search.Length < 1)
             {
-                SearchSubInNaver();
+                SearchSubInNaver(mode);
                 return false;
             }
             printAboutBooks.WriteBookCount();
@@ -284,7 +316,7 @@ namespace LibraryManagementWithNaverAPI
                 return false;
             else if (!exceptionHandler.CheckBookCount(count))
             {
-                SearchSubInNaver();
+                SearchSubInNaver(mode);
                 return false;
             }
             return true;

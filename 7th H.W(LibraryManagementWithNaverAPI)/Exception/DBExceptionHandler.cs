@@ -80,15 +80,15 @@ namespace LibraryManagementWithNaverAPI
         /// </summary>
         /// <param name="no">있는지 체크할 책의 번호</param>
         /// <returns>책의 존재 여부</returns>
-        public bool IsInBookDB(string no)
+        public bool IsInBookDB(string isbn)
         {
             int num = 0;
 
             connection.Open();
 
             command = connection.CreateCommand();
-            command.CommandText = "select * from book where no = @no";
-            command.Parameters.Add("@no", MySqlDbType.VarChar).Value = no;
+            command.CommandText = "select * from book where isbn = @isbn";
+            command.Parameters.Add("@isbn", MySqlDbType.VarChar).Value = isbn;
 
             reader = command.ExecuteReader();
 

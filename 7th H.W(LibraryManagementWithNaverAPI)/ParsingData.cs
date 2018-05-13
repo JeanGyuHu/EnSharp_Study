@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Web;
 
 namespace LibraryManagementWithNaverAPI
 {
@@ -28,12 +29,13 @@ namespace LibraryManagementWithNaverAPI
             request.Headers.Add("X-Naver-Client-Secret", "VQtTBnvGkp");       // 클라이언트 시크릿
             HttpWebResponse response = (HttpWebResponse)request.GetResponse();
             string status = response.StatusCode.ToString();
+            
             if (status == "OK")
             {
                 Stream stream = response.GetResponseStream();
                 StreamReader reader = new StreamReader(stream, Encoding.UTF8);
                 text = reader.ReadToEnd();
-                //Console.WriteLine(text);
+                
             }
             else
             {
@@ -52,14 +54,14 @@ namespace LibraryManagementWithNaverAPI
             foreach (JObject item in array)
             {
                 Book book = new Book();
-                book.Name = item["title"].ToString();
-                book.Author = item["author"].ToString();
+                book.Name = HttpUtility.HtmlDecode(item["title"].ToString().Replace("<b>", "").Replace("</b>", ""));
+                book.Author = HttpUtility.HtmlDecode(item["author"].ToString().Replace("<b>", "").Replace("</b>", ""));
                 book.Price = Convert.ToInt32(item["price"]);
-                book.Pbls = item["publisher"].ToString();
+                book.Pbls = HttpUtility.HtmlDecode(item["publisher"].ToString().Replace("<b>", "").Replace("</b>", ""));
                 book.PblsDate = DateTime.ParseExact(item["pubdate"].ToString(),"yyyyMMdd",null);
                 book.Count = 3;
-                book.Isbn = item["isbn"].ToString();
-                book.Information = item["description"].ToString();
+                book.Isbn = HttpUtility.HtmlDecode(item["isbn"].ToString());
+                book.Information = HttpUtility.HtmlDecode(item["description"].ToString().Replace("<b>", "").Replace("</b>", ""));
 
                 list.Add(book);
             }

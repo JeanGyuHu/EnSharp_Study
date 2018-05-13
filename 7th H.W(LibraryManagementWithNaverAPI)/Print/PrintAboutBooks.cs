@@ -246,15 +246,15 @@ namespace LibraryManagementWithNaverAPI
             string quaryCategory = "";
 
             Console.Clear();
-            Console.WriteLine("\n\n\t\t\t┌--------------------------------------------------------------┐");
+            Console.WriteLine("\n\n\t\t\t┌---------------------------------------------------------------┐");
             Console.WriteLine("\t\t\t│           R E S U L T  F R O M  N A V E R  ({0})         │", category);
-            Console.WriteLine("\t\t\t└--------------------------------------------------------------┘");
+            Console.WriteLine("\t\t\t└---------------------------------------------------------------┘");
 
             if (category.Equals("도 서 명"))
                 quaryCategory = "d_titl";
             else if (category.Equals("출 판 사"))
                 quaryCategory = "d_publ";
-            else if (category.Equals("저 자"))
+            else if (category.Equals("저    자"))
                 quaryCategory = "d_auth";
 
             result = parsingData.RequestJson(question, quaryCategory, count);
@@ -272,18 +272,29 @@ namespace LibraryManagementWithNaverAPI
             else
                 for (int i = 0; i < count; i++)
                 {
-                    Console.WriteLine("\n\t\t=====================================================");
-                    Console.WriteLine("\t\t제목     : {0}", list[i].Name.Replace("<b>","").Replace("</b>",""));
-                    Console.WriteLine("\t\t저자     : {0}", list[i].Author.Replace("<b>", "").Replace("</b>", ""));
+                    Console.WriteLine("\n\t\t===============================================================================");
+                    Console.WriteLine("\t\t제목     : {0}", list[i].Name);
+                    Console.WriteLine("\t\t저자     : {0}", list[i].Author);
                     Console.WriteLine("\t\t가격     : {0}", list[i].Price);
-                    Console.WriteLine("\t\t출판사   : {0}", list[i].Pbls.Replace("<b>", "").Replace("</b>", ""));
+                    Console.WriteLine("\t\t출판사   : {0}", list[i].Pbls);
                     Console.WriteLine("\t\t출판날짜 : {0}", list[i].PblsDate);
                     //Console.WriteLine("\t\t수량     : {0}", list[i].Count);
                     Console.WriteLine("\t\tISBN     : {0}", list[i].Isbn);
-                    Console.WriteLine("\t\t책 설명  : {0}", list[i].Information.Substring(0, 20).Replace("<b>", "").Replace("</b>", ""));
-                    Console.WriteLine("\t\t         : {0}", list[i].Information.Substring(21, 20).Replace("<b>", "").Replace("</b>", ""));
-                    Console.WriteLine("\t\t=====================================================");
+                    if (list[i].Information.Length < 40)
+                        Console.WriteLine("\t\t책 설명  : {0}", list[i].Information);
+                    if (list[i].Information.Length < 80&& list[i].Information.Length >= 40)
+                    {
+                        Console.WriteLine("\t\t책 설명  : {0}", list[i].Information.Substring(0, 40));
+                        Console.WriteLine("\t\t         : {0}", list[i].Information.Substring(40, list[i].Information.Length - 40));
+                    }
+                    if (list[i].Information.Length >= 80)
+                    {
+                        Console.WriteLine("\t\t책 설명  : {0}", list[i].Information.Substring(0, 40));
+                        Console.WriteLine("\t\t         : {0}", list[i].Information.Substring(40, 40));
+                    }
+                    Console.WriteLine("\t\t=================================================================================");
                 }
+            
             return list;
         }
     }

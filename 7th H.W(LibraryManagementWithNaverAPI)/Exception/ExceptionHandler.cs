@@ -163,7 +163,8 @@ namespace LibraryManagementWithNaverAPI
 
             if (bookNo.Length != 11)
                 return false;
-
+            //if (Regex.IsMatch(bookNo, @"^ *$"))
+            //    return false;
             if (Regex.IsMatch(bookNo, @"12-[0-9]{8}"))
                 return true;
 
