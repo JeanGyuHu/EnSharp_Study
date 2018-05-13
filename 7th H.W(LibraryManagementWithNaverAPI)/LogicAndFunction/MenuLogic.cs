@@ -21,6 +21,7 @@ namespace LibraryManagementWithNaverAPI
         private BookDAO bookDAO;
         private MemberManagement memberManagement;
         private ExceptionHandler exceptionHandler;
+        private LogDAO logDAO;
 
         public MenuLogic()
         {
@@ -32,6 +33,7 @@ namespace LibraryManagementWithNaverAPI
             printAboutBooks = new PrintAboutBooks();
             addNewMember = new AddNewMember();
             bookDAO = new BookDAO();
+            logDAO = new LogDAO();
         }
 
         public void StartMainMenu()
@@ -115,7 +117,7 @@ namespace LibraryManagementWithNaverAPI
                         BookManagement();
                         break;
                     case LibraryConstants.CHECK_LOG:
-
+                        CheckLog();
                         break;
                     case LibraryConstants.GO_BACK:
                         flag = false;
@@ -244,7 +246,20 @@ namespace LibraryManagementWithNaverAPI
                 mode = Console.ReadLine();
                 switch (mode)
                 {
+                    case LibraryConstants.LOG_CHECK:
+                        logDAO.CheckLog();
+                        break;
+                    case LibraryConstants.LOG_CLEAR:
+                        logDAO.DeleteAllLog();
+                        break;
+                    case LibraryConstants.LOG_MAKENOTE:
 
+                        break;
+                    case LibraryConstants.GO_BACK:
+                        flag = false;
+                        break;
+                    default:
+                        break;
                 }
             }
         }

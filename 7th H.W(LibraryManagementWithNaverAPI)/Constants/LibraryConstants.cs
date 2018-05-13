@@ -30,7 +30,11 @@ namespace LibraryManagementWithNaverAPI
         public const string START_SUPERVISER_MODE = "1";
         public const string START_USER_MODE = "2";
 
-        //public const string 
+        public const string LOG_CHECK = "1";
+        public const string LOG_CLEAR = "2";
+        public const string LOG_MAKENOTE = "3";
+
+
         //책관리모드에서 각 메뉴에 대한 매직넘버
         public const string ADD_MODE = "1";
         public const string EDIT_MODE = "2";
