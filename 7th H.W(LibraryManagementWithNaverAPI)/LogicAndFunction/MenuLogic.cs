@@ -251,11 +251,15 @@ namespace LibraryManagementWithNaverAPI
                         break;
                     case LibraryConstants.LOG_CLEAR:
                         logDAO.DeleteAllLog();
+                        printAboutControlMembers.DeleteResult("S U C C E S S !");
                         break;
                     case LibraryConstants.LOG_MAKENOTE:
-
+                        logDAO.SaveInTextFile();
                         break;
-                    case LibraryConstants.GO_BACK:
+                    case LibraryConstants.LOG_DELETENOTE:
+                        logDAO.DeleteTextFile();
+                        break;
+                    case LibraryConstants.LOG_EXIT:
                         flag = false;
                         break;
                     default:

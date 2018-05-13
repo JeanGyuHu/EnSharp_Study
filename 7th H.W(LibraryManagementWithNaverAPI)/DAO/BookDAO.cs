@@ -146,7 +146,7 @@ namespace LibraryManagementWithNaverAPI
                 Console.WriteLine("가격     : {0}", reader.GetInt32(5).ToString().Insert(reader.GetInt32(5).ToString().Length, "원"));
                 Console.WriteLine("출판사   : {0}", reader.GetString(3));
                 Console.WriteLine("출판날짜 : {0}", reader.GetDateTime(6).ToString("yyyy-MM-dd"));
-                //Console.WriteLine("\t\t수량     : {0}", list[i].Count);
+                Console.WriteLine("수량     : {0}", reader.GetInt32(2));
                 Console.WriteLine("ISBN     : {0}", reader.GetString(0));
                 Console.WriteLine("책 설명  : {0}", reader.GetString(7));
                 Console.WriteLine("======================================================================================================================================================");
@@ -180,7 +180,7 @@ namespace LibraryManagementWithNaverAPI
                 Console.WriteLine("가격     : {0}", reader.GetInt32(5).ToString().Insert(reader.GetInt32(5).ToString().Length, "원"));
                 Console.WriteLine("출판사   : {0}", reader.GetString(3));
                 Console.WriteLine("출판날짜 : {0}", reader.GetDateTime(6).ToString("yyyy-MM-dd"));
-                //Console.WriteLine("\t\t수량     : {0}", list[i].Count);
+                Console.WriteLine("수량     : {0}", reader.GetInt32(2));
                 Console.WriteLine("ISBN     : {0}", reader.GetString(0));
                 Console.WriteLine("책 설명  : {0}", reader.GetString(7));
                 Console.WriteLine("======================================================================================================================================================");

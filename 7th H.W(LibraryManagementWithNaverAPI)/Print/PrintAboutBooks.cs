@@ -240,7 +240,8 @@ namespace LibraryManagementWithNaverAPI
             Console.WriteLine("\n\n\t\t\t\t1. 로그 확인하기");
             Console.WriteLine("\n\n\t\t\t\t2. 로그 초기화");
             Console.WriteLine("\n\n\t\t\t\t3. 로그 메모장 파일 만들기");
-            Console.WriteLine("\n\n\t\t\t\t4. EXIT");
+            Console.WriteLine("\n\n\t\t\t\t3. 로그 메모장 파일 삭제하기");
+            Console.WriteLine("\n\n\t\t\t\t5. EXIT");
             Console.Write("\n\n\t\t\t\t >> ");
         }
         /// <summary>

@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
+using System.IO;
 namespace LibraryManagementWithNaverAPI
 {
     class LogDAO
@@ -65,6 +65,43 @@ namespace LibraryManagementWithNaverAPI
 
             Console.Write("PRESS ANY KEY. . .");
             Console.ReadKey();
+        }
+
+        public void SaveInTextFile()
+        {
+            connection.Open();          //연결
+
+            command = connection.CreateCommand();
+            command.CommandText = "select * from logdata;";    //SQL문 생성
+
+            reader = command.ExecuteReader();  //DB에 SQL문 실행
+
+            //Console.WriteLine(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory) + "\\" + DateTime.Now.ToString("yyyyMMdd") + ".txt");
+            string savePath = @"C:\Users\gjwls\Desktop\"+DateTime.Now.ToString("yyyyMMdd")+".txt";
+            File.WriteAllText(savePath,"",Encoding.Default);
+
+            while (reader.Read())
+            {
+                File.AppendAllText(savePath, "\r\n======================================================================================================================================================",Encoding.Default);
+                File.AppendAllText(savePath, "\r\n검색 시간 : " + reader.GetDateTime(0).ToString("yyyy-MM-dd HH:mm:ss"), Encoding.Default);
+                File.AppendAllText(savePath, "\r\n정 보 :" + reader.GetString(1), Encoding.Default);
+                File.AppendAllText(savePath, "\r\n모 드 :" + reader.GetString(2), Encoding.Default);
+                File.AppendAllText(savePath, "\r\n======================================================================================================================================================", Encoding.Default);
+            }
+
+            connection.Close();     //연결해제
+
+            Console.Write("저장 성공. . .");
+            Console.ReadKey();
+        }
+
+        public void DeleteTextFile()
+        {
+            FileInfo fileDel = new FileInfo(@"C:\Users\gjwls\Desktop\" + DateTime.Now.ToString("yyyyMMdd") + ".txt");
+            if (fileDel.Exists) //삭제할 파일이 있는지
+            {
+                fileDel.Delete(); //없어도 에러안남
+            }
         }
     }
 }

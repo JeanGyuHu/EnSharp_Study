@@ -33,7 +33,8 @@ namespace LibraryManagementWithNaverAPI
         public const string LOG_CHECK = "1";
         public const string LOG_CLEAR = "2";
         public const string LOG_MAKENOTE = "3";
-
+        public const string LOG_DELETENOTE = "4";
+        public const string LOG_EXIT = "5";
 
         //책관리모드에서 각 메뉴에 대한 매직넘버
         public const string ADD_MODE = "1";
