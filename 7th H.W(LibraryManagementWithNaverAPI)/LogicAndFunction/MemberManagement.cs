@@ -150,7 +150,8 @@ namespace LibraryManagementWithNaverAPI
 
             printAboutControlMembers.DeleteScreen();
             id = Console.ReadLine();
-
+            if (id.Equals("0"))
+                return;
             if (!exceptionHandler.CheckId(id))
                 DeleteSub();
         }
@@ -161,7 +162,8 @@ namespace LibraryManagementWithNaverAPI
         public void DrawDelete()
         {
             DeleteSub();
-
+            if (id.Equals("0"))
+                return;
             memberDAO.DeleteMember(id);
             logDAO.AddLog(DateTime.Now, id, "회원 삭제");
             printAboutControlMembers.DeleteResult("S U C C E S S");

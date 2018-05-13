@@ -78,7 +78,7 @@ namespace LibraryManagementWithNaverAPI
 
             //Console.WriteLine(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory) + "\\" + DateTime.Now.ToString("yyyyMMdd") + ".txt");
             string savePath = @"C:\Users\gjwls\Desktop\"+DateTime.Now.ToString("yyyyMMdd")+".txt";
-            File.WriteAllText(savePath,"",Encoding.Default);
+            File.WriteAllText(savePath,"로 그 정 보\r\n",Encoding.Default);
 
             while (reader.Read())
             {

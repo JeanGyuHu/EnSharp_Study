@@ -115,7 +115,14 @@ namespace LibraryManagementWithNaverAPI
 
             while (reader.Read())
             {
-                Console.WriteLine("   " + ConvertLength(reader.GetString(0), 15) + ConvertLength(reader.GetString(1), 20) + ConvertLength(reader.GetString(2), 20) + ConvertLength(reader.GetString(3), 15) + ConvertLength(reader.GetString(4), 20) + ConvertLength(reader.GetDateTime(5).ToString("yyyy-MM-dd"), 15));
+                Console.WriteLine("\n======================================================================================================================================================");
+                Console.WriteLine("제목            : {0}", reader.GetString(1));
+                Console.WriteLine("저자            : {0}", reader.GetString(3));
+                Console.WriteLine("출판사          : {0}", reader.GetString(2));
+                Console.WriteLine("반납날짜        : {0}", reader.GetDateTime(5).ToString("yyyy-MM-dd"));
+                Console.WriteLine("연장 수(최대 2) : {0}", reader.GetInt32(6));
+                Console.WriteLine("ISBN            : {0}", reader.GetString(0));
+                Console.WriteLine("======================================================================================================================================================");
             }
             connection.Close();
         }

@@ -139,7 +139,7 @@ namespace LibraryManagementWithNaverAPI
             Console.Clear();
             printAboutControlMembers.AddMemberTitle();
             printAboutControlMembers.WriteResidentNum((int)LibraryConstants.Mode.Add);
-            secureResidentNum = printAboutControlMembers.GetConsoleSecurePassword();
+            secureResidentNum = printAboutControlMembers.GetConsoleSecureResidentNumber();
             residentNum = new NetworkCredential("", secureResidentNum).Password;
             if (residentNum.Equals("0"))
                 return;

@@ -89,10 +89,18 @@ namespace LibraryManagementWithNaverAPI
                 Login();
             if (loginFlag)
             {
+
                 if (mode.Equals(LibraryConstants.START_SUPERVISER_MODE))
+                {
+                    logDAO.AddLog(DateTime.Now, id, "관리자 로그인");
                     SuperViserMenu();
+                }
                 else
+                {
+                    logDAO.AddLog(DateTime.Now, id, "회원 로그인");
                     UserMenu();
+                }
+                    
             }
             else
             {
@@ -236,6 +244,7 @@ namespace LibraryManagementWithNaverAPI
                 }
             }
         }
+
         public void CheckLog()
         {
             bool flag = true;

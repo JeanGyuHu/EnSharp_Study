@@ -208,9 +208,6 @@ namespace LibraryManagementWithNaverAPI
             Console.WriteLine("\n\n\t\t\t┌---------------------------------------------------------┐");
             Console.WriteLine("\t\t\t│           E X T E N D   R E N T A L   T I M E           │");
             Console.WriteLine("\t\t\t└---------------------------------------------------------┘");
-            Console.WriteLine("┌----------------------------------------------------------------------------------------------------------------┐");
-            Console.WriteLine("│\tNo\t│\tName\t   │   \tLender\t     │\tAuthor\t   │\tPublisher\t│\tReturn Time\t  |");
-            Console.WriteLine("└----------------------------------------------------------------------------------------------------------------┘");
         }
 
         /// <summary>
@@ -255,9 +252,6 @@ namespace LibraryManagementWithNaverAPI
             Console.WriteLine("\n\n\t\t\t┌---------------------------------------------┐");
             Console.WriteLine("\t\t\t│           R E T U R N   B O O K S           │");
             Console.WriteLine("\t\t\t└---------------------------------------------┘");
-            Console.WriteLine("┌----------------------------------------------------------------------------------------------------------------┐");
-            Console.WriteLine("│\tNo\t│\tName\t   │   \tLender\t     │\tAuthor\t   │\tPublisher\t│\tReturn Time\t  |");
-            Console.WriteLine("└----------------------------------------------------------------------------------------------------------------┘");
         }
 
         public void AddOrNot()

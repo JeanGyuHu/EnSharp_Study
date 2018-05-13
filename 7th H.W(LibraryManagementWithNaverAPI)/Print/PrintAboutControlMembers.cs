@@ -36,7 +36,7 @@ namespace LibraryManagementWithNaverAPI
         /// </summary>
         public void DeleteScreen()
         {
-            Console.Write("\n\n\n\t\t\tChoose person (ID) >>");
+            Console.Write("\n\n\n\t\t\tChoose person (ID) (뒤로가기를 원하면 0을 입력) >>");
         }
         /// <summary>
         /// 멤버 정보를 띄우는 창의 제목 부분과 카테고리 출력
@@ -44,7 +44,6 @@ namespace LibraryManagementWithNaverAPI
         public void Category()
         {
             Console.Clear();
-            Console.SetWindowSize(180, 30);
             Console.WriteLine("\n\n\t\t\t┌--------------------------------------------------------┐");
             Console.WriteLine("\t\t\t│           M E M B E R   I N F O R M A T I O N          │");
             Console.WriteLine("\t\t\t└--------------------------------------------------------┘");
@@ -397,6 +396,48 @@ namespace LibraryManagementWithNaverAPI
                         Console.SetCursorPosition(Console.CursorLeft - 1, Console.CursorTop);
                         pwd.RemoveAt(pwd.Length - 1);
                     }
+                }
+                else
+                {
+                    pwd.AppendChar(i.KeyChar);
+                    Console.Write("*");
+                }
+            }
+            return pwd;
+        }
+
+        public SecureString GetConsoleSecureResidentNumber()
+        {
+            SecureString pwd = new SecureString();
+            while (true)
+            {
+                if (pwd.Length == 6)
+                {
+                    pwd.AppendChar('-');
+                    Console.Write('-');
+                }
+
+                ConsoleKeyInfo i = Console.ReadKey(true);
+
+                if (i.Key == ConsoleKey.Enter)
+                {
+                    break;
+                }
+                
+                else if (i.Key == ConsoleKey.Backspace)
+                {
+                    if (pwd.Length > 0)
+                    {
+                        Console.SetCursorPosition(Console.CursorLeft - 1, Console.CursorTop);
+                        Console.Write(" ");
+                        Console.SetCursorPosition(Console.CursorLeft - 1, Console.CursorTop);
+                        pwd.RemoveAt(pwd.Length - 1);
+                    }
+                }
+                else if (pwd.Length < 6)
+                {
+                    pwd.AppendChar(i.KeyChar);
+                    Console.Write(i.KeyChar);
                 }
                 else
                 {
