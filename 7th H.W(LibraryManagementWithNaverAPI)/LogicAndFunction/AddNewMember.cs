@@ -22,6 +22,8 @@ namespace LibraryManagementWithNaverAPI
         private ExceptionHandler exceptionHandler;                    //예외처리를 위해 클래스의 객체 선언
         private DBExceptionHandler dBExceptionHandler;
         private MemberDAO memberDAO;
+        private LogDAO logDAO;
+
         /// <summary>
         /// 기본 생성자로써 각각의 객체들의 생성해주고 초기화해준다.
         /// 초기화 후에 회원가입을 진행한다.
@@ -33,6 +35,7 @@ namespace LibraryManagementWithNaverAPI
             exceptionHandler = new ExceptionHandler();
             dBExceptionHandler = new DBExceptionHandler();
             memberDAO = new MemberDAO();
+            logDAO = new LogDAO();
             count = 0;
         }
 
@@ -62,6 +65,7 @@ namespace LibraryManagementWithNaverAPI
                 return;
             Console.Clear();
             memberDAO.AddMember(new Member(name, residentNum, password, id, address, phoneNumber, 0));
+            logDAO.AddLog(DateTime.Now, id, "회원 추가");
             printAboutControlMembers.AddResult("S U C C E S S");
         }
 

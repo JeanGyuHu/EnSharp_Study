@@ -27,6 +27,7 @@ namespace LibraryManagementWithNaverAPI
         private string information;
         private string answer;
         private List<Book> bookList;
+        private LogDAO logDAO;
 
         /// <summary>
         /// 생성자로써 사용되는 객체를 생성, 초기화한다.
@@ -39,6 +40,7 @@ namespace LibraryManagementWithNaverAPI
             printAboutBooks = new PrintAboutBooks();
             bookDAO = new BookDAO();
             bookList = new List<Book>();
+            logDAO = new LogDAO();
         }
 
         /// <summary>
@@ -50,7 +52,10 @@ namespace LibraryManagementWithNaverAPI
             DeleteSub();
 
             if (bookDAO.DeleteBook(deleteName))
+            {
+                logDAO.AddLog(DateTime.Now, deleteName, "도서 삭제");
                 printAboutBooks.DeleteResult("S U C C E S S !");
+            }
             else
                 printAboutBooks.DeleteResult("F A I L E D !");
         }
@@ -88,30 +93,35 @@ namespace LibraryManagementWithNaverAPI
                         SearchSub(LibraryConstants.SEARCH_BOOK_NO);
                         if (search.Equals("0")) return;
                         printAboutBooks.Category();
+                        logDAO.AddLog(DateTime.Now, search, "로컬 도서 검색");
                         bookDAO.SearchWithQuary("Select * from book where no = \"" + search + "\"");
                         break;
                     case LibraryConstants.SEARCH_BOOK_NAME:
                         SearchSub(LibraryConstants.SEARCH_BOOK_NAME);
                         if (search.Equals("0")) return;
                         printAboutBooks.Category();
+                        logDAO.AddLog(DateTime.Now, search, "로컬 도서 검색");
                         bookDAO.SearchWithQuary("Select * from book where name = \"" + search + "\"");
                         break;
                     case LibraryConstants.SEARCH_BOOK_COUNT:
                         SearchSub(LibraryConstants.SEARCH_BOOK_COUNT);
                         if (search.Equals("0")) return;
                         printAboutBooks.Category();
+                        logDAO.AddLog(DateTime.Now, search, "로컬 도서 검색");
                         bookDAO.SearchWithQuary("Select * from book where count = \"" + search + "\"");
                         break;
                     case LibraryConstants.SEARCH_BOOK_AUTHOR:
                         SearchSub(LibraryConstants.SEARCH_BOOK_AUTHOR);
                         if (search.Equals("0")) return;
                         printAboutBooks.Category();
+                        logDAO.AddLog(DateTime.Now, search, "로컬 도서 검색");
                         bookDAO.SearchWithQuary("Select * from book where author = \"" + search + "\"");
                         break;
                     case LibraryConstants.SEARCH_BOOK_PUBLISHER:
                         SearchSub(LibraryConstants.SEARCH_BOOK_PUBLISHER);
                         if (search.Equals("0")) return;
                         printAboutBooks.Category();
+                        logDAO.AddLog(DateTime.Now, search, "로컬 도서 검색");
                         bookDAO.SearchWithQuary("Select * from book where publisher = \"" + search + "\"");
                         break;
                     case LibraryConstants.SEARCH_BOOK_IN_NAVER:
@@ -217,25 +227,28 @@ namespace LibraryManagementWithNaverAPI
                             return;
                         status = "도 서 명";
                         bookList = printAboutBooks.ResultFromNaver(status, search, Convert.ToInt32(count));
+                        logDAO.AddLog(DateTime.Now, search, "네이버 도서 검색");
                         printAboutBooks.PressAnyKey();
                         if (bookList != null)
                             AddAfterSearch(bookList);
-                        break;
+                        return;
                     case LibraryConstants.SEARCH_NAVER_PUBLISHER:
                         
                         if (!SearchSubInNaver(mode))
                             return;
                         status = "출 판 사";
                         bookList = printAboutBooks.ResultFromNaver(status, search, Convert.ToInt32(count));
+                        logDAO.AddLog(DateTime.Now, search, "네이버 도서 검색");
                         printAboutBooks.PressAnyKey();
                         if (bookList != null)
                             AddAfterSearch(bookList);
-                        break;
+                        return;
                     case LibraryConstants.SEARCH_NAVER_AUTHOR:
                         if (!SearchSubInNaver(mode))
                             return;
                         status = "저    자";
                         bookList = printAboutBooks.ResultFromNaver(status, search, Convert.ToInt32(count));
+                        logDAO.AddLog(DateTime.Now, search, "네이버 도서 검색");
                         printAboutBooks.PressAnyKey();
                         if (bookList != null) 
                             AddAfterSearch(bookList);
@@ -273,6 +286,7 @@ namespace LibraryManagementWithNaverAPI
                                 if (dBExceptionHandler.IsInBookDB(answer))
                                 {
                                     bookDAO.AddBook(new Book(book.Isbn, book.Name, book.Count, book.Pbls, book.Author, book.Price, book.PblsDate, book.Information));
+                                    logDAO.AddLog(DateTime.Now, book.Isbn, "네이버 도서 추가");
                                     successFlag = true;
                                     break;
                                 }
@@ -339,6 +353,7 @@ namespace LibraryManagementWithNaverAPI
             if (Regex.IsMatch(name, @"^\s"))
                 DrawName();
         }
+
         /// <summary>
         /// 책의 정보를 입력받고 수정하는 메소드를 호출
         /// </summary>
@@ -377,34 +392,40 @@ namespace LibraryManagementWithNaverAPI
                         DrawCountRead();
                         if (count.Equals("-1"))
                             return;
-                        if (count.Equals("-2"))
+                        else if (count.Equals("-2"))
                             return;
-
-                        if (!dBExceptionHandler.IsInBookDB(deleteName))
-                        {
-                            bookDAO.EditBookCount(deleteName, Convert.ToInt32(count));
-                            //drawAboutBooks.EditResult("S U C C E S S");
-                        }
                         else
                         {
-                            //drawAboutBooks.EditResult("F A I L E D");
+                            if (!dBExceptionHandler.IsInBookDB(deleteName))
+                            {
+                                bookDAO.EditBookCount(deleteName, Convert.ToInt32(count));
+                                logDAO.AddLog(DateTime.Now, deleteName, "도서 수량 수정");
+                                //drawAboutBooks.EditResult("S U C C E S S");
+                            }
+                            else
+                            {
+                                //drawAboutBooks.EditResult("F A I L E D");
+                            }
                         }
                         return;
                     case LibraryConstants.EDIT_PRICE:
                         DrawEditPrice();
                         if (price.Equals("0"))
                             return;
-                        if (price.Equals("1"))
+                        else if (price.Equals("1"))
                             return;
-
-                        if (!dBExceptionHandler.IsInBookDB(deleteName))
-                        {
-                            bookDAO.EditBookPrice(deleteName, Convert.ToInt32(price));
-                            //drawAboutBooks.EditResult("S U C C E S S");
-                        }
                         else
                         {
-                            //drawAboutBooks.EditResult("F A I L E D");
+                            if (!dBExceptionHandler.IsInBookDB(deleteName))
+                            {
+                                bookDAO.EditBookPrice(deleteName, Convert.ToInt32(price));
+                                logDAO.AddLog(DateTime.Now, deleteName, "도서 가격 수정");
+                                //drawAboutBooks.EditResult("S U C C E S S");
+                            }
+                            else
+                            {
+                                //drawAboutBooks.EditResult("F A I L E D");
+                            }
                         }
                         return;
                     case LibraryConstants.EDIT_EXIT:
@@ -473,6 +494,18 @@ namespace LibraryManagementWithNaverAPI
                 DrawAuthor();
         }
 
+        public void DrawPblsDate()
+        {
+            printAboutBooks.InfoTitle();
+            printAboutBooks.WriteBookPublishDate();
+            publishDate = Console.ReadLine();
+            if (publishDate.Equals("0"))
+                return;
+            if (publishDate.Equals("1"))
+                return;
+
+
+        }
         /// <summary>
         /// 출판사를 입력받는 메소드
         /// </summary>
@@ -550,6 +583,7 @@ namespace LibraryManagementWithNaverAPI
             else
             {
                 bookDAO.AddBook(new Book(no, name, Convert.ToInt32(count), publisher, author, Convert.ToInt32(price),Convert.ToDateTime(publishDate),information));
+                logDAO.AddLog(DateTime.Now, no, "도서 추가");
                 printAboutBooks.AddResult("S U C C E S S !");
             }
 

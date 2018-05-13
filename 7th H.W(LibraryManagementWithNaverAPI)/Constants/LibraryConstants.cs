@@ -17,6 +17,7 @@ namespace LibraryManagementWithNaverAPI
         //관리자 모드 메뉴에서의 매직넘버
         public const string MEMBER_CONTROL = "1";
         public const string BOOK_MANAGEMENT = "2";
+        public const string CHECK_LOG = "3";
         public const string GO_RETURN = "3";
         public const string GO_BACK = "4";
 
@@ -73,9 +74,11 @@ namespace LibraryManagementWithNaverAPI
 
         public const string EDIT_COUNT = "1";
         public const string EDIT_PRICE = "2";
-
         public const string EDIT_EXIT = "3";
 
+        public const string RENTBOOK = "1";
+        public const string EXTENDTIME = "2";
+        public const string RETURNBOOK = "3";
         //출력할때 add모드인지 Search 모드인지 판단해주기 위한 매직넘버
         public enum Mode { Add = 1, Search };
 

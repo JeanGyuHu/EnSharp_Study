@@ -161,11 +161,11 @@ namespace LibraryManagementWithNaverAPI
         {
             result = true;
 
-            if (bookNo.Length != 11)
+            if (bookNo.Length != 24)
                 return false;
             //if (Regex.IsMatch(bookNo, @"^ *$"))
             //    return false;
-            if (Regex.IsMatch(bookNo, @"12-[0-9]{8}"))
+            if (Regex.IsMatch(bookNo, @"[0-9a-zA-Z]{10}\s[0-9a-zA-Z]{13}"))
                 return true;
 
             return false;
@@ -290,6 +290,55 @@ namespace LibraryManagementWithNaverAPI
                 return false;
 
             return result;
+        }
+
+        public bool CheckPublishDate(string date)
+        {
+            char[] inputDate = date.ToCharArray();
+            int year;
+
+            if (!Regex.IsMatch(date, @"[012][0-9]{3}-[01][0-9]-[0123][0-9]"))
+                return false;
+
+            if (date.Length != 10)
+                return false;
+            year = Convert.ToInt32(date.Substring(0, 4));
+
+            if (year > 2018 || year < 1)
+                return false;
+
+            if (Convert.ToInt32(date.Substring(5, 2)).Equals(01) && (Convert.ToInt32(date.Substring(8, 2)) < 1 || Convert.ToInt32(date.Substring(8, 2)) > 31))
+                return false;
+            if (Convert.ToInt32(date.Substring(5, 2)).Equals(02) && !((year % 4 == 0 && year % 100 != 0) || year % 400 == 0) && (Convert.ToInt32(date.Substring(8, 2)) < 1 || Convert.ToInt32(date.Substring(8, 2)) > 28))
+                return false;
+            if (Convert.ToInt32(date.Substring(5, 2)).Equals(02) && ((year % 4 == 0 && year % 100 != 0) || year % 400 == 0) && (Convert.ToInt32(date.Substring(8, 2)) < 1 || Convert.ToInt32(date.Substring(8, 2)) > 29))
+                return false;
+            if (Convert.ToInt32(date.Substring(5, 2)).Equals(03) && (Convert.ToInt32(date.Substring(8, 2)) < 1 || Convert.ToInt32(date.Substring(8, 2)) > 31))
+                return false;
+            if (Convert.ToInt32(date.Substring(5, 2)).Equals(04) && (Convert.ToInt32(date.Substring(8, 2)) < 1 || Convert.ToInt32(date.Substring(8, 2)) > 30))
+                return false;
+            if (Convert.ToInt32(date.Substring(5, 2)).Equals(05) && (Convert.ToInt32(date.Substring(8, 2)) < 1 || Convert.ToInt32(date.Substring(8, 2)) > 31))
+                return false;
+            if (Convert.ToInt32(date.Substring(5, 2)).Equals(06) && (Convert.ToInt32(date.Substring(8, 2)) < 1 || Convert.ToInt32(date.Substring(8, 2)) > 30))
+                return false;
+            if (Convert.ToInt32(date.Substring(5, 2)).Equals(07) && (Convert.ToInt32(date.Substring(8, 2)) < 1 || Convert.ToInt32(date.Substring(8, 2)) > 31))
+                return false;
+            if (Convert.ToInt32(date.Substring(5, 2)).Equals(08) && (Convert.ToInt32(date.Substring(8, 2)) < 1 || Convert.ToInt32(date.Substring(8, 2)) > 31))
+                return false;
+            if (Convert.ToInt32(date.Substring(5, 2)).Equals(09) && (Convert.ToInt32(date.Substring(8, 2)) < 1 || Convert.ToInt32(date.Substring(8, 2)) > 30))
+                return false;
+            if (Convert.ToInt32(date.Substring(5, 2)).Equals(10) && (Convert.ToInt32(date.Substring(8, 2)) < 1 || Convert.ToInt32(date.Substring(8, 2)) > 31))
+                return false;
+            if (Convert.ToInt32(date.Substring(5, 2)).Equals(11) && (Convert.ToInt32(date.Substring(8, 2)) < 1 || Convert.ToInt32(date.Substring(8, 2)) > 30))
+                return false;
+            if (Convert.ToInt32(date.Substring(5, 2)).Equals(12) && (Convert.ToInt32(date.Substring(8, 2)) < 1 || Convert.ToInt32(date.Substring(8, 2)) > 31))
+                return false;
+            if (inputDate[5].Equals('1') && inputDate[6] > '2')
+                return false;
+            if (inputDate[8].Equals('3') && inputDate[9] > '1')
+                return false;
+
+            return true;
         }
         /// <summary>
         /// 전화번호 조건 충족 여부

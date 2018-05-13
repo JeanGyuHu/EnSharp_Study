@@ -45,6 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DAO\LogDAO.cs" />
     <Compile Include="LogicAndFunction\AddNewMember.cs" />
     <Compile Include="LogicAndFunction\LibraryManagement.cs" />
     <Compile Include="LogicAndFunction\MemberManagement.cs" />

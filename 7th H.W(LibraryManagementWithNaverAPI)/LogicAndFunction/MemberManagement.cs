@@ -11,6 +11,7 @@ namespace LibraryManagementWithNaverAPI
         private MemberDAO memberDAO;
         private DBExceptionHandler dBExceptionHandler;
         private PrintAboutControlMembers printAboutControlMembers;    //창을 그려주기 위한 객체 선언
+        private LogDAO logDAO;
         private string choice;                       //어떤 작업을 할지 선택을 받는 변수
         private bool flag = true;                       //회원관리 창을 빠져나가기 위한 Flag
         private string id;                           //아이디 입력 받는 변수
@@ -24,6 +25,7 @@ namespace LibraryManagementWithNaverAPI
         /// <param name="list">회원 정보 리스트</param>
         public MemberManagement()
         {
+            logDAO = new LogDAO();
             memberDAO = new MemberDAO();
             printAboutControlMembers = new PrintAboutControlMembers();
             exceptionHandler = new ExceptionHandler();
@@ -68,18 +70,26 @@ namespace LibraryManagementWithNaverAPI
                         DrawAddress();
                         if (address.Equals("0"))
                             return;
-                        if (address.Equals("1"))
+                        else if (address.Equals("1"))
                             return;
-                        memberDAO.EditMemberAddress(id, address);
-                        //drawControlMember.EditResult("S U C C E S S");
+                        else
+                        {
+                            memberDAO.EditMemberAddress(id, address);
+                            logDAO.AddLog(DateTime.Now, id + " 주소 수정", "정보 수정");
+                            //drawControlMember.EditResult("S U C C E S S");
+                        }
                         return;
                     case LibraryConstants.EDIT_PHONE:
                         DrawPhoneNum();
                         if (phoneNumber.Equals("0"))
                             return;
-                        if (phoneNumber.Equals("1"))
+                        else if (phoneNumber.Equals("1"))
                             return;
-                        memberDAO.EditMemberPhone(id, phoneNumber);
+                        else
+                        {
+                            memberDAO.EditMemberPhone(id, phoneNumber);
+                            logDAO.AddLog(DateTime.Now, id + " 전화번호 수정", "정보 수정");
+                        }
                         //drawControlMember.EditResult("S U C C E S S");
                         return;
                     case LibraryConstants.EDIT_EXIT:
@@ -153,6 +163,7 @@ namespace LibraryManagementWithNaverAPI
             DeleteSub();
 
             memberDAO.DeleteMember(id);
+            logDAO.AddLog(DateTime.Now, id, "회원 삭제");
             printAboutControlMembers.DeleteResult("S U C C E S S");
         }
         /// <summary>
@@ -173,6 +184,7 @@ namespace LibraryManagementWithNaverAPI
                         SearchSub(LibraryConstants.SEARCH_WITH_NAME);
                         if (search.Equals("0")) return;
                         printAboutControlMembers.Category();
+                        logDAO.AddLog(DateTime.Now, search, "회원 검색");
                         memberDAO.SearchWithQuary("select * from member where name = \"" + search + "\"");
                         printAboutControlMembers.PressAnyKey();
                         break;
@@ -180,6 +192,7 @@ namespace LibraryManagementWithNaverAPI
                         SearchSub(LibraryConstants.SEARCH_WITH_RESIDENT_NUMBER);
                         if (search.Equals("0")) return;
                         printAboutControlMembers.Category();
+                        logDAO.AddLog(DateTime.Now, search, "회원 검색");
                         memberDAO.SearchWithQuary("select * from member where residentNumber = \"" + search + "\"");
                         printAboutControlMembers.PressAnyKey();
                         break;
@@ -187,6 +200,7 @@ namespace LibraryManagementWithNaverAPI
                         SearchSub(LibraryConstants.SEARCH_WITH_ID);
                         if (search.Equals("0")) return;
                         printAboutControlMembers.Category();
+                        logDAO.AddLog(DateTime.Now, search, "회원 검색");
                         memberDAO.SearchWithQuary("select * from member where id = \"" + search + "\"");
                         printAboutControlMembers.PressAnyKey();
                         break;
@@ -194,6 +208,7 @@ namespace LibraryManagementWithNaverAPI
                         SearchSub(LibraryConstants.SEARCH_WITH_PASSWORD);
                         if (search.Equals("0")) return;
                         printAboutControlMembers.Category();
+                        logDAO.AddLog(DateTime.Now, search, "회원 검색");
                         memberDAO.SearchWithQuary("select * from member where password = \"" + search + "\"");
                         printAboutControlMembers.PressAnyKey();
                         break;
@@ -201,6 +216,7 @@ namespace LibraryManagementWithNaverAPI
                         SearchSub(LibraryConstants.SEARCH_WITH_ADDRESS);
                         if (search.Equals("0")) return;
                         printAboutControlMembers.Category();
+                        logDAO.AddLog(DateTime.Now, search, "회원 검색");
                         memberDAO.SearchWithQuary("select * from member where address = \"" + search + "\"");
                         printAboutControlMembers.PressAnyKey();
                         break;
@@ -208,6 +224,7 @@ namespace LibraryManagementWithNaverAPI
                         SearchSub(LibraryConstants.SEARCH_WITH_PHONE);
                         if (search.Equals("0")) return;
                         printAboutControlMembers.Category();
+                        logDAO.AddLog(DateTime.Now, search, "회원 검색");
                         memberDAO.SearchWithQuary("select * from member where phoneNumber = \"" + search + "\"");
                         printAboutControlMembers.PressAnyKey();
                         break;
@@ -215,12 +232,13 @@ namespace LibraryManagementWithNaverAPI
                         SearchSub(LibraryConstants.SEARCH_WITH_AGE);
                         if (search.Equals("0")) return;
                         printAboutControlMembers.Category();
+                        logDAO.AddLog(DateTime.Now, search, "회원 검색");
                         memberDAO.SearchWithQuary("select * from member where age = \"" + search + "\"");
                         printAboutControlMembers.PressAnyKey();
                         break;
                     case LibraryConstants.RETURN_BACK:
                         exitFlag = false;
-                        break;
+                        return;
                     default:
                         break;
                 }

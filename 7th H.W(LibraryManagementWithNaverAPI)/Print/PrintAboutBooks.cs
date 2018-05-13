@@ -154,6 +154,15 @@ namespace LibraryManagementWithNaverAPI
             Console.Write("\n\n\t\t\t\t>> ");
         }
         /// <summary>
+        /// 책의 출판날짜를 적으라고 알리는 메소드
+        /// </summary>
+        public void WriteBookPublishDate()
+        {
+            Console.WriteLine("\n\n\t\t\t\t책의 출판사 날짜를 입력하세요. (뒤로가기 1, 종료 0)");
+            Console.WriteLine("\n\n\t\t\t\t형식 (0000~2018)-(1~12)-(1~31)");
+            Console.Write("\n\n\t\t\t\t>> ");
+        }
+        /// <summary>
         /// 검색할때 메뉴창을 그리는 메소드
         /// </summary>
         public void SearchMenu()
@@ -272,27 +281,16 @@ namespace LibraryManagementWithNaverAPI
             else
                 for (int i = 0; i < count; i++)
                 {
-                    Console.WriteLine("\n\t\t===============================================================================");
-                    Console.WriteLine("\t\t제목     : {0}", list[i].Name);
-                    Console.WriteLine("\t\t저자     : {0}", list[i].Author);
-                    Console.WriteLine("\t\t가격     : {0}", list[i].Price);
-                    Console.WriteLine("\t\t출판사   : {0}", list[i].Pbls);
-                    Console.WriteLine("\t\t출판날짜 : {0}", list[i].PblsDate);
+                    Console.WriteLine("\n======================================================================================================================================================");
+                    Console.WriteLine("제목     : {0}", list[i].Name);
+                    Console.WriteLine("저자     : {0}", list[i].Author);
+                    Console.WriteLine("가격     : {0}", list[i].Price);
+                    Console.WriteLine("출판사   : {0}", list[i].Pbls);
+                    Console.WriteLine("출판날짜 : {0}", list[i].PblsDate);
                     //Console.WriteLine("\t\t수량     : {0}", list[i].Count);
-                    Console.WriteLine("\t\tISBN     : {0}", list[i].Isbn);
-                    if (list[i].Information.Length < 40)
-                        Console.WriteLine("\t\t책 설명  : {0}", list[i].Information);
-                    if (list[i].Information.Length < 80&& list[i].Information.Length >= 40)
-                    {
-                        Console.WriteLine("\t\t책 설명  : {0}", list[i].Information.Substring(0, 40));
-                        Console.WriteLine("\t\t         : {0}", list[i].Information.Substring(40, list[i].Information.Length - 40));
-                    }
-                    if (list[i].Information.Length >= 80)
-                    {
-                        Console.WriteLine("\t\t책 설명  : {0}", list[i].Information.Substring(0, 40));
-                        Console.WriteLine("\t\t         : {0}", list[i].Information.Substring(40, 40));
-                    }
-                    Console.WriteLine("\t\t=================================================================================");
+                    Console.WriteLine("ISBN     : {0}", list[i].Isbn);
+                    Console.WriteLine("책 설명  : {0}", list[i].Information);
+                    Console.WriteLine("======================================================================================================================================================");
                 }
             
             return list;

@@ -37,7 +37,7 @@ namespace LibraryManagementWithNaverAPI
         public void StartMainMenu()
         {
             //drawStartMark.StartMark();
-
+            Console.SetWindowSize(150, 40);
             bool flag = true;
             while (flag)
             {
