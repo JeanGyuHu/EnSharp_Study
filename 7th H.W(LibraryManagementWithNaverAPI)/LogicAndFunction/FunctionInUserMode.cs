@@ -69,19 +69,19 @@ namespace LibraryManagementWithNaverAPI
             bookDAO.SearchAll();
 
             DrawNo(LibraryConstants.RENTBOOK);
-            if (choice.Equals("0"))
+            if (no.Equals("0"))
                 return;
 
-            if (!dBExceptionHandler.IsInAlreadyRentDB(id, choice))
+            if (!dBExceptionHandler.IsInAlreadyRentDB(id, no))
             {
                 printAboutBooks.RentalResult("F A I L E D");
             }
-            else if (bookDAO.GetBook(choice).Count > 0)
+            else if (bookDAO.GetBook(no).Count > 0)
             {
-                Book book = bookDAO.GetBook(choice);
-                bookDAO.EditBookCount(choice, --book.Count);
+                Book book = bookDAO.GetBook(no);
+                bookDAO.EditBookCount(no, --book.Count);
                 logDAO.AddLog(DateTime.Now, book.Name, "도서 대여");
-                rentalDataDAO.AddAfterRent(new RentalData(choice, book.Name, book.Pbls, book.Author, id, new DateTime(now.Year, now.Month + 1, now.Day + 10), 0));
+                rentalDataDAO.AddAfterRent(new RentalData(no, book.Name, book.Pbls, book.Author, id, new DateTime(now.Year, now.Month + 1, now.Day + 10), 0));
                 printAboutBooks.RentalResult("S U C C E S S");
             }
             else
@@ -114,8 +114,7 @@ namespace LibraryManagementWithNaverAPI
                 printAboutBooks.ReturnBooksTitle();
                 rentalDataDAO.SearchAll();
             }
-            printAboutBooks.ExtendTimeTitle();
-            rentalDataDAO.SearchAll();
+            
             printAboutBooks.WriteBookNo();
             no = Console.ReadLine();
             if (no.Equals("0"))

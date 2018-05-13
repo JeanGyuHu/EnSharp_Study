@@ -114,7 +114,10 @@ namespace LibraryManagementWithNaverAPI
                     case LibraryConstants.BOOK_MANAGEMENT:
                         BookManagement();
                         break;
-                    case LibraryConstants.GO_RETURN:
+                    case LibraryConstants.CHECK_LOG:
+
+                        break;
+                    case LibraryConstants.GO_BACK:
                         flag = false;
                         break;
                     default:
@@ -220,7 +223,6 @@ namespace LibraryManagementWithNaverAPI
                         libraryManagement.DrawSearch();
                         break;
                     case LibraryConstants.PRINT_MODE:
-                        printAboutBooks.Category();
                         bookDAO.SearchAll();
                         printAboutBooks.PressAnyKey();
                         break;
@@ -229,6 +231,20 @@ namespace LibraryManagementWithNaverAPI
                         break;
                     default:
                         break;
+                }
+            }
+        }
+        public void CheckLog()
+        {
+            bool flag = true;
+
+            while (flag)
+            {
+                printAboutBooks.ManagementLog();
+                mode = Console.ReadLine();
+                switch (mode)
+                {
+
                 }
             }
         }

@@ -352,7 +352,8 @@ namespace LibraryManagementWithNaverAPI
             Console.WriteLine("\t\t\t└---------------------------------------------------┘");
             Console.WriteLine("\n\n\t\t\t\t1. User Management");
             Console.WriteLine("\n\n\t\t\t\t2. Book Management");
-            Console.WriteLine("\n\n\t\t\t\t3. EXIT");
+            Console.WriteLine("\n\n\t\t\t\t3. Check Log");
+            Console.WriteLine("\n\n\t\t\t\t4. EXIT");
             Console.Write("\n\n\t\t\t\t >> ");
 
         }

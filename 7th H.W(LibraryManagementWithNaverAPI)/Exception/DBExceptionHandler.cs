@@ -175,7 +175,7 @@ namespace LibraryManagementWithNaverAPI
             connection.Open();
 
             command = connection.CreateCommand();
-            command.CommandText = "select * from rentaldata where bookNo = @bookNo and bookLender = @bookLender";
+            command.CommandText = "select * from rentaldata where isbn = @bookNo and bookLender = @bookLender";
             command.Parameters.Add("@bookNo", MySqlDbType.VarChar).Value = no;
             command.Parameters.Add("@bookLender", MySqlDbType.VarChar).Value = id;
 

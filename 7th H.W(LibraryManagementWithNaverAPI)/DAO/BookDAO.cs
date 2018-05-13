@@ -50,7 +50,7 @@ namespace LibraryManagementWithNaverAPI
             connection.Open();
 
             command = connection.CreateCommand();
-            command.CommandText = "select * from book where no = @no";
+            command.CommandText = "select * from book where isbn = @no";
             command.Parameters.Add("@no", MySqlDbType.VarChar).Value = no;
             reader = command.ExecuteReader();
 
@@ -73,7 +73,7 @@ namespace LibraryManagementWithNaverAPI
             connection.Open();
 
             command = connection.CreateCommand();
-            command.CommandText = "Delete from book where no = @no";
+            command.CommandText = "Delete from book where isbn = @no";
             command.Parameters.Add("@no", MySqlDbType.VarChar).Value = no;
 
             result = command.ExecuteNonQuery();
@@ -95,7 +95,7 @@ namespace LibraryManagementWithNaverAPI
             connection.Open();
 
             command = connection.CreateCommand();
-            command.CommandText = "UPDATE book SET count =@count where no = @no";
+            command.CommandText = "UPDATE book SET count =@count where isbn = @no";
             command.Parameters.Add("@count", MySqlDbType.VarChar).Value = count;
             command.Parameters.Add("@no", MySqlDbType.VarChar).Value = no;
 
@@ -113,7 +113,7 @@ namespace LibraryManagementWithNaverAPI
             connection.Open();
 
             command = connection.CreateCommand();
-            command.CommandText = "UPDATE book SET price = @price where no = @no";
+            command.CommandText = "UPDATE book SET price = @price where isbn = @no";
             command.Parameters.Add("@no", MySqlDbType.VarChar).Value = no;
             command.Parameters.Add("@price", MySqlDbType.VarChar).Value = price;
 
@@ -127,6 +127,8 @@ namespace LibraryManagementWithNaverAPI
         /// <param name="quary">검색 SQL 문</param>
         public void SearchWithQuary(string quary)
         {
+            int count = 0;
+
             connection.Open();
 
             command = connection.CreateCommand();
@@ -134,10 +136,25 @@ namespace LibraryManagementWithNaverAPI
 
             reader = command.ExecuteReader();
 
+            Console.Clear();
+
             while (reader.Read())
             {
-                Console.WriteLine("   " + ConvertLength(reader.GetString(0), 15) + ConvertLength(reader.GetString(1), 22) + ConvertLength(reader.GetInt32(2).ToString(), 8) + ConvertLength(reader.GetString(3), 23) + ConvertLength(reader.GetString(4), 18) + ConvertLength(reader.GetInt32(5).ToString().Insert(reader.GetInt32(5).ToString().Length, "원"), 13));
+                Console.WriteLine("\n======================================================================================================================================================");
+                Console.WriteLine("제목     : {0}", reader.GetString(1));
+                Console.WriteLine("저자     : {0}", reader.GetString(4));
+                Console.WriteLine("가격     : {0}", reader.GetInt32(5).ToString().Insert(reader.GetInt32(5).ToString().Length, "원"));
+                Console.WriteLine("출판사   : {0}", reader.GetString(3));
+                Console.WriteLine("출판날짜 : {0}", reader.GetDateTime(6).ToString("yyyy-MM-dd"));
+                //Console.WriteLine("\t\t수량     : {0}", list[i].Count);
+                Console.WriteLine("ISBN     : {0}", reader.GetString(0));
+                Console.WriteLine("책 설명  : {0}", reader.GetString(7));
+                Console.WriteLine("======================================================================================================================================================");
+
+                count++;
             }
+            if (count.Equals(0))
+                Console.WriteLine("\n\n검색 결과가 없습니다.");
             connection.Close();
         }
 
@@ -153,9 +170,20 @@ namespace LibraryManagementWithNaverAPI
 
             reader = command.ExecuteReader();
 
+            Console.Clear();
+
             while (reader.Read())
             {
-                Console.WriteLine("   " + ConvertLength(reader.GetString(0), 15) + ConvertLength(reader.GetString(1), 22) + ConvertLength(reader.GetInt32(2).ToString(), 8) + ConvertLength(reader.GetString(3), 23) + ConvertLength(reader.GetString(4), 18) + ConvertLength(reader.GetInt32(5).ToString().Insert(reader.GetInt32(5).ToString().Length, "원"), 13));
+                Console.WriteLine("\n======================================================================================================================================================");
+                Console.WriteLine("제목     : {0}", reader.GetString(1));
+                Console.WriteLine("저자     : {0}", reader.GetString(4));
+                Console.WriteLine("가격     : {0}", reader.GetInt32(5).ToString().Insert(reader.GetInt32(5).ToString().Length, "원"));
+                Console.WriteLine("출판사   : {0}", reader.GetString(3));
+                Console.WriteLine("출판날짜 : {0}", reader.GetDateTime(6).ToString("yyyy-MM-dd"));
+                //Console.WriteLine("\t\t수량     : {0}", list[i].Count);
+                Console.WriteLine("ISBN     : {0}", reader.GetString(0));
+                Console.WriteLine("책 설명  : {0}", reader.GetString(7));
+                Console.WriteLine("======================================================================================================================================================");
             }
             connection.Close();
         }

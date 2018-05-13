@@ -51,7 +51,7 @@ namespace LibraryManagementWithNaverAPI
             connection.Open();
 
             command = connection.CreateCommand();
-            command.CommandText = "Select * from rentaldata where bookLender = @id and bookNo = @no";
+            command.CommandText = "Select * from rentaldata where bookLender = @id and isbn = @no";
             command.Parameters.Add("@no", MySqlDbType.VarChar).Value = no;
             command.Parameters.Add("@id", MySqlDbType.VarChar).Value = id;
             reader = command.ExecuteReader();
@@ -77,7 +77,7 @@ namespace LibraryManagementWithNaverAPI
             connection.Open();
 
             command = connection.CreateCommand();
-            command.CommandText = "UPDATE rentaldata SET returnDate=@dateTime, extendCount = @count where bookLender = @id and bookNo = @no";
+            command.CommandText = "UPDATE rentaldata SET returnDate=@dateTime, extendCount = @count where bookLender = @id and isbn = @no";
             command.Parameters.Add("@dateTime", MySqlDbType.VarChar).Value = dateTime.ToString("yyyy-MM-dd");
             command.Parameters.Add("@count", MySqlDbType.VarChar).Value = count;
             command.Parameters.Add("@id", MySqlDbType.VarChar).Value = id;
@@ -97,7 +97,7 @@ namespace LibraryManagementWithNaverAPI
             connection.Open();
 
             command = connection.CreateCommand();
-            command.CommandText = "Delete from rentalData where bookNo = @bookNo and bookLender = @id";
+            command.CommandText = "Delete from rentalData where isbn = @bookNo and bookLender = @id";
             command.Parameters.Add("@bookNo", MySqlDbType.VarChar).Value = no;
             command.Parameters.Add("@id", MySqlDbType.VarChar).Value = id;
 

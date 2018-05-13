@@ -93,7 +93,7 @@ namespace LibraryManagementWithNaverAPI
         public void WriteBookNo()
         {
             Console.WriteLine("\n\n\t\t\t\t책의 고유번호를 입력하세요.(종료 0)");
-            Console.WriteLine("\n\n\t\t\t\t형식 12-xxxxxxxx (x는 모두 숫자)");
+            Console.WriteLine("\n\n\t\t\t\t형식 0000000000 0000000000000 (x는 모두 숫자,알파벳(10,13자))");
             Console.Write("\n\n\t\t\t\t>> ");
         }
         /// <summary>
@@ -162,6 +162,11 @@ namespace LibraryManagementWithNaverAPI
             Console.WriteLine("\n\n\t\t\t\t형식 (0000~2018)-(1~12)-(1~31)");
             Console.Write("\n\n\t\t\t\t>> ");
         }
+        public void WriteBookInformation()
+        {
+            Console.WriteLine("\n\n\t\t\t\t책의 설명을 입력하세요. (뒤로가기 1, 종료 0)");
+            Console.Write("\n\n\t\t\t\t>> ");
+        }
         /// <summary>
         /// 검색할때 메뉴창을 그리는 메소드
         /// </summary>
@@ -226,6 +231,18 @@ namespace LibraryManagementWithNaverAPI
             Console.Write("\n\n\t\t\t\t >> ");
         }
 
+        public void ManagementLog()
+        {
+            Console.Clear();
+            Console.WriteLine("\n\n\t\t\t┌---------------------------------------------------------┐");
+            Console.WriteLine("\t\t\t│           L O G  M A N A G E M E N T  M O D E           │");
+            Console.WriteLine("\t\t\t└---------------------------------------------------------┘");
+            Console.WriteLine("\n\n\t\t\t\t1. 로그 확인하기");
+            Console.WriteLine("\n\n\t\t\t\t2. 로그 초기화");
+            Console.WriteLine("\n\n\t\t\t\t3. 로그 메모장 파일 만들기");
+            Console.WriteLine("\n\n\t\t\t\t4. EXIT");
+            Console.Write("\n\n\t\t\t\t >> ");
+        }
         /// <summary>
         /// 반납 메뉴에서 반납하는 창을 그리는 메소드
         /// </summary>
