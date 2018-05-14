@@ -59,7 +59,6 @@ namespace LibraryManagementWithNaverAPI
         {
             Console.Write("\n\n\n\t\t\tPress any key . . .");
             keyInfo = Console.ReadKey();
-            Console.SetWindowSize(120, 30);
         }
         /// <summary>
         /// 이름을 입력하시오 출력

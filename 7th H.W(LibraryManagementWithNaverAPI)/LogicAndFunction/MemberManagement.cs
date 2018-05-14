@@ -187,7 +187,7 @@ namespace LibraryManagementWithNaverAPI
                         if (search.Equals("0")) return;
                         printAboutControlMembers.Category();
                         logDAO.AddLog(DateTime.Now, search, "회원 검색");
-                        memberDAO.SearchWithQuary("select * from member where name = \"" + search + "\"");
+                        memberDAO.SearchWithQuary("select * from member where name like \"%" + search + "%\"");
                         printAboutControlMembers.PressAnyKey();
                         break;
                     case LibraryConstants.SEARCH_WITH_RESIDENT_NUMBER:
@@ -195,7 +195,7 @@ namespace LibraryManagementWithNaverAPI
                         if (search.Equals("0")) return;
                         printAboutControlMembers.Category();
                         logDAO.AddLog(DateTime.Now, search, "회원 검색");
-                        memberDAO.SearchWithQuary("select * from member where residentNumber = \"" + search + "\"");
+                        memberDAO.SearchWithQuary("select * from member where residentNumber like \"%" + search + "%\"");
                         printAboutControlMembers.PressAnyKey();
                         break;
                     case LibraryConstants.SEARCH_WITH_ID:
@@ -203,7 +203,7 @@ namespace LibraryManagementWithNaverAPI
                         if (search.Equals("0")) return;
                         printAboutControlMembers.Category();
                         logDAO.AddLog(DateTime.Now, search, "회원 검색");
-                        memberDAO.SearchWithQuary("select * from member where id = \"" + search + "\"");
+                        memberDAO.SearchWithQuary("select * from member where id like \"%" + search + "%\"");
                         printAboutControlMembers.PressAnyKey();
                         break;
                     case LibraryConstants.SEARCH_WITH_PASSWORD:
@@ -211,7 +211,7 @@ namespace LibraryManagementWithNaverAPI
                         if (search.Equals("0")) return;
                         printAboutControlMembers.Category();
                         logDAO.AddLog(DateTime.Now, search, "회원 검색");
-                        memberDAO.SearchWithQuary("select * from member where password = \"" + search + "\"");
+                        memberDAO.SearchWithQuary("select * from member where password like \"%" + search + "%\"");
                         printAboutControlMembers.PressAnyKey();
                         break;
                     case LibraryConstants.SEARCH_WITH_ADDRESS:
@@ -219,7 +219,7 @@ namespace LibraryManagementWithNaverAPI
                         if (search.Equals("0")) return;
                         printAboutControlMembers.Category();
                         logDAO.AddLog(DateTime.Now, search, "회원 검색");
-                        memberDAO.SearchWithQuary("select * from member where address = \"" + search + "\"");
+                        memberDAO.SearchWithQuary("select * from member where address like \"%" + search + "%\"");
                         printAboutControlMembers.PressAnyKey();
                         break;
                     case LibraryConstants.SEARCH_WITH_PHONE:
@@ -227,7 +227,7 @@ namespace LibraryManagementWithNaverAPI
                         if (search.Equals("0")) return;
                         printAboutControlMembers.Category();
                         logDAO.AddLog(DateTime.Now, search, "회원 검색");
-                        memberDAO.SearchWithQuary("select * from member where phoneNumber = \"" + search + "\"");
+                        memberDAO.SearchWithQuary("select * from member where phoneNumber like \"%" + search + "%\"");
                         printAboutControlMembers.PressAnyKey();
                         break;
                     case LibraryConstants.SEARCH_WITH_AGE:
@@ -235,7 +235,7 @@ namespace LibraryManagementWithNaverAPI
                         if (search.Equals("0")) return;
                         printAboutControlMembers.Category();
                         logDAO.AddLog(DateTime.Now, search, "회원 검색");
-                        memberDAO.SearchWithQuary("select * from member where age = \"" + search + "\"");
+                        memberDAO.SearchWithQuary("select * from member where age like \"%" + search + "%\"");
                         printAboutControlMembers.PressAnyKey();
                         break;
                     case LibraryConstants.RETURN_BACK:
@@ -261,73 +261,45 @@ namespace LibraryManagementWithNaverAPI
                     printAboutControlMembers.PrintName((int)LibraryConstants.Mode.Search);
                     search = Console.ReadLine();
                     if (search.Equals("0")) return;
-                    if (!exceptionHandler.CheckName(search))
-                    {
-                        Console.Clear();
-                        SearchSub(LibraryConstants.SEARCH_WITH_NAME);
-                    }
+                    
                     break;
                 case LibraryConstants.SEARCH_WITH_RESIDENT_NUMBER:
                     printAboutControlMembers.PrintResidentNum((int)LibraryConstants.Mode.Search);
                     search = Console.ReadLine();
                     if (search.Equals("0")) return;
-                    if (!exceptionHandler.CheckResidentNum(search))
-                    {
-                        Console.Clear();
-                        SearchSub(LibraryConstants.SEARCH_WITH_RESIDENT_NUMBER);
-                    }
+                    
                     break;
                 case LibraryConstants.SEARCH_WITH_ID:
                     printAboutControlMembers.PrintSignId((int)LibraryConstants.Mode.Search);
                     search = Console.ReadLine();
                     if (search.Equals("0")) return;
-                    if (!exceptionHandler.CheckId(search))
-                    {
-                        Console.Clear();
-                        SearchSub(LibraryConstants.SEARCH_WITH_ID);
-                    }
+                    
 
                     break;
                 case LibraryConstants.SEARCH_WITH_PASSWORD:
                     printAboutControlMembers.PrintSignPassword((int)LibraryConstants.Mode.Search);
                     search = Console.ReadLine();
                     if (search.Equals("0")) return;
-                    if (!exceptionHandler.CheckPw(search))
-                    {
-                        Console.Clear();
-                        SearchSub(LibraryConstants.SEARCH_WITH_PASSWORD);
-                    }
+                    
                     break;
 
                 case LibraryConstants.SEARCH_WITH_ADDRESS:
                     printAboutControlMembers.PrintAddress((int)LibraryConstants.Mode.Search);
                     search = Console.ReadLine();
                     if (search.Equals("0")) return;
-                    if (!exceptionHandler.CheckAddress(search))
-                    {
-                        Console.Clear();
-                        SearchSub(LibraryConstants.SEARCH_WITH_ADDRESS);
-                    }
+                    
                     break;
                 case LibraryConstants.SEARCH_WITH_PHONE:
                     printAboutControlMembers.PrintPhone((int)LibraryConstants.Mode.Search);
                     search = Console.ReadLine();
                     if (search.Equals("0")) return;
-                    if (!exceptionHandler.CheckPhone(search))
-                    {
-                        Console.Clear();
-                        SearchSub(LibraryConstants.SEARCH_WITH_PHONE);
-                    }
+                    
                     break;
                 case LibraryConstants.SEARCH_WITH_AGE:
                     printAboutControlMembers.PrintSearchAge();
                     search = Console.ReadLine();
                     if (search.Equals("0")) return;
-                    if (!exceptionHandler.CheckBookCount(search))
-                    {
-                        Console.Clear();
-                        SearchSub(LibraryConstants.SEARCH_WITH_AGE);
-                    }
+                    
                     break;
                 default:
                     break;

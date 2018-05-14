@@ -109,6 +109,8 @@ namespace LibraryManagementWithNaverAPI
         /// <param name="quary">SQL문</param>
         public void SearchWithQuary(string quary)
         {
+            int count = 0;
+
             connection.Open();
 
             command = connection.CreateCommand();
@@ -119,8 +121,12 @@ namespace LibraryManagementWithNaverAPI
             while (reader.Read())
             {
                 Console.WriteLine("   " + ConvertLength(reader.GetString(0), 13) + ConvertLength(reader.GetString(1), 21) + ConvertLength(reader.GetString(2), 27) + ConvertLength(reader.GetString(3), 21) + ConvertLength(reader.GetString(4), 20) + ConvertLength(reader.GetString(5), 28) + ConvertLength(reader.GetInt32(6).ToString(), 5));
+                count++;
             }
             connection.Close();
+
+            if (count.Equals(0))
+                Console.WriteLine("\n\n\t\t\t검색 결과가 없습니다.");
         }
 
         /// <summary>
