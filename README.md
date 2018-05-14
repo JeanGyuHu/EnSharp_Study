@@ -23,3 +23,6 @@ This Repository is the space to store and organize my study datas.
 
 7. 7th day
   Explain about 7th H.W, and learn about use NaverAPI, and practice parsing datas
+
+8. 8th day
+  Explain about 8th H.W, and learn about WPF in C# programming (calculator) 
