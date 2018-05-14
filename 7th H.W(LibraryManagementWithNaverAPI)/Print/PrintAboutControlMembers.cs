@@ -64,7 +64,7 @@ namespace LibraryManagementWithNaverAPI
         /// <summary>
         /// 이름을 입력하시오 출력
         /// </summary>
-        public void WriteName(int num)
+        public void PrintName(int num)
         {
             switch (num)
             {
@@ -81,14 +81,14 @@ namespace LibraryManagementWithNaverAPI
             }
 
         }
-        public void WriteEditWhich()
+        public void PrintEditWhich()
         {
             Console.Clear();
             Console.WriteLine("\n\n\t\t\t\t수정할 부분을 선택하세요 !");
             Console.WriteLine("\n\n\t\t\t\t1. 주소  2. 휴대전화번호  3. 나가기");
             Console.Write("\n\n\t\t\t\t>> ");
         }
-        public void WriteSearchAge()
+        public void PrintSearchAge()
         {
             Console.WriteLine("\n\n\t\t\t\t나이를 입력하세요. (뒤로가기 0)");
             Console.WriteLine("\n\n\t\t\t\t공백을 제외한 100미만 숫자 입력 가능합니다.(글자 제한 : 2)");
@@ -97,7 +97,7 @@ namespace LibraryManagementWithNaverAPI
         /// <summary>
         /// 주민번호 입력하시오 출력
         /// </summary>
-        public void WriteResidentNum(int num)
+        public void PrintResidentNum(int num)
         {
             switch (num)
             {
@@ -117,7 +117,7 @@ namespace LibraryManagementWithNaverAPI
         /// <summary>
         /// 아이디 입력하시오 출력 (로그인 화면)
         /// </summary>
-        public void WriteId()
+        public void PrintId()
         {
 
             Console.WriteLine("\n\n\t\t\t\t아이디를 입력하세요. (종료 0)");
@@ -126,7 +126,7 @@ namespace LibraryManagementWithNaverAPI
         /// <summary>
         /// 비밀번호 입력하시오 출력 (로그인 화면)
         /// </summary>
-        public void WritePassword()
+        public void PrintPassword()
         {
 
             Console.WriteLine("\n\n\t\t\t\t비밀번호를 입력하세요. (아이디 다시 입력 -1,종료 0)");
@@ -135,7 +135,7 @@ namespace LibraryManagementWithNaverAPI
         /// <summary>
         /// 회원가입할때 아이디 입력하시오.. 출력
         /// </summary>
-        public void WriteSignId(int num)
+        public void PrintSignId(int num)
         {
             switch (num)
             {
@@ -155,7 +155,7 @@ namespace LibraryManagementWithNaverAPI
         /// <summary>
         /// 회원가입할때 비밀번호 입력하시오.. 출력
         /// </summary>
-        public void WriteSignPassword(int num)
+        public void PrintSignPassword(int num)
         {
             switch (num)
             {
@@ -175,7 +175,7 @@ namespace LibraryManagementWithNaverAPI
         /// <summary>
         /// 연체 횟수를 입력하시오.. 출력
         /// </summary>
-        public void WriteOverdue(int num)
+        public void PrintOverdue(int num)
         {
             Console.WriteLine("\n\n\t\t\t\t연체한 횟수를 입력하세요. (숫자만 입력)");
             Console.Write("\n\n\t\t\t\t>> ");
@@ -183,7 +183,7 @@ namespace LibraryManagementWithNaverAPI
         /// <summary>
         /// 주소를 입력하시오.. 출력
         /// </summary>
-        public void WriteAddress(int num)
+        public void PrintAddress(int num)
         {
             switch (num)
             {
@@ -216,7 +216,7 @@ namespace LibraryManagementWithNaverAPI
         /// <summary>
         /// 전화번호 입력하시오.. 출력
         /// </summary>
-        public void WritePhone(int num)
+        public void PrintPhone(int num)
         {
             switch (num)
             {
@@ -406,6 +406,10 @@ namespace LibraryManagementWithNaverAPI
             return pwd;
         }
 
+        /// <summary>
+        /// 주민등록번호를 입력받는 메서드 앞번호는 보이고 뒷번호는 안보이고
+        /// </summary>
+        /// <returns></returns>
         public SecureString GetConsoleSecureResidentNumber()
         {
             SecureString pwd = new SecureString();

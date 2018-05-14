@@ -43,24 +43,24 @@ namespace LibraryManagementWithNaverAPI
         /// 전체적으로 그리고 입력받고 추가하는 역할을 한다.
         /// </summary>
         /// <param name="list"></param>
-        public void DrawAndAdd()
+        public void PrintAndAdd()
         {
-            DrawId();
+            PrintId();
             if (id.Equals("0"))
                 return;
-            DrawPassword();
+            PrintPassword();
             if (password.Equals("0"))
                 return;
-            DrawName();
+            PrintName();
             if (name.Equals("0"))
                 return;
-            DrawResidentNum();
+            PrintResidentNum();
             if (residentNum.Equals("0"))
                 return;
-            DrawPhoneNum();
+            PrintPhoneNumber();
             if (phoneNumber.Equals("0"))
                 return;
-            DrawAddress();
+            PrintAddress();
             if (address.Equals("0"))
                 return;
             Console.Clear();
@@ -74,124 +74,124 @@ namespace LibraryManagementWithNaverAPI
         /// <summary>
         /// 아이디를 입력받는 부분
         /// </summary>
-        public void DrawId()
+        public void PrintId()
         {
             Console.Clear();
             printAboutControlMembers.AddMemberTitle();
-            printAboutControlMembers.WriteSignId((int)LibraryConstants.Mode.Add);
+            printAboutControlMembers.PrintSignId((int)LibraryConstants.Mode.Add);
             id = Console.ReadLine();
             if (id.Equals("0"))
                 return;
 
             if (!exceptionHandler.CheckId(id))
             {
-                DrawId();
+                PrintId();
             }
             else if (!CheckId())
             {
-                DrawId();
+                PrintId();
             }
         }
 
         /// <summary>
         /// 비밀번호를 입력받는 부분
         /// </summary>
-        public void DrawPassword()
+        public void PrintPassword()
         {
             Console.Clear();
             printAboutControlMembers.AddMemberTitle();
-            printAboutControlMembers.WriteSignPassword((int)LibraryConstants.Mode.Add);
+            printAboutControlMembers.PrintSignPassword((int)LibraryConstants.Mode.Add);
             securePassword = printAboutControlMembers.GetConsoleSecurePassword();
             password = new NetworkCredential("", securePassword).Password;
             if (password.Equals("0"))
                 return;
             if (password.Equals("1"))
-                DrawId();
+                PrintId();
             if (!exceptionHandler.CheckPw(password))
             {
-                DrawPassword();
+                PrintPassword();
             }
         }
         /// <summary>
         /// 이름을 입력받는 부분
         /// </summary>
-        public void DrawName()
+        public void PrintName()
         {
             Console.Clear();
             printAboutControlMembers.AddMemberTitle();
-            printAboutControlMembers.WriteName((int)LibraryConstants.Mode.Add);
+            printAboutControlMembers.PrintName((int)LibraryConstants.Mode.Add);
             name = Console.ReadLine();
             if (name.Equals("0"))
                 return;
             if (name.Equals("1"))
-                DrawPassword();
+                PrintPassword();
 
             if (!exceptionHandler.CheckName(name))
             {
-                DrawName();
+                PrintName();
             }
         }
         /// <summary>
         /// 주민번호를 입력받는 부분
         /// </summary>
-        public void DrawResidentNum()
+        public void PrintResidentNum()
         {
             Console.Clear();
             printAboutControlMembers.AddMemberTitle();
-            printAboutControlMembers.WriteResidentNum((int)LibraryConstants.Mode.Add);
+            printAboutControlMembers.PrintResidentNum((int)LibraryConstants.Mode.Add);
             secureResidentNum = printAboutControlMembers.GetConsoleSecureResidentNumber();
             residentNum = new NetworkCredential("", secureResidentNum).Password;
             if (residentNum.Equals("0"))
                 return;
             if (residentNum.Equals("1"))
-                DrawName();
+                PrintName();
             if (!exceptionHandler.CheckResidentNum(residentNum))
             {
-                DrawResidentNum();
+                PrintResidentNum();
             }
             if (!dBExceptionHandler.CheckResidentNumber(residentNum))
             {
-                DrawResidentNum();
+                PrintResidentNum();
             }
         }
         /// <summary>
         /// 전화번호를 입력받는 부분
         /// </summary>
-        public void DrawPhoneNum()
+        public void PrintPhoneNumber()
         {
             Console.Clear();
             printAboutControlMembers.AddMemberTitle();
-            printAboutControlMembers.WritePhone((int)LibraryConstants.Mode.Add);
+            printAboutControlMembers.PrintPhone((int)LibraryConstants.Mode.Add);
             phoneNumber = Console.ReadLine();
             if (phoneNumber.Equals("0"))
                 return;
             if (phoneNumber.Equals("1"))
-                DrawResidentNum();
+                PrintResidentNum();
             if (!exceptionHandler.CheckPhone(phoneNumber))
             {
-                DrawPhoneNum();
+                PrintPhoneNumber();
             }
             if (!dBExceptionHandler.CheckPhoneNumber(phoneNumber))
             {
-                DrawPhoneNum();
+                PrintPhoneNumber();
             }
         }
         /// <summary>
         /// 주소를 입력받는 부분
         /// </summary>
-        public void DrawAddress()
+        public void PrintAddress()
         {
             Console.Clear();
             printAboutControlMembers.AddMemberTitle();
-            printAboutControlMembers.WriteAddress((int)LibraryConstants.Mode.Add);
+            printAboutControlMembers.PrintAddress((int)LibraryConstants.Mode.Add);
             address = Console.ReadLine();
             if (address.Equals("0"))
                 return;
             if (address.Equals("1"))
-                DrawPhoneNum();
+                PrintPhoneNumber();
             if (!exceptionHandler.CheckAddress(address))
             {
-                DrawAddress();
+                PrintAddress();
             }
         }
         /// <summary>

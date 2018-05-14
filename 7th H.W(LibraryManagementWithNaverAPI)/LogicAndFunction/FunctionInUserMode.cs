@@ -33,7 +33,7 @@ namespace LibraryManagementWithNaverAPI
         /// <param name="id">현재 사용중인 사용자 아이디</param>
         public void ExtendRentalTime(string id)
         {
-            DrawNo(LibraryConstants.EXTENDTIME);
+            PrintNo(LibraryConstants.EXTENDTIME);
             if (no.Equals("0"))
                 return;
 
@@ -68,7 +68,7 @@ namespace LibraryManagementWithNaverAPI
             printAboutBooks.Category();
             bookDAO.SearchAll();
 
-            DrawNo(LibraryConstants.RENTBOOK);
+            PrintNo(LibraryConstants.RENTBOOK);
             if (no.Equals("0"))
                 return;
 
@@ -97,7 +97,7 @@ namespace LibraryManagementWithNaverAPI
         /// </summary>
         /// <param name="rentalList">대여자 리스트</param>
         /// <param name="id">현재 사용자 명</param>
-        public void DrawNo(string mode)
+        public void PrintNo(string mode)
         {
             if(mode.Equals(LibraryConstants.RENTBOOK))
             {
@@ -120,7 +120,7 @@ namespace LibraryManagementWithNaverAPI
             if (no.Equals("0"))
                 return;
             if (!exceptionHandler.CheckBookNo(no))
-                DrawNo(mode);
+                PrintNo(mode);
         }
 
         /// <summary>
@@ -131,7 +131,7 @@ namespace LibraryManagementWithNaverAPI
         /// <param name="id">현재 사용자명</param>
         public void ReturnBook(string id)
         {
-            DrawNo(LibraryConstants.RETURNBOOK);
+            PrintNo(LibraryConstants.RETURNBOOK);
             if (no.Equals("0"))
                 return;
 

@@ -47,7 +47,7 @@ namespace LibraryManagementWithNaverAPI
         /// 원하는 책을 지울때 사용하는 메소드
         /// </summary>
         /// <param name="list">책 목록</param>
-        public void DrawDelete()
+        public void PrintDelete()
         {
             DeleteSub();
 
@@ -79,7 +79,7 @@ namespace LibraryManagementWithNaverAPI
         /// 원하는 정보로 검색하는 메소드
         /// </summary>
         /// <param name="list">책 정보 리스트</param>
-        public void DrawSearch()
+        public void PrintSearch()
         {
             bool exitFlag = true;
             while (exitFlag)
@@ -190,6 +190,11 @@ namespace LibraryManagementWithNaverAPI
                     break;
             }
         }
+
+        /// <summary>
+        /// 네이버 API를 통해서 검색을 하는 부분이다.
+        /// 도서명,출판사, 저자를 통해서 각각 검색을 하는 기능을 한다.
+        /// </summary>
         public void SearchInNaver()
         {
             bool exitFlag = true;
@@ -200,7 +205,7 @@ namespace LibraryManagementWithNaverAPI
                 
                 switch (mode)
                 {
-                    case LibraryConstants.SEARCH_NAVER_NAME:
+                    case LibraryConstants.SEARCH_NAVER_NAME:        //도서명 검색
                         
                         if (!SearchSubInNaver(mode))
                             return;
@@ -211,7 +216,7 @@ namespace LibraryManagementWithNaverAPI
                         if (bookList != null)
                             AddAfterSearch(bookList);
                         return;
-                    case LibraryConstants.SEARCH_NAVER_PUBLISHER:
+                    case LibraryConstants.SEARCH_NAVER_PUBLISHER:       //출판사 검색
                         
                         if (!SearchSubInNaver(mode))
                             return;
@@ -222,7 +227,7 @@ namespace LibraryManagementWithNaverAPI
                         if (bookList != null)
                             AddAfterSearch(bookList);
                         return;
-                    case LibraryConstants.SEARCH_NAVER_AUTHOR:
+                    case LibraryConstants.SEARCH_NAVER_AUTHOR:      //저자 검색
                         if (!SearchSubInNaver(mode))
                             return;
                         status = "저    자";
@@ -241,6 +246,10 @@ namespace LibraryManagementWithNaverAPI
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="list"></param>
         public void AddAfterSearch(List<Book> list)
         {
             bool successFlag = false, yesOrNoExitFlag= true;
@@ -300,8 +309,7 @@ namespace LibraryManagementWithNaverAPI
                 return false;
             else if (Regex.IsMatch(search, @"^ *$") || search.Length < 1)
             {
-                SearchSubInNaver(mode);
-                return false;
+                return SearchSubInNaver(mode); 
             }
             printAboutBooks.WriteBookCount();
             count = Console.ReadLine();
@@ -309,15 +317,15 @@ namespace LibraryManagementWithNaverAPI
                 return false;
             else if (!exceptionHandler.CheckBookCount(count))
             {
-                SearchSubInNaver(mode);
-                return false;
+                
+                return SearchSubInNaver(mode);
             }
             return true;
         }
         /// <summary>
         /// 책의 이름을 받는 메소드
         /// </summary>
-        public void DrawName()
+        public void PrintName()
         {
             Console.Clear();
             printAboutBooks.InfoTitle();
@@ -326,18 +334,18 @@ namespace LibraryManagementWithNaverAPI
             if (name.Equals("0"))
                 return;
             if (name.Equals("1"))
-                DrawNo();
+                PrintNo();
             if (name.Length < 1 || name.Length > 15)
-                DrawName();
+                PrintName();
             if (Regex.IsMatch(name, @"^\s"))
-                DrawName();
+                PrintName();
         }
 
         /// <summary>
         /// 책의 정보를 입력받고 수정하는 메소드를 호출
         /// </summary>
         /// <param name="list">모든 책 리스트</param>
-        public void DrawEdit()
+        public void PrintEdit()
         {
             printAboutBooks.Category();
             bookDAO.SearchAll();
@@ -349,7 +357,7 @@ namespace LibraryManagementWithNaverAPI
             if (deleteName.Equals("1"))
                 return;
             if (!exceptionHandler.CheckBookNo(deleteName))
-                DrawEdit();
+                PrintEdit();
             else
             {
                 EditWhichOne();
@@ -368,7 +376,7 @@ namespace LibraryManagementWithNaverAPI
                 switch (mode)
                 {
                     case LibraryConstants.EDIT_COUNT:
-                        DrawCountRead();
+                        PrintCountRead();
                         if (count.Equals("-1"))
                             return;
                         else if (count.Equals("-2"))
@@ -388,7 +396,7 @@ namespace LibraryManagementWithNaverAPI
                         }
                         return;
                     case LibraryConstants.EDIT_PRICE:
-                        DrawEditPrice();
+                        PrintEditPrice();
                         if (price.Equals("0"))
                             return;
                         else if (price.Equals("1"))
@@ -416,7 +424,7 @@ namespace LibraryManagementWithNaverAPI
             }
         }
 
-        public void DrawCountRead()
+        public void PrintCountRead()
         {
             Console.Clear();
             printAboutBooks.InfoTitle();
@@ -431,13 +439,13 @@ namespace LibraryManagementWithNaverAPI
             }
             if (!exceptionHandler.CheckBookCount(count))
             {
-                DrawCountRead();
+                PrintCountRead();
             }
         }
         /// <summary>
         /// 책 번호를 입력받는 메소드
         /// </summary>
-        public void DrawNo()
+        public void PrintNo()
         {
             Console.Clear();
             printAboutBooks.InfoTitle();
@@ -448,18 +456,18 @@ namespace LibraryManagementWithNaverAPI
 
             if (!exceptionHandler.CheckBookNo(no))
             {
-                DrawNo();
+                PrintNo();
             }
             if (!dBExceptionHandler.IsInBookDB(no))
             {
-                DrawNo();
+                PrintNo();
             }
         }
 
         /// <summary>
         /// 저자를 입력받는 메소드
         /// </summary>
-        public void DrawAuthor()
+        public void PrintAuthor()
         {
             Console.Clear();
             printAboutBooks.InfoTitle();
@@ -468,14 +476,14 @@ namespace LibraryManagementWithNaverAPI
             if (author.Equals("0"))
                 return;
             if (author.Equals("1"))
-                DrawCountRead();
+                PrintCountRead();
             if (!exceptionHandler.CheckAuthor(author))
-                DrawAuthor();
+                PrintAuthor();
         }
         /// <summary>
         /// 출판 년도를 입력받는 메서드
         /// </summary>
-        public void DrawPblsDate()
+        public void PrintPblsDate()
         {
             Console.Clear();
             printAboutBooks.InfoTitle();
@@ -484,12 +492,12 @@ namespace LibraryManagementWithNaverAPI
             if (publishDate.Equals("0"))
                 return;
             if (publishDate.Equals("1"))
-                DrawPrice();
+                PrintPrice();
             if (!exceptionHandler.CheckPublishDate(publishDate))
-                DrawPblsDate();
+                PrintPblsDate();
         }
 
-        public void DrawInformation()
+        public void PrintInformation()
         {
             Console.Clear();
             printAboutBooks.InfoTitle();
@@ -498,12 +506,12 @@ namespace LibraryManagementWithNaverAPI
             if (information.Equals("0"))
                 return;
             if (information.Equals("1"))
-                DrawPblsDate();
+                PrintPblsDate();
         }
         /// <summary>
         /// 출판사를 입력받는 메소드
         /// </summary>
-        public void DrawPublisher()
+        public void PrintPublisher()
         {
             Console.Clear();
             printAboutBooks.InfoTitle();
@@ -512,11 +520,11 @@ namespace LibraryManagementWithNaverAPI
             if (publisher.Equals("0"))
                 return;
             if (publisher.Equals("1"))
-                DrawAuthor();
+                PrintAuthor();
             if (!exceptionHandler.CheckPublisher(publisher))
-                DrawPublisher();
+                PrintPublisher();
         }
-        public void DrawEditPrice()
+        public void PrintEditPrice()
         {
             Console.Clear();
             printAboutBooks.InfoTitle();
@@ -530,9 +538,9 @@ namespace LibraryManagementWithNaverAPI
                 return;
             }
             if (!exceptionHandler.CheckPrice(price))
-                DrawEditPrice();
+                PrintEditPrice();
         }
-        public void DrawPrice()
+        public void PrintPrice()
         {
             Console.Clear();
             printAboutBooks.InfoTitle();
@@ -541,39 +549,39 @@ namespace LibraryManagementWithNaverAPI
             if (price.Equals("0"))
                 return;
             if (price.Equals("1"))
-                DrawPublisher();
+                PrintPublisher();
             if (!exceptionHandler.CheckPrice(price))
-                DrawPrice();
+                PrintPrice();
         }
         /// <summary>
         /// 새 책을 추가하는 메소드
         /// </summary>
         /// <param name="list">책 정보 리스트</param>
-        public void DrawAdd()
+        public void PrintAdd()
         {
-            DrawNo();
+            PrintNo();
             if (no.Equals("0"))
                 return;
 
-            DrawName();
+            PrintName();
             if (name.Equals("0"))
                 return;
-            DrawCountRead();
+            PrintCountRead();
             if (count.Equals("-1"))
                 return;
-            DrawAuthor();
+            PrintAuthor();
             if (author.Equals("0"))
                 return;
-            DrawPublisher();
+            PrintPublisher();
             if (publisher.Equals("0"))
                 return;
-            DrawPrice();
+            PrintPrice();
             if (price.Equals("0"))
                 return;
-            DrawPblsDate();
+            PrintPblsDate();
             if (publishDate.Equals("0"))
                 return;
-            DrawInformation();
+            PrintInformation();
             if (information.Equals("0"))
                 return;
             if (!dBExceptionHandler.IsInBookDB(no))

@@ -228,6 +228,9 @@ namespace LibraryManagementWithNaverAPI
             Console.Write("\n\n\t\t\t\t >> ");
         }
 
+        /// <summary>
+        /// 로그에 관련된 메뉴를 그리는 메서드
+        /// </summary>
         public void ManagementLog()
         {
             Console.Clear();
@@ -237,7 +240,7 @@ namespace LibraryManagementWithNaverAPI
             Console.WriteLine("\n\n\t\t\t\t1. 로그 확인하기");
             Console.WriteLine("\n\n\t\t\t\t2. 로그 초기화");
             Console.WriteLine("\n\n\t\t\t\t3. 로그 메모장 파일 만들기");
-            Console.WriteLine("\n\n\t\t\t\t3. 로그 메모장 파일 삭제하기");
+            Console.WriteLine("\n\n\t\t\t\t4. 로그 메모장 파일 삭제하기");
             Console.WriteLine("\n\n\t\t\t\t5. EXIT");
             Console.Write("\n\n\t\t\t\t >> ");
         }
@@ -254,6 +257,9 @@ namespace LibraryManagementWithNaverAPI
             Console.WriteLine("\t\t\t└---------------------------------------------┘");
         }
 
+        /// <summary>
+        /// 추가할꺼야말꺼야
+        /// </summary>
         public void AddOrNot()
         {
             Console.WriteLine("\n\n\t\t\t\t추가 하시겠습니까?");
@@ -261,6 +267,14 @@ namespace LibraryManagementWithNaverAPI
             Console.WriteLine("\n\n\t\t\t\t2. 아니오");
             Console.Write("\n\n\t\t\t\t>> ");
         }
+
+        /// <summary>
+        /// API 검색을 통해서 받아온 정보를 띄워주는 메서드
+        /// </summary>
+        /// <param name="category"></param>
+        /// <param name="question"></param>
+        /// <param name="count"></param>
+        /// <returns></returns>
         public List<Book> ResultFromNaver(string category, string question, int count)
         {
             string result = "";
@@ -271,27 +285,28 @@ namespace LibraryManagementWithNaverAPI
             Console.WriteLine("\t\t\t│           R E S U L T  F R O M  N A V E R  ({0})         │", category);
             Console.WriteLine("\t\t\t└---------------------------------------------------------------┘");
 
-            if (category.Equals("도 서 명"))
+            if (category.Equals("도 서 명"))           //쿼리문을 날려줄때 어떤 것에 대한 검색을 할지 위함
                 quaryCategory = "d_titl";
             else if (category.Equals("출 판 사"))
                 quaryCategory = "d_publ";
             else if (category.Equals("저    자"))
-                quaryCategory = "d_auth";
+                quaryCategory = "d_auth";   
 
+            //인터넷에서 받아온 정보
             result = parsingData.RequestJson(question, quaryCategory, count);
-            list = parsingData.ParseJson(result);
+            list = parsingData.ParseJson(result);   //받아온 정보를 파싱해서 리스트에 담는다.
 
-            if (list.Count < count)
+            if (list.Count < count) //입력한 개수보다 실제 책의 수가 적을때
                 count = list.Count;
 
-            if (list.Count.Equals(0))
+            if (list.Count.Equals(0))   //검색 결과 없을때
             {
                 Console.WriteLine("\n\n\t\t검색 결과가 없습니다 ! !\n");
                 PressAnyKey();
                 return null;
             }
             else
-                for (int i = 0; i < count; i++)
+                for (int i = 0; i < count; i++) //외에는 출력
                 {
                     Console.WriteLine("\n======================================================================================================================================================");
                     Console.WriteLine("제목     : {0}", list[i].Name);

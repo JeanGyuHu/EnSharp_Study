@@ -49,7 +49,7 @@
     <Compile Include="LogicAndFunction\AddNewMember.cs" />
     <Compile Include="LogicAndFunction\LibraryManagement.cs" />
     <Compile Include="LogicAndFunction\MemberManagement.cs" />
-    <Compile Include="ParsingData.cs" />
+    <Compile Include="DAO\ParsingData.cs" />
     <Compile Include="V.O\Book.cs" />
     <Compile Include="DAO\BookDAO.cs" />
     <Compile Include="Exception\DBExceptionHandler.cs" />

@@ -36,7 +36,7 @@ namespace LibraryManagementWithNaverAPI
         /// 수정을 위해 체크해주고 그려주는 창
         /// </summary>
         /// <param name="list">회원 정보 리스트</param>
-        public void DrawEdit()
+        public void PrintEdit()
         {
             printAboutControlMembers.Category();
             memberDAO.SearchAll();
@@ -48,7 +48,7 @@ namespace LibraryManagementWithNaverAPI
                 return;
 
             if (dBExceptionHandler.IsIdInMemberDB(id))
-                DrawEdit();
+                PrintEdit();
             else
             {
                 EditWhichOne();
@@ -61,13 +61,13 @@ namespace LibraryManagementWithNaverAPI
 
             while (exitFlag)
             {
-                printAboutControlMembers.WriteEditWhich();
+                printAboutControlMembers.PrintEditWhich();
                 mode = Console.ReadLine();
 
                 switch (mode)
                 {
                     case LibraryConstants.EDIT_ADDRESS:
-                        DrawAddress();
+                        PrintAddress();
                         if (address.Equals("0"))
                             return;
                         else if (address.Equals("1"))
@@ -80,7 +80,7 @@ namespace LibraryManagementWithNaverAPI
                         }
                         return;
                     case LibraryConstants.EDIT_PHONE:
-                        DrawPhoneNum();
+                        PrintPhoneNumber();
                         if (phoneNumber.Equals("0"))
                             return;
                         else if (phoneNumber.Equals("1"))
@@ -103,11 +103,11 @@ namespace LibraryManagementWithNaverAPI
         /// <summary>
         /// 주소 입력받는 메소드
         /// </summary>
-        public void DrawAddress()
+        public void PrintAddress()
         {
             Console.Clear();
 
-            printAboutControlMembers.WriteAddress((int)LibraryConstants.Mode.Add);
+            printAboutControlMembers.PrintAddress((int)LibraryConstants.Mode.Add);
             address = Console.ReadLine();
             if (address.Equals("0"))
                 return;
@@ -118,16 +118,16 @@ namespace LibraryManagementWithNaverAPI
             }
             if (!exceptionHandler.CheckAddress(address))
             {
-                DrawAddress();
+                PrintAddress();
             }
         }
         /// <summary>
         /// 전화번호 입력받는 메소드
         /// </summary>
-        public void DrawPhoneNum()
+        public void PrintPhoneNumber()
         {
             Console.Clear();
-            printAboutControlMembers.WritePhone((int)LibraryConstants.Mode.Add);
+            printAboutControlMembers.PrintPhone((int)LibraryConstants.Mode.Add);
             phoneNumber = Console.ReadLine();
             if (phoneNumber.Equals("0"))
                 return;
@@ -137,7 +137,7 @@ namespace LibraryManagementWithNaverAPI
                 return;
             }
             if (!exceptionHandler.CheckPhone(phoneNumber))
-                DrawPhoneNum();
+                PrintPhoneNumber();
         }
         /// <summary>
         /// 삭제하는 하는 부분에서 아이디를 받고 체크해주는 역할을 한다.
@@ -159,7 +159,7 @@ namespace LibraryManagementWithNaverAPI
         /// 삭제하는 창을 그리고 삭제하는 메소드
         /// </summary>
         /// <param name="list"></param>
-        public void DrawDelete()
+        public void PrintDelete()
         {
             DeleteSub();
             if (id.Equals("0"))
@@ -172,7 +172,7 @@ namespace LibraryManagementWithNaverAPI
         /// 검색 기능을 담당하는 메소드
         /// </summary>
         /// <param name="list"></param>
-        public void DrawSearch()
+        public void PrintSearch()
         {
             bool exitFlag = true;
             while (exitFlag)
@@ -258,7 +258,7 @@ namespace LibraryManagementWithNaverAPI
             switch (mode)
             {
                 case LibraryConstants.SEARCH_WITH_NAME:
-                    printAboutControlMembers.WriteName((int)LibraryConstants.Mode.Search);
+                    printAboutControlMembers.PrintName((int)LibraryConstants.Mode.Search);
                     search = Console.ReadLine();
                     if (search.Equals("0")) return;
                     if (!exceptionHandler.CheckName(search))
@@ -268,7 +268,7 @@ namespace LibraryManagementWithNaverAPI
                     }
                     break;
                 case LibraryConstants.SEARCH_WITH_RESIDENT_NUMBER:
-                    printAboutControlMembers.WriteResidentNum((int)LibraryConstants.Mode.Search);
+                    printAboutControlMembers.PrintResidentNum((int)LibraryConstants.Mode.Search);
                     search = Console.ReadLine();
                     if (search.Equals("0")) return;
                     if (!exceptionHandler.CheckResidentNum(search))
@@ -278,7 +278,7 @@ namespace LibraryManagementWithNaverAPI
                     }
                     break;
                 case LibraryConstants.SEARCH_WITH_ID:
-                    printAboutControlMembers.WriteSignId((int)LibraryConstants.Mode.Search);
+                    printAboutControlMembers.PrintSignId((int)LibraryConstants.Mode.Search);
                     search = Console.ReadLine();
                     if (search.Equals("0")) return;
                     if (!exceptionHandler.CheckId(search))
@@ -289,7 +289,7 @@ namespace LibraryManagementWithNaverAPI
 
                     break;
                 case LibraryConstants.SEARCH_WITH_PASSWORD:
-                    printAboutControlMembers.WriteSignPassword((int)LibraryConstants.Mode.Search);
+                    printAboutControlMembers.PrintSignPassword((int)LibraryConstants.Mode.Search);
                     search = Console.ReadLine();
                     if (search.Equals("0")) return;
                     if (!exceptionHandler.CheckPw(search))
@@ -300,7 +300,7 @@ namespace LibraryManagementWithNaverAPI
                     break;
 
                 case LibraryConstants.SEARCH_WITH_ADDRESS:
-                    printAboutControlMembers.WriteAddress((int)LibraryConstants.Mode.Search);
+                    printAboutControlMembers.PrintAddress((int)LibraryConstants.Mode.Search);
                     search = Console.ReadLine();
                     if (search.Equals("0")) return;
                     if (!exceptionHandler.CheckAddress(search))
@@ -310,7 +310,7 @@ namespace LibraryManagementWithNaverAPI
                     }
                     break;
                 case LibraryConstants.SEARCH_WITH_PHONE:
-                    printAboutControlMembers.WritePhone((int)LibraryConstants.Mode.Search);
+                    printAboutControlMembers.PrintPhone((int)LibraryConstants.Mode.Search);
                     search = Console.ReadLine();
                     if (search.Equals("0")) return;
                     if (!exceptionHandler.CheckPhone(search))
@@ -320,7 +320,7 @@ namespace LibraryManagementWithNaverAPI
                     }
                     break;
                 case LibraryConstants.SEARCH_WITH_AGE:
-                    printAboutControlMembers.WriteSearchAge();
+                    printAboutControlMembers.PrintSearchAge();
                     search = Console.ReadLine();
                     if (search.Equals("0")) return;
                     if (!exceptionHandler.CheckBookCount(search))
@@ -337,7 +337,7 @@ namespace LibraryManagementWithNaverAPI
         /// 회원정보를 전부 띄워주는 메소드
         /// </summary>
         /// <param name="list">회원정보리스트</param>
-        public void DrawPrint()
+        public void PrintAll()
         {
             printAboutControlMembers.Category();
             memberDAO.SearchAll();

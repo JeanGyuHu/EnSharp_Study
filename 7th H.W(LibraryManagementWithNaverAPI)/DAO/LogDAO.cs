@@ -42,6 +42,9 @@ namespace LibraryManagementWithNaverAPI
             connection.Close();     //연결해제
         }
 
+        /// <summary>
+        /// 로그 정보를 전부 띄워주는 메서드
+        /// </summary>
         public void CheckLog()
         {
             connection.Open();          //연결
@@ -67,6 +70,9 @@ namespace LibraryManagementWithNaverAPI
             Console.ReadKey();
         }
 
+        /// <summary>
+        /// 텍스트 파일에 로그 정보 전부 데이터 베이스에서 불러와서 저장하기
+        /// </summary>
         public void SaveInTextFile()
         {
             connection.Open();          //연결
@@ -77,7 +83,7 @@ namespace LibraryManagementWithNaverAPI
             reader = command.ExecuteReader();  //DB에 SQL문 실행
 
             //Console.WriteLine(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory) + "\\" + DateTime.Now.ToString("yyyyMMdd") + ".txt");
-            string savePath = @"C:\Users\gjwls\Desktop\"+DateTime.Now.ToString("yyyyMMdd")+".txt";
+            string savePath = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory) + "\\" + DateTime.Now.ToString("yyyyMMdd") + ".txt";
             File.WriteAllText(savePath,"로 그 정 보\r\n",Encoding.Default);
 
             while (reader.Read())
@@ -95,9 +101,12 @@ namespace LibraryManagementWithNaverAPI
             Console.ReadKey();
         }
 
+        /// <summary>
+        /// 로그 데이터 초기화
+        /// </summary>
         public void DeleteTextFile()
         {
-            FileInfo fileDel = new FileInfo(@"C:\Users\gjwls\Desktop\" + DateTime.Now.ToString("yyyyMMdd") + ".txt");
+            FileInfo fileDel = new FileInfo(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory) + "\\" + DateTime.Now.ToString("yyyyMMdd") + ".txt");
             if (fileDel.Exists) //삭제할 파일이 있는지
             {
                 fileDel.Delete(); //없어도 에러안남

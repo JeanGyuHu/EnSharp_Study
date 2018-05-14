@@ -30,6 +30,7 @@ namespace LibraryManagementWithNaverAPI
         public const string START_SUPERVISER_MODE = "1";
         public const string START_USER_MODE = "2";
 
+        //로그 정보를 검색하는 것에 대한 매직넘버
         public const string LOG_CHECK = "1";
         public const string LOG_CLEAR = "2";
         public const string LOG_MAKENOTE = "3";
@@ -53,6 +54,7 @@ namespace LibraryManagementWithNaverAPI
         public const string SEARCH_BOOK_IN_NAVER = "6";
         public const string SEARCH_GO_BACK = "7";
 
+        //네이버 검색할때 무엇에 대한 검색을 할지에 대한 매직넘버
         public const string SEARCH_NAVER_NAME = "1";
         public const string SEARCH_NAVER_PUBLISHER = "2";
         public const string SEARCH_NAVER_AUTHOR = "3";

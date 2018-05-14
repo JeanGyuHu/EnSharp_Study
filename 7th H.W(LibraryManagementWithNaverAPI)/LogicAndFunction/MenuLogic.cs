@@ -57,7 +57,7 @@ namespace LibraryManagementWithNaverAPI
                         break;
 
                     case LibraryConstants.GOTO_SIGNUP_PAGE:
-                        addNewMember.DrawAndAdd();
+                        addNewMember.PrintAndAdd();
                         break;
 
                     case LibraryConstants.EXIT:
@@ -184,24 +184,23 @@ namespace LibraryManagementWithNaverAPI
                 switch (mode)
                 {
                     case LibraryConstants.ADD_NEW_MEMBER:
-                        addNewMember.DrawAndAdd();
+                        addNewMember.PrintAndAdd();
                         break;
                     case LibraryConstants.EDIT_MEMBER_INFO:
-                        memberManagement.DrawEdit();
+                        memberManagement.PrintEdit();
                         break;
                     case LibraryConstants.DELETE_MEMBER:
-                        memberManagement.DrawDelete();
+                        memberManagement.PrintDelete();
                         break;
                     case LibraryConstants.SEARCH_MEMBER:
-                        memberManagement.DrawSearch();
+                        memberManagement.PrintSearch();
                         break;
                     case LibraryConstants.PRINT_MEMBER_INFO:
-                        memberManagement.DrawPrint();
+                        memberManagement.PrintAll();
                         break;
                     case LibraryConstants.GO_BEFORE_PAGE:
                         flag = false;
                         break;
-
                     default:
                         break;
                 }
@@ -221,16 +220,16 @@ namespace LibraryManagementWithNaverAPI
                 switch (mode)
                 {
                     case LibraryConstants.ADD_MODE:
-                        libraryManagement.DrawAdd();
+                        libraryManagement.PrintAdd();
                         break;
                     case LibraryConstants.EDIT_MODE:
-                        libraryManagement.DrawEdit();
+                        libraryManagement.PrintEdit();
                         break;
                     case LibraryConstants.DELETE_MODE:
-                        libraryManagement.DrawDelete();
+                        libraryManagement.PrintDelete();
                         break;
                     case LibraryConstants.SEARCH_MODE:
-                        libraryManagement.DrawSearch();
+                        libraryManagement.PrintSearch();
                         break;
                     case LibraryConstants.PRINT_MODE:
                         bookDAO.SearchAll();
@@ -284,14 +283,14 @@ namespace LibraryManagementWithNaverAPI
         public bool DrawLoginPage(string mode)
         {
             printAboutControlMembers.LoginPage();
-            printAboutControlMembers.WriteId();
+            printAboutControlMembers.PrintId();
             id = Console.ReadLine();
             if (id.Equals("0"))
                 return false;
 
             if (exceptionHandler.CheckID(id, mode))
             {
-                printAboutControlMembers.WritePassword();
+                printAboutControlMembers.PrintPassword();
                 securePassword = printAboutControlMembers.GetConsoleSecurePassword();
                 password = new NetworkCredential("", securePassword).Password;
                 if (exceptionHandler.CheckPW(id, password, mode))
