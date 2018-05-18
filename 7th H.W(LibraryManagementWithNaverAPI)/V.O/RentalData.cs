@@ -14,6 +14,13 @@ namespace LibraryManagementWithNaverAPI
         private string bookLender;  //책 대여자
         private DateTime bookReturnTime;    //반납일자
         private int extendCount;
+        private int number;
+
+        public int Number
+        {
+            get { return number; }
+            set { number = value; }
+        }
         /// <summary>
         /// 책 번호에 대한 get/set
         /// </summary>
@@ -81,8 +88,9 @@ namespace LibraryManagementWithNaverAPI
         /// <param name="author">입력 책 저자</param>
         /// <param name="lender">입력 책 대여자</param>
         /// <param name="date">입력 책 반납일자</param>
-        public RentalData(string no, string name, string pbls, string author, string lender, DateTime date, int extendCount)
+        public RentalData(string no, string name, string pbls, string author, string lender, DateTime date, int extendCount,int number)
         {
+            Number = number;
             BookNo = no;
             BookName = name;
             BookPbls = pbls;

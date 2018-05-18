@@ -46,6 +46,7 @@ namespace LibraryManagementWithNaverAPI
         
         public List<Book> ParseJson(string json)
         {
+            int count = 0;
             list.Clear();
 
             JObject obj = JObject.Parse(json);
@@ -54,6 +55,7 @@ namespace LibraryManagementWithNaverAPI
             foreach (JObject item in array)
             {
                 Book book = new Book();
+                book.Number = ++count;
                 book.Name = HttpUtility.HtmlDecode(item["title"].ToString().Replace("<b>", "").Replace("</b>", ""));
                 book.Author = HttpUtility.HtmlDecode(item["author"].ToString().Replace("<b>", "").Replace("</b>", ""));
                 book.Price = Convert.ToInt32(item["price"]);

@@ -11,11 +11,12 @@ namespace LibraryManagementWithNaverAPI
         private MySqlConnection connection;     //DB에 연결할때 쓰이는 객체
         private MySqlCommand command;           //쿼리문을 실행해주는 객체
         private MySqlDataReader reader;         //실행을 통해서 읽어온 정보를 지닌 객체
-
+        private List<Book> list;
         //기본 생성자로 connection을 localDB에 연결
         public BookDAO()
         {
             connection = new MySqlConnection(LibraryConstants.CONNECTIONINFORMATION);
+            list = new List<Book>();
         }
 
 
@@ -45,6 +46,7 @@ namespace LibraryManagementWithNaverAPI
         /// <returns>no 값을 가진 책의 모든 정보</returns>
         public Book GetBook(string no)
         {
+            int count = 0;
             Book book = new Book();
 
             connection.Open();
@@ -56,7 +58,7 @@ namespace LibraryManagementWithNaverAPI
 
             while (reader.Read())   //쿼리문을 수행한 정보들에 대해서
             {
-                book = new Book(reader.GetString(0), reader.GetString(1), reader.GetInt32(2), reader.GetString(3), reader.GetString(4), reader.GetInt32(5),reader.GetDateTime(6),reader.GetString(7));  //
+                book = new Book(reader.GetString(0), reader.GetString(1), reader.GetInt32(2), reader.GetString(3), reader.GetString(4), reader.GetInt32(5),reader.GetDateTime(6),reader.GetString(7),++count);  //
             }
             connection.Close();
 
@@ -161,8 +163,10 @@ namespace LibraryManagementWithNaverAPI
         /// <summary>
         /// 모든 책 정보를 출력한다.
         /// </summary>
-        public void SearchAll()
+        public List<Book> SearchAll()
         {
+            list.Clear();
+            int count = 0;
             connection.Open();
 
             command = connection.CreateCommand();
@@ -174,7 +178,10 @@ namespace LibraryManagementWithNaverAPI
 
             while (reader.Read())
             {
+                list.Add(new Book(reader.GetString(0), reader.GetString(1), reader.GetInt32(2), reader.GetString(3), reader.GetString(4), reader.GetInt32(5), reader.GetDateTime(6), reader.GetString(7), ++count));
+
                 Console.WriteLine("\n======================================================================================================================================================");
+                Console.WriteLine("번호     : {0}", count);
                 Console.WriteLine("제목     : {0}", reader.GetString(1));
                 Console.WriteLine("저자     : {0}", reader.GetString(4));
                 Console.WriteLine("가격     : {0}", reader.GetInt32(5).ToString().Insert(reader.GetInt32(5).ToString().Length, "원"));
@@ -186,21 +193,8 @@ namespace LibraryManagementWithNaverAPI
                 Console.WriteLine("======================================================================================================================================================");
             }
             connection.Close();
-        }
 
-        /// <summary>
-        /// 인자로 넘어온 문자열을 원하는 길이로 만들어준다.
-        /// </summary>
-        /// <param name="inputString">길이를 변경하고 싶은 문자열</param>
-        /// <param name="length">원하는 길이</param>
-        /// <returns>길이가 변환된 문자열</returns>
-        public string ConvertLength(string inputString, int length)
-        {
-            byte[] byteName1 = Encoding.Default.GetBytes(inputString + "                                                                                ");
-            byte[] byteName2 = new byte[length];
-            Array.Copy(byteName1, byteName2, length);
-
-            return Encoding.Default.GetString(byteName2);
+            return list;
         }
     }
 }

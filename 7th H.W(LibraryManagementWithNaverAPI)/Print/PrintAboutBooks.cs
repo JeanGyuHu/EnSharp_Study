@@ -96,6 +96,13 @@ namespace LibraryManagementWithNaverAPI
             Console.WriteLine("\n\n\t\t\t\t형식 0000000000 0000000000000 (x는 모두 숫자,알파벳(10,13자))");
             Console.Write("\n\n\t\t\t\t>> ");
         }
+
+        public void WriteNumber()
+        {
+            Console.WriteLine("\n\n\t\t\t\t책의 번호를 입력하세요.(종료 0)");
+            Console.WriteLine("\n\n\t\t\t\t형식은 99이하의 숫자");
+            Console.Write("\n\n\t\t\t\t>> ");
+        }
         /// <summary>
         /// 책 이름을 적으라는 메세지를 띄우는 메소드
         /// </summary>
@@ -309,6 +316,7 @@ namespace LibraryManagementWithNaverAPI
                 for (int i = 0; i < count; i++) //외에는 출력
                 {
                     Console.WriteLine("\n======================================================================================================================================================");
+                    Console.WriteLine("번호     : {0}", i+1);
                     Console.WriteLine("제목     : {0}", list[i].Name);
                     Console.WriteLine("저자     : {0}", list[i].Author);
                     Console.WriteLine("가격     : {0}", list[i].Price);

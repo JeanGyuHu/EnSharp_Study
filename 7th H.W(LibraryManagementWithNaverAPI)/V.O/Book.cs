@@ -15,6 +15,7 @@ namespace LibraryManagementWithNaverAPI
         private int price;
         private DateTime pblsDate;
         private string information;
+        private int number;
 
         /// <summary>
         /// 책 번호에 대한 get/set
@@ -74,6 +75,13 @@ namespace LibraryManagementWithNaverAPI
             get { return information; }
             set { information = value; }
         }
+
+        public int Number
+        {
+            get { return number; }
+            set { number = value; }
+        }
+
         public Book() { }
         /// <summary>
         /// 생성자로써 모든 정보가 들어왔을때 모두다 값을 변경해준다.
@@ -83,8 +91,9 @@ namespace LibraryManagementWithNaverAPI
         /// <param name="count">입력 책 개수</param>
         /// <param name="pbls">입력 책 출판사</param>
         /// <param name="author">입력 책 저자</param>
-        public Book(string isbn, string name, int count, string pbls, string author, int price,DateTime pblsDate,string information)
+        public Book(string isbn, string name, int count, string pbls, string author, int price,DateTime pblsDate,string information,int number)
         {
+            Number = number;
             Isbn = isbn;
             Name = name;
             Count = count;

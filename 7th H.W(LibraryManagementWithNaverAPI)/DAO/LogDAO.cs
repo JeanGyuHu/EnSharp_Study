@@ -107,6 +107,7 @@ namespace LibraryManagementWithNaverAPI
         public void DeleteTextFile()
         {
             FileInfo fileDel = new FileInfo(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory) + "\\" + DateTime.Now.ToString("yyyyMMdd") + ".txt");
+
             if (fileDel.Exists) //삭제할 파일이 있는지
             {
                 fileDel.Delete(); //없어도 에러안남

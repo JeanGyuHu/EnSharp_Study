@@ -17,9 +17,8 @@ namespace LibraryManagementWithNaverAPI
         private string password;                                        //저장을 위해 string으로 변환하기 위함
         private string address;                                         //주소 입력 받기 위함
         private string phoneNumber;                                     //전화번호 입력받기 위함
-        private int count;                                              //아이디 체크를 할때 전부다 확인을 했나 체크하기 위함
-        private PrintAboutControlMembers printAboutControlMembers;                    //출력을 하기 위해 클래스의 객체 선언
-        private ExceptionHandler exceptionHandler;                    //예외처리를 위해 클래스의 객체 선언
+        private PrintAboutControlMembers printAboutControlMembers;      //출력을 하기 위해 클래스의 객체 선언
+        private ExceptionHandler exceptionHandler;                      //예외처리를 위해 클래스의 객체 선언
         private DBExceptionHandler dBExceptionHandler;
         private MemberDAO memberDAO;
         private LogDAO logDAO;
@@ -36,7 +35,6 @@ namespace LibraryManagementWithNaverAPI
             dBExceptionHandler = new DBExceptionHandler();
             memberDAO = new MemberDAO();
             logDAO = new LogDAO();
-            count = 0;
         }
 
         /// <summary>
@@ -201,7 +199,6 @@ namespace LibraryManagementWithNaverAPI
         /// <returns>회원이 있는지 없는지를 bool값으로 리턴</returns>
         public bool CheckId()
         {
-            count = 0;
 
             if (!dBExceptionHandler.IsIdInMemberDB(id))
             {

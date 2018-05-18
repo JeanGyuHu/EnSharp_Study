@@ -12,11 +12,13 @@ namespace LibraryManagementWithNaverAPI
         private MySqlCommand command;               //쿼리문을 실행해주는 객체
         private MySqlDataReader reader;             //실행을 통해서 읽어온 정보를 지닌 객체
         private RentalData rentalData;              //데이터베이스의 정보를 가져오기 위한 객체
+        private List<RentalData> list;
 
         //기본 생성자로 connection을 localDB에 연결
         public RentalDataDAO()
         {
             connection = new MySqlConnection(LibraryConstants.CONNECTIONINFORMATION);
+            list = new List<RentalData>();
         }
 
         /// <summary>
@@ -48,6 +50,7 @@ namespace LibraryManagementWithNaverAPI
         /// <returns></returns>
         public RentalData GetRentalData(string id, string no)
         {
+            int count = 0;
             connection.Open();
 
             command = connection.CreateCommand();
@@ -58,7 +61,7 @@ namespace LibraryManagementWithNaverAPI
 
             while (reader.Read())
             {
-                rentalData = new RentalData(reader.GetString(0), reader.GetString(1), reader.GetString(2), reader.GetString(3), reader.GetString(4), reader.GetDateTime(5), reader.GetInt32(6));
+                rentalData = new RentalData(reader.GetString(0), reader.GetString(1), reader.GetString(2), reader.GetString(3), reader.GetString(4), reader.GetDateTime(5), reader.GetInt32(6),++count);
             }
             connection.Close();
 
@@ -104,8 +107,10 @@ namespace LibraryManagementWithNaverAPI
             command.ExecuteNonQuery();
             connection.Close();
         }
-        public void SearchAll()
+        public List<RentalData> SearchAll()
         {
+            list.Clear();
+            int count = 0;
             connection.Open();
 
             command = connection.CreateCommand();
@@ -115,7 +120,10 @@ namespace LibraryManagementWithNaverAPI
 
             while (reader.Read())
             {
+                list.Add(new RentalData(reader.GetString(0), reader.GetString(1), reader.GetString(2), reader.GetString(3), reader.GetString(4), reader.GetDateTime(5), reader.GetInt32(6), ++count));
+
                 Console.WriteLine("\n======================================================================================================================================================");
+                Console.WriteLine("번호            : {0}", count);
                 Console.WriteLine("제목            : {0}", reader.GetString(1));
                 Console.WriteLine("저자            : {0}", reader.GetString(3));
                 Console.WriteLine("출판사          : {0}", reader.GetString(2));
@@ -125,21 +133,8 @@ namespace LibraryManagementWithNaverAPI
                 Console.WriteLine("======================================================================================================================================================");
             }
             connection.Close();
-        }
 
-        /// <summary>
-        /// 인자로 넘어온 문자열을 원하는 길이로 만들어준다.
-        /// </summary>
-        /// <param name="inputString">길이를 변경하고 싶은 문자열</param>
-        /// <param name="length">원하는 길이</param>
-        /// <returns>길이가 변환된 문자열</returns>
-        public string ConvertLength(string inputString, int length)
-        {
-            byte[] byteName1 = Encoding.Default.GetBytes(inputString + "                                                                                ");
-            byte[] byteName2 = new byte[length];
-            Array.Copy(byteName1, byteName2, length);
-
-            return Encoding.Default.GetString(byteName2);
+            return list;
         }
     }
 }

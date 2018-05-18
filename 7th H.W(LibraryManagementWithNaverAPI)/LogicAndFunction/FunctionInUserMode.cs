@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace LibraryManagementWithNaverAPI
 {
@@ -13,11 +14,15 @@ namespace LibraryManagementWithNaverAPI
         private DateTime now;
         private string no;
         private string choice;
-       
+        private List<Book> bookList;
+        private List<RentalData> rentalList;
+
         public FunctionInUserMode()
         {
             logDAO = new LogDAO();
             bookDAO = new BookDAO();
+            bookList = new List<Book>();
+            rentalList = new List<RentalData>();
             rentalDataDAO = new RentalDataDAO();
             printAboutBooks = new PrintAboutBooks();
             exceptionHandler = new ExceptionHandler();
@@ -37,16 +42,16 @@ namespace LibraryManagementWithNaverAPI
             if (no.Equals("0"))
                 return;
 
-            if (dBExceptionHandler.IsInAlreadyRentDB(id, no))
+            if (dBExceptionHandler.IsInAlreadyRentDB(id, rentalList[Convert.ToInt32(no) - 1].BookNo))
             {
                 printAboutBooks.ExtendResult("F A I L E D !");
             }
             else
             {
-                if (rentalDataDAO.GetRentalData(id, no).ExtendCount < 2)
+                if (rentalDataDAO.GetRentalData(id, rentalList[Convert.ToInt32(no) - 1].BookNo).ExtendCount < 2)
                 {
-                    logDAO.AddLog(DateTime.Now, rentalDataDAO.GetRentalData(id,no).BookName, "도서 연장");
-                    rentalDataDAO.ChangeInformationAfterExtendTime(id, no, rentalDataDAO.GetRentalData(id, no).BookReturnTime.AddDays(10), rentalDataDAO.GetRentalData(id, no).ExtendCount + 1);
+                    logDAO.AddLog(DateTime.Now, rentalDataDAO.GetRentalData(id, rentalList[Convert.ToInt32(no) - 1].BookNo).BookName, "도서 연장");
+                    rentalDataDAO.ChangeInformationAfterExtendTime(id, rentalList[Convert.ToInt32(no) - 1].BookNo, rentalDataDAO.GetRentalData(id, rentalList[Convert.ToInt32(no) - 1].BookNo).BookReturnTime.AddDays(10), rentalDataDAO.GetRentalData(id, rentalList[Convert.ToInt32(no) - 1].BookNo).ExtendCount + 1);
 
                     printAboutBooks.ExtendResult("S U C C E S S !");
                 }
@@ -72,16 +77,16 @@ namespace LibraryManagementWithNaverAPI
             if (no.Equals("0"))
                 return;
 
-            if (!dBExceptionHandler.IsInAlreadyRentDB(id, no))
+            if (!dBExceptionHandler.IsInAlreadyRentDB(id, bookList[Convert.ToInt32(no) - 1].Isbn))
             {
                 printAboutBooks.RentalResult("F A I L E D");
             }
-            else if (bookDAO.GetBook(no).Count > 0)
+            else if (bookDAO.GetBook(bookList[Convert.ToInt32(no) - 1].Isbn).Count > 0)
             {
-                Book book = bookDAO.GetBook(no);
-                bookDAO.EditBookCount(no, --book.Count);
+                Book book = bookDAO.GetBook(bookList[Convert.ToInt32(no) - 1].Isbn);
+                bookDAO.EditBookCount(bookList[Convert.ToInt32(no) - 1].Isbn, --book.Count);
                 logDAO.AddLog(DateTime.Now, book.Name, "도서 대여");
-                rentalDataDAO.AddAfterRent(new RentalData(no, book.Name, book.Pbls, book.Author, id, new DateTime(now.Year, now.Month + 1, now.Day + 10), 0));
+                rentalDataDAO.AddAfterRent(new RentalData(bookList[Convert.ToInt32(no) - 1].Isbn, book.Name, book.Pbls, book.Author, id, new DateTime(now.Year, now.Month + 1, now.Day + 10),0,0));
                 printAboutBooks.RentalResult("S U C C E S S");
             }
             else
@@ -102,24 +107,24 @@ namespace LibraryManagementWithNaverAPI
             if(mode.Equals(LibraryConstants.RENTBOOK))
             {
                 printAboutBooks.Category();
-                bookDAO.SearchAll();
+                bookList = bookDAO.SearchAll();
             }
             else if (mode.Equals(LibraryConstants.EXTENDTIME))
             {
                 printAboutBooks.ExtendTimeTitle();
-                rentalDataDAO.SearchAll();
+                rentalList = rentalDataDAO.SearchAll();
             }
             else if (mode.Equals(LibraryConstants.RETURNBOOK))
             {
                 printAboutBooks.ReturnBooksTitle();
-                rentalDataDAO.SearchAll();
+                rentalList = rentalDataDAO.SearchAll();
             }
             
-            printAboutBooks.WriteBookNo();
+            printAboutBooks.WriteNumber();
             no = Console.ReadLine();
             if (no.Equals("0"))
                 return;
-            if (!exceptionHandler.CheckBookNo(no))
+            if (!exceptionHandler.CheckBookCount(no))
                 PrintNo(mode);
         }
 
@@ -135,15 +140,15 @@ namespace LibraryManagementWithNaverAPI
             if (no.Equals("0"))
                 return;
 
-            if (dBExceptionHandler.IsInAlreadyRentDB(id, no))
+            if (dBExceptionHandler.IsInAlreadyRentDB(id, rentalList[Convert.ToInt32(no)-1].BookNo))
             {
                 printAboutBooks.ReturnResult("F A I L E D !");
             }
             else
             {
-                logDAO.AddLog(DateTime.Now, bookDAO.GetBook(no).Name, "도서 반납");
-                rentalDataDAO.ChangeAfterReturnBook(id, no);
-                bookDAO.EditBookCount(no, ++bookDAO.GetBook(no).Count);
+                logDAO.AddLog(DateTime.Now, bookDAO.GetBook(rentalList[Convert.ToInt32(no) - 1].BookNo).Name, "도서 반납");
+                rentalDataDAO.ChangeAfterReturnBook(id, rentalList[Convert.ToInt32(no) - 1].BookNo);
+                bookDAO.EditBookCount(no, ++bookDAO.GetBook(rentalList[Convert.ToInt32(no) - 1].BookNo).Count);
                 printAboutBooks.ReturnResult("S U C C E S S !");
             }
             printAboutBooks.PressAnyKey();
