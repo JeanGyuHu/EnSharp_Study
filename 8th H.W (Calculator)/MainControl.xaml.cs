@@ -13,9 +13,9 @@ namespace Hu_s_Calculator1
     {
         private bool operationAfter;  // 연산자가 눌린 바로 다음에 true
 
-        private int lastInput = 0;          //처음인지 입력 받은게 있는지 표시
+        private int lastInput = Constants.FIRST;          //처음인지 입력 받은게 있는지 표시
         private List<Data> operations;      //숫자와 연산을 저장
-        private Data lastOperation = null;  //마지막 연산에서 들어온 숫자와 연산자 저장
+        private Data last = null;  //마지막 연산에서 들어온 숫자와 연산자 저장
         private bool newLine = true;        //삭제플래그
         private AllLogPage allLogPage;      //여태 총 검색 결과를 저장하는 창
 
@@ -95,18 +95,18 @@ namespace Hu_s_Calculator1
         {
             
             //이미 연산중이고 이전에 고른 연산자가 나누기일때 바꿀 필요 없으므로 return
-            if (lastInput == 1 && operations[operations.Count - 1].Operation == Constants.Operation.DEVIDE)
+            if (lastInput == Constants.STARTED && operations[operations.Count - 1].Operation == Constants.Operation.DEVIDE)
             {
                 return;
             }
             //이미 연산중이고 이전에 고른 연산자가 나누기가 아닐때 연산자를 바꿔준다.
-            else if (lastInput == 1)
+            else if (lastInput == Constants.STARTED)
             {
                 operations.RemoveAt(operations.Count - 1);
                 operations.Add(new Data(Convert.ToDouble(NowLog.Text), Constants.Operation.DEVIDE));
                 DisplayBeforeLog();
             }
-            
+            //=일때 연산자와 숫자를 추가해주고 계산한다.
             else
             {
                 operations.Add(new Data(Convert.ToDouble(NowLog.Text), Constants.Operation.DEVIDE));
@@ -114,7 +114,7 @@ namespace Hu_s_Calculator1
                 Calculate();
             }
 
-            lastInput = 1;
+            lastInput = Constants.STARTED;
             newLine = true;
 
         }
@@ -122,12 +122,12 @@ namespace Hu_s_Calculator1
         private void ButtonMultiply_Click(object sender, RoutedEventArgs e)
         {
 
-            if (lastInput == 1 && operations[operations.Count - 1].Operation == Constants.Operation.MULTIPLY)
+            if (lastInput == Constants.STARTED && operations[operations.Count - 1].Operation == Constants.Operation.MULTIPLY)
             {
                 return;
             }
 
-            else if (lastInput == 1 && operations.Count>1)
+            else if (lastInput == Constants.STARTED && operations.Count>1)
             {
                 operations.RemoveAt(operations.Count - 1);
                 operations.Add(new Data(Convert.ToDouble(NowLog.Text.Replace(",", "")), Constants.Operation.MULTIPLY));
@@ -139,7 +139,7 @@ namespace Hu_s_Calculator1
                 DisplayBeforeLog();
                 Calculate();
             }
-            lastInput = 1;
+            lastInput = Constants.STARTED;
             newLine = true;
         }
 
@@ -147,11 +147,11 @@ namespace Hu_s_Calculator1
         {
             
 
-            if (lastInput == 1 && operations[operations.Count - 1].Operation == Constants.Operation.SUBTRACT)
+            if (lastInput == Constants.STARTED && operations[operations.Count - 1].Operation == Constants.Operation.SUBTRACT)
             {
                 return;
             }
-            else if (lastInput == 1)
+            else if (lastInput == Constants.STARTED)
             {
                 operations.RemoveAt(operations.Count - 1);
                 operations.Add(new Data(Convert.ToDouble(NowLog.Text), Constants.Operation.SUBTRACT));
@@ -164,7 +164,7 @@ namespace Hu_s_Calculator1
                 Calculate();
             }
 
-            lastInput = 1;
+            lastInput = Constants.STARTED;
             newLine = true;
 
 
@@ -173,11 +173,11 @@ namespace Hu_s_Calculator1
         private void ButtonPlus_Click(object sender, RoutedEventArgs e)
         {
             
-            if (lastInput == 1 && operations[operations.Count - 1].Operation == Constants.Operation.PLUS)
+            if (lastInput == Constants.STARTED && operations[operations.Count - 1].Operation == Constants.Operation.PLUS)
             {
                 return;
             }
-            else if (lastInput == 1)
+            else if (lastInput == Constants.STARTED)
             {
                 operations.RemoveAt(operations.Count - 1);
                 operations.Add(new Data(Convert.ToDouble(NowLog.Text), Constants.Operation.PLUS));
@@ -190,7 +190,7 @@ namespace Hu_s_Calculator1
                 Calculate();
             }
 
-            lastInput = 1;
+            lastInput = Constants.STARTED;
             newLine = true;
 
         }
@@ -203,8 +203,8 @@ namespace Hu_s_Calculator1
             if (operations.Count > 0)
             {
                 // 마지막 연산자가 있을때 연산한다.
-                lastOperation = new Data(Convert.ToDouble(NowLog.Text), operations[operations.Count - 1].Operation);
-                operations.Add(lastOperation);
+                last = new Data(Convert.ToDouble(NowLog.Text), operations[operations.Count - 1].Operation);
+                operations.Add(last);
                 log = BeforeLog.Text+NowLog.Text;
                 Calculate();
                 allLogPage.AddNewMemory(log + " = " + NowLog.Text);
@@ -212,30 +212,30 @@ namespace Hu_s_Calculator1
                 BeforeLog.Clear();
             }
             // 해야 할 연산자는 없지만 마지막 작업에 숫자가 있으면 마지막 계산을 한다.
-            else if (lastOperation != null)
+            else if (last != null)
             {
                 double value = Convert.ToDouble(NowLog.Text);
 
-                switch (lastOperation.Operation)
+                switch (last.Operation)
                 {
                     case Constants.Operation.SUBTRACT:
                         oper = " - ";
-                        NowLog.Text = Convert.ToString(value - lastOperation.Number);
+                        NowLog.Text = Convert.ToString(value - last.Number);
                         break;
                     case Constants.Operation.PLUS:
                         oper = " + ";
-                        NowLog.Text = Convert.ToString(value + lastOperation.Number);
+                        NowLog.Text = Convert.ToString(value + last.Number);
                         break;
                     case Constants.Operation.MULTIPLY:
                         oper = " × ";
-                        NowLog.Text = Convert.ToString(value * lastOperation.Number);
+                        NowLog.Text = Convert.ToString(value * last.Number);
                         break;
                     case Constants.Operation.DEVIDE:
                         oper = " ÷ ";
-                        NowLog.Text = Convert.ToString(value / lastOperation.Number);
+                        NowLog.Text = Convert.ToString(value / last.Number);
                         break;
                 }
-                allLogPage.AddNewMemory(value + oper + lastOperation.Number + " = " + NowLog.Text);
+                allLogPage.AddNewMemory(value + oper + last.Number + " = " + NowLog.Text);
             }
             
             //외 아무 것도 하지 않는다.
@@ -246,7 +246,7 @@ namespace Hu_s_Calculator1
             
             operations.Clear();
             newLine = true;
-            lastInput = 0;
+            lastInput = Constants.FIRST;
 
         }
 
@@ -271,69 +271,70 @@ namespace Hu_s_Calculator1
             }
             else
             {
-                double newValue = operations[0].Number;
+                double result = operations[0].Number;
 
                 for (int i = 0; i < operations.Count - 1; i++)
                 {
                     switch (operations[i].Operation)
                     {
                         case Constants.Operation.SUBTRACT:
-                            newValue = newValue - operations[i + 1].Number;
+                            result = result - operations[i + 1].Number;
                             break;
                         case Constants.Operation.PLUS:
-                            newValue = newValue + operations[i + 1].Number;
+                            result = result + operations[i + 1].Number;
                             break;
                         case Constants.Operation.MULTIPLY:
-                            newValue = newValue * operations[i + 1].Number;
+                            result = result * operations[i + 1].Number;
                             break;
                         case Constants.Operation.DEVIDE:
                             if (operations[i + 1].Number == 0)
                             {
+                                NowLog.FontSize = 30;
                                 NowLog.Text = "0으로 나눌 수 없습니다.";
                                 return;
                             }
 
-                            newValue = newValue / operations[i + 1].Number;
+                            result = result / operations[i + 1].Number;
                             break;
                     }
                 }
 
-                NowLog.Text = Convert.ToString(newValue);
+                NowLog.Text = Convert.ToString(result);
             }
         }
 
         private void DisplayBeforeLog()
         {
-            string newLiteral = "";
+            string log = "";
 
             for (int i = 0; i < operations.Count; i++)
             {
-                newLiteral += operations[i].Number;
+                log += operations[i].Number;
 
                 switch (operations[i].Operation)
                 {
                     case Constants.Operation.SUBTRACT:
-                        newLiteral += " - ";
+                        log += " - ";
                         break;
                     case Constants.Operation.PLUS:
-                        newLiteral += " + ";
+                        log += " + ";
                         break;
                     case Constants.Operation.MULTIPLY:
-                        newLiteral += " × ";
+                        log += " × ";
                         break;
                     case Constants.Operation.DEVIDE:
-                        newLiteral += " ÷ ";
+                        log += " ÷ ";
                         break;
                 }
             }
 
-            if (newLiteral.Length > 62)
+            if (log.Length > 62)
             {
-                BeforeLog.Text = newLiteral.Remove(62);
+                BeforeLog.Text = log.Remove(62);
             }
             else
             {
-                BeforeLog.Text = newLiteral;
+                BeforeLog.Text = log;
             }
         }
 

@@ -15,6 +15,7 @@ namespace Hu_s_Calculator1
             DEVIDE
         }
 
-        
+        public const int FIRST = 0;
+        public const int STARTED = 1;
     }
 }

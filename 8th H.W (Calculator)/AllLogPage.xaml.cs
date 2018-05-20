@@ -25,6 +25,11 @@ namespace Hu_s_Calculator1
             InitializeComponent();
         }
 
+        private void ResetButton_Clicked(object sender, RoutedEventArgs e)
+        {
+            storage.Text = "아직 기록이 없음";
+        }
+
         public void SetTextBox(string before,string now)
         {
             BeforeLog.Text = before;
@@ -98,6 +103,10 @@ namespace Hu_s_Calculator1
                 NowLog.SelectionLength = 0;
             }
             AutoFontSize(NowLog.Text);
+            if (NowLog.Text.Equals("0으로 나눌 수 없습니다."))
+            {
+                NowLog.FontSize = 30;
+            }
         }
 
         public void AutoFontSize(string text)
