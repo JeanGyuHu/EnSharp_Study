@@ -14,8 +14,8 @@ namespace Hu_s_Calculator1
         private bool operationAfter;  // 연산자가 눌린 바로 다음에 true
 
         private int lastInput = Constants.FIRST;          //처음인지 입력 받은게 있는지 표시
-        private List<Data> operations;      //숫자와 연산을 저장
-        private Data last = null;  //마지막 연산에서 들어온 숫자와 연산자 저장
+        private List<DataVO> operations;      //숫자와 연산을 저장
+        private DataVO last = null;  //마지막 연산에서 들어온 숫자와 연산자 저장
         private bool newLine = true;        //삭제플래그
         private AllLogPage allLogPage;      //여태 총 검색 결과를 저장하는 창
 
@@ -24,7 +24,7 @@ namespace Hu_s_Calculator1
             InitializeComponent();
 
             NowLog.Text = "0";
-            operations = new List<Data>();
+            operations = new List<DataVO>();
             allLogPage = logPage;
         }
 
@@ -85,8 +85,31 @@ namespace Hu_s_Calculator1
 
         private void ButtonNegate_Click(object sender, RoutedEventArgs e)
         {
-            if (BeforeLog.Text != "")
-                BeforeLog.Text = "negate(" + BeforeLog.Text + ")";
+            if (BeforeLog.Text.Equals(""))
+            {
+
+            }
+
+            else if (BeforeLog.Text[BeforeLog.Text.Length - 1].Equals(')'))
+            {
+                if (NowLog.Text[0].Equals('-'))
+                {
+                    int index = BeforeLog.Text.LastIndexOf(NowLog.Text.Substring(1,NowLog.Text.Length-1));
+                    string text = BeforeLog.Text;
+                    text = text.Insert(index, "negate(");
+                    BeforeLog.Text = text.Insert(index+7 + NowLog.Text.Length, ")");
+
+                }
+                else
+                {
+                    int index = BeforeLog.Text.LastIndexOf(NowLog.Text);
+                    string text = BeforeLog.Text;
+                    text =text.Insert(index, "negate(");
+                    BeforeLog.Text = text.Insert(index+7 + NowLog.Text.Length, ")");
+                }
+            }
+            else 
+                BeforeLog.Text += "negate(" + NowLog.Text + ")";
 
             NowLog.Text = (-double.Parse(NowLog.Text)).ToString();
         }
@@ -103,13 +126,13 @@ namespace Hu_s_Calculator1
             else if (lastInput == Constants.STARTED)
             {
                 operations.RemoveAt(operations.Count - 1);
-                operations.Add(new Data(Convert.ToDouble(NowLog.Text), Constants.Operation.DEVIDE));
+                operations.Add(new DataVO(Convert.ToDouble(NowLog.Text), Constants.Operation.DEVIDE));
                 DisplayBeforeLog();
             }
             //=일때 연산자와 숫자를 추가해주고 계산한다.
             else
             {
-                operations.Add(new Data(Convert.ToDouble(NowLog.Text), Constants.Operation.DEVIDE));
+                operations.Add(new DataVO(Convert.ToDouble(NowLog.Text), Constants.Operation.DEVIDE));
                 DisplayBeforeLog();
                 Calculate();
             }
@@ -130,12 +153,12 @@ namespace Hu_s_Calculator1
             else if (lastInput == Constants.STARTED && operations.Count>1)
             {
                 operations.RemoveAt(operations.Count - 1);
-                operations.Add(new Data(Convert.ToDouble(NowLog.Text.Replace(",", "")), Constants.Operation.MULTIPLY));
+                operations.Add(new DataVO(Convert.ToDouble(NowLog.Text.Replace(",", "")), Constants.Operation.MULTIPLY));
                 DisplayBeforeLog();
             }
             else
             {
-                operations.Add(new Data(Convert.ToDouble(NowLog.Text.Replace(",", "")), Constants.Operation.MULTIPLY));
+                operations.Add(new DataVO(Convert.ToDouble(NowLog.Text.Replace(",", "")), Constants.Operation.MULTIPLY));
                 DisplayBeforeLog();
                 Calculate();
             }
@@ -154,12 +177,12 @@ namespace Hu_s_Calculator1
             else if (lastInput == Constants.STARTED)
             {
                 operations.RemoveAt(operations.Count - 1);
-                operations.Add(new Data(Convert.ToDouble(NowLog.Text), Constants.Operation.SUBTRACT));
+                operations.Add(new DataVO(Convert.ToDouble(NowLog.Text), Constants.Operation.SUBTRACT));
                 DisplayBeforeLog();
             }
             else
             {
-                operations.Add(new Data(Convert.ToDouble(NowLog.Text), Constants.Operation.SUBTRACT));
+                operations.Add(new DataVO(Convert.ToDouble(NowLog.Text), Constants.Operation.SUBTRACT));
                 DisplayBeforeLog();
                 Calculate();
             }
@@ -180,12 +203,12 @@ namespace Hu_s_Calculator1
             else if (lastInput == Constants.STARTED)
             {
                 operations.RemoveAt(operations.Count - 1);
-                operations.Add(new Data(Convert.ToDouble(NowLog.Text), Constants.Operation.PLUS));
+                operations.Add(new DataVO(Convert.ToDouble(NowLog.Text), Constants.Operation.PLUS));
                 DisplayBeforeLog();
             }
             else
             {
-                operations.Add(new Data(Convert.ToDouble(NowLog.Text), Constants.Operation.PLUS));
+                operations.Add(new DataVO(Convert.ToDouble(NowLog.Text), Constants.Operation.PLUS));
                 DisplayBeforeLog();
                 Calculate();
             }
@@ -203,7 +226,7 @@ namespace Hu_s_Calculator1
             if (operations.Count > 0)
             {
                 // 마지막 연산자가 있을때 연산한다.
-                last = new Data(Convert.ToDouble(NowLog.Text), operations[operations.Count - 1].Operation);
+                last = new DataVO(Convert.ToDouble(NowLog.Text), operations[operations.Count - 1].Operation);
                 operations.Add(last);
                 log = BeforeLog.Text+NowLog.Text;
                 Calculate();
