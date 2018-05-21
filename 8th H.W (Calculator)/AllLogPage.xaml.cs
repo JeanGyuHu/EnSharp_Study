@@ -28,6 +28,8 @@ namespace Hu_s_Calculator1
         private void ResetButton_Clicked(object sender, RoutedEventArgs e)
         {
             storage.Text = "아직 기록이 없음";
+            MyGrid.Height = 295;
+            
         }
 
         public void SetTextBox(string before,string now)
@@ -47,7 +49,10 @@ namespace Hu_s_Calculator1
             answer = calculation.Remove(0, index);
 
             if (storage.Text.Equals("아직 기록이 없음"))
+            {
                 storage.Text = problem + "\n" + answer + "\n";
+                MyGrid.Height = 260;
+            }
             else
             {
                 storage.Text += "\n" + problem + "\n" + answer + "\n";
@@ -72,7 +77,11 @@ namespace Hu_s_Calculator1
                 checkE = lgsText.IndexOf('E');
 
                 if (NowLog.Text.Equals("0으로 나눌 수 없습니다."))
+                {
+                    NowLog.FontSize = 30;
                     return;
+                }
+                    
                 else if (index.Equals(-1))
                 {
                     real = lgsText;
@@ -103,10 +112,6 @@ namespace Hu_s_Calculator1
                 NowLog.SelectionLength = 0;
             }
             AutoFontSize(NowLog.Text);
-            if (NowLog.Text.Equals("0으로 나눌 수 없습니다."))
-            {
-                NowLog.FontSize = 30;
-            }
         }
 
         public void AutoFontSize(string text)

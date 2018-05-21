@@ -66,8 +66,8 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Constants.cs" />
-    <Compile Include="DataVO.cs" />
+    <Compile Include="Constant\Constants.cs" />
+    <Compile Include="V.O\DataVO.cs" />
     <Compile Include="MainControl.xaml.cs">
       <DependentUpon>MainControl.xaml</DependentUpon>
     </Compile>
@@ -112,7 +112,7 @@
     <Resource Include="Image\menu.PNG" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Calculator.ico" />
+    <Resource Include="Icon\Calculator.ico" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Image\trash.png" />

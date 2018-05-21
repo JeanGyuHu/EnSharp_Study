@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Hu_s_Calculator1"
         mc:Ignorable="d"
-        Title="계산기" Height="510" Width="335" ResizeMode="NoResize" Background="#B7B7B7" Icon="Calculator.ico">
+        Title="계산기" Height="510" Width="335" ResizeMode="NoResize" Background="#B7B7B7" Icon="Icon\Calculator.ico">
 
     <Grid Name="MainGrid">
         

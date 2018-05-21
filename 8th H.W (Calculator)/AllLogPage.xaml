@@ -17,13 +17,13 @@
             </Button>
         </DockPanel>
         <ScrollViewer Height="65" DockPanel.Dock="Top" Background="#B7B7B7" VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Auto">
-            <TextBox Name="BeforeLog" Height="65" Background="#B7B7B7" HorizontalAlignment="Right" VerticalAlignment="Center" FontSize="20" Foreground="Gray" BorderThickness="0" IsReadOnly="True"></TextBox>
+            <TextBox Name="BeforeLog" Height="65" Background="#B7B7B7" HorizontalAlignment="Right" VerticalAlignment="Top" FontSize="20" Foreground="Gray" BorderThickness="0" IsReadOnly="True"></TextBox>
         </ScrollViewer>
 
         <TextBox Name="NowLog" Text="0" Width="330" Height="85" DockPanel.Dock="Top" Background="#B7B7B7" VerticalAlignment="Center" FontSize="48" FontWeight="Bold" MaxLength="17" BorderThickness="0" IsReadOnly="True" TextAlignment="Right" TextChanged="Txt_TextChanged"></TextBox>
-        <Grid Name="MyGrid" DockPanel.Dock="Top" Height="260" ShowGridLines="False">
+        <Grid Name="MyGrid" DockPanel.Dock="Top" Height="295" ShowGridLines="False">
             <ScrollViewer>
-                <TextBox Name="storage" Background="#B7B7B7" Text ="아직 기록이 없음" IsReadOnly="True" TextAlignment="Right" FontWeight="Bold" FontSize="16"></TextBox>
+                <TextBox Name="storage" TextWrapping="Wrap" Background="#B7B7B7" Text ="아직 기록이 없음" IsReadOnly="True" TextAlignment="Right" FontWeight="Bold" FontSize="16" ></TextBox>
             </ScrollViewer>
             
         </Grid>

@@ -64,6 +64,7 @@ namespace Hu_s_Calculator1
 
         private void ButtonDelete_Click(object sender, RoutedEventArgs e)
         {
+            if(NowLog.Text.Length>0)
             NowLog.Text = NowLog.Text.Remove(NowLog.Text.Length - 1);
             if (NowLog.Text.Length == 0)
                 NowLog.Text = "0";
@@ -80,7 +81,8 @@ namespace Hu_s_Calculator1
             NowLog.Text = "0";
             BeforeLog.Text = "";
             operationAfter = false;
-
+            lastInput = Constants.FIRST;
+            newLine = true;
         }
 
         private void ButtonNegate_Click(object sender, RoutedEventArgs e)
@@ -150,15 +152,15 @@ namespace Hu_s_Calculator1
                 return;
             }
 
-            else if (lastInput == Constants.STARTED && operations.Count>1)
+            else if (lastInput == Constants.STARTED)
             {
                 operations.RemoveAt(operations.Count - 1);
-                operations.Add(new DataVO(Convert.ToDouble(NowLog.Text.Replace(",", "")), Constants.Operation.MULTIPLY));
+                operations.Add(new DataVO(Convert.ToDouble(NowLog.Text), Constants.Operation.MULTIPLY));
                 DisplayBeforeLog();
             }
             else
             {
-                operations.Add(new DataVO(Convert.ToDouble(NowLog.Text.Replace(",", "")), Constants.Operation.MULTIPLY));
+                operations.Add(new DataVO(Convert.ToDouble(NowLog.Text), Constants.Operation.MULTIPLY));
                 DisplayBeforeLog();
                 Calculate();
             }
@@ -228,8 +230,13 @@ namespace Hu_s_Calculator1
                 // 마지막 연산자가 있을때 연산한다.
                 last = new DataVO(Convert.ToDouble(NowLog.Text), operations[operations.Count - 1].Operation);
                 operations.Add(last);
+
+                if (BeforeLog.Text.EndsWith(")"))
+                    log = BeforeLog.Text;
+                else
                 log = BeforeLog.Text+NowLog.Text;
-                Calculate();
+
+                Calculate();             
                 allLogPage.AddNewMemory(log + " = " + NowLog.Text);
                 operations.Clear();
                 BeforeLog.Clear();
