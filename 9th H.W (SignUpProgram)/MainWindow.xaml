@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Hu_s_SignUp"
         mc:Ignorable="d"
-        Title="Hu's SignUpPage" Height="350" Width="565" ResizeMode="NoResize">
+        Title="Hu's SignUpPage" Height="390" Width="565" ResizeMode="NoResize" Closing="Window_Closing">
 
     <Grid Name="MainGrid">
         

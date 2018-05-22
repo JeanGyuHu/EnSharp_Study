@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Hu_s_SignUp"
              mc:Ignorable="d" 
-             d:DesignHeight="330" d:DesignWidth="565">
+             d:DesignHeight="370" d:DesignWidth="565">
     <UserControl.Resources>
         <Style x:Key="Link" TargetType="Button">
             <Setter Property="VerticalAlignment" Value="Center"/>
@@ -29,14 +29,14 @@
             </Setter>
         </Style>
     </UserControl.Resources>
-    
+
     <Grid Height="330" Margin="0,0,-0.2,-0.4" VerticalAlignment="Top">
         <Grid.RowDefinitions>
             <RowDefinition Height="2*"/>
             <RowDefinition Height="10*"/>
-            <RowDefinition Height="2*"/>
-            <RowDefinition Height="10*"/>
+            <RowDefinition Height="4*"/>
             <RowDefinition Height="12*"/>
+            <RowDefinition Height="10*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
@@ -60,10 +60,9 @@
             <PasswordBox Name="passwordBox" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Width="100" Height="30"/>
             <Button Name="login" Content="로그인" Grid.Column="2" Grid.RowSpan="2" HorizontalAlignment="Left" VerticalAlignment="Center" Width="50" Height="45" Click="Login_Click"/>
         </Grid>
-        <Label Content="     " Grid.Row="4" Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Left"/>
         <Button Name="signUpButton" Content="회원가입 바로가기" Style="{StaticResource Link}" Grid.Row="4" Grid.Column="1" Click="SignUp_Click"/>
-        <Button Name ="findIdButton" Content="아이디를 잊어버리셨습니까?" Style="{StaticResource Link}" Grid.Row="4" Grid.Column="1" Width="110" Height="12" HorizontalContentAlignment="Center" FontSize="8" Margin="9.8,27.4,150.6,65.6" Click="FindId_Click"/>
-        <Button Name="findPwButton" Content="비밀번호를 잊어버리셨습니까?" Style="{StaticResource Link}" Grid.Row="4" Grid.Column="1" Width="110" Height="12" HorizontalContentAlignment="Center" FontSize="8" Margin="141.8,26.4,10.6,65.6" Click="FindPw_Click"/>
+        <Button Name ="findIdButton" Content="아이디를 잊어버리셨습니까?" Style="{StaticResource Link}" Grid.Row="4" Grid.Column="1" Width="110" HorizontalContentAlignment="Center" FontSize="8" Margin="11.2,17.6,0,57.6" Click="FindId_Click" VerticalAlignment="Stretch" HorizontalAlignment="Left"/>
+        <Button Name="findPwButton" Content="비밀번호를 잊어버리셨습니까?" Style="{StaticResource Link}" Grid.Row="4" Grid.Column="1" Width="110" HorizontalContentAlignment="Center" FontSize="8" Margin="0,17.6,11.2,57.6" Click="FindPw_Click" HorizontalAlignment="Right" VerticalAlignment="Stretch"/>
         <Label Name="message" Grid.Row="4" Grid.ColumnSpan="3" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="13" />
     </Grid>
 </UserControl>

@@ -5,8 +5,15 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Hu_s_SignUp"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="330" d:DesignWidth="565">
     <Grid>
-            
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Button Name="editButton" Content="회원 정보 수정" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Height="150" Width="120" Click="EditButton_Click"/>
+        <Button Name="logOutButton" Content="로그아웃" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Height="150" Width="120" Click="LogOutButton_Click"/>
+        <Button Name="signOutButton" Content="회원 탈퇴" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" Height="150" Width="120"/>
     </Grid>
 </UserControl>

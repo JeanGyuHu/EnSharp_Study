@@ -22,33 +22,40 @@ namespace Hu_s_SignUp
         FindId findId;
         FindPassword findPassword;
         SignUp signUp;
+        MainWindow main;
+        AfterLogin afterLogin;
 
-        public Login()
+        public Login(MainWindow main)
         {
             InitializeComponent();
-            findId = new FindId();
-            findPassword = new FindPassword();
-            signUp = new SignUp();
+
+            this.main = main;
+            signUp = new SignUp(main, this);
+            afterLogin = new AfterLogin(main, this);
         }
 
         private void FindId_Click(object sender, RoutedEventArgs e)
         {
+            findId = new FindId();
             findId.Show();
         }
 
         private void FindPw_Click(object sender, RoutedEventArgs e)
         {
+            findPassword = new FindPassword();
             findPassword.Show();
         }
         
         private void SignUp_Click(object sender, RoutedEventArgs e)
         {
-            signUp.Show();
+            main.MainGrid.Children.Clear();
+            main.MainGrid.Children.Add(signUp);
         }
 
         private void Login_Click(object sender, RoutedEventArgs e)
         {
-
+            main.MainGrid.Children.Clear();
+            main.MainGrid.Children.Add(afterLogin);
         }
     }
 }
