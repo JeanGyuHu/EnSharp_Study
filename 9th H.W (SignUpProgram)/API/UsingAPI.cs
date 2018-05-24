@@ -22,7 +22,7 @@ namespace Hu_s_SignUp
             random = new Random();
         }
 
-        public void SendEMail()
+        public int SendEMail(string email)
         {
             client.UseDefaultCredentials = false; // 시스템에 설정된 인증 정보를 사용하지 않는다.
             client.EnableSsl = true;  // SSL을 사용한다.
@@ -30,7 +30,7 @@ namespace Hu_s_SignUp
             client.Credentials = new System.Net.NetworkCredential("gjwlsrb1700@gmail.com", "Hsjk0629!");
 
             MailAddress from = new MailAddress("gjwlsrb1700@gmail.com", "Hu's", System.Text.Encoding.UTF8);
-            MailAddress to = new MailAddress("gjwlsrb1700@gmail.com");
+            MailAddress to = new MailAddress(email);
 
             MailMessage message = new MailMessage(from, to);
             number = random.Next(111111, 999999);
@@ -43,7 +43,7 @@ namespace Hu_s_SignUp
             {
                 // 동기로 메일을 보낸다.
                 client.Send(message);
-
+                
                 // Clean up.
                 message.Dispose();
             }
@@ -51,6 +51,7 @@ namespace Hu_s_SignUp
             {
                 MessageBox.Show(ex.ToString());
             }
+            return number;
         }
 
         public static string Find(string searchWord, int page, int count, List<string> v, out int n)

@@ -14,6 +14,6 @@
         </Grid.ColumnDefinitions>
         <Button Name="editButton" Content="회원 정보 수정" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Height="150" Width="120" Click="EditButton_Click"/>
         <Button Name="logOutButton" Content="로그아웃" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Height="150" Width="120" Click="LogOutButton_Click"/>
-        <Button Name="signOutButton" Content="회원 탈퇴" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" Height="150" Width="120"/>
+        <Button Name="signOutButton" Content="회원 탈퇴" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" Height="150" Width="120" Click="SignOutButton_Click"/>
     </Grid>
 </UserControl>

@@ -5,13 +5,15 @@ using System.Text;
 
 namespace Hu_s_SignUp
 {
-    class MemberVO
+    public class MemberVO
     {
         string id;
         string password;
         string name;
         string residentNumber;
+        string addressNumber;
         string address;
+        string addressDetail;
         string phoneNumber;
         string email;
 
@@ -39,12 +41,23 @@ namespace Hu_s_SignUp
             set { residentNumber = value; }
         }
 
+        public string AddressNumber
+        {
+            get { return addressNumber; }
+            set { addressNumber = value; }
+        }
+
         public string Address
         {
             get { return address; }
             set { address = value; }
         }
 
+        public string AddressDetail
+        {
+            get { return addressDetail; }
+            set { addressDetail = value; }
+        }
         public string PhoneNumber
         {
             get { return phoneNumber; }
@@ -57,13 +70,17 @@ namespace Hu_s_SignUp
             set { email = value; }
         }
 
-        public MemberVO (string id, string pw, string name, string residentNumber, string address, string phone, string email)
+        public MemberVO() { }
+
+        public MemberVO (string id, string pw, string name, string residentNumber, string addressNumber, string address,string addressDetail, string phone, string email)
         {
             Id = id;
             Password = pw;
             Name = name;
             ResidentNumber = residentNumber;
+            AddressNumber = addressNumber;
             Address = address;
+            AddressDetail = addressDetail;
             PhoneNumber = phone;
             Email = email;
         }

@@ -21,15 +21,18 @@ namespace Hu_s_SignUp
     public partial class FindId : Window
     {
         bool isFill;
+        int creditNumber;
         DispatcherTimer timer;
         TimeSpan time;
         UsingAPI usingAPI;
+        MemberDAO memberDAO;
 
         public FindId()
         {
             InitializeComponent();
             isFill = false;
             usingAPI = new UsingAPI();
+            memberDAO = new MemberDAO();
         }
 
         private void FindId_Closing(object sender, CancelEventArgs e)
@@ -71,6 +74,8 @@ namespace Hu_s_SignUp
                     timer.Stop();
 
                     MessageBox.Show("시간이 초과되었습니다.", "인증 실패");
+                    emailTextBox.Focusable = true;
+                    emailButton.IsEnabled = true;
                     confirmPanel.Visibility = Visibility.Hidden;
                 }
                 time = time.Add(TimeSpan.FromSeconds(-1));
@@ -81,9 +86,34 @@ namespace Hu_s_SignUp
 
         private void EmailButton_Click(object sender, RoutedEventArgs e)
         {
-            usingAPI.SendEMail();
-            confirmPanel.Visibility = Visibility.Visible;
-            SetTimer();
+            if (memberDAO.CheckEmail(emailTextBox.Text) && emailTextBox.Text.Length>8)
+            {
+                emailTextBox.Focusable = false;
+                emailButton.IsEnabled = false;
+                creditNumber = usingAPI.SendEMail(emailTextBox.Text);
+                confirmPanel.Visibility = Visibility.Visible;
+                SetTimer();
+            }
+            else
+            {
+                MessageBox.Show("가입되지 않은 이메일입니다!", "찾기 실패");
+            }
+        }
+
+        private void CheckNumberButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (ConfirmTextBox.Text.Equals(creditNumber.ToString()))
+            {
+                answer.Content = memberDAO.FindMember(emailTextBox.Text,Constants.SEARCH_WITH_EMAIL).Id;
+                timer.Stop();
+                confirmPanel.Visibility = Visibility.Hidden;
+            }
+            else
+            {
+                MessageBox.Show("인증번호가 틀렸습니다!", "실패");
+                emailTextBox.Focusable = true;
+                emailButton.IsEnabled = true;
+            }
         }
     }
 }

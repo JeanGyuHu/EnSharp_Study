@@ -24,6 +24,7 @@ namespace Hu_s_SignUp
         SignUp signUp;
         MainWindow main;
         AfterLogin afterLogin;
+        MemberDAO memberDAO;
 
         public Login(MainWindow main)
         {
@@ -32,6 +33,7 @@ namespace Hu_s_SignUp
             this.main = main;
             signUp = new SignUp(main, this);
             afterLogin = new AfterLogin(main, this);
+            memberDAO = new MemberDAO();
         }
 
         private void FindId_Click(object sender, RoutedEventArgs e)
@@ -54,8 +56,19 @@ namespace Hu_s_SignUp
 
         private void Login_Click(object sender, RoutedEventArgs e)
         {
-            main.MainGrid.Children.Clear();
-            main.MainGrid.Children.Add(afterLogin);
+            if (memberDAO.CheckLogin(idTextBox.Text, passwordBox.Password))
+            {
+                main.MainGrid.Children.Clear();
+                afterLogin.SetId(idTextBox.Text);
+                main.MainGrid.Children.Add(afterLogin);
+            }
+            else
+            {
+                MessageBox.Show("아이디와 비밀번호가 틀렸습니다.", "로그인 실패");
+                idTextBox.Clear();
+                passwordBox.Clear();
+            }
+            
         }
     }
 }

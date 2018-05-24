@@ -23,11 +23,16 @@ namespace Hu_s_SignUp
         bool isFill;
         DispatcherTimer timer;
         TimeSpan time;
+        MemberDAO memberDAO;
+        UsingAPI usingAPI;
+        int creditNumber;
 
         public FindPassword()
         {
             InitializeComponent();
             isFill = false;
+            memberDAO = new MemberDAO();
+            usingAPI = new UsingAPI();
         }
 
         private void FindId_Closing(object sender, CancelEventArgs e)
@@ -73,8 +78,26 @@ namespace Hu_s_SignUp
 
         private void EmailButton_Click(object sender, RoutedEventArgs e)
         {
-            confirmPanel.Visibility = Visibility.Visible;
-            SetTimer();
+            if (memberDAO.CheckEmail(emailTextBox.Text) && emailTextBox.Text.Length > 8)
+            {
+                creditNumber = usingAPI.SendEMail(emailTextBox.Text);
+                confirmPanel.Visibility = Visibility.Visible;
+                SetTimer();
+            }
+            else
+            {
+                MessageBox.Show("가입되지 않은 이메일입니다!", "찾기 실패");
+            }
+        }
+
+        private void CheckNumberButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (confirmTextBox.Text.Equals(creditNumber.ToString()))
+            {
+                answer.Content = memberDAO.FindMember(emailTextBox.Text,Constants.SEARCH_WITH_EMAIL).Password;
+                timer.Stop();
+                confirmPanel.Visibility = Visibility.Hidden;
+            }
         }
     }
 }
