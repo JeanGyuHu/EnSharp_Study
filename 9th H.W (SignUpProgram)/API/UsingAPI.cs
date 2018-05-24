@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
@@ -12,6 +13,7 @@ namespace Hu_s_SignUp
 {
     class UsingAPI
     {
+        List<AddressVO> list;
         SmtpClient client;
         Random random;
         int number;
@@ -19,6 +21,7 @@ namespace Hu_s_SignUp
         public UsingAPI()
         {
             client = new SmtpClient("smtp.gmail.com", 587);
+            list = new List<AddressVO>();
             random = new Random();
         }
 
@@ -43,7 +46,7 @@ namespace Hu_s_SignUp
             {
                 // 동기로 메일을 보낸다.
                 client.Send(message);
-                
+
                 // Clean up.
                 message.Dispose();
             }
@@ -54,75 +57,42 @@ namespace Hu_s_SignUp
             return number;
         }
 
-        public static string Find(string searchWord, int page, int count, List<string> v, out int n)
+        public List<AddressVO> Find(string search)
         {
-            n = 0;
-            try
-            {
-                HttpWebRequest rq = (HttpWebRequest)WebRequest.Create(
-                    "http://openapi.epost.go.kr/postal/retrieveNewAdressAreaCdSearchAllService/retrieveNewAdressAreaCdSearchAllService/getNewAddressListAreaCdSearchAll"
-                    + "?ServiceKey=KLhvysyVkBRKcl2PDgNMvw5dpdXCOLuptvhFJ3m84Pzy5PjlkUmihb5kpkDlxiIoynPEmEgpDB%2BvA%2FTMv4N%2BeA%3D%3D" // 서비스키
-                    + "&countPerPage=" + 10 // 페이지당 출력될 개수를 지정(최대 50)
-                    + "&currentPage=" + 1 // 출력될 페이지 번호
-                    + "&srchwrd=" + HttpUtility.UrlPathEncode(searchWord) // 검색어
-                    );
-                rq.Headers = new WebHeaderCollection();
-                rq.Headers.Add("Accept-language", "ko");
-                bool bOk = false; // <successYN>Y</successYN> 획득 여부
-                searchWord = null; // 에러 메시지
-                HttpWebResponse rp = (HttpWebResponse)rq.GetResponse();
-                XmlTextReader r = new XmlTextReader(rp.GetResponseStream());
+            string text = "";
+            //string query = "윔피키드 Diary of a Wimpy Kid Box Set : Book 1-11 & DO-IT-YOURSELF Book"; // 검색할 문자열
+            string url = "http://openapi.epost.go.kr/postal/retrieveNewAdressAreaCdService/retrieveNewAdressAreaCdService/getNewAddressListAreaCd"; // 결과가 JSON 포맷
+            string ServiceKey = "KLhvysyVkBRKcl2PDgNMvw5dpdXCOLuptvhFJ3m84Pzy5PjlkUmihb5kpkDlxiIoynPEmEgpDB%2BvA%2FTMv4N%2BeA%3D%3D";
 
-                while (r.Read())
+            string qry = String.Format("{0}?searchSe={1}&srchwrd={2}&encoding=UTF-8&mediaType=application/json&serviceKey={3}"
+                                                                    , url, "road", search, ServiceKey);
+
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(qry);
+            //request.Headers.Add("X-Naver-Client-Id", "1qfVtx6gi6giA4Vpr3K3"); // 클라이언트 아이디
+            //request.Headers.Add("X-Naver-Client-Secret", "VQtTBnvGkp");       // 클라이언트 시크릿
+            HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+            string status = response.StatusCode.ToString();
+
+            if (status == "OK")
+            {
+                Stream stream = response.GetResponseStream();
+                StreamReader reader = new StreamReader(stream, Encoding.UTF8);
+                text = reader.ReadToEnd();
+
+                XmlDocument xmlDoc = new XmlDocument();
+                xmlDoc.LoadXml(text);
+                XmlNodeList address = xmlDoc.GetElementsByTagName("newAddressListAreaCd");
+                list.Clear();
+                foreach (XmlNode nodeAddress in address)
                 {
-                    if (r.NodeType == XmlNodeType.Element)
-                    {
-                        if (bOk)
-                        {
-                            if (r.Name == "zipNo" || // 우편번호
-                                r.Name == "lnmAdres" || // 도로명 주소
-                                r.Name == "rnAdres") // 지번 주소
-                            {
-                                v.Add(r.ReadString());
-                            }
-                            else if (r.Name == "totalCount") // 전체 검색수
-                            {
-                                int.TryParse(r.ReadString(), out n);
-                            }
-                            // else if (r.Name == "currentPage") // 현재 페이지 번호
-                            // {
-                            //  int.TryParse(r.ReadString(), p);
-                            // }
-                        }
-                        else
-                        {
-                            if (r.Name == "successYN")
-                            {
-                                if (r.ReadString() == "Y") bOk = true; // 검색 성공
-                            }
-                            else if (r.Name == "errMsg") // 에러 메시지
-                            {
-                                searchWord = r.ReadString();
-                                break;
-                            }
-                        }
-                    }
-                }
-
-                r.Close();
-                rp.Close();
-
-                if (searchWord == null)
-                { // OK!
-                    if (v.Count < 3)
-                        searchWord = "검색결과가 없습니다.";
+                    list.Add(new AddressVO(nodeAddress["zipNo"].InnerText, nodeAddress["lnmAdres"].InnerText, nodeAddress["rnAdres"].InnerText)); 
                 }
             }
-            catch (Exception e)
+            else
             {
-                searchWord = e.Message;
+                Console.WriteLine("Error 발생=" + status);
             }
-            return searchWord;
+            return list;
         }
     }
 }

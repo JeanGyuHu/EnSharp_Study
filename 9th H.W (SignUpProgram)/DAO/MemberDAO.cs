@@ -189,7 +189,6 @@ namespace Hu_s_SignUp
             command.CommandText = "select * from member where residentNumber = @residentNumber";
             command.Parameters.Add("@residentNumber", MySqlDbType.VarChar).Value = residentNumber;
 
-
             reader = command.ExecuteReader();
 
             while (reader.Read())

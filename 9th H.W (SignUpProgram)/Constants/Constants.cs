@@ -15,7 +15,8 @@ namespace Hu_s_SignUp
         public const int ERROR_ID_SPECIAL = 1;
         public const int ERROR_ID_ALREADY = 2;
         public const int ERROR_ID_SPACE = 3;
-        public const int SUCCESS_ID = 4;
+        public const int ERRO_ID_KOREAN = 4;
+        public const int SUCCESS_ID = 5;
         
         public const int ERROR_PW_LENGTH = 0;
         public const int ERROR_PW_KOREAN = 1;
@@ -35,6 +36,7 @@ namespace Hu_s_SignUp
         public const int ERROR_EMAIL_SPECIAL = 1;
         public const int ERROR_EMAIL_ALREADY = 2;
         public const int ERROR_EMAIL_SPACE = 3;
-        public const int SUCCESS_EMAIL = 4;
+        public const int ERROR_EMAIL_KOREAN = 4;
+        public const int SUCCESS_EMAIL = 5;
     }
 }

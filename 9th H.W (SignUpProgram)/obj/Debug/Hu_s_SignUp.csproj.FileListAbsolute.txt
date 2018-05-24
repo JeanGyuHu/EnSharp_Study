@@ -28,3 +28,5 @@ C:\Users\gjwls\source\repos\Hu_s_SignUp\obj\Debug\EditInformation.g.cs
 C:\Users\gjwls\source\repos\Hu_s_SignUp\obj\Debug\EditInformation.baml
 C:\Users\gjwls\source\repos\Hu_s_SignUp\bin\Debug\MySql.Data.dll
 C:\Users\gjwls\source\repos\Hu_s_SignUp\bin\Debug\MySql.Data.xml
+C:\Users\gjwls\source\repos\Hu_s_SignUp\obj\Debug\FindAddress.g.cs
+C:\Users\gjwls\source\repos\Hu_s_SignUp\obj\Debug\FindAddress.baml

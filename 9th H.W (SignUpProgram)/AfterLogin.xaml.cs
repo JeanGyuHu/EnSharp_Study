@@ -38,6 +38,7 @@ namespace Hu_s_SignUp
 
         private void LogOutButton_Click(object sender, RoutedEventArgs e)
         {
+            login.InIt();
             main.MainGrid.Children.Clear();
             main.MainGrid.Children.Add(login);
         }
@@ -69,6 +70,7 @@ namespace Hu_s_SignUp
 
             if (result.Equals(MessageBoxResult.Yes))
             {
+                login.InIt();
                 memberDAO.DeleteMember(id);
                 main.MainGrid.Children.Clear();
                 main.MainGrid.Children.Add(login);

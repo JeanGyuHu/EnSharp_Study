@@ -28,6 +28,8 @@ namespace Hu_s_SignUp
 
             if (Regex.IsMatch(id, @"\s"))
                 return Constants.ERROR_ID_SPACE;
+            if (Regex.IsMatch(id, @"[가-힣]"))
+                return Constants.ERRO_ID_KOREAN;
 
             return Constants.SUCCESS_ID;
         }
@@ -45,6 +47,7 @@ namespace Hu_s_SignUp
 
             return Constants.SUCCESS_PW;
         }
+
         public int CheckName(string name)
         {
             if (name.Length > 5 || name.Length < 2)
@@ -53,11 +56,16 @@ namespace Hu_s_SignUp
             if (Regex.IsMatch(name, @"\s"))
                 return Constants.ERROR_NAME_SPACE;
 
-            if (!Regex.IsMatch(name, @"^[가-힣]$"))
+            Regex regex = new Regex(@"[^가-힣]");
+            Match m = regex.Match(name);
+            while (m.Success)
+            {
                 return Constants.ERROR_NAME_NOTKOREAN;
-
+            }
+            
             return Constants.SUCCESS_NAME;
         }
+
         public int CheckResidentNumber(string resiNum)
         {
             char[] inputResinum = resiNum.ToCharArray();
@@ -68,7 +76,7 @@ namespace Hu_s_SignUp
             if (resiNum.Length != 13)
                 return Constants.ERROR_RESINUM_FORMAT;
 
-            if (!memberDAO.CheckResidentNumber(resiNum))
+            if (memberDAO.CheckResidentNumber(resiNum))
                 return Constants.ERROR_RESINUM_ALREADY;
 
             if (Convert.ToInt32(resiNum.Substring(0, 2)) > 10 && Convert.ToInt32(resiNum.Substring(0, 2)) < 99)
@@ -136,17 +144,29 @@ namespace Hu_s_SignUp
 
         public int CheckEmail(string email)
         {
-            if (email.Length > 15 || email.Length < 5)
+            string check;
+
+            if (email[0].Equals('@'))
                 return Constants.ERROR_EMAIL_LENGTH;
 
-            if (Regex.IsMatch(email, @"[~`^!@#$%%\-+={}[\]|\\;:""<>,?/]"))
+            if (email.LastIndexOf('@').Equals(email.Length-1))
+                return Constants.ERROR_EMAIL_LENGTH;
+
+            if (email.Length > 30 || email.Length < 5)
+                return Constants.ERROR_EMAIL_LENGTH;
+
+            check = email.Replace("@", "");
+            if (Regex.IsMatch(check, @"[~`^!@#$%%\-+={}[\]|\\;:""<>,?/]"))
                 return Constants.ERROR_EMAIL_SPECIAL;
 
-            if (!memberDAO.CheckEmail(email))
+            if (memberDAO.CheckEmail(email))
                 return Constants.ERROR_EMAIL_ALREADY;
 
             if (Regex.IsMatch(email, @"\s"))
                 return Constants.ERROR_EMAIL_SPACE;
+
+            if (Regex.IsMatch(email, @"[가-힣]"))
+                return Constants.ERROR_EMAIL_KOREAN;
 
             return Constants.SUCCESS_EMAIL;
         }
