@@ -76,17 +76,30 @@ namespace Hu_s_SignUp
             timer.Start();
         }
 
+        private void TextBox_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            if (e.Key.Equals(Key.Enter) && (sender.Equals(emailTextBox)||sender.Equals(idTextBox)))
+                EmailButton_Click(sender, e);
+            else if (e.Key.Equals(Key.Enter) && sender.Equals(confirmTextBox))
+                CheckNumberButton_Click(sender, e);
+        }
+
         private void EmailButton_Click(object sender, RoutedEventArgs e)
         {
             if (memberDAO.CheckEmail(emailTextBox.Text) && emailTextBox.Text.Length > 8)
             {
-                creditNumber = usingAPI.SendEMail(emailTextBox.Text);
+                emailTextBox.Focusable = false;
+                emailButton.IsEnabled = false;
                 confirmPanel.Visibility = Visibility.Visible;
                 SetTimer();
+                creditNumber = usingAPI.SendEMail(emailTextBox.Text);
             }
             else
             {
                 MessageBox.Show("가입되지 않은 이메일입니다!", "찾기 실패");
+                emailTextBox.Focusable = true;
+                emailButton.IsEnabled = true;
+                confirmPanel.Visibility = Visibility.Hidden;
             }
         }
 

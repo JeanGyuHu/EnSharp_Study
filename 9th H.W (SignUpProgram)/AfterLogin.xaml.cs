@@ -38,9 +38,14 @@ namespace Hu_s_SignUp
 
         private void LogOutButton_Click(object sender, RoutedEventArgs e)
         {
-            login.InIt();
-            main.MainGrid.Children.Clear();
-            main.MainGrid.Children.Add(login);
+            MessageBoxResult result;
+            result = MessageBox.Show("로그아웃하시겠습니까?", "알림", MessageBoxButton.YesNo);
+            if (result == MessageBoxResult.Yes)
+            {
+                login.InIt();
+                main.MainGrid.Children.Clear();
+                main.MainGrid.Children.Add(login);
+            }
         }
         private void EditBackButton_Click(object sender, RoutedEventArgs e)
         {

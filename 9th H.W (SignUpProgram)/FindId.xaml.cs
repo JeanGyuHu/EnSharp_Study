@@ -84,6 +84,14 @@ namespace Hu_s_SignUp
             timer.Start();
         }
 
+        private void TextBox_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            if (e.Key.Equals(Key.Enter)&&sender.Equals(emailTextBox))
+                EmailButton_Click(sender, e);
+            else if(e.Key.Equals(Key.Enter) && sender.Equals(ConfirmTextBox))
+                CheckNumberButton_Click(sender, e);
+        }
+
         private void EmailButton_Click(object sender, RoutedEventArgs e)
         {
             if (memberDAO.CheckEmail(emailTextBox.Text) && emailTextBox.Text.Length>8)

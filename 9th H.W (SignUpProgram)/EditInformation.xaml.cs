@@ -66,7 +66,8 @@ namespace Hu_s_SignUp
                 phone2.Text = member.PhoneNumber.Substring(3, 4);
                 phone3.Text = member.PhoneNumber.Substring(7, 4);
             }
-            else if (member.PhoneNumber.Length.Equals(10)){
+            else if (member.PhoneNumber.Length.Equals(10))
+            {
 
                 phone1.Text = member.PhoneNumber.Substring(0, 3);
                 phone2.Text = member.PhoneNumber.Substring(3, 3);
@@ -78,12 +79,12 @@ namespace Hu_s_SignUp
             emailFront.Text = member.Email.Substring(0, index);
             emailBehind.Text = member.Email.Substring(index + 1, member.Email.Length - index - 1);
         }
-        
+
         public void Edit()
         {
             memberDAO.EditMemberInfo(new MemberVO(id.Text, pw.Text, name.Text, frontResiNum.Text + behindResiNum.Text, addressNumber.Text, frontAddress.Text, behindAddress.Text, phone1.Text + phone2.Text + phone3.Text, emailFront.Text + "@" + emailBehind.Text));
         }
-        
+
         private void FindAddress_Click(object sender, RoutedEventArgs e)
         {
 
@@ -136,7 +137,14 @@ namespace Hu_s_SignUp
 
         private void AddressDetailText_LostFocus(object sender, RoutedEventArgs e)
         {
-            if (behindAddress.Text.Length < 5 && (frontAddress.Text.Length == 0 || addressNumber.Text.Length == 0))
+            if ((frontAddress.Text.Length == 0 || addressNumber.Text.Length == 0))
+            {
+                alarm.Content = "우편 번호를 찾으세요.";
+                alarm.Foreground = Brushes.Red;
+                behindAddress.BorderBrush = Brushes.Red;
+                addressFlag = false;
+            }
+            if (behindAddress.Text.Length < 5)
             {
                 alarm.Content = "너무 짧습니다.";
                 alarm.Foreground = Brushes.Red;

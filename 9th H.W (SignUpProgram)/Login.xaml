@@ -55,9 +55,9 @@
                 <RowDefinition Height="40"/>
             </Grid.RowDefinitions>
             <Label Name="idLabel" Content="아이디" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            <TextBox Name="idTextBox" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Width="100" Height="30"/>
+            <TextBox Name="idTextBox" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Width="100" Height="30" KeyDown="TextBox_KeyDown"/>
             <Label Name="pwLabel" Content="비밀번호" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            <PasswordBox Name="passwordBox" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Width="100" Height="30"/>
+            <PasswordBox Name="passwordBox" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Width="100" Height="30" KeyDown="TextBox_KeyDown"/>
             <Button Name="login" Content="로그인" Grid.Column="2" Grid.RowSpan="2" HorizontalAlignment="Left" VerticalAlignment="Center" Width="50" Height="45" Click="Login_Click"/>
         </Grid>
         <Button Name="signUpButton" Content="회원가입 바로가기" Style="{StaticResource Link}" Grid.Row="4" Grid.Column="1" Click="SignUp_Click"/>

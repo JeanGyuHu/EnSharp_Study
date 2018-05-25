@@ -60,7 +60,13 @@ namespace Hu_s_SignUp
             main.MainGrid.Children.Add(signUp);
         }
 
-        private void Login_Click(object sender, RoutedEventArgs e)
+        private void TextBox_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            if (e.Key.Equals(Key.Enter))
+                Login_Click(sender, e);
+        }
+
+        private void Login_Click(object sender, EventArgs e)
         {
             if (memberDAO.CheckLogin(idTextBox.Text, passwordBox.Password))
             {

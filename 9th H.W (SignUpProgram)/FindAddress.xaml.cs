@@ -30,6 +30,8 @@ namespace Hu_s_SignUp
             this.signUp = signUp;
         }
 
+
+
         private void SearchButton_Click(object sender, RoutedEventArgs e)
         {
             list.Clear();
@@ -47,8 +49,7 @@ namespace Hu_s_SignUp
                 {
                     listBox.Items.Add(item.No + "   " + item.RoadAddress + "\r\n\r\n" + item.BeforeAddress);
                 }
-            }
-                
+            }      
         }
 
         private void EndButton_Click(object sender, RoutedEventArgs e)
@@ -62,6 +63,12 @@ namespace Hu_s_SignUp
                 
                 this.Close();
             }
+        }
+
+        private void AddressInputTextBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key.Equals(Key.Enter))
+                SearchButton_Click(sender, e);
         }
     }
 }

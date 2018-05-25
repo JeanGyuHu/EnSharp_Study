@@ -252,7 +252,14 @@ namespace Hu_s_SignUp
 
         private void AddressDetailText_LostFocus(object sender, RoutedEventArgs e)
         {
-            if (addressDetailText.Text.Length < 5&&(addressText.Text.Length==0||addressNumberText.Text.Length==0))
+            if ((addressText.Text.Length == 0 || addressNumberText.Text.Length == 0))
+            {
+                alarm.Content = "우편 주소를 찾으세요.";
+                alarm.Foreground = Brushes.Red;
+                addressDetailText.BorderBrush = Brushes.Red;
+                AddressFlag = false;
+            }
+            else if (addressDetailText.Text.Length < 5)
             {
                 alarm.Content = "너무 짧습니다.";
                 alarm.Foreground = Brushes.Red;
