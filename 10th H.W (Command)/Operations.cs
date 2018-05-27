@@ -27,11 +27,21 @@ namespace Hu_s_Command
             print.Help();
         }
 
-        public void Dir(string path)
+        public void Dir(string command, string path)
         {
             long fileSize = 0;
             int fileCount = 0, directoryCount = 0;
-
+            if (!command.Equals(Constants.DIR, StringComparison.OrdinalIgnoreCase))
+            {
+                while (true)
+                {
+                    if (command[3].Equals(' ') && command[4].Equals(' '))
+                        command = command.Remove(3, 1);
+                    else
+                        break;
+                }
+                path = command.Remove(0, 4);
+            }
             if (Directory.Exists(path))
             {
                 DirectoryInfo directoryInfo = new DirectoryInfo(path);
@@ -69,6 +79,7 @@ namespace Hu_s_Command
                 print.PrintFileByte(fileSize, fileCount);
                 print.PrintDirectoryByte(allDrives[0].AvailableFreeSpace, directoryCount);
             }
+
         }
 
         public void Cd(string command, ref string path)
@@ -87,30 +98,50 @@ namespace Hu_s_Command
             else if (Regex.IsMatch(command, @"^[cC][dD]") && Regex.IsMatch(command, @"\\$") && !Regex.IsMatch(command, @"[^cCdD\s\\]"))
             {
                 if (Regex.IsMatch(command, @"\\\\"))
-                    Console.WriteLine("CMD에서 현재 디렉터리로 UNC 경로를 지원하지 않습니다.");
+                    print.NotApplyAddress();
                 else
                     path = Path.GetPathRoot(Environment.SystemDirectory);
             }
-            else if (Regex.IsMatch(command, @"^[cC][dD]") && Regex.IsMatch(command, @"[.][.]$") && !Regex.IsMatch(command,@"[.][.][.]"))
+            else if (Regex.IsMatch(command, @"^[cC][dD]") && Regex.IsMatch(command, @"[.][.]$") && !Regex.IsMatch(command, @"[.][.][.]"))
             {
                 if (!path.Equals(Path.GetPathRoot(Environment.SystemDirectory)))
                     path = Directory.GetParent(path).ToString();
             }
-            
-            else if (Regex.IsMatch(command, @"^[cC][dD]") && Directory.Exists(command.Remove(0, 3)) && !command.Remove(0, 3)[0].Equals('.'))
+
+            while (true)
+            {
+                if (command[2].Equals(' ') && command[3].Equals(' '))
+                    command = command.Remove(2, 1);
+                else
+                {
+                    break;
+                }   
+            }
+
+            if (Regex.IsMatch(command, @"^[cC][dD]") && Directory.Exists(command.Remove(0, 3)) && !command.Remove(0, 3)[0].Equals('.'))
             {
                 path = command.Remove(0, 3);
             }
-            else if (Regex.IsMatch(command, @"^[cC][dD]") && Directory.Exists(path + "\\" + command.Remove(0, 3)) && !command.Remove(0,3)[0].Equals('.'))
+            else if (Regex.IsMatch(command, @"^[cC][dD]") && Directory.Exists(path + "\\" + command.Remove(0, 3)) && !command.Remove(0, 3)[0].Equals('.'))
             {
                 path = path + "\\" + command.Remove(0, 3);
             }
-            else if(!Directory.Exists(command.Remove(0, 3)) || !Directory.Exists(path + "\\" + command.Remove(0, 3)))
+            else if (!Directory.Exists(command.Remove(0, 3)) || !Directory.Exists(path + "\\" + command.Remove(0, 3)))
             {
-                Console.WriteLine("지정된 경로를 찾을 수 없습니다.");
+                print.FindPathFail();
             }
 
             Console.WriteLine();
+        }
+
+        public void Move()
+        {
+
+        }
+
+        public void Copy()
+        {
+
         }
     }
 }

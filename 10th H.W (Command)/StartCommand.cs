@@ -45,9 +45,9 @@ namespace Hu_s_Command
                     mode = Constants.CLS;
                 else if (command.Equals(Constants.HELP, StringComparison.OrdinalIgnoreCase))
                     mode = Constants.HELP;
-                else if (command.Equals(Constants.DIR, StringComparison.OrdinalIgnoreCase))
+                else if (Regex.IsMatch(command, @"^[dD][iI][rR]"))
                     mode = Constants.DIR;
-                else if (Regex.IsMatch(command, @"[cC][dD]"))
+                else if (Regex.IsMatch(command, @"^[cC][dD]"))
                     mode = Constants.CD;
 
                 switch (mode)
@@ -65,7 +65,7 @@ namespace Hu_s_Command
 
                         break;
                     case Constants.DIR:
-                        operations.Dir(path);
+                        operations.Dir(command, path);
                         break;
                     case Constants.MOVE:
 
