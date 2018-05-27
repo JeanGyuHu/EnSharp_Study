@@ -31,6 +31,16 @@ namespace Hu_s_Command
                 Console.Write(path +">");
                 command = Console.ReadLine();
 
+                if (Regex.IsMatch(command, @"^\s*$"))
+                    continue;
+                while (true)
+                {
+                    if (Regex.IsMatch(command, @"^\s"))
+                        command = command.Remove(0,1);
+                    if (!command[0].Equals(' '))
+                        break;
+                }
+
                 if (command.Equals(Constants.CLS, StringComparison.OrdinalIgnoreCase))
                     mode = Constants.CLS;
                 else if (command.Equals(Constants.HELP, StringComparison.OrdinalIgnoreCase))
@@ -61,6 +71,7 @@ namespace Hu_s_Command
 
                         break;
                     default:
+                        print.PrintNotCommand(command);
                         break;
                 }
             }
