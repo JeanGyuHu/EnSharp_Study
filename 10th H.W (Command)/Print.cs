@@ -139,6 +139,16 @@ namespace Hu_s_Command
             Console.WriteLine("\t\t" + count + "개 디렉터리" + "{0,16:N0} 바이트 남음", bytes);
         }
 
+        public void FindPathFail()
+        {
+            Console.WriteLine("지정된 경로를 찾을 수 없습니다.");
+        }
+
+        public void NotApplyAddress()
+        {
+            Console.WriteLine("CMD에서 현재 디렉터리로 UNC 경로를 지원하지 않습니다.");
+        }
+
         public void PrintNotCommand(string command)
         {
             Console.WriteLine("'"+command+ "'은(는) 내부 또는 외부 명령, 실행할 수 있는 프로그램, 또는\n배치 파일이 아닙니다.\n");

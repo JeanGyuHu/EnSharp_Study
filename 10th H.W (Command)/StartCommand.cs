@@ -28,7 +28,7 @@ namespace Hu_s_Command
 
             while (exitFlag)
             {
-                Console.Write(path +">");
+                Console.Write(path + ">");
                 command = Console.ReadLine();
 
                 if (Regex.IsMatch(command, @"^\s*$"))
@@ -36,7 +36,7 @@ namespace Hu_s_Command
                 while (true)
                 {
                     if (Regex.IsMatch(command, @"^\s"))
-                        command = command.Remove(0,1);
+                        command = command.Remove(0, 1);
                     if (!command[0].Equals(' '))
                         break;
                 }
@@ -49,6 +49,10 @@ namespace Hu_s_Command
                     mode = Constants.DIR;
                 else if (Regex.IsMatch(command, @"^[cC][dD]"))
                     mode = Constants.CD;
+                else if (Regex.IsMatch(command, @"^[cC][oO][pP][yY]"))
+                    mode = Constants.COPY;
+                else if (Regex.IsMatch(command, @"^[mM][oO][vV][eE]"))
+                    mode = Constants.MOVE;
 
                 switch (mode)
                 {
@@ -59,10 +63,10 @@ namespace Hu_s_Command
                         operations.Help();
                         break;
                     case Constants.CD:
-                        operations.Cd(command,ref path);
+                        operations.Cd(command, ref path);
                         break;
                     case Constants.COPY:
-
+                        operations.Copy(command, path);
                         break;
                     case Constants.DIR:
                         operations.Dir(command, path);

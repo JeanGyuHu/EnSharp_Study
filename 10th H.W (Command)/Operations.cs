@@ -115,7 +115,7 @@ namespace Hu_s_Command
                 else
                 {
                     break;
-                }   
+                }
             }
 
             if (Regex.IsMatch(command, @"^[cC][dD]") && Directory.Exists(command.Remove(0, 3)) && !command.Remove(0, 3)[0].Equals('.'))
@@ -134,13 +134,94 @@ namespace Hu_s_Command
             Console.WriteLine();
         }
 
-        public void Move()
+        public void Move(string command, string path)
         {
+            while (true)
+            {
+                if (command[4].Equals(' ') && command[5].Equals(' '))
+                    command.Remove(4, 1);
+                else
+                {
+                    break;
+                }
+            }
+            command.Remove(0, 5);
 
         }
 
-        public void Copy()
+        public void Copy(string command, string path)
         {
+            string[] copyDirectory;
+            string departure = "", destination = "";
+            string depName = "", desName = "";
+
+            while (true)
+            {
+                if (command[4].Equals(' ') && command[5].Equals(' '))
+                    command.Remove(4, 1);
+                else
+                {
+                    break;
+                }
+            }
+            command = command.Remove(0, 5);
+
+            copyDirectory = command.Split(' ');
+
+            if (copyDirectory.Count() == 1)
+            {
+                departure = copyDirectory[0].Substring(0, copyDirectory[0].LastIndexOf('\\'));
+                depName = copyDirectory[0].Substring(copyDirectory[0].LastIndexOf('\\') + 1, copyDirectory[0].Length - copyDirectory[0].LastIndexOf('\\') - 1);
+            }
+            else if (copyDirectory.Count() == 2 && copyDirectory[0].LastIndexOf('\\') != -1 && copyDirectory[1].LastIndexOf('\\') == -1)
+            {
+                departure = copyDirectory[0].Substring(0, copyDirectory[0].LastIndexOf('\\'));
+                depName = copyDirectory[0].Substring(copyDirectory[0].LastIndexOf('\\') + 1, copyDirectory[0].Length - copyDirectory[0].LastIndexOf('\\') - 1);
+
+                desName = copyDirectory[1];
+            }
+            else if (copyDirectory.Count() == 2 && copyDirectory[1].LastIndexOf('\\') != -1 && copyDirectory[0].LastIndexOf('\\') == -1)
+            {
+                destination = copyDirectory[1].Substring(0, copyDirectory[1].LastIndexOf('\\'));
+                desName = copyDirectory[1].Substring(copyDirectory[1].LastIndexOf('\\') + 1, copyDirectory[1].Length - copyDirectory[1].LastIndexOf('\\') - 1);
+            }
+            else if (copyDirectory.Count() == 2 && copyDirectory[1].LastIndexOf('\\') != -1 && copyDirectory[0].LastIndexOf('\\') != -1)
+            {
+                departure = copyDirectory[0].Substring(0, copyDirectory[0].LastIndexOf('\\'));
+                depName = copyDirectory[0].Substring(copyDirectory[0].LastIndexOf('\\') + 1, copyDirectory[0].Length - copyDirectory[0].LastIndexOf('\\') - 1);
+
+                destination = copyDirectory[1].Substring(0, copyDirectory[1].LastIndexOf('\\'));
+                desName = copyDirectory[1].Substring(copyDirectory[1].LastIndexOf('\\') + 1, copyDirectory[1].Length - copyDirectory[1].LastIndexOf('\\') - 1);
+            }
+
+            if (Directory.Exists(departure) && copyDirectory.Count().Equals(1))
+            {
+                string sourceFile = System.IO.Path.Combine(departure, depName);
+                string destFile = System.IO.Path.Combine(path, depName);
+
+                File.Copy(sourceFile, destFile);
+            }
+            else if (Directory.Exists(departure) && !Directory.Exists(destination))
+            {
+                string sourceFile = System.IO.Path.Combine(departure, depName);
+                string destFile = System.IO.Path.Combine(departure, desName);
+
+                File.Copy(sourceFile, destFile);
+            }
+            else if (!Directory.Exists(departure) && Directory.Exists(destination))
+            {
+                string sourceFile = System.IO.Path.Combine(path, copyDirectory[0]);
+                string destFile = System.IO.Path.Combine(destination, desName);
+
+                File.Copy(sourceFile, destFile);
+            }
+            else if (Directory.Exists(departure) && Directory.Exists(destination))
+            {
+                string sourceFile = System.IO.Path.Combine(departure, depName);
+                string destFile = System.IO.Path.Combine(destination, desName);
+
+                File.Copy(sourceFile, destFile);
+            }
 
         }
     }
