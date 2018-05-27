@@ -28,6 +28,7 @@ namespace Hu_s_SignUp
 
             if (Regex.IsMatch(id, @"\s"))
                 return Constants.ERROR_ID_SPACE;
+
             if (Regex.IsMatch(id, @"[가-힣]"))
                 return Constants.ERRO_ID_KOREAN;
 

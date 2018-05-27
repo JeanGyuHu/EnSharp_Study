@@ -20,7 +20,16 @@ namespace Hu_s_SignUp
     {
         UsingAPI usingAPI;
         List<AddressVO> list;
-        SignUp signUp;
+        SignUp signUp = null;
+        EditInformation editInformation = null;
+
+        public FindAddress(EditInformation edit)
+        {
+            InitializeComponent();
+            editInformation = edit;
+            usingAPI = new UsingAPI();
+            list = new List<AddressVO>();
+        }
 
         public FindAddress(SignUp signUp)
         {
@@ -29,12 +38,12 @@ namespace Hu_s_SignUp
             list = new List<AddressVO>();
             this.signUp = signUp;
         }
-
-
-
+        
         private void SearchButton_Click(object sender, RoutedEventArgs e)
         {
             list.Clear();
+            listBox.Items.Clear();
+            listBox.Items.Refresh();
             list = usingAPI.Find(addressInputTextBox.Text);
 
             if (list.Count.Equals(0))
@@ -58,9 +67,16 @@ namespace Hu_s_SignUp
             {
                 int index = listBox.SelectedValue.ToString().IndexOf("\r\n\r\n",0);
 
-                signUp.addressNumberText.Text = listBox.SelectedValue.ToString().Substring(0,5);
-                signUp.addressText.Text = listBox.SelectedValue.ToString().Substring(8, index - 8);
-                
+                if (editInformation == null)
+                {
+                    signUp.addressNumberText.Text = listBox.SelectedValue.ToString().Substring(0, 5);
+                    signUp.addressText.Text = listBox.SelectedValue.ToString().Substring(8, index - 8);
+                }
+                else if(signUp == null)
+                {
+                    editInformation.addressNumber.Text = listBox.SelectedValue.ToString().Substring(0, 5);
+                    editInformation.frontAddress.Text = listBox.SelectedValue.ToString().Substring(8, index - 8);
+                }
                 this.Close();
             }
         }

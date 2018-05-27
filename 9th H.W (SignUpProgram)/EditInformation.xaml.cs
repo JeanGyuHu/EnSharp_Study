@@ -21,6 +21,8 @@ namespace Hu_s_SignUp
     {
         ExceptionHandler exceptionHandler;
         MemberDAO memberDAO;
+        FindAddress find;
+
         bool pwFlag = false, phoneFlag = false, addressFlag = false;
 
         public EditInformation()
@@ -41,6 +43,7 @@ namespace Hu_s_SignUp
                 signButton.IsEnabled = false;
             }
         }
+
         public void InitTextBoxes(MemberVO member)
         {
             id.Text = member.Id;
@@ -87,7 +90,8 @@ namespace Hu_s_SignUp
 
         private void FindAddress_Click(object sender, RoutedEventArgs e)
         {
-
+            find = new FindAddress(this);
+            find.Show();
         }
 
         private void PwText_LostFocus(object sender, RoutedEventArgs e)

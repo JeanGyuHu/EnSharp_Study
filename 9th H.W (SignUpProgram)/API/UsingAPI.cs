@@ -30,7 +30,7 @@ namespace Hu_s_SignUp
             client.UseDefaultCredentials = false; // 시스템에 설정된 인증 정보를 사용하지 않는다.
             client.EnableSsl = true;  // SSL을 사용한다.
             client.DeliveryMethod = SmtpDeliveryMethod.Network; // 이걸 하지 않으면 Gmail에 인증을 받지 못한다.
-            client.Credentials = new System.Net.NetworkCredential("gjwlsrb1700@gmail.com", "Hsjk0629!");
+            client.Credentials = new System.Net.NetworkCredential("gjwlsrb1700@gmail.com", "Q1w2e3r4099!");
 
             MailAddress from = new MailAddress("gjwlsrb1700@gmail.com", "Hu's", System.Text.Encoding.UTF8);
             MailAddress to = new MailAddress(email);
@@ -60,16 +60,14 @@ namespace Hu_s_SignUp
         public List<AddressVO> Find(string search)
         {
             string text = "";
-            //string query = "윔피키드 Diary of a Wimpy Kid Box Set : Book 1-11 & DO-IT-YOURSELF Book"; // 검색할 문자열
-            string url = "http://openapi.epost.go.kr/postal/retrieveNewAdressAreaCdService/retrieveNewAdressAreaCdService/getNewAddressListAreaCd"; // 결과가 JSON 포맷
+            
+            string url = "http://openapi.epost.go.kr/postal/retrieveNewAdressAreaCdService/retrieveNewAdressAreaCdService/getNewAddressListAreaCd"; // 결과가 XML로 포맷
             string ServiceKey = "KLhvysyVkBRKcl2PDgNMvw5dpdXCOLuptvhFJ3m84Pzy5PjlkUmihb5kpkDlxiIoynPEmEgpDB%2BvA%2FTMv4N%2BeA%3D%3D";
 
             string qry = String.Format("{0}?searchSe={1}&srchwrd={2}&encoding=UTF-8&mediaType=application/json&serviceKey={3}"
                                                                     , url, "road", search, ServiceKey);
 
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(qry);
-            //request.Headers.Add("X-Naver-Client-Id", "1qfVtx6gi6giA4Vpr3K3"); // 클라이언트 아이디
-            //request.Headers.Add("X-Naver-Client-Secret", "VQtTBnvGkp");       // 클라이언트 시크릿
             HttpWebResponse response = (HttpWebResponse)request.GetResponse();
             string status = response.StatusCode.ToString();
 

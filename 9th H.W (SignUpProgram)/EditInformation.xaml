@@ -46,7 +46,7 @@
         <TextBox Name="frontResiNum" Grid.Column="1" Grid.Row="5" Height="25" Width="120" HorizontalAlignment="Left" IsEnabled="False"/>
         <TextBox Name="behindResiNum"  Grid.Column="2" Grid.Row="5" Height="25" Width="120" HorizontalAlignment="Right" IsEnabled="False"/>
         <TextBox Name="addressNumber" Grid.Column="1" Grid.Row="6" Height="25" Width="70" HorizontalAlignment="Left" IsEnabled="False"/>
-        <Button Name="findAddress" Content="우편번호 검색" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="6" Height="25" Width="90" HorizontalAlignment="Center" Click="FindAddress_Click"/>
+        <Button Name="findAddress" Content="우편번호 검색" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="6" Height="25" Width="90" HorizontalAlignment="Center" Click="FindAddress_Click" RenderTransformOrigin="0.5,0.504"/>
         <TextBox Name="frontAddress" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="7" Height="25" Width="200" HorizontalAlignment="Left" IsEnabled="False"/>
         <TextBox Name="behindAddress" Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="7" Height="25" Width="200" HorizontalAlignment="Right" LostFocus="AddressDetailText_LostFocus"/>
         <TextBox Name="phone1" Grid.Column="1" Grid.Row="8" Height="25" Width="60" HorizontalAlignment="Left" LostFocus="Phone_LostFocus" MaxLength="3" />
