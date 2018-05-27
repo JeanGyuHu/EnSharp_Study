@@ -1,0 +1,6 @@
+C:\Users\gjwls\source\repos\Hu_s_Command\bin\Debug\Hu_s_Command.exe
+C:\Users\gjwls\source\repos\Hu_s_Command\bin\Debug\Hu_s_Command.pdb
+C:\Users\gjwls\source\repos\Hu_s_Command\obj\Debug\Hu_s_Command.csprojResolveAssemblyReference.cache
+C:\Users\gjwls\source\repos\Hu_s_Command\obj\Debug\Hu_s_Command.csproj.CoreCompileInputs.cache
+C:\Users\gjwls\source\repos\Hu_s_Command\obj\Debug\Hu_s_Command.exe
+C:\Users\gjwls\source\repos\Hu_s_Command\obj\Debug\Hu_s_Command.pdb
