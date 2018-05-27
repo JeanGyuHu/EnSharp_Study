@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 
@@ -112,6 +113,30 @@ namespace Hu_s_Command
                 "\nXCOPY          파일과 디렉터리 트리를 복사합니다." +
                 "\nWMIC           대화형 명령 셸 내의 WMI 정보를 표시합니다.\n"+
                 "\n도구에 대한 자세한 내용은 온라인 도움말의 명령줄 참조를 참조하십시오.\n");
+        }
+
+        public void PrintDirectory(FileSystemInfo file)
+        {
+            Console.Write(file.LastWriteTime.ToString("yyyy-MM-dd  tt hh:mm "));
+
+            if (file.GetType().ToString().Equals("System.IO.DirectoryInfo"))
+                Console.Write("{0,-17}","    <DIR>");
+            else if (file.GetType().ToString().Equals("System.IO.FileInfo"))
+            {
+                Console.Write("{0,17:N0}", ((FileInfo)file).Length);
+            }
+
+            Console.WriteLine(" "+file.Name);
+        }
+        
+        public void PrintFileByte(long bytes, int count)
+        {
+            Console.WriteLine("\t\t" + count + "개 파일" + "{0,20:N0} 바이트",bytes);
+        }
+
+        public void PrintDirectoryByte(long bytes, int count)
+        {
+            Console.WriteLine("\t\t" + count + "개 디렉터리" + "{0,16:N0} 바이트 남음", bytes);
         }
     }
 }

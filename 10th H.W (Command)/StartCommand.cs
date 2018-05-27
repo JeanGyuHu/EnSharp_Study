@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace Hu_s_Command
 {
@@ -11,6 +12,7 @@ namespace Hu_s_Command
         Print print;
         string path;
         string command;
+        string mode;
         bool exitFlag = true;
 
         public StartCommand()
@@ -30,15 +32,15 @@ namespace Hu_s_Command
                 command = Console.ReadLine();
 
                 if (command.Equals(Constants.CLS, StringComparison.OrdinalIgnoreCase))
-                    command = Constants.CLS;
+                    mode = Constants.CLS;
                 else if (command.Equals(Constants.HELP, StringComparison.OrdinalIgnoreCase))
-                    command = Constants.HELP;
+                    mode = Constants.HELP;
                 else if (command.Equals(Constants.DIR, StringComparison.OrdinalIgnoreCase))
-                    command = Constants.DIR;
-                else if (command.Substring(0, 2).Equals(Constants.CD, StringComparison.OrdinalIgnoreCase))
-                    command = Constants.CD;
+                    mode = Constants.DIR;
+                else if (Regex.IsMatch(command, @"[cC][dD]"))
+                    mode = Constants.CD;
 
-                switch (command)
+                switch (mode)
                 {
                     case Constants.CLS:
                         operations.Cls();
@@ -47,13 +49,13 @@ namespace Hu_s_Command
                         operations.Help();
                         break;
                     case Constants.CD:
-
+                        operations.Cd(command,ref path);
                         break;
                     case Constants.COPY:
 
                         break;
                     case Constants.DIR:
-
+                        operations.Dir(path);
                         break;
                     case Constants.MOVE:
 
