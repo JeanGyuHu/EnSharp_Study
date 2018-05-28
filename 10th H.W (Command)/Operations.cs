@@ -11,6 +11,7 @@ namespace Hu_s_Command
     class Operations
     {
         Print print;
+        string answer;
 
         public Operations()
         {
@@ -199,30 +200,73 @@ namespace Hu_s_Command
                 string sourceFile = System.IO.Path.Combine(departure, depName);
                 string destFile = System.IO.Path.Combine(path, depName);
 
-                File.Copy(sourceFile, destFile);
+                IsFileExist(desName, sourceFile, destFile);
             }
             else if (Directory.Exists(departure) && !Directory.Exists(destination))
             {
                 string sourceFile = System.IO.Path.Combine(departure, depName);
                 string destFile = System.IO.Path.Combine(departure, desName);
 
-                File.Copy(sourceFile, destFile);
+                IsFileExist(desName, sourceFile, destFile);
             }
             else if (!Directory.Exists(departure) && Directory.Exists(destination))
             {
                 string sourceFile = System.IO.Path.Combine(path, copyDirectory[0]);
                 string destFile = System.IO.Path.Combine(destination, desName);
 
-                File.Copy(sourceFile, destFile);
+                IsFileExist(desName, sourceFile, destFile);
             }
             else if (Directory.Exists(departure) && Directory.Exists(destination))
             {
                 string sourceFile = System.IO.Path.Combine(departure, depName);
                 string destFile = System.IO.Path.Combine(destination, desName);
 
-                File.Copy(sourceFile, destFile);
+                IsFileExist(desName, sourceFile, destFile);
             }
 
+        }
+
+        public void IsFileExist(string desName, string sourceFile,string destFile)
+        {
+            if (!File.Exists(sourceFile))
+                Console.WriteLine("지정된 파일을 찾을 수 없습니다.\n");
+            else if (File.Exists(sourceFile) && !File.Exists(destFile))
+            {
+                Console.WriteLine("\t\t1개 파일이 복사되었습니다.\n");
+                File.Copy(sourceFile, destFile);
+            }
+            else if (File.Exists(sourceFile) && File.Exists(destFile))
+            {
+                YesOrNoQuestion(desName, sourceFile, destFile);
+            }
+        }
+
+        public void YesOrNoQuestion(string desName, string source, string destination)
+        {
+            Console.Write(desName + "을(를) 덮어쓰시겠습니까? (Yes/No/All):");
+            answer = Console.ReadLine();
+
+            if (answer.Equals(Constants.YES, StringComparison.OrdinalIgnoreCase) || answer.Equals("y", StringComparison.OrdinalIgnoreCase) || answer.Equals("a", StringComparison.OrdinalIgnoreCase))
+                answer = Constants.YES;
+
+            else if (answer.Equals(Constants.NO, StringComparison.OrdinalIgnoreCase) || answer.Equals("n", StringComparison.OrdinalIgnoreCase))
+                answer = Constants.NO;
+
+            else if (answer.Equals(Constants.ALL, StringComparison.OrdinalIgnoreCase))
+                answer = Constants.ALL;
+
+            switch (answer)
+            {
+                case Constants.YES:
+                case Constants.ALL:
+                    Console.WriteLine("\t\t1개 파일이 복사되었습니다.\n");
+                    File.Delete(destination);
+                    File.Copy(source, destination);
+                    break;
+                case Constants.NO:
+                    Console.WriteLine("\t\t0개 파일이 복사되었습니다.\n");
+                    break;
+            }
         }
     }
 }

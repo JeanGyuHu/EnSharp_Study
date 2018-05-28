@@ -13,5 +13,9 @@ namespace Hu_s_Command
         public const string DIR = "dir";
         public const string COPY = "copy";
         public const string MOVE = "move";
+
+        public const string YES = "yes";
+        public const string NO = "no";
+        public const string ALL = "all";
     }
 }
