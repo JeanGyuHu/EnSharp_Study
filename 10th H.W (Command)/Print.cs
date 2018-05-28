@@ -163,16 +163,29 @@ namespace Hu_s_Command
             }
         }
 
+        public void GrammarError(string mode,string command)
+        {
+            switch (mode)
+            {
+                case Constants.COPY:
+                    Console.WriteLine(command + "\n파일 이름, 디렉터리 이름 또는 볼륨 레이블 구문이 잘못되었습니다.\n\t\t0개 파일이 복사되었습니다.\n");
+                    break;
+
+                case Constants.MOVE:
+                    Console.WriteLine("\n파일 이름, 디렉터리 이름 또는 볼륨 레이블 구문이 잘못되었습니다.\n");
+                    break;
+            }
+        }
         public void FailMoveCopy(string mode)
         {
             switch (mode)
             {
                 case Constants.COPY:
-                    Console.WriteLine("\t\t1개 파일이 복사되었습니다.\n");
+                    Console.WriteLine("\t\t0개 파일이 복사되었습니다.\n");
                     break;
 
                 case Constants.MOVE:
-                    Console.WriteLine("\t\t1개 파일이 이동했습니다.\n");
+                    Console.WriteLine("\t\t0개 파일이 이동했습니다.\n");
                     break;
             }
         }

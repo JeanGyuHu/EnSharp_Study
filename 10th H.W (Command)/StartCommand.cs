@@ -28,9 +28,11 @@ namespace Hu_s_Command
 
             while (exitFlag)
             {
+                mode = "";
                 Console.Write(path + ">");
                 command = Console.ReadLine();
 
+                command.Replace("/", "\\");
                 if (Regex.IsMatch(command, @"^\s*$"))
                     continue;
                 while (true)
