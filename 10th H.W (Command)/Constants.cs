@@ -17,5 +17,6 @@ namespace Hu_s_Command
         public const string YES = "yes";
         public const string NO = "no";
         public const string ALL = "all";
+
     }
 }

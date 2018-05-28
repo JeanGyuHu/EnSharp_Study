@@ -135,22 +135,7 @@ namespace Hu_s_Command
             Console.WriteLine();
         }
 
-        public void Move(string command, string path)
-        {
-            while (true)
-            {
-                if (command[4].Equals(' ') && command[5].Equals(' '))
-                    command.Remove(4, 1);
-                else
-                {
-                    break;
-                }
-            }
-            command.Remove(0, 5);
-
-        }
-
-        public void Copy(string command, string path)
+        public void CopyAndMove(string command, string path, string mode)
         {
             string[] copyDirectory;
             string departure = "", destination = "";
@@ -173,6 +158,12 @@ namespace Hu_s_Command
             {
                 departure = copyDirectory[0].Substring(0, copyDirectory[0].LastIndexOf('\\'));
                 depName = copyDirectory[0].Substring(copyDirectory[0].LastIndexOf('\\') + 1, copyDirectory[0].Length - copyDirectory[0].LastIndexOf('\\') - 1);
+
+                if(!Directory.Exists(departure))
+                {
+                    print.GrammarError(mode, command);
+                    return;
+                }
             }
             else if (copyDirectory.Count() == 2 && copyDirectory[0].LastIndexOf('\\') != -1 && copyDirectory[1].LastIndexOf('\\') == -1)
             {
@@ -195,55 +186,64 @@ namespace Hu_s_Command
                 desName = copyDirectory[1].Substring(copyDirectory[1].LastIndexOf('\\') + 1, copyDirectory[1].Length - copyDirectory[1].LastIndexOf('\\') - 1);
             }
 
+            if(!Directory.Exists(departure)&& !Directory.Exists(destination))
+            {
+                print.GrammarError(mode, command);
+                return;
+            }
+
             if (Directory.Exists(departure) && copyDirectory.Count().Equals(1))
             {
                 string sourceFile = System.IO.Path.Combine(departure, depName);
                 string destFile = System.IO.Path.Combine(path, depName);
 
-                IsFileExist(desName, sourceFile, destFile);
+                IsFileExist(desName, sourceFile, destFile,mode);
             }
             else if (Directory.Exists(departure) && !Directory.Exists(destination))
             {
                 string sourceFile = System.IO.Path.Combine(departure, depName);
                 string destFile = System.IO.Path.Combine(departure, desName);
 
-                IsFileExist(desName, sourceFile, destFile);
+                IsFileExist(desName, sourceFile, destFile,mode);
             }
             else if (!Directory.Exists(departure) && Directory.Exists(destination))
             {
                 string sourceFile = System.IO.Path.Combine(path, copyDirectory[0]);
                 string destFile = System.IO.Path.Combine(destination, desName);
 
-                IsFileExist(desName, sourceFile, destFile);
+                IsFileExist(desName, sourceFile, destFile,mode);
             }
             else if (Directory.Exists(departure) && Directory.Exists(destination))
             {
                 string sourceFile = System.IO.Path.Combine(departure, depName);
                 string destFile = System.IO.Path.Combine(destination, desName);
 
-                IsFileExist(desName, sourceFile, destFile);
+                IsFileExist(desName, sourceFile, destFile,mode);
             }
 
         }
 
-        public void IsFileExist(string desName, string sourceFile,string destFile)
+        public void IsFileExist(string desName, string sourceFile,string destFile,string mode)
         {
             if (!File.Exists(sourceFile))
                 Console.WriteLine("지정된 파일을 찾을 수 없습니다.\n");
             else if (File.Exists(sourceFile) && !File.Exists(destFile))
             {
-                Console.WriteLine("\t\t1개 파일이 복사되었습니다.\n");
-                File.Copy(sourceFile, destFile);
+                print.SuccessMoveCopy(mode);
+                if (mode.Equals(Constants.COPY))
+                    File.Copy(sourceFile, destFile);
+                else if (mode.Equals(Constants.MOVE))
+                    File.Move(sourceFile, destFile);
             }
             else if (File.Exists(sourceFile) && File.Exists(destFile))
             {
-                YesOrNoQuestion(desName, sourceFile, destFile);
+                YesOrNoQuestion(desName, sourceFile, destFile,mode);
             }
         }
 
-        public void YesOrNoQuestion(string desName, string source, string destination)
+        public void YesOrNoQuestion(string desName, string source, string destination,string mode)
         {
-            Console.Write(desName + "을(를) 덮어쓰시겠습니까? (Yes/No/All):");
+            Console.Write(destination + "을(를) 덮어쓰시겠습니까? (Yes/No/All):");
             answer = Console.ReadLine();
 
             if (answer.Equals(Constants.YES, StringComparison.OrdinalIgnoreCase) || answer.Equals("y", StringComparison.OrdinalIgnoreCase) || answer.Equals("a", StringComparison.OrdinalIgnoreCase))
@@ -259,12 +259,20 @@ namespace Hu_s_Command
             {
                 case Constants.YES:
                 case Constants.ALL:
-                    Console.WriteLine("\t\t1개 파일이 복사되었습니다.\n");
-                    File.Delete(destination);
-                    File.Copy(source, destination);
+                    print.SuccessMoveCopy(mode);
+                    if (mode.Equals(Constants.COPY))
+                    {
+                        File.Delete(destination);
+                        File.Copy(source, destination);
+                    }
+                    else if(mode.Equals(Constants.MOVE))
+                    {
+                        File.Delete(destination);
+                        File.Move(source, destination);
+                    }
                     break;
                 case Constants.NO:
-                    Console.WriteLine("\t\t0개 파일이 복사되었습니다.\n");
+                    print.FailMoveCopy(mode);
                     break;
             }
         }

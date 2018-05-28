@@ -66,13 +66,13 @@ namespace Hu_s_Command
                         operations.Cd(command, ref path);
                         break;
                     case Constants.COPY:
-                        operations.Copy(command, path);
+                        operations.CopyAndMove(command, path,mode);
                         break;
                     case Constants.DIR:
                         operations.Dir(command, path);
                         break;
                     case Constants.MOVE:
-
+                        operations.CopyAndMove(command, path, mode);
                         break;
                     default:
                         print.PrintNotCommand(command);

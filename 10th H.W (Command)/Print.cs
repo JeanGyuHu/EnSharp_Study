@@ -149,6 +149,34 @@ namespace Hu_s_Command
             Console.WriteLine("CMD에서 현재 디렉터리로 UNC 경로를 지원하지 않습니다.");
         }
 
+        public void SuccessMoveCopy(string mode)
+        {
+            switch (mode)
+            {
+                case Constants.COPY:
+                    Console.WriteLine("\t\t1개 파일이 복사되었습니다.\n");
+                    break;
+
+                case Constants.MOVE:
+                    Console.WriteLine("\t\t1개 파일이 이동했습니다.\n");
+                    break;
+            }
+        }
+
+        public void FailMoveCopy(string mode)
+        {
+            switch (mode)
+            {
+                case Constants.COPY:
+                    Console.WriteLine("\t\t1개 파일이 복사되었습니다.\n");
+                    break;
+
+                case Constants.MOVE:
+                    Console.WriteLine("\t\t1개 파일이 이동했습니다.\n");
+                    break;
+            }
+        }
+
         public void PrintNotCommand(string command)
         {
             Console.WriteLine("'"+command+ "'은(는) 내부 또는 외부 명령, 실행할 수 있는 프로그램, 또는\n배치 파일이 아닙니다.\n");
