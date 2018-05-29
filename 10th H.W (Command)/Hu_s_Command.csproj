@@ -50,36 +50,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AutoComplete\AutoComplete.cs" />
-    <Compile Include="ConsoleActions\AutoCompleteRestOfLineAction.cs" />
-    <Compile Include="ConsoleActions\AutoCompleteSingleCharacterAction.cs" />
-    <Compile Include="ConsoleActions\AutoCompleteUsingPreviousLinesAction.cs" />
-    <Compile Include="ConsoleActions\BackspaceAction.cs" />
-    <Compile Include="ConsoleActions\ClearLineAction.cs" />
-    <Compile Include="ConsoleActions\CycleBottomAction.cs" />
-    <Compile Include="ConsoleActions\CycleDownAction.cs" />
-    <Compile Include="ConsoleActions\CycleTopAction.cs" />
-    <Compile Include="ConsoleActions\CycleUpAction.cs" />
-    <Compile Include="ConsoleActions\DeleteAction.cs" />
-    <Compile Include="ConsoleActions\IConsole.cs" />
-    <Compile Include="ConsoleActions\IConsoleAction.cs" />
-    <Compile Include="ConsoleActions\IgnoreAction.cs" />
-    <Compile Include="ConsoleActions\InsertCharacterAction.cs" />
-    <Compile Include="ConsoleActions\InsertStringAction.cs" />
-    <Compile Include="ConsoleActions\MoveCursorLeftAction.cs" />
-    <Compile Include="ConsoleActions\MoveCursorRightAction.cs" />
-    <Compile Include="ConsoleActions\MoveCursorToBeginAction.cs" />
-    <Compile Include="ConsoleActions\MoveCursorToEndAction.cs" />
-    <Compile Include="ConsoleActions\RemovePrecedingAction.cs" />
-    <Compile Include="ConsoleActions\RemoveSucceedingAction.cs" />
-    <Compile Include="AutoComplete\ConsoleExt.cs" />
-    <Compile Include="AutoComplete\ConsoleExtInstance.cs" />
-    <Compile Include="AutoComplete\ConsoleKeyConverter.cs" />
     <Compile Include="Constants.cs" />
-    <Compile Include="AutoComplete\KeyPressResult.cs" />
-    <Compile Include="AutoComplete\LineState.cs" />
     <Compile Include="Operations.cs" />
-    <Compile Include="AutoComplete\PreviousLineBuffer.cs" />
     <Compile Include="Print.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

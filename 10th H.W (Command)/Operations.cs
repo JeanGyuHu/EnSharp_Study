@@ -35,9 +35,25 @@ namespace Hu_s_Command
         /// <summary>
         /// 도움말을 띄워주는 매서드
         /// </summary>
-        public void Help()
+        public void Help(string command)
         {
-            print.Help();
+            if (Regex.IsMatch(command, @"^[Hh][Ee][lL][pP]") && !Regex.IsMatch(command, @"[^HhEelLpP]"))
+                print.Help();
+
+            else
+            {
+                while (true)
+                {
+                    if (command[4].Equals(' ') && command[5].Equals(' '))   //dir 명령어 뒤에 space가 많을 시에 1개만 빼고 전부 제거
+                        command = command.Remove(4, 1);
+                    else
+                        break;
+                }
+                command = command.Remove(0, 5);
+
+                Console.WriteLine("이 명령은 도움말 유틸리티가 지원하지 않습니다. \"{0} /? \"를 사용해 보십시오.\n",command);
+            }
+                
         }
 
         /// <summary>
@@ -50,7 +66,9 @@ namespace Hu_s_Command
             long fileSize = 0;
             int fileCount = 0, directoryCount = 0;
 
-            if (!command.Equals(Constants.DIR, StringComparison.OrdinalIgnoreCase))     //Dir이 아니라 dir + 경로가 들어온 경우 앞에 dir을 없애고 경로만 남긴다
+            if (Regex.IsMatch(command, @"^[dD][iI][rR]") && !Regex.IsMatch(command, @"[^dDiIrR\s]")) { }
+
+            else if (!command.Equals(Constants.DIR, StringComparison.OrdinalIgnoreCase) && Regex.IsMatch(command, @"\\"))     //Dir이 아니라 dir + 경로가 들어온 경우 앞에 dir을 없애고 경로만 남긴다
             {
                 while (true)
                 {
@@ -61,6 +79,18 @@ namespace Hu_s_Command
                 }
                 path = command.Remove(0, 4);    //명령어 부분 제거
             }
+            else if (!Regex.IsMatch(command, @"\\"))
+            {
+                while (true)
+                {
+                    if (command[3].Equals(' ') && command[4].Equals(' '))   //dir 명령어 뒤에 space가 많을 시에 1개만 빼고 전부 제거
+                        command = command.Remove(3, 1);
+                    else
+                        break;
+                }
+                path = path + "\\" + command.Remove(0, 4);    //명령어 부분 제거
+            }
+
             if (Directory.Exists(path)) //현재 존재하는 경로나 새로 입력받은 경로가 존재할때
             {
                 DirectoryInfo directoryInfo = new DirectoryInfo(path);  //디렉토리 정보를 얻는 객체
@@ -232,6 +262,8 @@ namespace Hu_s_Command
 
                 desName = copyDirectory[1];
             }
+
+            //else if(copyDirectory.Count() == 2 && File.Exists(path+"\\"+copyDirectory[0]) &&)
             //2개로 나눠졌을때 앞쪽이 파일명이고 뒤쪽이 경로일때
             else if (copyDirectory.Count() == 2 && copyDirectory[1].LastIndexOf('\\') != -1 && copyDirectory[0].LastIndexOf('\\') == -1)
             {
@@ -251,7 +283,19 @@ namespace Hu_s_Command
             //앞쪽과 뒤쪽이 둘다 경로가 아닐때
             if (!Directory.Exists(departure) && !Directory.Exists(destination))
             {
-                print.GrammarError(mode, command);  //에러문
+                string destFile="";
+
+                if (Directory.Exists(path + "\\" + destination) && Directory.Exists(path + "\\" + departure))
+                {
+                    string depart = path + "\\" + departure;
+                    string dest = path + "\\" + destination;
+
+                    string sourceFile = System.IO.Path.Combine(depart, depName);
+                    destFile = System.IO.Path.Combine(dest, desName);
+                    IsFileExist(desName, sourceFile, destFile, mode);   //copy or move
+                }
+                else
+                    print.GrammarError(mode, command);  //에러문
                 return;
             }
             //1개의 경로로만 명령어가 되어있고 그 경로가 존재할때 
@@ -265,8 +309,15 @@ namespace Hu_s_Command
             //보낼 주소가 있고 받은 주소에 없을 때
             else if (Directory.Exists(departure) && !Directory.Exists(destination))
             {
+                string destFile;
+
                 string sourceFile = System.IO.Path.Combine(departure, depName);
-                string destFile = System.IO.Path.Combine(departure, desName);
+                if (Directory.Exists(path + "\\" + destination) && Regex.IsMatch(destination,@"\\")) {
+                    string space = path + "\\" + destination;
+                    destFile = System.IO.Path.Combine(space, desName);
+                }
+                else
+                    destFile = System.IO.Path.Combine(departure, desName);
 
                 IsFileExist(desName, sourceFile, destFile, mode);   //copy or move
             }
@@ -320,38 +371,46 @@ namespace Hu_s_Command
         /// <param name="mode">move 할지 copy할지</param>
         public void YesOrNoQuestion(string desName, string source, string destination, string mode)
         {
-            Console.Write(destination + "을(를) 덮어쓰시겠습니까? (Yes/No/All):");
-            answer = Console.ReadLine();
-
-            if (answer.Equals(Constants.YES, StringComparison.OrdinalIgnoreCase) || answer.Equals("y", StringComparison.OrdinalIgnoreCase) || answer.Equals("a", StringComparison.OrdinalIgnoreCase))
-                answer = Constants.YES;
-
-            else if (answer.Equals(Constants.NO, StringComparison.OrdinalIgnoreCase) || answer.Equals("n", StringComparison.OrdinalIgnoreCase))
-                answer = Constants.NO;
-
-            else if (answer.Equals(Constants.ALL, StringComparison.OrdinalIgnoreCase))
-                answer = Constants.ALL;
-
-            switch (answer)
+            bool flag = true;
+            while (flag)
             {
-                case Constants.YES:
-                case Constants.ALL:
-                    print.SuccessMoveCopy(mode);
+                Console.Write(destination + "을(를) 덮어쓰시겠습니까? (Yes/No/All):");
+                answer = Console.ReadLine();
 
-                    if (mode.Equals(Constants.COPY))
-                    {
-                        File.Delete(destination);
-                        File.Copy(source, destination);
-                    }
-                    else if (mode.Equals(Constants.MOVE))
-                    {
-                        File.Delete(destination);
-                        File.Move(source, destination);
-                    }
-                    break;
-                case Constants.NO:
-                    print.FailMoveCopy(mode);
-                    break;
+                if (answer.Equals(Constants.YES, StringComparison.OrdinalIgnoreCase) || answer.Equals("y", StringComparison.OrdinalIgnoreCase) || answer.Equals("a", StringComparison.OrdinalIgnoreCase))
+                    answer = Constants.YES;
+
+                else if (answer.Equals(Constants.NO, StringComparison.OrdinalIgnoreCase) || answer.Equals("n", StringComparison.OrdinalIgnoreCase))
+                    answer = Constants.NO;
+
+                else if (answer.Equals(Constants.ALL, StringComparison.OrdinalIgnoreCase))
+                    answer = Constants.ALL;
+
+                switch (answer)
+                {
+                    case Constants.YES:
+                    case Constants.ALL:
+                        print.SuccessMoveCopy(mode);
+
+                        if (mode.Equals(Constants.COPY))
+                        {
+                            File.Delete(destination);
+                            File.Copy(source, destination);
+                        }
+                        else if (mode.Equals(Constants.MOVE))
+                        {
+                            File.Delete(destination);
+                            File.Move(source, destination);
+                        }
+                        flag = false;
+                        break;
+                    case Constants.NO:
+                        print.FailMoveCopy(mode);
+                        flag = false;
+                        break;
+                    default:
+                        break;
+                }
             }
         }
 
