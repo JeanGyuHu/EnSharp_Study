@@ -14,6 +14,7 @@ namespace Hu_s_Command
         Print print;        //출력 뿌려주는 객체
         string answer;      //yesorno에 대한 대답
         List<string> list;  //추가기능을 위해 만들었지만 구현 실패
+        string mode;
 
         /// <summary>
         /// 기본 생성자 객체들 초기화
@@ -98,20 +99,35 @@ namespace Hu_s_Command
 
                 foreach (DriveInfo d in allDrives)  //모든 드라이브 정보를 가져온 후에 
                 {
-                    if (d.Name == "C:\\")   //필요한 C드라이브의 이름을 확인
+                    if (d.Name == path.Substring(0,3) && d.VolumeLabel =="")   //필요한 C드라이브의 이름을 확인
                     {
-                        Console.WriteLine("C 드라이브의 볼륨에는 이름이 없습니다.");
+                        if (path.Substring(0, 1).Equals("c", StringComparison.OrdinalIgnoreCase))
+                            mode = "C";
+                        else if (path.Substring(0, 1).Equals("d", StringComparison.OrdinalIgnoreCase))
+                            mode = "D";
+
+                        Console.WriteLine("{0} 드라이브의 볼륨에는 이름이 없습니다.",mode);
+                        break;
                     }
-                    else { }
+                    else if(d.Name == path.Substring(0, 3) && d.VolumeLabel != "")
+                    {
+                        if (path.Substring(0, 1).Equals("c", StringComparison.OrdinalIgnoreCase))
+                            mode = "C";
+                        else if (path.Substring(0, 1).Equals("d", StringComparison.OrdinalIgnoreCase))
+                            mode = "D";
+                        Console.WriteLine(" {0} 드라이브의 볼륨: "+d.VolumeLabel,mode);
+                        break;
+                    }
+                    
                 }
 
-                ManagementObject manageobject = new ManagementObject("win32_logicaldisk.deviceid=\"" + "C" + ":\"");    //내 컴퓨터 볼륨 일련번호를 가져오기 위한 객체
+                ManagementObject manageobject = new ManagementObject("win32_logicaldisk.deviceid=\"" + mode + ":\"");    //내 컴퓨터 볼륨 일련번호를 가져오기 위한 객체
                 manageobject.Get();
 
                 Console.WriteLine("볼륨 일련 번호: " + manageobject["VolumeSerialNumber"].ToString().Insert(manageobject["VolumeSerialNumber"].ToString().Length / 2, "-"));
                 Console.WriteLine("\n" + path + " 디렉터리\n");
 
-                if(!path.Equals("C:\\"))    //C:\\가 아닐경우에는 상위 폴더가 있으므로 .과 ..의 디렉토리가 있다
+                if((!path.Equals("C:\\")&&mode=="C")||(!path.Equals("D:\\") && mode == "D"))    //C:\\가 아닐경우에는 상위 폴더가 있으므로 .과 ..의 디렉토리가 있다
                 {
                     Console.WriteLine("2018-05-28  오후 05:30     <DIR>         .\n2018-05-28  오후 05:30     <DIR>         ..");   
                 }
@@ -204,7 +220,9 @@ namespace Hu_s_Command
             //ex cd Desktop
             else if (Regex.IsMatch(command, @"^[cC][dD]") && Directory.Exists(path + "\\" + command.Remove(0, 3)) && !command.Remove(0, 3)[0].Equals('.'))
             {
-                if (path.Equals("C:\\"))
+                if (path.Equals("C:\\")) 
+                    path = path + command.Remove(0, 3);
+                else if (path.Equals("D:\\"))
                     path = path + command.Remove(0, 3);
                 else
                     path = path + "\\" + command.Remove(0, 3);
@@ -414,6 +432,25 @@ namespace Hu_s_Command
             }
         }
 
+        public void ChangeDrive(ref string path, string command, string mode)
+        {
+            command = command + "\\";
+
+            string[] drives = Environment.GetLogicalDrives();
+
+            if(mode.Equals(Constants.CDRIVE))
+            {
+                path = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
+                return;
+            }
+
+            foreach(string drive in drives)
+            {
+                if (command.Equals(drive,StringComparison.OrdinalIgnoreCase))
+                    path = drive;
+            }
+            
+        }
         //자동완성을 위해 현재 경로에 있는 폴더 명들을 받아온다.
         //public List<string> FindDirectories(string path)
         //{

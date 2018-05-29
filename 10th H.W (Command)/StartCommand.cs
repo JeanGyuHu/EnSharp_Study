@@ -61,6 +61,10 @@ namespace Hu_s_Command
                         break;
                 }
 
+                if (Regex.IsMatch(command, @"^[cC][:]$"))
+                    mode = Constants.CDRIVE;
+                if (Regex.IsMatch(command, @"^[dD][:]$"))
+                    mode = Constants.DDRIVE;
                 if (Regex.IsMatch(command, @"^[cC][lL][sS]"))      //cls 대소문자 관계없이 일치 확인
                     mode = Constants.CLS;
                 else if (Regex.IsMatch(command, @"^[Hh][Ee][lL][pP]"))    //help 대소문자 관계없이 일치 확인
@@ -93,6 +97,12 @@ namespace Hu_s_Command
                         break;
                     case Constants.MOVE:
                         operations.CopyAndMove(command, path, mode);
+                        break;
+                    case Constants.DDRIVE:
+                        operations.ChangeDrive(ref path,command,Constants.DDRIVE);
+                        break;
+                    case Constants.CDRIVE:
+                        operations.ChangeDrive(ref path, command,Constants.CDRIVE);
                         break;
                     default:
                         print.PrintNotCommand(command);
