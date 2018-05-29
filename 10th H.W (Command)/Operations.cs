@@ -393,6 +393,12 @@ namespace Hu_s_Command
         public void YesOrNoQuestion(string desName, string source, string destination, string mode)
         {
             bool flag = true;
+
+            if(source.Equals(destination))
+            {
+                Console.WriteLine("같은 파일로 복사할 수 없습니다.\n\t\t0개 파일이 복사되었습니다.");
+                return;
+            }
             while (flag)
             {
                 Console.Write(destination + "을(를) 덮어쓰시겠습니까? (Yes/No/All):");
