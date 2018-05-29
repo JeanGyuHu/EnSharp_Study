@@ -5,6 +5,7 @@ using System.Text;
 
 namespace Hu_s_Command
 {
+    //모드 선택을 위한 매직 넘버
     class Constants
     {
         public const string CLS = "cls";
@@ -15,6 +16,7 @@ namespace Hu_s_Command
         public const string MOVE = "move";
         public const string DDRIVE = "ddrive";
         public const string CDRIVE = "cdrive";
+
         public const string YES = "yes";
         public const string NO = "no";
         public const string ALL = "all";

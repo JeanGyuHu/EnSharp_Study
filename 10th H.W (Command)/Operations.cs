@@ -161,6 +161,12 @@ namespace Hu_s_Command
         /// <param name="path">현재 우리가 있는 경로</param>
         public void Cd(string command, ref string path)
         {
+
+            if (command.Equals("cd", StringComparison.OrdinalIgnoreCase))   //명령어 없이 cd만 입력 했을시
+            {
+                Console.WriteLine(path + "\n");
+                return;
+            }
             while (true)    //cd 뒤에 공백이 많을 시에 1개만 빼고 전부 삭제
             {
                 if (command[2].Equals(' ') && command[3].Equals(' '))
@@ -171,11 +177,8 @@ namespace Hu_s_Command
                 }
             }
             
-            if (command.Equals("cd", StringComparison.OrdinalIgnoreCase))   //명령어 없이 cd만 입력 했을시
-                Console.WriteLine(path + "\n");
-
             //cd ..\\\\\\.. 2개 상위 폴더로 가는 것에 대한 예외처리
-            else if (Regex.IsMatch(command, @"^[cC][dD]") && Regex.IsMatch(command, @"[.]{2}\\+[.]{2}$") && !Regex.IsMatch(command, @"[.]{3}[\\]"))
+            if (Regex.IsMatch(command, @"^[cC][dD]") && Regex.IsMatch(command, @"[.]{2}\\+[.]{2}$") && !Regex.IsMatch(command, @"[.]{3}[\\]"))
             {
                 //상위 디렉토리가 1개밖에 없는 경우
                 if (Directory.GetParent(path).ToString().Equals(Path.GetPathRoot(Environment.SystemDirectory)))
@@ -432,6 +435,12 @@ namespace Hu_s_Command
             }
         }
 
+        /// <summary>
+        /// 드라이브를 변경할때 사용하는 메서드
+        /// </summary>
+        /// <param name="path">현재 경로</param>
+        /// <param name="command">우리가 입력한 명령어</param>
+        /// <param name="mode">현재 C인지 D인지</param>
         public void ChangeDrive(ref string path, string command, string mode)
         {
             command = command + "\\";
