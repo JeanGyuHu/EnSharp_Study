@@ -26,3 +26,9 @@ This Repository is the space to store and organize my study datas.
 
 8. 8th day
   Explain about 8th H.W, and learn about WPF in C# programming (calculator) 
+
+9. 9th day
+  Explain about 9th H.W, and learn about using Email sending smtp & address api
+  
+10. 10th day
+  Explain about 10th H.W (Command)
