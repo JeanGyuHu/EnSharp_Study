@@ -48,7 +48,7 @@ namespace Hu_s_Command
                 command = Console.ReadLine();
                 //ReadCommand(directoryList);
 
-                command.Replace("/", "\\");         // \뿐만 아니라 /가 들어왔을때도 똑같이 동작하므로 /가 들어왔을때 전부 \로 바꿔준다.
+                command = command.Replace("/", "\\");         // \뿐만 아니라 /가 들어왔을때도 똑같이 동작하므로 /가 들어왔을때 전부 \로 바꿔준다.
                 if (Regex.IsMatch(command, @"^\s*$"))   //공백이 입력으로 들어왔을때
                     continue;
 

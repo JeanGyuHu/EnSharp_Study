@@ -162,7 +162,7 @@ namespace Hu_s_Command
         public void Cd(string command, ref string path)
         {
 
-            if (command.Equals("cd", StringComparison.OrdinalIgnoreCase))   //명령어 없이 cd만 입력 했을시
+            if (command.Equals("cd", StringComparison.OrdinalIgnoreCase)|| command.Equals("cd.", StringComparison.OrdinalIgnoreCase))   //명령어 없이 cd만 입력 했을시
             {
                 Console.WriteLine(path + "\n");
                 return;
