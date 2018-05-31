@@ -71,7 +71,7 @@ namespace Hu_s_Command
                     mode = Constants.HELP;
                 else if (Regex.IsMatch(command, @"^[dD][iI][rR]"))                          //dir 일치 확인
                     mode = Constants.DIR;
-                else if (Regex.IsMatch(command, @"^[cC][dD]"))      //cd 일치 확인
+                else if (Regex.IsMatch(command, @"^[cC][dD][\\\s.]"))      //cd 일치 확인
                     mode = Constants.CD;
                 else if (Regex.IsMatch(command, @"^[cC][oO][pP][yY]"))  //copy 일치 확인
                     mode = Constants.COPY;

@@ -52,9 +52,8 @@ namespace Hu_s_Command
                 }
                 command = command.Remove(0, 5);
 
-                Console.WriteLine("이 명령은 도움말 유틸리티가 지원하지 않습니다. \"{0} /? \"를 사용해 보십시오.\n",command);
+                Console.WriteLine("이 명령은 도움말 유틸리티가 지원하지 않습니다. \"{0} /? \"를 사용해 보십시오.\n", command);
             }
-                
         }
 
         /// <summary>
@@ -69,7 +68,7 @@ namespace Hu_s_Command
 
             if (Regex.IsMatch(command, @"^[dD][iI][rR]") && !Regex.IsMatch(command, @"[^dDiIrR\s]")) { }
 
-            else if (!command.Equals(Constants.DIR, StringComparison.OrdinalIgnoreCase) && Regex.IsMatch(command, @"\\"))     //Dir이 아니라 dir + 경로가 들어온 경우 앞에 dir을 없애고 경로만 남긴다
+            else
             {
                 while (true)
                 {
@@ -78,20 +77,28 @@ namespace Hu_s_Command
                     else
                         break;
                 }
-                path = command.Remove(0, 4);    //명령어 부분 제거
-            }
-            else if (!Regex.IsMatch(command, @"\\"))
-            {
-                while (true)
-                {
-                    if (command[3].Equals(' ') && command[4].Equals(' '))   //dir 명령어 뒤에 space가 많을 시에 1개만 빼고 전부 제거
-                        command = command.Remove(3, 1);
-                    else
-                        break;
-                }
-                path = path + "\\" + command.Remove(0, 4);    //명령어 부분 제거
-            }
 
+                if (!command.Equals(Constants.DIR, StringComparison.OrdinalIgnoreCase) && Regex.IsMatch(command, @"\\")&& !Regex.IsMatch(command,@"[.][.][\\]"))     //Dir이 아니라 dir + 경로가 들어온 경우 앞에 dir을 없애고 경로만 남긴다
+                {
+                    path = command.Remove(0, 4);    //명령어 부분 제거
+                }
+                else if (command.Remove(0, 4).Equals(".."))
+                {
+                    if(path != Path.GetPathRoot(path))
+                        path = Directory.GetParent(path).ToString();
+                }
+                else if (command.Remove(0, 4).Equals("..\\.."))
+                {
+                    if (Directory.GetParent(path).ToString().Equals(Path.GetPathRoot(Environment.SystemDirectory)))
+                        path = Path.GetPathRoot(Environment.SystemDirectory);
+                    else if (!path.Equals(Path.GetPathRoot(Environment.SystemDirectory)))   //상위폴더가 2개있는 경우
+                        path = Directory.GetParent(Directory.GetParent(path).ToString()).ToString();
+                }
+                else if (!Regex.IsMatch(command, @"\\"))
+                {
+                    path = path + "\\" + command.Remove(0, 4);    //명령어 부분 제거
+                }
+            }
             if (Directory.Exists(path)) //현재 존재하는 경로나 새로 입력받은 경로가 존재할때
             {
                 DirectoryInfo directoryInfo = new DirectoryInfo(path);  //디렉토리 정보를 얻는 객체
@@ -99,26 +106,26 @@ namespace Hu_s_Command
 
                 foreach (DriveInfo d in allDrives)  //모든 드라이브 정보를 가져온 후에 
                 {
-                    if (d.Name == path.Substring(0,3) && d.VolumeLabel =="")   //필요한 C드라이브의 이름을 확인
+                    if (d.Name == path.Substring(0, 3) && d.VolumeLabel == "")   //필요한 C드라이브의 이름을 확인
                     {
                         if (path.Substring(0, 1).Equals("c", StringComparison.OrdinalIgnoreCase))
                             mode = "C";
                         else if (path.Substring(0, 1).Equals("d", StringComparison.OrdinalIgnoreCase))
                             mode = "D";
 
-                        Console.WriteLine("{0} 드라이브의 볼륨에는 이름이 없습니다.",mode);
+                        Console.WriteLine("{0} 드라이브의 볼륨에는 이름이 없습니다.", mode);
                         break;
                     }
-                    else if(d.Name == path.Substring(0, 3) && d.VolumeLabel != "")
+                    else if (d.Name == path.Substring(0, 3) && d.VolumeLabel != "")
                     {
                         if (path.Substring(0, 1).Equals("c", StringComparison.OrdinalIgnoreCase))
                             mode = "C";
                         else if (path.Substring(0, 1).Equals("d", StringComparison.OrdinalIgnoreCase))
                             mode = "D";
-                        Console.WriteLine(" {0} 드라이브의 볼륨: "+d.VolumeLabel,mode);
+                        Console.WriteLine(" {0} 드라이브의 볼륨: " + d.VolumeLabel, mode);
                         break;
                     }
-                    
+
                 }
 
                 ManagementObject manageobject = new ManagementObject("win32_logicaldisk.deviceid=\"" + mode + ":\"");    //내 컴퓨터 볼륨 일련번호를 가져오기 위한 객체
@@ -127,9 +134,9 @@ namespace Hu_s_Command
                 Console.WriteLine("볼륨 일련 번호: " + manageobject["VolumeSerialNumber"].ToString().Insert(manageobject["VolumeSerialNumber"].ToString().Length / 2, "-"));
                 Console.WriteLine("\n" + path + " 디렉터리\n");
 
-                if((!path.Equals("C:\\")&&mode=="C")||(!path.Equals("D:\\") && mode == "D"))    //C:\\가 아닐경우에는 상위 폴더가 있으므로 .과 ..의 디렉토리가 있다
+                if ((!path.Equals("C:\\") && mode == "C") || (!path.Equals("D:\\") && mode == "D"))    //C:\\가 아닐경우에는 상위 폴더가 있으므로 .과 ..의 디렉토리가 있다
                 {
-                    Console.WriteLine("2018-05-28  오후 05:30     <DIR>         .\n2018-05-28  오후 05:30     <DIR>         ..");   
+                    Console.WriteLine("2018-05-28  오후 05:30     <DIR>         .\n2018-05-28  오후 05:30     <DIR>         ..");
                 }
 
                 //경로에 있는 모든 파일과 디렉토리 정보를 가져와서 보여준다. 이때 Attribute를 이용하여 숨김파일은 나타내지 않도록 한다.
@@ -161,17 +168,12 @@ namespace Hu_s_Command
         /// <param name="path">현재 우리가 있는 경로</param>
         public void Cd(string command, ref string path)
         {
-
-            if(command.Equals("cd.", StringComparison.OrdinalIgnoreCase))
-            {
-                Console.WriteLine();
-                return;
-            }
-            if (command.Equals("cd", StringComparison.OrdinalIgnoreCase))   //명령어 없이 cd만 입력 했을시
+            if (command.Equals("cd", StringComparison.OrdinalIgnoreCase) || command.Equals("cd c:", StringComparison.OrdinalIgnoreCase) || !Regex.IsMatch(command, @"[^cCdD\s,]"))   //명령어 없이 cd만 입력 했을시
             {
                 Console.WriteLine(path + "\n");
                 return;
             }
+
             while (true)    //cd 뒤에 공백이 많을 시에 1개만 빼고 전부 삭제
             {
                 if (command[2].Equals(' ') && command[3].Equals(' '))
@@ -181,7 +183,7 @@ namespace Hu_s_Command
                     break;
                 }
             }
-            
+
             //cd ..\\\\\\.. 2개 상위 폴더로 가는 것에 대한 예외처리
             if (Regex.IsMatch(command, @"^[cC][dD]") && Regex.IsMatch(command, @"[.]{2}\\+[.]{2}$") && !Regex.IsMatch(command, @"[.]{3}[\\]"))
             {
@@ -202,7 +204,7 @@ namespace Hu_s_Command
             //cd ..에 대한 처리
             else if (Regex.IsMatch(command, @"^[cC][dD]") && Regex.IsMatch(command, @"[.]{2}[\\]*[.]*$"))
             {
-                if ((!Regex.IsMatch(command.Remove(0,3), @"[^.]") && Regex.IsMatch(command, @"[.]{3}")))    //.만 있을때 점이 3개이상이면 아무 일도 일어나지 않는다. 
+                if ((!Regex.IsMatch(command.Remove(0, 3), @"[^.]") && Regex.IsMatch(command, @"[.]{3}")))    //.만 있을때 점이 3개이상이면 아무 일도 일어나지 않는다. 
                 {
                     Console.WriteLine();
                     return;
@@ -228,7 +230,7 @@ namespace Hu_s_Command
             //ex cd Desktop
             else if (Regex.IsMatch(command, @"^[cC][dD]") && Directory.Exists(path + "\\" + command.Remove(0, 3)) && !command.Remove(0, 3)[0].Equals('.'))
             {
-                if (path.Equals("C:\\")) 
+                if (path.Equals("C:\\"))
                     path = path + command.Remove(0, 3);
                 else if (path.Equals("D:\\"))
                     path = path + command.Remove(0, 3);
@@ -269,7 +271,7 @@ namespace Hu_s_Command
 
             copyDirectory = command.Split(' '); //공백을 가지고 나눈다.
 
-            if (copyDirectory.Count() == 1)     //공백이 없이 하나의 경로일때
+            if (copyDirectory.Count() == 1 && copyDirectory[0].IndexOf('\\') != -1)       //공백이 없이 하나의 경로일때
             {
                 departure = copyDirectory[0].Substring(0, copyDirectory[0].LastIndexOf('\\'));      //복사를 할 파일경로
                 depName = copyDirectory[0].Substring(copyDirectory[0].LastIndexOf('\\') + 1, copyDirectory[0].Length - copyDirectory[0].LastIndexOf('\\') - 1); //복사할 파일명
@@ -280,21 +282,44 @@ namespace Hu_s_Command
                     return;
                 }
             }
+            else if (copyDirectory.Count() == 1 && copyDirectory[0].IndexOf('\\') == -1)
+            {
+                departure = path;      //복사를 할 파일경로
+                depName = copyDirectory[0];     //복사할 파일명
+
+                if (!Directory.Exists(departure))   //경로가 존재하는지 확인
+                {
+                    print.GrammarError(mode, command);  //없으면 에러문
+                    return;
+                }
+            }
+
             //2개로 나눠졌을때 앞쪽이 경로이고 뒤쪽은 그냥 파일명일때
             else if (copyDirectory.Count() == 2 && copyDirectory[0].LastIndexOf('\\') != -1 && copyDirectory[1].LastIndexOf('\\') == -1)
             {
+
                 departure = copyDirectory[0].Substring(0, copyDirectory[0].LastIndexOf('\\'));
                 depName = copyDirectory[0].Substring(copyDirectory[0].LastIndexOf('\\') + 1, copyDirectory[0].Length - copyDirectory[0].LastIndexOf('\\') - 1);
 
+                if (Directory.Exists(path + "\\" + departure) && !Directory.Exists(departure) && File.Exists(path + "\\" + copyDirectory[1]))
+                {
+                    departure = path + "\\" + departure;
+                }
+
                 desName = copyDirectory[1];
             }
-
+            //move z.txt desktop\qq.txt
             //else if(copyDirectory.Count() == 2 && File.Exists(path+"\\"+copyDirectory[0]) &&)
             //2개로 나눠졌을때 앞쪽이 파일명이고 뒤쪽이 경로일때
             else if (copyDirectory.Count() == 2 && copyDirectory[1].LastIndexOf('\\') != -1 && copyDirectory[0].LastIndexOf('\\') == -1)
             {
                 destination = copyDirectory[1].Substring(0, copyDirectory[1].LastIndexOf('\\'));
                 desName = copyDirectory[1].Substring(copyDirectory[1].LastIndexOf('\\') + 1, copyDirectory[1].Length - copyDirectory[1].LastIndexOf('\\') - 1);
+
+                if (Directory.Exists(path + "\\" + destination) && !Directory.Exists(destination) && File.Exists(path + "\\" + copyDirectory[0]))
+                {
+                    destination = path + "\\" + destination;
+                }
             }
             //2개로 나눠졌을때 앞쪽과 뒤쪽이 전부 경로일때
             else if (copyDirectory.Count() == 2 && copyDirectory[1].LastIndexOf('\\') != -1 && copyDirectory[0].LastIndexOf('\\') != -1)
@@ -311,7 +336,7 @@ namespace Hu_s_Command
                     desName = depName;
                 }
             }
-            else if(copyDirectory.Count() == 2 && copyDirectory[1].LastIndexOf('\\') == -1 && copyDirectory[0].LastIndexOf('\\') == -1)
+            else if (copyDirectory.Count() == 2 && copyDirectory[1].LastIndexOf('\\') == -1 && copyDirectory[0].LastIndexOf('\\') == -1)
             {
                 depName = copyDirectory[0];
                 desName = copyDirectory[1];
@@ -320,8 +345,10 @@ namespace Hu_s_Command
             //앞쪽과 뒤쪽이 둘다 경로가 아닐때
             if (!Directory.Exists(departure) && !Directory.Exists(destination))
             {
-                string destFile="";
+                string destFile = "";
                 string sourceFile = "";
+
+
                 if (Directory.Exists(path + "\\" + destination) && Directory.Exists(path + "\\" + departure))
                 {
                     if (File.Exists(path + "\\" + depName) && File.Exists(path + "\\" + desName))
@@ -340,7 +367,7 @@ namespace Hu_s_Command
                         IsFileExist(desName, sourceFile, destFile, mode);   //copy or move
                     }
                 }
-                
+
                 else
                     print.GrammarError(mode, command);  //에러문
                 return;
@@ -359,7 +386,8 @@ namespace Hu_s_Command
                 string destFile;
 
                 string sourceFile = Path.Combine(departure, depName);
-                if (Directory.Exists(path + "\\" + destination) && Regex.IsMatch(destination,@"\\")) {
+                if (Directory.Exists(path + "\\" + destination) && Regex.IsMatch(destination, @"\\"))
+                {
                     string space = path + "\\" + destination;
                     destFile = Path.Combine(space, desName);
                 }
@@ -420,7 +448,7 @@ namespace Hu_s_Command
         {
             bool flag = true;
 
-            if(source.Equals(destination) && mode.Equals(Constants.COPY))
+            if (source.Equals(destination) && mode.Equals(Constants.COPY))
             {
                 Console.WriteLine("같은 파일로 복사할 수 없습니다.\n\t\t0개 파일이 복사되었습니다.");
                 return;
@@ -484,18 +512,18 @@ namespace Hu_s_Command
 
             string[] drives = Environment.GetLogicalDrives();
 
-            if(mode.Equals(Constants.CDRIVE))
+            if (mode.Equals(Constants.CDRIVE))
             {
                 path = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
                 return;
             }
 
-            foreach(string drive in drives)
+            foreach (string drive in drives)
             {
-                if (command.Equals(drive,StringComparison.OrdinalIgnoreCase))
+                if (command.Equals(drive, StringComparison.OrdinalIgnoreCase))
                     path = drive;
             }
-            
+
         }
         //자동완성을 위해 현재 경로에 있는 폴더 명들을 받아온다.
         //public List<string> FindDirectories(string path)
