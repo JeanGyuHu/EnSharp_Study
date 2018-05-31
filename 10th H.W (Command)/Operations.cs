@@ -162,7 +162,12 @@ namespace Hu_s_Command
         public void Cd(string command, ref string path)
         {
 
-            if (command.Equals("cd", StringComparison.OrdinalIgnoreCase)|| command.Equals("cd.", StringComparison.OrdinalIgnoreCase))   //명령어 없이 cd만 입력 했을시
+            if(command.Equals("cd.", StringComparison.OrdinalIgnoreCase))
+            {
+                Console.WriteLine();
+                return;
+            }
+            if (command.Equals("cd", StringComparison.OrdinalIgnoreCase))   //명령어 없이 cd만 입력 했을시
             {
                 Console.WriteLine(path + "\n");
                 return;
@@ -299,22 +304,43 @@ namespace Hu_s_Command
 
                 destination = copyDirectory[1].Substring(0, copyDirectory[1].LastIndexOf('\\'));
                 desName = copyDirectory[1].Substring(copyDirectory[1].LastIndexOf('\\') + 1, copyDirectory[1].Length - copyDirectory[1].LastIndexOf('\\') - 1);
+
+                if (!Regex.IsMatch(desName, @"\.txt"))
+                {
+                    destination = destination + "\\" + desName;
+                    desName = depName;
+                }
+            }
+            else if(copyDirectory.Count() == 2 && copyDirectory[1].LastIndexOf('\\') == -1 && copyDirectory[0].LastIndexOf('\\') == -1)
+            {
+                depName = copyDirectory[0];
+                desName = copyDirectory[1];
             }
 
             //앞쪽과 뒤쪽이 둘다 경로가 아닐때
             if (!Directory.Exists(departure) && !Directory.Exists(destination))
             {
                 string destFile="";
-
+                string sourceFile = "";
                 if (Directory.Exists(path + "\\" + destination) && Directory.Exists(path + "\\" + departure))
                 {
-                    string depart = path + "\\" + departure;
-                    string dest = path + "\\" + destination;
+                    if (File.Exists(path + "\\" + depName) && File.Exists(path + "\\" + desName))
+                    {
+                        sourceFile = Path.Combine(path, depName);
+                        destFile = Path.Combine(path, desName);
+                        IsFileExist(desName, sourceFile, destFile, mode);   //copy or move
+                    }
+                    else
+                    {
+                        string depart = path + "\\" + departure;
+                        string dest = path + "\\" + destination;
 
-                    string sourceFile = System.IO.Path.Combine(depart, depName);
-                    destFile = System.IO.Path.Combine(dest, desName);
-                    IsFileExist(desName, sourceFile, destFile, mode);   //copy or move
+                        sourceFile = Path.Combine(depart, depName);
+                        destFile = Path.Combine(dest, desName);
+                        IsFileExist(desName, sourceFile, destFile, mode);   //copy or move
+                    }
                 }
+                
                 else
                     print.GrammarError(mode, command);  //에러문
                 return;
@@ -322,8 +348,8 @@ namespace Hu_s_Command
             //1개의 경로로만 명령어가 되어있고 그 경로가 존재할때 
             if (Directory.Exists(departure) && copyDirectory.Count().Equals(1))
             {
-                string sourceFile = System.IO.Path.Combine(departure, depName);
-                string destFile = System.IO.Path.Combine(path, depName);
+                string sourceFile = Path.Combine(departure, depName);
+                string destFile = Path.Combine(path, depName);
 
                 IsFileExist(desName, sourceFile, destFile, mode);   //파일에 move,copy 가능성을 체크 후 동작
             }
@@ -332,29 +358,29 @@ namespace Hu_s_Command
             {
                 string destFile;
 
-                string sourceFile = System.IO.Path.Combine(departure, depName);
+                string sourceFile = Path.Combine(departure, depName);
                 if (Directory.Exists(path + "\\" + destination) && Regex.IsMatch(destination,@"\\")) {
                     string space = path + "\\" + destination;
-                    destFile = System.IO.Path.Combine(space, desName);
+                    destFile = Path.Combine(space, desName);
                 }
                 else
-                    destFile = System.IO.Path.Combine(departure, desName);
+                    destFile = Path.Combine(departure, desName);
 
                 IsFileExist(desName, sourceFile, destFile, mode);   //copy or move
             }
             //보내는게 없을때
             else if (!Directory.Exists(departure) && Directory.Exists(destination))
             {
-                string sourceFile = System.IO.Path.Combine(path, copyDirectory[0]);
-                string destFile = System.IO.Path.Combine(destination, desName);
+                string sourceFile = Path.Combine(path, copyDirectory[0]);
+                string destFile = Path.Combine(destination, desName);
 
                 IsFileExist(desName, sourceFile, destFile, mode);
             }
             //둘다 경로가 존재할때
             else if (Directory.Exists(departure) && Directory.Exists(destination))
             {
-                string sourceFile = System.IO.Path.Combine(departure, depName);
-                string destFile = System.IO.Path.Combine(destination, desName);
+                string sourceFile = Path.Combine(departure, depName);
+                string destFile = Path.Combine(destination, desName);
 
                 IsFileExist(desName, sourceFile, destFile, mode);
             }
@@ -394,9 +420,14 @@ namespace Hu_s_Command
         {
             bool flag = true;
 
-            if(source.Equals(destination))
+            if(source.Equals(destination) && mode.Equals(Constants.COPY))
             {
                 Console.WriteLine("같은 파일로 복사할 수 없습니다.\n\t\t0개 파일이 복사되었습니다.");
+                return;
+            }
+            else if (source.Equals(destination) && mode.Equals(Constants.MOVE))
+            {
+                print.SuccessMoveCopy(Constants.MOVE);
                 return;
             }
             while (flag)
