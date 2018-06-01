@@ -67,12 +67,12 @@ namespace Hu_s_Command
                     mode = Constants.DDRIVE;
                 if (Regex.IsMatch(command, @"^[cC][lL][sS]"))      //cls 대소문자 관계없이 일치 확인
                     mode = Constants.CLS;
+                else if (Regex.IsMatch(command, @"^[cC][dD][\\\s.]*"))      //cd 일치 확인
+                    mode = Constants.CD;
                 else if (Regex.IsMatch(command, @"^[Hh][Ee][lL][pP]"))    //help 대소문자 관계없이 일치 확인
                     mode = Constants.HELP;
-                else if (Regex.IsMatch(command, @"^[dD][iI][rR]"))                          //dir 일치 확인
+                else if (Regex.IsMatch(command, @"^[dD][iI][rR][\s.]*"))                          //dir 일치 확인
                     mode = Constants.DIR;
-                else if (Regex.IsMatch(command, @"^[cC][dD][\\\s.]"))      //cd 일치 확인
-                    mode = Constants.CD;
                 else if (Regex.IsMatch(command, @"^[cC][oO][pP][yY]"))  //copy 일치 확인
                     mode = Constants.COPY;
                 else if (Regex.IsMatch(command, @"^[mM][oO][vV][eE]"))  // move 일치 확인

@@ -80,7 +80,12 @@ namespace Hu_s_Command
 
                 if (!command.Equals(Constants.DIR, StringComparison.OrdinalIgnoreCase) && Regex.IsMatch(command, @"\\")&& !Regex.IsMatch(command,@"[.][.][\\]"))     //Dir이 아니라 dir + 경로가 들어온 경우 앞에 dir을 없애고 경로만 남긴다
                 {
-                    path = command.Remove(0, 4);    //명령어 부분 제거
+                    path = command.Remove(0, 4).Replace("c","C");    //명령어 부분 제거
+                }
+                else if (command.Remove(0, 3).Equals(".."))
+                {
+                    if (path != Path.GetPathRoot(path))
+                        path = Directory.GetParent(path).ToString();
                 }
                 else if (command.Remove(0, 4).Equals(".."))
                 {
@@ -137,6 +142,7 @@ namespace Hu_s_Command
                 if ((!path.Equals("C:\\") && mode == "C") || (!path.Equals("D:\\") && mode == "D"))    //C:\\가 아닐경우에는 상위 폴더가 있으므로 .과 ..의 디렉토리가 있다
                 {
                     Console.WriteLine("2018-05-28  오후 05:30     <DIR>         .\n2018-05-28  오후 05:30     <DIR>         ..");
+                    directoryCount = directoryCount + 2;
                 }
 
                 //경로에 있는 모든 파일과 디렉토리 정보를 가져와서 보여준다. 이때 Attribute를 이용하여 숨김파일은 나타내지 않도록 한다.
@@ -157,7 +163,6 @@ namespace Hu_s_Command
                 print.PrintFileByte(fileSize, fileCount);       //파일 정보를 출력
                 print.PrintDirectoryByte(allDrives[0].AvailableFreeSpace, directoryCount);  //디렉토리 개수와 남은 용량 표현
             }
-
         }
 
         /// <summary>
@@ -168,7 +173,7 @@ namespace Hu_s_Command
         /// <param name="path">현재 우리가 있는 경로</param>
         public void Cd(string command, ref string path)
         {
-            if (command.Equals("cd", StringComparison.OrdinalIgnoreCase) || command.Equals("cd c:", StringComparison.OrdinalIgnoreCase) || !Regex.IsMatch(command, @"[^cCdD\s,]"))   //명령어 없이 cd만 입력 했을시
+            if (command.Equals("cd", StringComparison.OrdinalIgnoreCase) || command.Equals("cd c:", StringComparison.OrdinalIgnoreCase) || command.Equals("cd.", StringComparison.OrdinalIgnoreCase) || !Regex.IsMatch(command, @"[^cCdD\s,=]"))   //명령어 없이 cd만 입력 했을시
             {
                 Console.WriteLine(path + "\n");
                 return;
@@ -202,7 +207,7 @@ namespace Hu_s_Command
                     path = Path.GetPathRoot(Environment.SystemDirectory);
             }
             //cd ..에 대한 처리
-            else if (Regex.IsMatch(command, @"^[cC][dD]") && Regex.IsMatch(command, @"[.]{2}[\\]*[.]*$"))
+            else if (Regex.IsMatch(command, @"^[cC][dD]") && Regex.IsMatch(command, @"[.]{2}[\\]*[.]*$")&&!Regex.IsMatch(command.Remove(0,3),@"[a-zA-Z]"))
             {
                 if ((!Regex.IsMatch(command.Remove(0, 3), @"[^.]") && Regex.IsMatch(command, @"[.]{3}")))    //.만 있을때 점이 3개이상이면 아무 일도 일어나지 않는다. 
                 {
@@ -221,15 +226,19 @@ namespace Hu_s_Command
 
             //입력한 경로로 경로를 이동한다. (이때 ...으로 시작하는 경로가 존재한다고 판단이 되어 그 부분에 대해서 안되게 막음
             //ex) cd c:\Users
-            else if (Regex.IsMatch(command, @"^[cC][dD]") && Directory.Exists(command.Remove(0, 3)) && !command.Remove(0, 3)[0].Equals('.'))
+            else if (Regex.IsMatch(command, @"^[cC][dD]") && Directory.Exists(command.Remove(0, 3)) && !command.Remove(0, 3)[0].Equals('.') && !command.Remove(0, 3)[0].Equals('\\'))
             {
-                path = command.Remove(0, 3);
+                if(command.Remove(0,3).ToLower().Equals("c:") || command.Remove(0, 3).ToLower().Equals("d:"))
+                    Console.WriteLine(command.Remove(0, 3)+"\\");
+                else
+                    path = command.Remove(0, 3);
             }
 
             //현재 경로에서 있는 디렉토리로 들어간다
             //ex cd Desktop
-            else if (Regex.IsMatch(command, @"^[cC][dD]") && Directory.Exists(path + "\\" + command.Remove(0, 3)) && !command.Remove(0, 3)[0].Equals('.'))
+            else if (Regex.IsMatch(command, @"^[cC][dD]") && Directory.Exists(path + "\\" + command.Remove(0, 3)) && !command.Remove(0, 3)[0].Equals('.') && !command.Remove(0, 3)[0].Equals('\\'))
             {
+                command = command.Replace(".", "");
                 if (path.Equals("C:\\"))
                     path = path + command.Remove(0, 3);
                 else if (path.Equals("D:\\"))
@@ -258,10 +267,16 @@ namespace Hu_s_Command
             string departure = "", destination = "";
             string depName = "", desName = "";
 
+            if (command.Length == 4 || command.Length == 5)
+            {
+                Console.WriteLine("명령 구문이 올바르지 않습니다.");
+                return;
+            }
+                
             while (true)    //copy ,move 뒤에 공백 1개빼고 전부 제거
             {
                 if (command[4].Equals(' ') && command[5].Equals(' '))
-                    command.Remove(4, 1);
+                    command = command.Remove(4, 1);
                 else
                 {
                     break;
