@@ -1,17 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+
 
 namespace Hu_s_WindowExplorer
 {
@@ -35,9 +28,15 @@ namespace Hu_s_WindowExplorer
             backStack = new Stack<string>();
             forwardStack = new Stack<string>();
         }
+
         public void SetMainPage(MainPage main)
         {
             mainPage = main;
+        }
+
+        public void ClearForwardStack()
+        {
+            forwardStack.Clear();
         }
         private void PathTextBox_KeyDown(object sender, KeyEventArgs e)
         {
@@ -46,8 +45,10 @@ namespace Hu_s_WindowExplorer
                 if (Directory.Exists(pathTextBox.Text))
                 {
                     backStack.Push(path);
+                    ClearForwardStack();
                     mainPage.SetMainPage(pathTextBox.Text);
                     path = pathTextBox.Text;
+                    mainPage.SetPath(path);
                 }
             }
         }
@@ -66,6 +67,8 @@ namespace Hu_s_WindowExplorer
                     forwardStack.Push(pathTextBox.Text);
                     pathTextBox.Text = backStack.Peek();
                     path = backStack.Peek();
+                    mainPage.SetPath(path);
+
                     mainPage.SetMainPage(backStack.Pop());
                 }
             }
@@ -80,6 +83,8 @@ namespace Hu_s_WindowExplorer
                     backStack.Push(pathTextBox.Text);
                     pathTextBox.Text = forwardStack.Peek();
                     path = forwardStack.Peek();
+                    mainPage.SetPath(path);
+
                     mainPage.SetMainPage(forwardStack.Pop());
                 }
             }
@@ -92,6 +97,8 @@ namespace Hu_s_WindowExplorer
                 backStack.Push(path);
                 path = Directory.GetParent(path).ToString();
                 pathTextBox.Text = path;
+                mainPage.SetPath(path);
+
                 mainPage.SetMainPage(path);
             }
         }

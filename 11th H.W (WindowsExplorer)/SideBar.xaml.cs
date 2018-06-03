@@ -1,19 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.Security.AccessControl;
-using System.Security.Principal;
+
 
 namespace Hu_s_WindowExplorer
 {
@@ -39,6 +30,7 @@ namespace Hu_s_WindowExplorer
             mainPage = main;
             topBar = top;
         }
+
         public string[] GetDrives()
         {
             return Environment.GetLogicalDrives();
@@ -54,7 +46,23 @@ namespace Hu_s_WindowExplorer
             {
                 try
                 {
-                    TreeViewItem item = new TreeViewItem() { Header = files.Name };
+                    StackPanel stackPanel = new StackPanel();
+                    stackPanel.Orientation = Orientation.Horizontal;
+
+                    Image image = new Image();
+                    image.Source = new BitmapImage(new Uri("Images\\folder.png", UriKind.Relative));
+
+                    image.Height = 10;
+                    image.Width = 10;
+
+                    TextBlock text = new TextBlock();
+                    text.Text = files.Name;
+                    stackPanel.Children.Add(image);
+                    stackPanel.Children.Add(text);
+
+                    TreeViewItem item = new TreeViewItem() { Header = stackPanel };
+                    item.DataContext = files.Name;
+                    
                     root.Items.Add(item);
                     SetTreeChild(files.FullName.ToString(), item);
                 }
@@ -67,9 +75,26 @@ namespace Hu_s_WindowExplorer
             int count = 0;
             treeRoots = new TreeViewItem[drives.Length];
 
+
             for (int i = 0; i < drives.Length; i++)
             {
-                treeRoots[i] = new TreeViewItem() { Header = drives[i] };
+                StackPanel stackPanel = new StackPanel();
+                stackPanel.Orientation = Orientation.Horizontal;
+
+                TextBlock text = new TextBlock();
+                text.Text = drives[i];
+
+                Image image = new Image();
+                image.Source = new BitmapImage(new Uri("Images\\harddisk.png", UriKind.Relative));
+
+                image.Height = 10;
+                image.Width = 10;
+
+                stackPanel.Children.Add(image);
+                stackPanel.Children.Add(text);
+
+                treeRoots[i] = new TreeViewItem() { Header = stackPanel };
+                treeRoots[i].DataContext = drives[i];
             }
 
             foreach (TreeViewItem item in treeRoots)
@@ -84,10 +109,15 @@ namespace Hu_s_WindowExplorer
         {
             if (node.DisplayMemberPath != null)
             {
-                var path = node.Header;
+                var path = node.DataContext;
                 //TreeViewItem grand = GetGrandParent(node);
                 for (var i = node.Parent; i != mainTreeView; i = ((TreeViewItem)i).Parent)
-                    path = ((TreeViewItem)i).Header + "\\" + path;
+                {
+                    if(((TreeViewItem)i).DataContext.Equals("C:\\")|| ((TreeViewItem)i).DataContext.Equals("D:\\") || ((TreeViewItem)i).DataContext.Equals("E:\\"))
+                        path = ((TreeViewItem)i).DataContext.ToString() + path;
+                    else
+                        path = ((TreeViewItem)i).DataContext + "\\" + path;
+                }
 
                 ViewDirectoryList(path.ToString());
             }
@@ -96,8 +126,8 @@ namespace Hu_s_WindowExplorer
         private void ViewDirectoryList(string path)
         {
             topBar.pathTextBox.Text = path;
-            
-            mainPage.listView.Items.Clear();
+            mainPage.SetPath(path);
+            topBar.SetPath(path);
 
             mainPage.SetMainPage(path);
         }
@@ -105,21 +135,9 @@ namespace Hu_s_WindowExplorer
         private void MainTreeView_Selected(object sender, RoutedEventArgs e)
         {
             topBar.AddBackList(topBar.pathTextBox.Text);
+            topBar.ClearForwardStack();
+
             SelectTreeView((TreeViewItem)e.OriginalSource);
         }
     }
 }
-
-
-
-
-
-//DirectorySecurity dSecurity = Directory.GetAccessControl(files.ToString());
-//dSecurity.AddAccessRule(new FileSystemAccessRule(
-//       new NTAccount("Users"),
-//      FileSystemRights.FullControl,
-//       InheritanceFlags.ObjectInherit | InheritanceFlags.ContainerInherit,
-//       PropagationFlags.None,
-//       AccessControlType.Allow
-//));
-//   Directory.SetAccessControl(files.ToString(), dSecurity);

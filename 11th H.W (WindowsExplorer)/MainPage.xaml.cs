@@ -3,7 +3,6 @@ using System.Diagnostics;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -31,6 +30,12 @@ namespace Hu_s_WindowExplorer
             this.topBar = top;
             path = topBar.pathTextBox.Text;
         }
+
+        public void SetPath(string path)
+        {
+            this.path = path;
+        }
+
         public void SetMainPage(string path)
         {
             listView.Items.Clear();    // 전에 있던 목록들을 지우고 새로 나열함.
@@ -100,19 +105,22 @@ namespace Hu_s_WindowExplorer
 
         private void TextBlock_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            if (e.ChangedButton == MouseButton.Left && e.ClickCount == 2)
+            //if (e.ChangedButton == MouseButton.Left && e.ClickCount == 2)
             {
                 if (((StackPanel)sender).DataContext.ToString().IndexOf('.') == -1)
                 {
-                    topBar.AddBackList(topBar.pathTextBox.Text);
-                    topBar.pathTextBox.Text = topBar.pathTextBox.Text + "\\" + ((StackPanel)sender).DataContext.ToString();
-                    topBar.SetPath(topBar.pathTextBox.Text);
+                    topBar.AddBackList(path);
+                    topBar.ClearForwardStack();
+
+                    topBar.pathTextBox.Text = path + "\\" + ((StackPanel)sender).DataContext.ToString();
+                    path = path + "\\" + ((StackPanel)sender).DataContext.ToString();
+                    topBar.SetPath(path);
                     
-                    SetMainPage(topBar.pathTextBox.Text);
+                    SetMainPage(path);
                 }
                 else
                 {
-                    Process.Start("explorer.exe", topBar.pathTextBox.Text + "\\" + ((StackPanel)sender).DataContext.ToString());
+                    Process.Start("explorer.exe", path + "\\" + ((StackPanel)sender).DataContext.ToString());
                 }
             }
         
