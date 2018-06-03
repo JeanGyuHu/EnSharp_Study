@@ -8,7 +8,7 @@
       d:DesignHeight="940" d:DesignWidth="160">
     
     <ScrollViewer HorizontalScrollBarVisibility="Visible">
-        <TreeView Name="mainTreeView">
+        <TreeView Name="mainTreeView" TreeViewItem.Selected="MainTreeView_Selected">
 
         </TreeView>
     </ScrollViewer>

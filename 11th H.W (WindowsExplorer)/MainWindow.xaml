@@ -11,16 +11,14 @@
             <RowDefinition Height="60"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <local:TopBar x:Name="topBar" Grid.Row="0"/>
         <Grid Name="subGrid" Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="160"/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            
-            <local:SideBar x:Name="sideBar" Grid.Column="0"/>
+
+
             <GridSplitter Grid.Column="0" Grid.Row="1" Width="3" Background="DarkGray"/>
-            <local:MainPage x:Name="mainScene" Grid.Column="1"/>
         </Grid>
     </Grid>
 

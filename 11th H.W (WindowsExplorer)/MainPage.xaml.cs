@@ -1,17 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+
 
 namespace Hu_s_WindowExplorer
 {
@@ -20,54 +16,72 @@ namespace Hu_s_WindowExplorer
     /// </summary>
     public partial class MainPage : UserControl
     {
+        TopBar topBar;
+        string path;
+
         public MainPage()
         {
             InitializeComponent();
-
-            SetMainPage();
+            
+            
         }
 
-        public void SetMainPage()
+        public void SetTopBar(TopBar top)
+        {
+            this.topBar = top;
+            path = topBar.pathTextBox.Text;
+        }
+        public void SetMainPage(string path)
         {
             listView.Items.Clear();    // 전에 있던 목록들을 지우고 새로 나열함.
 
-            string[] directories = Directory.GetDirectories("C:\\Users\\gjwls\\Desktop");
+            string[] directories = Directory.GetDirectories(path);
 
             foreach (string directory in directories)    // 폴더 나열
             {
                 DirectoryInfo info = new DirectoryInfo(directory);
                 Image img = new Image();
                 img.Source = new BitmapImage(new Uri("Images\\folder.png",UriKind.Relative));
-                StackPanel stack = new StackPanel();
-               
-                Label lbl = new Label();
-                lbl.Width = 40;
-                lbl.Content = info.Name;
-                img.Width = 30;
-                img.Height = 30;
-                stack.Children.Add(img);
-                stack.Children.Add(lbl);
-                listView.Items.Add(stack);
+
+                MakeIcon(info.Name, img);
             }
 
-            string[] files = Directory.GetFiles("C:\\Users\\gjwls\\Desktop");
+
+            string[] files = Directory.GetFiles(path,"*.*",SearchOption.TopDirectoryOnly);
 
             foreach (string file in files)    // 파일 나열
             {
                 FileInfo info = new FileInfo(file);
-                StackPanel stack = new StackPanel();
                 Image img = new Image();
-                Label lbl = new Label();
-                lbl.Content = info.Name;
-                lbl.Width = 40;
-                
                 img.Source = GetIcon(file);
-                img.Width = 30;
-                img.Height = 30;
-                stack.Children.Add(img);
-                stack.Children.Add(lbl);
-                listView.Items.Add(stack);
+
+                MakeIcon(info.Name, img);
             }
+        }
+
+        public void MakeIcon(string name,Image image)
+        {
+            StackPanel stackPanel = new StackPanel();
+            stackPanel.Width = 120;
+            stackPanel.Height = 120;
+
+            image.Width = 120;
+            image.Height = 50;
+
+            TextBlock textBlock = new TextBlock();
+            
+            textBlock.TextWrapping = TextWrapping.Wrap;
+            textBlock.TextAlignment = TextAlignment.Center;
+            textBlock.Width = 120;
+            textBlock.Height = 60;
+            textBlock.Text = name;
+
+            stackPanel.MouseLeftButtonDown += TextBlock_MouseDoubleClick;
+
+            stackPanel.Children.Add(image);
+            stackPanel.Children.Add(textBlock);
+            stackPanel.DataContext = name;
+            listView.Items.Add(stackPanel);
         }
 
         public ImageSource GetIcon(string filename)       //File 경로에서 Image 추출
@@ -80,9 +94,28 @@ namespace Hu_s_WindowExplorer
                 sysicon.Handle,
                 Int32Rect.Empty,
                 BitmapSizeOptions.FromEmptyOptions());
-
             }
             return icon;
+        }
+
+        private void TextBlock_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left && e.ClickCount == 2)
+            {
+                if (((StackPanel)sender).DataContext.ToString().IndexOf('.') == -1)
+                {
+                    topBar.AddBackList(topBar.pathTextBox.Text);
+                    topBar.pathTextBox.Text = topBar.pathTextBox.Text + "\\" + ((StackPanel)sender).DataContext.ToString();
+                    topBar.SetPath(topBar.pathTextBox.Text);
+                    
+                    SetMainPage(topBar.pathTextBox.Text);
+                }
+                else
+                {
+                    Process.Start("explorer.exe", topBar.pathTextBox.Text + "\\" + ((StackPanel)sender).DataContext.ToString());
+                }
+            }
+        
         }
     } 
 }

@@ -24,15 +24,21 @@ namespace Hu_s_WindowExplorer
     {
         string[] drives;
         TreeViewItem[] treeRoots;
+        MainPage mainPage;
+        TopBar topBar;
 
         public SideBar()
         {
             InitializeComponent();
-            
             drives = GetDrives();
-            MakeTreeView();
+
         }
-        
+
+        public void SetMainPageAndTopBar(MainPage main, TopBar top)
+        {
+            mainPage = main;
+            topBar = top;
+        }
         public string[] GetDrives()
         {
             return Environment.GetLogicalDrives();
@@ -44,7 +50,7 @@ namespace Hu_s_WindowExplorer
 
             DirectoryInfo directoryInfo = new DirectoryInfo(path);
 
-            foreach(var files in directoryInfo.GetDirectories().Where(f => !f.Attributes.HasFlag(FileAttributes.Hidden)))
+            foreach (var files in directoryInfo.GetDirectories().Where(f => !f.Attributes.HasFlag(FileAttributes.Hidden)))
             {
                 try
                 {
@@ -52,10 +58,7 @@ namespace Hu_s_WindowExplorer
                     root.Items.Add(item);
                     SetTreeChild(files.FullName.ToString(), item);
                 }
-                catch(Exception e)
-                {
-
-                }
+                catch (Exception e) { }
             }
         }
 
@@ -64,17 +67,45 @@ namespace Hu_s_WindowExplorer
             int count = 0;
             treeRoots = new TreeViewItem[drives.Length];
 
-            for(int i = 0; i < drives.Length; i++)
+            for (int i = 0; i < drives.Length; i++)
             {
                 treeRoots[i] = new TreeViewItem() { Header = drives[i] };
             }
 
-            foreach(TreeViewItem item in treeRoots)
+            foreach (TreeViewItem item in treeRoots)
             {
                 mainTreeView.Items.Add(item);
-                SetTreeChild(drives[count],item);
+                SetTreeChild(drives[count], item);
                 count++;
             }
+        }
+
+        public void SelectTreeView(TreeViewItem node)
+        {
+            if (node.DisplayMemberPath != null)
+            {
+                var path = node.Header;
+                //TreeViewItem grand = GetGrandParent(node);
+                for (var i = node.Parent; i != mainTreeView; i = ((TreeViewItem)i).Parent)
+                    path = ((TreeViewItem)i).Header + "\\" + path;
+
+                ViewDirectoryList(path.ToString());
+            }
+        }
+
+        private void ViewDirectoryList(string path)
+        {
+            topBar.pathTextBox.Text = path;
+            
+            mainPage.listView.Items.Clear();
+
+            mainPage.SetMainPage(path);
+        }
+
+        private void MainTreeView_Selected(object sender, RoutedEventArgs e)
+        {
+            topBar.AddBackList(topBar.pathTextBox.Text);
+            SelectTreeView((TreeViewItem)e.OriginalSource);
         }
     }
 }

@@ -35,16 +35,16 @@
         <Label Content="공유" Grid.Column="2" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         <Label Content="보기" Grid.Column="3" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
 
-        <Button Name="backButton" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" BorderThickness="0">
+        <Button Name="backButton" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" BorderThickness="0" Click="BackButton_Click">
             <Image Source="Images\Back.PNG"/>
         </Button>
-        <Button Name="forwardButton" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" BorderThickness="0">
+        <Button Name="forwardButton" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" BorderThickness="0" Click="ForwardButton_Click">
             <Image Source="Images\for.PNG"/>
         </Button>
-        <Button Name="parentButton" Grid.Column="2" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" BorderThickness="0">
+        <Button Name="parentButton" Grid.Column="2" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" BorderThickness="0" Click="ParentButton_Click">
             <Image Source="Images\parent.PNG"/>
         </Button>
         <Label Content="주소" Grid.Column="3" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-        <TextBox Name="pathTextBox" Grid.Column="4" Height="25" Width="650" Grid.ColumnSpan="10" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+        <TextBox Name="pathTextBox" Grid.Column="4" Height="25" Width="650" Grid.ColumnSpan="10" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" KeyDown="PathTextBox_KeyDown"/>
     </Grid>
 </UserControl>
