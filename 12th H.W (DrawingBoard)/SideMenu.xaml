@@ -1,0 +1,73 @@
+﻿<UserControl x:Class="Hu_s_Drawing_Board.SideMenu"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Hu_s_Drawing_Board"
+             mc:Ignorable="d" 
+             d:DesignHeight="350" d:DesignWidth="80">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="33"/>
+                <RowDefinition Height="33"/>
+                <RowDefinition Height="33"/>
+            </Grid.RowDefinitions>
+            <Button Name="penButton" Content="펜" Grid.Column="0" Grid.Row="0" Click="Button_Click"/>
+            <Button Name="recButton" Content="사각형" Grid.Column="1" Grid.Row="0" Click="Button_Click"/>
+            <Button Name="cirButton" Content="원" Grid.Column="0" Grid.Row="1" Click="Button_Click"/>
+            <Button Name="lineButton" Content="선" Grid.Column="1" Grid.Row="1" Click="Button_Click"/>
+            <Button Name="eraseButton" Content="지우개" Grid.Column="0" Grid.Row="2" Click="Button_Click"/>
+            <Button Name="cursorButton" Content="선택" Grid.Column="1" Grid.Row="2" Click="Button_Click"/>
+        </Grid>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="33"/>
+                <RowDefinition Height="33"/>
+                <RowDefinition Height="33"/>
+            </Grid.RowDefinitions>
+            <Button Name="spoidButton" Content="스포잇" Grid.Column="0" Grid.Row="0" Click="Button_Click"/>
+            <Button Name="paintButton" Content="페인트" Grid.Column="1" Grid.Row="0" Click="Button_Click"/>
+            <ComboBox Name="colorBox" Grid.Column="0" Grid.Row="1" SelectionChanged="ColorBox_SelectionChanged">
+                <ComboBoxItem Content=" " Background="Black"/>
+                <ComboBoxItem Content=" " Background="Red"/>
+                <ComboBoxItem Content=" " Background="Yellow"/>
+                <ComboBoxItem Content=" " Background="Green"/>
+                <ComboBoxItem Content=" " Background="Blue"/>
+                <ComboBoxItem Content=" " Background="DarkBlue"/>
+                <ComboBoxItem Content=" " Background="Purple"/>
+            </ComboBox>
+            <Grid Name="color" Background="Black" Grid.Column="1" Grid.Row="1"/>
+        </Grid>
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="33"/>
+                <RowDefinition Height="33"/>
+                <RowDefinition Height="33"/>
+            </Grid.RowDefinitions>
+            <Button Name="thick1Button" Grid.Column="0" Grid.Row="0" Click="Button_Click"/>
+            <Button Name="thick2Button" Grid.Column="1" Grid.Row="0" Click="Button_Click"/>
+            <Button Name="thick3Button" Grid.Column="0" Grid.Row="1" Click="Button_Click"/>
+            <Button Name="thick4Button" Grid.Column="1" Grid.Row="1" Click="Button_Click"/>
+            <Button Name="thick5Button" Grid.Column="0" Grid.Row="2" Click="Button_Click"/>
+            <Button Name="thick6Button" Grid.Column="1" Grid.Row="2" Click="Button_Click"/>
+        </Grid>
+    </Grid>
+</UserControl>

@@ -1,0 +1,12 @@
+﻿<UserControl x:Class="Hu_s_Drawing_Board.DrawingBoard"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Hu_s_Drawing_Board"
+             mc:Ignorable="d" 
+             d:DesignHeight="445" d:DesignWidth="350">
+    <Canvas Name="board" Background="Aqua" MouseLeftButtonDown="Board_MouseLeftButtonDown" MouseMove="Board_MouseMove" MouseLeftButtonUp="Board_MouseLeftButtonUp">
+        <Label Name="la" FontSize="15" Content="as"/>
+    </Canvas>
+</UserControl>
